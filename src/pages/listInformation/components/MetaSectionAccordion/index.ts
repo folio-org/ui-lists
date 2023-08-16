@@ -1,0 +1,1 @@
+export { MetaSectionAccordion } from './MetaSectionAccordion';

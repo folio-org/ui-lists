@@ -1,0 +1,1 @@
+export const PULLING_STATUS_DELAY = 10000;

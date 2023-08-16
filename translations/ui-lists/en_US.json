@@ -1,0 +1,93 @@
+{
+  "meta.title": "Lists",
+  "settings.general": "General",
+  "settings.general.message": "These are your general app settings.",
+  "paneHeader.button.new": "New",
+  "paneHeader.button.actions": "Actions",
+  "filterPane.title": "Filter",
+  "mainPane.title": "Lists",
+  "mainPane.subTitle": "{count} records found",
+  "lists.columns.list-name": "List name",
+  "lists.columns.record-type": "Record type",
+  "lists.columns.records": "Records",
+  "lists.columns.status": "Status",
+  "lists.columns.source": "Source",
+  "lists.columns.last-updated": "Last updated",
+  "lists.columns.visibility": "Visibility",
+  "lists.columns.first-name": "First name",
+  "lists.columns.last-name": "Last name",
+  "lists.columns.barcode": "Barcode",
+  "lists.columns.patron-group": "Patron group",
+  "lists.item.active": "Active",
+
+  "lists.item.inactive": "Inactive",
+  "lists.item.shared": "Shared",
+  "lists.item.private": "Private",
+  "lists.item.compiling": "Compiling",
+  "lists.searchInputLabel": "Search Lists",
+  "list.info.list-name": "List name",
+  "list.info.description": "Description",
+  "list.info.visibility": "Visibility",
+  "list.info.status": "Status",
+
+  "accordion.title.list-information": "List information",
+  "accordion.title.query": "Query: {query}",
+
+  "pane.dropdown.show-columns": "Show columns",
+  "pane.dropdown.refresh": "Refresh list",
+  "pane.dropdown.delete": "Delete list",
+  "pane.dropdown.edit": "Edit list",
+  "pane.dropdown.export": "Export list (CSV)",
+  "status-toast.success.refresh-complete": "<strong>Refresh complete</strong> with <strong>{count}</strong> records: ",
+  "status-toast.success.link": "View updated list",
+
+  "create-list.subtitle": "Set criteria to build query",
+  "create-list.saving": "Saving",
+
+  "button.save": "Save",
+  "button.cancel": "Cancel",
+
+  "create-list.title": "New list",
+
+  "create-list.aside.set-criteria": "Set criteria",
+  "create-list.aside.set-criteria-to-build": "Set criteria to build query",
+  "create-list.aside.record-types": "Record types",
+  "create-list.aside.build-query": "Build query",
+
+  "create-list.main.collapse-all": "Collapse all",
+  "create-list.main.list-name": "List name",
+  "create-list.main.list-information": "List information",
+  "create-list.main.list-description": "Description",
+  "create-list.main.list-visibility": "Visibility",
+  "create-list.main.list-shared": "Shared",
+  "create-list.main.list-status": "Status",
+  "create-list.main.list-private": "Private",
+  "create-list.main.list-active": "Active",
+  "create-list.main.list-inactive": "Inactive",
+  "create-list.main.expand-all": "Expand all",
+
+  "list.modal.delete": "Delete",
+  "list.modal.delete-list": "Delete list",
+  "list.modal.confirm-message": "Are you sure you want to delete the list <strong>{listName}</strong>?",
+
+  "list.model.sure-heading": "Are you sure?",
+  "list.modal.keep-edit": "Keep editing",
+  "list.modal.cancel-edit": "Close without saving",
+  "list.modal.confirm-cancel-message": "There are unsaved changes",
+  "list.modal.run-query-and-save": "Run query & save",
+  "list.modal.edit-query": "Edit query",
+
+  "callout.list.delete.success": "List <strong>{listName}</strong> deleted.",
+  "callout.list.delete.error": "Error: <strong>{listName}</strong> was not deleted.",
+  "callout.list.save.success": "List <strong>{listName}</strong> saved.",
+  "callout.list.save.error": "Error: <strong>{listName}</strong> was not saved.",
+  "callout.list.refresh.error": "The list <strong>{listName}</strong> was not refreshed. Please try again.",
+
+  "lists.edit.saving": "Saving",
+  "lists.edit.loading": "Loading",
+  "lists.edit.title": "Edit {listName}",
+
+  "form.field.empty-error": "Please fill this in to continue",
+
+  "loading-fallback": "Not loaded"
+}

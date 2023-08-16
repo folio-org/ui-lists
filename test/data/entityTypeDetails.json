@@ -1,0 +1,160 @@
+{
+    "id": "0cb79a4c-f7eb-4941-a104-745224ae0292",
+    "name": "item_details",
+    "labelAlias": "Item",
+    "columns": [
+        {
+            "name": "id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_effective_call_number",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Effective call number",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_level_call_number",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Call number",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_effective_shelving_order",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Shelving order",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_holdings_record_id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Holdings record ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_status",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item status",
+            "visibleByDefault": true,
+            "values": null
+        },
+        {
+            "name": "item_copy_number",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item copy number",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_barcode",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item barcode",
+            "visibleByDefault": true,
+            "values": null
+        },
+        {
+            "name": "item_effective_location_id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item location ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_effective_location_name",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item location name",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_permanent_location_id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item permanent ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_permanent_location_name",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Item permanent location name",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_material_type_id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Material ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "item_material_type",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Material type",
+            "visibleByDefault": true,
+            "values": null
+        },
+        {
+            "name": "instance_id",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Instance ID",
+            "visibleByDefault": false,
+            "values": null
+        },
+        {
+            "name": "instance_title",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Instance title",
+            "visibleByDefault": true,
+            "values": null
+        },
+        {
+            "name": "instance_primary_contributor",
+            "dataType": {
+                "dataType": "stringType"
+            },
+            "labelAlias": "Instance primary contributor",
+            "visibleByDefault": false,
+            "values": null
+        }
+    ]
+}

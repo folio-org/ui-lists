@@ -1,0 +1,15 @@
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.loadingContainer > div {
+  /*
+    We can't avoid using !important here because the initial state set via
+    style attr in HTML; to overwrite it we need to use !important
+  */
+  width: 90px !important;
+  height: 45px !important;
+}
+

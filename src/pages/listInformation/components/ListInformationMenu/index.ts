@@ -1,0 +1,1 @@
+export { ListInformationMenu } from './ListInformationMenu';

@@ -1,0 +1,56 @@
+{
+    "content": [
+        {
+            "id": "8101497b-b9ea-4e40-b0d6-039d924640f3",
+            "name": "Expired Patron Loan",
+            "entityTypeId": "4e09d89a-44ed-418e-a9cc-820dfb27bf3a",
+            "userFriendlyQuery": "loan_status ='Open' and user_active = 'false'",
+            "fqlQuery": "loan_status ='Open' and user_active = 'false'",
+            "createdByUsername": "SYSTEM",
+            "createdDate": "2023-01-31T22:11:48.574301Z",
+            "isActive": true,
+            "isPrivate": true,
+            "recordsCount": 3,
+            "refreshedDate": "2023-02-01T20:17:55.162331Z",
+            "refreshedByUsername": "8101497b-b9ea-4e40-b0d6-039d924640f3",
+            "isRefreshing": true
+        },
+        {
+            "id": "fafdefeb-334b-4312-83a2-6f25930099c3",
+            "name": "Missing Items",
+            "entityTypeId": "0cb79a4c-f7eb-4941-a104-745224ae0292",
+            "userFriendlyQuery": "item_status = 'missing' or item_status = 'aged to lost' or item_status = 'claimed returned' or item_status = 'declared lost' or item_status = 'long missing'",
+            "fqlQuery": "item_status = 'missing' or item_status = 'aged to lost' or item_status = 'claimed returned' or item_status = 'declared lost' or item_status = 'long missing'",
+            "createdByUsername": "SYSTEM",
+            "createdDate": "2023-01-31T22:11:48.574301Z",
+            "isActive": true,
+            "isPrivate": true,
+            "isRefreshing": true
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+        "offset": 0,
+        "pageNumber": 0,
+        "pageSize": 100,
+        "paged": true,
+        "unpaged": false
+    },
+    "totalRecords": 2,
+    "totalPages": 1,
+    "last": true,
+    "size": 100,
+    "number": 0,
+    "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+    },
+    "numberOfElements": 2,
+    "first": true,
+    "empty": false
+}

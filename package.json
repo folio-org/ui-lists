@@ -1,0 +1,172 @@
+{
+  "name": "@folio/lists",
+  "version": "1.2.0",
+  "description": "FOLIO Reporting Machine Lists",
+  "main": "src/index.tsx",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12.20.1"
+  },
+  "publishConfig": {
+    "registry": "https://repository.folio.org/repository/npm-folio/"
+  },
+  "scripts": {
+    "start": "stripes serve",
+    "build": "stripes build --output ./output",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-lists ./translations/ui-lists/compiled",
+    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "test": "jest",
+    "tsc:check-app": "tsc --noEmit --project \"./tsconfig.json\""
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.9.0",
+    "@folio/calendar": "^8.0.0",
+    "@folio/eslint-config-stripes": "^6.0.0",
+    "@folio/stripes": "^9.0.0",
+    "@folio/stripes-cli": "^1.20.0 || ^2.4.0",
+    "@folio/stripes-core": "^10.0.0",
+    "@formatjs/cli": "^4.2.29",
+    "@jest/globals": "^26.6.2",
+    "@testing-library/dom": "^7.26.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^29.2.4",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^18.11.14",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "chai": "^4.2.0",
+    "core-js": "^3.6.4",
+    "eslint": "^7.32.0",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "identity-obj-proxy": "^3.0.0",
+    "inflected": "^2.0.4",
+    "jest": "^29.0.0",
+    "jest-canvas-mock": "^2.3.0",
+    "jest-environment-jsdom": "^29.3.1",
+    "jest-junit": "^12.0.0",
+    "localforage": "^1.10.0",
+    "miragejs": "^0.1.47",
+    "mocha": "^5.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intl": "^5.8.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-observable": "^1.2.0",
+    "regenerator-runtime": "^0.13.3",
+    "rxjs": "^6.6.3",
+    "ts-jest": "^28.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@folio/stripes-acq-components": "~4.0.0",
+    "date-fns": "^2.29.3",
+    "ky": "^0.33.2",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.6.0"
+  },
+  "peerDependencies": {
+    "@folio/stripes": "^8.0.0",
+    "react": "^17.02",
+    "react-intl": "^5.8.0",
+    "react-redux": "^8.0.5",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "optionalDependencies": {
+    "@folio/plugin-query-builder": ">=1.0.0"
+  },
+  "stripes": {
+    "actsAs": [
+      "app",
+      "settings"
+    ],
+    "displayName": "ui-lists.meta.title",
+    "route": "/lists",
+    "home": "/lists",
+    "hasSettings": true,
+    "okapiInterfaces": {
+      "lists": "1.0"
+    },
+    "stripesDeps": [
+      "@folio/stripes-acq-components"
+    ],
+    "permissionSets": [
+      {
+        "permissionName": "module.lists.enabled",
+        "displayName": "Lists (Enable): Can view lists",
+        "visible": true,
+        "subPermissions": [
+          "fqm.entityTypes.collection.get",
+          "fqm.entityTypes.item.get",
+          "fqm.entityTypes.item.columnValues.get",
+          "lists.collection.get",
+          "lists.item.get",
+          "lists.item.contents.get",
+          "lists.configuration.get"
+        ]
+      },
+      {
+        "permissionName": "module.lists.refresh",
+        "displayName": "Lists (Edit): Can create, edit, export, and refresh lists",
+        "visible": true,
+        "subPermissions": [
+          "module.lists.enabled",
+          "fqm.query.async.post",
+          "fqm.query.async.results.get",
+          "fqm.query.async.delete",
+          "lists.item.refresh",
+          "lists.item.refresh.cancel",
+          "lists.item.export.download.get",
+          "lists.collection.post",
+          "lists.item.update",
+          "lists.item.export.post",
+          "lists.item.export.get"
+        ]
+      },
+      {
+        "permissionName": "settings.lists.enabled",
+        "displayName": "Settings (lists): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "module.lists.all",
+        "displayName": "Lists (Admin): All permissions",
+        "visible": true,
+        "subPermissions": [
+          "module.lists.refresh",
+          "settings.lists.enabled",
+          "lists.item.delete"
+        ]
+      }
+    ],
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Create, view and manage lists",
+        "title": "Lists"
+      }
+    ]
+  }
+}

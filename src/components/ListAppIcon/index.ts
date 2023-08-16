@@ -1,0 +1,1 @@
+export { ListAppIcon } from './ListAppIcon';
