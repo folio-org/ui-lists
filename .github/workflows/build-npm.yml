@@ -10,26 +10,23 @@
 #   - PUBLISH_MOD_DESCRIPTOR (boolean 'true' or 'false')
 #   - COMPILE_TRANSLATION_FILES (boolean 'true' or 'false')
 
-
-
 name: buildNPM Snapshot
 on: [push, pull_request]
 
 jobs:
   github-actions-ci:
     env:
-      YARN_TEST_OPTIONS: ''
+      YARN_TEST_OPTIONS: '--coverage'
       SQ_ROOT_DIR: './src'
       COMPILE_TRANSLATION_FILES: 'true'
       PUBLISH_MOD_DESCRIPTOR: 'true'
       FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
-      FOLIO_NPM_REGISTRY_AUTH: '//repository.folio.org/repository/npm-folioci/'
       FOLIO_MD_REGISTRY: 'https://folio-registry.dev.folio.org'
-      NODEJS_VERSION: '18'
+      NODEJS_VERSION: '16'
       JEST_JUNIT_OUTPUT_DIR: 'artifacts/jest-junit'
       JEST_COVERAGE_REPORT_DIR: 'artifacts/coverage-jest/lcov-report/'
       SQ_LCOV_REPORT: 'artifacts/coverage-jest/lcov.info'
-      SQ_EXCLUSIONS: '**/platform/alias-service.js,**/docs/**,**/node_modules/**,**/examples/**,**/artifacts/**,**/ci/**,Jenkinsfile,**/LICENSE,**/*.css,**/*.md,**/*.json,**/tests/**,**/stories/*.js,**/test/**,**/.stories.js,**/*-test.js,**/*.test.js,**/*-spec.js,**/karma.conf.js,**/jest.config.js'
+      SQ_EXCLUSIONS: '**/platform/alias-service.js,**/docs/**,**/node_modules/**,**/examples/**,**/artifacts/**,**/ci/**,Jenkinsfile,**/LICENSE,**/*.css,**/*.md,**/*.json,**/tests/**,**/stories/*.js,**/test/**,**/.stories.js,**/resources/bigtest/interactors/**,**/resources/bigtest/network/**,**/*-test.js,**/*.test.js,**/*.test.ts,**/*.test.tsx,**/*-spec.js,**/karma.conf.js,**/jest.config.js'
 
     runs-on: ubuntu-latest
     steps:
@@ -66,13 +63,9 @@ jobs:
       - name: Run yarn lint
         run: yarn lint
         continue-on-error: true
-      
-      - name: Get number of CPU cores
-        id: cpu-cores
-        uses: SimenB/github-actions-cpu-cores@v1
 
       - name: Run yarn test
-        run: xvfb-run --server-args="-screen 0 1024x768x24" yarn test $YARN_TEST_OPTIONS --max-workers ${{ steps.cpu-cores.outputs.count }}
+        run: yarn node --expose-gc $(yarn bin jest) --runInBand --logHeapUsage $YARN_TEST_OPTIONS
 
       - name: Run yarn formatjs-compile
         if: ${{ env.COMPILE_TRANSLATION_FILES == 'true' }}
@@ -91,9 +84,9 @@ jobs:
         if: always()
         with:
           github_token: ${{ github.token }}
-          files: "${{ env.JEST_JUNIT_OUTPUT_DIR }}/*.xml"
+          files: '${{ env.JEST_JUNIT_OUTPUT_DIR }}/*.xml'
           check_name: Jest Unit Test Results
-          comment_mode: update last
+          comment_mode: always
           comment_title: Jest Unit Test Statistics
 
       - name: Publish Jest coverage report
@@ -142,9 +135,10 @@ jobs:
           always-auth: true
 
       - name: Set _auth in .npmrc
+        if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
         run: |
           npm config set @folio:registry $FOLIO_NPM_REGISTRY
-          npm config set $FOLIO_NPM_REGISTRY_AUTH:_auth $NODE_AUTH_TOKEN
+          npm config set //repository.folio.org/repository/npm-folioci/:_auth $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -155,7 +149,7 @@ jobs:
           echo ".github" >> .npmignore
           echo ".scannerwork" >> .npmignore
           cat .npmignore
-          
+
       - name: Publish NPM
         if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
         run: npm publish
