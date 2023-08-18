@@ -6,6 +6,11 @@ jest.mock('@folio/stripes/components', () => ({
       <span>{props.children}</span>
     </span>
   )),
+  TextLink: jest.fn(({ children, onClick }) => (
+    <span onClick={onClick}>
+      <span>{children}</span>
+    </span>
+  )),
   Button: jest.fn(({ children, onClick, ...rest }) => (
     <button {...rest} onClick={onClick} data-test-button type="button">
       {children}
@@ -149,6 +154,17 @@ jest.mock('@folio/stripes/components', () => ({
       {lastMenu ?? null}
     </footer>
   )),
+  MessageBanner: jest.fn(({ show, children }) => {
+    return show ? <div data-testid="success-banner">{children}</div> : <></>;
+  }),
+  Layout: jest.fn(({
+    children,
+    'data-testid': testId,
+  }) => (
+    <div data-testid={testId}>
+      {children}
+    </div>
+  )),
   PaneBackLink: jest.fn(() => <span />),
   PaneMenu: jest.fn((props) => <div>{props.children}</div>),
   RadioButton: jest.fn(({ label, name, ...rest }) => (
@@ -242,6 +258,31 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>)),
   DropdownMenu: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  TextArea: jest.fn(({
+    'data-testid': testId,
+  }) => <div data-testid={testId}>TextArea</div>),
+  TextField: jest.fn(({
+    label,
+    onChange,
+    validate = jest.fn(),
+    ...rest
+  }) => {
+    const handleChange = (e) => {
+      validate(e.target.value);
+      onChange(e);
+    };
+
+    return (
+      <div>
+        <label htmlFor="textField">{label}</label>
+        <input
+          id="textField"
+          onChange={handleChange}
+          {...rest}
+        />
+      </div>
+    );
+  }),
   Checkbox: jest.fn(({
     label,
     checked,

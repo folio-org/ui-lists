@@ -1,4 +1,3 @@
-export { useEntityType } from './useEntityType';
 export { useListDetails } from './useListDetails';
 export { useLists } from './useLists';
 export { useRefresh } from './useRefresh';
@@ -6,5 +5,6 @@ export { useRecordTypes } from './useRecordTypes';
 export { useDeleteList } from './useDeleteList';
 export { useRecordsLimit } from './useRecordsLimit';
 export { useCSVExport } from './useCSVListExport';
+export { useMessages } from './useMessages';
 export { useLocalStorageToggle } from './useLocalStorageToggle';
 export { usePrevious } from './usePrevious';

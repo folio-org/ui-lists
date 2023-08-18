@@ -9,66 +9,62 @@ import {
   Pane,
   Paneset,
 } from '@folio/stripes/components';
-// @ts-ignore:next-line
-import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
-import { t, isActive, isInDraft, isCanned, computeErrorMessage } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport } from '../../hooks';
-import { useMessageContext } from '../../contexts/MessageContext';
+import { useQueryClient } from 'react-query';
+import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
+import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
-  SuccessRefreshSection
+  SuccessRefreshSection,
+  ListInformationResultViewer
 } from './components';
 import { HOME_PAGE_URL } from '../../constants';
-import { EntityTypeColumn, ListsRecordDetails, ICONS } from '../../interfaces';
-import { getVisibleColumnsKey } from '../../utils/helpers';
-import { ActionButton } from '../../components';
+import { EntityTypeColumn } from '../../interfaces';
+import { getVisibleColumnsKey } from '../../utils';
 
 import './ListInformationPage.module.css';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
-  const ky = useOkapiKy();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
-  const { data: initialInfo, isLoading: isDetailsLoading } = useListDetails(id);
+  const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
+  const { name: listName = '' } = listData || {};
 
-  const { requestExport, isExportInProgress, cancelInProgress: cancelExportInProgress, cancelExport } = useCSVExport({
+  const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
-    listName: initialInfo?.name || ''
+    listName
   });
-
-  const [pulledInfo, setPulledInfo] = useState<ListsRecordDetails | null>(null);
+  const queryClient = useQueryClient();
   const [showSuccessRefreshMessage, setShowSuccessRefreshMessage] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
-  const { showSuccessMessage, showErrorMessage } = useMessageContext();
-  const { initRefresh, isRefreshInProgress, cancelRefresh, cancelInProgress } = useRefresh({
+  const { showSuccessMessage, showErrorMessage } = useMessages();
+  const { initRefresh, isRefreshInProgress, cancelRefresh, isCancelRefreshInProgress, polledData } = useRefresh({
     listId: id,
-    shouldStartPulling: Boolean(initialInfo?.inProgressRefresh),
-    onErrorPulling: (code) => {
+    inProgressRefresh: listData?.inProgressRefresh,
+    onErrorPolling: (code) => {
       showErrorMessage({
         message: t(code || 'callout.list.refresh.error', {
-          listName: initialInfo?.name || ''
+          listName
         })
       });
     },
-    onSuccessPulling: (data) => {
-      setPulledInfo(data);
+    onSuccessPolling: () => {
       setShowSuccessRefreshMessage(true);
     },
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.refresh.error', {
-        listName: initialInfo?.name || ''
+        listName
       });
 
       showErrorMessage({ message: errorMessage });
     },
     onCancelError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'cancel-refresh.default', {
-        listName: initialInfo?.name || ''
+        listName
       });
 
       showErrorMessage({ message: errorMessage });
@@ -76,7 +72,7 @@ export const ListInformationPage: React.FC = () => {
     onCancelSuccess: () => {
       showSuccessMessage({
         message: t('cancel-refresh.success', {
-          listName: initialInfo?.name || ''
+          listName
         })
       });
     }
@@ -86,18 +82,22 @@ export const ListInformationPage: React.FC = () => {
     onSuccess: () => {
       showSuccessMessage({
         message: t('callout.list.delete.success', {
-          listName: initialInfo?.name || ''
+          listName
         })
       });
       history.push(HOME_PAGE_URL);
     },
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.delete.error', {
-        listName: initialInfo?.name || ''
+        listName
       });
 
       showErrorMessage({ message: errorMessage });
     } });
+
+  const updateListDetailsData = () => {
+    queryClient.setQueryData(['listDetails', id], polledData);
+  };
 
   const deleteListHandler = async () => {
     setShowConfirmDeleteModal(false);
@@ -107,7 +107,6 @@ export const ListInformationPage: React.FC = () => {
     setShowSuccessRefreshMessage(false);
   };
 
-  const [currentInfo, setCurrentInfo] = useState<ListsRecordDetails>();
   const [columnFilterList, setColumnControlList] = useState<EntityTypeColumn[]>([]);
   const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
 
@@ -116,126 +115,67 @@ export const ListInformationPage: React.FC = () => {
     if (values.length === 0) {
       return;
     }
-    localStorage.setItem(getVisibleColumnsKey(initialInfo?.id), JSON.stringify(values));
+    localStorage.setItem(getVisibleColumnsKey(listData?.id), JSON.stringify(values));
 
     setVisibleColumns(values);
   };
 
-  const refreshButtonClickHandler = async () => {
-    if (!initialInfo?.inProgressRefresh) {
+  const refresh = async () => {
+    if (!listData?.inProgressRefresh) {
       initRefresh();
       closeSuccessMessage();
-      if (pulledInfo) {
-        setCurrentInfo(pulledInfo);
+      if (polledData) {
+        updateListDetailsData();
       }
     }
   };
 
   const onVewListClickHandler = () => {
-    if (pulledInfo) {
-      setCurrentInfo(pulledInfo);
+    if (polledData) {
+      updateListDetailsData();
     }
 
     setShowSuccessRefreshMessage(false);
   };
 
-  const handleDefaultVisibleColumnsSet = (defaultColumns: string[]) => {
-    const cachedColumns = localStorage.getItem(getVisibleColumnsKey(initialInfo?.id));
-    const finalVisibleColumns = cachedColumns ? JSON.parse(cachedColumns) : defaultColumns;
-
-    setVisibleColumns(finalVisibleColumns);
-  };
-
-  const getAsyncContentData = ({ limit, offset }: any) => {
-    return ky.get(`lists/${id}/contents?offset=${offset}&size=${limit}`).json();
-  };
-
-  const getAsyncEntityType = () => {
-    return ky.get(`entity-types/${initialInfo?.entityTypeId}`).json();
-  };
 
   if (isDetailsLoading) {
     return <LoadingPane />;
   }
 
-  const dataToDisplay = currentInfo || initialInfo;
-  const recordCount = dataToDisplay?.successRefresh?.recordsCount || 0;
+  const recordCount = listData?.successRefresh?.recordsCount || 0;
 
-
-  const cancelRefreshButton = {
-    label: 'cancel-refresh',
-    icon: ICONS.refresh,
-    onClick: cancelRefresh,
-    disabled: cancelInProgress
-  };
-
-  const refreshButton = {
-    label: 'refresh',
-    icon: ICONS.refresh,
-    onClick: refreshButtonClickHandler,
-    disabled:
-      isRefreshInProgress ||
-      !isActive(initialInfo) ||
-      isInDraft(initialInfo) ||
-      isExportInProgress
-  };
-
-  const initExportButton = {
-    label: 'export',
-    icon: ICONS.download,
-    onClick: () => {
+  const buttonHandlers = {
+    'cancel-refresh': () => {
+      cancelRefresh();
+    },
+    'refresh': () => {
+      refresh();
+    },
+    'edit':  () => {
+      history.push(`${id}/edit`);
+    },
+    'delete': () => {
+      setShowConfirmDeleteModal(true);
+    },
+    'export': () => {
       requestExport();
     },
-    disabled:
-      isRefreshInProgress ||
-      isDeleteInProgress ||
-      isInDraft(initialInfo) ||
-      isExportInProgress ||
-      !isActive(initialInfo)
-  };
-
-  const cancelExportButton = {
-    label: 'cancel-export',
-    icon: ICONS.download,
-    onClick: () => {
+    'cancel-export': () => {
       cancelExport();
     },
-    disabled: cancelExportInProgress
   };
 
-  const refreshSlot = isRefreshInProgress ? (
-    cancelRefreshButton
-  ) : (
-    refreshButton
-  );
-
-  const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
-
-  const actionButtons:ActionButton[] = [
-    refreshSlot,
-    {
-      label: 'edit',
-      icon: ICONS.edit,
-      onClick: () => {
-        history.push(`${id}/edit`);
-      },
-      disabled:
-        isRefreshInProgress ||
-        isCanned(initialInfo) ||
-        isExportInProgress
-    },
-    {
-      label: 'delete',
-      icon: ICONS.trash,
-      onClick: () => setShowConfirmDeleteModal(true),
-      disabled:
-        isDeleteInProgress ||
-        isRefreshInProgress ||
-        isCanned(initialInfo) ||
-        isExportInProgress
-    },
-    exportSlot
-  ];
+  const conditions = {
+    isRefreshInProgress,
+    isCancelRefreshInProgress,
+    isExportInProgress,
+    isCancelExportInProgress,
+    isDeleteInProgress,
+    isListInactive: isInactive(listData),
+    isListInDraft: isInDraft(listData),
+    isListCanned: isCanned(listData)
+  };
 
   return (
     <Paneset data-testid="listInformation">
@@ -245,7 +185,7 @@ export const ListInformationPage: React.FC = () => {
             dismissible
             defaultWidth="fill"
             appIcon={<ListAppIcon />}
-            paneTitle={dataToDisplay?.name}
+            paneTitle={listData?.name}
             paneSub={!isRefreshInProgress ?
               t('mainPane.subTitle',
                 { count: formatNumber(recordCount) })
@@ -254,41 +194,30 @@ export const ListInformationPage: React.FC = () => {
             lastMenu={<ListInformationMenu
               visibleColumns={visibleColumns}
               columns={columnFilterList}
-              onChange={handleColumnsChange}
-              actionButtons={actionButtons}
+              onColumnsChange={handleColumnsChange}
+              buttonHandlers={buttonHandlers}
+              conditions={conditions}
             />}
             onClose={() => history.push(HOME_PAGE_URL)}
             subheader={<SuccessRefreshSection
               shouldShow={showSuccessRefreshMessage}
-              recordsCount={formatNumber(pulledInfo?.successRefresh?.recordsCount || 0)}
+              recordsCount={formatNumber(polledData?.successRefresh?.recordsCount || 0)}
               onViewListClick={onVewListClickHandler}
             />}
           >
             <AccordionSet>
-              <MetaSectionAccordion listInfo={dataToDisplay} />
+              <MetaSectionAccordion listInfo={listData} />
             </AccordionSet>
 
             <AccordionSet>
-              <Pluggable
-                type="query-builder"
-                componentType="viewer"
-                accordionHeadline={
-                  t('accordion.title.query',
-                    { query: dataToDisplay?.userFriendlyQuery || '' })}
-                headline={({ totalRecords }: any) => (
-                  t('mainPane.subTitle',
-                    { count: totalRecords === 'NaN' ? 0 : totalRecords })
-                )}
-                refreshTrigger={dataToDisplay?.successRefresh?.contentVersion}
-                contentDataSource={getAsyncContentData}
-                entityTypeDataSource={getAsyncEntityType}
+              <ListInformationResultViewer
+                listID={listData?.id}
+                userFriendlyQuery={listData?.userFriendlyQuery}
+                entityTypeId={listData?.entityTypeId}
+                setColumnControlList={setColumnControlList}
+                setVisibleColumns={setVisibleColumns}
                 visibleColumns={visibleColumns}
-                onSetDefaultVisibleColumns={handleDefaultVisibleColumnsSet}
-                onSetDefaultColumns={setColumnControlList}
-                height={500}
-              >
-                No loaded
-              </Pluggable>
+              />
             </AccordionSet>
           </Pane>
         </Paneset>
@@ -297,7 +226,7 @@ export const ListInformationPage: React.FC = () => {
         buttonStyle="danger"
         confirmLabel={t('list.modal.delete')}
         heading={t('list.modal.delete-list')}
-        message={t('list.modal.confirm-message', { listName: dataToDisplay?.name || '' })}
+        message={t('list.modal.confirm-message', { listName })}
         onCancel={() => setShowConfirmDeleteModal(false)}
         onConfirm={() => {
           deleteListHandler();

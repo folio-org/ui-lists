@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { ActionButtonsList } from '../ActionButtonsList';
-import { ActionButton } from '../../..';
+import { ActionButton } from '../../../../../services';
 import { ICONS } from '../../../../../interfaces';
 
 describe('ActionButtonsList', () => {

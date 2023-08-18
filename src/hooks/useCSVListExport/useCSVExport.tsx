@@ -5,14 +5,14 @@ import { HTTPError } from 'ky';
 import { useCSVExportPolling } from './useCSVExportPolling';
 import { useCSVExportCancel } from './useCSVExportCancel';
 import { ListExport } from '../../interfaces';
-import { useMessageContext } from '../../contexts/MessageContext';
 import { computeErrorMessage, t } from '../../services';
+import { useMessages } from '../useMessages';
 
 export const useCSVExport = ({
   listId,
   listName
 }: {listId: string; listName: string}) => {
-  const { showSuccessMessage, showErrorMessage } = useMessageContext();
+  const { showSuccessMessage, showErrorMessage } = useMessages();
   const ky = useOkapiKy();
   const [values] = useLocalStorage<{[key: string]: string}>('listIdsToExport', {});
   const unlinkedValue = { ...values };
@@ -78,6 +78,6 @@ export const useCSVExport = ({
     requestExport: mutateAsync,
     isExportInProgress: isLoading || Boolean(values[listId]),
     cancelExport,
-    cancelInProgress
+    isCancelExportInProgress: cancelInProgress
   };
 };

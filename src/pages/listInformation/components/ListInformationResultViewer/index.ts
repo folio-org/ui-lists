@@ -1,0 +1,1 @@
+export { ListInformationResultViewer } from './ListInformationResultViewer';

@@ -13,6 +13,15 @@ export interface Pagination {
   unpaged: boolean;
 }
 
+export interface InitRefreshResponse {
+  id: string,
+  listId: string,
+  refreshStartDate: string,
+  refreshedBy: string,
+  refreshedByUsername: string,
+  status: string
+}
+
 export interface Response<T> {
   content: T;
   pageable: Pagination;
