@@ -1,1 +1,1 @@
-export { SuccessRefreshSection } from './RefreshStatusSection';
+export { SuccessRefreshSection } from './SuccessRefreshSection';

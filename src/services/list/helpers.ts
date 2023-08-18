@@ -1,6 +1,6 @@
 import { ListsRecordDetails } from '../../interfaces';
 
-export const isActive = (list?: ListsRecordDetails) => Boolean(list?.isActive);
+export const isInactive = (list?: ListsRecordDetails) => !list?.isActive;
 
 export const isInDraft = (list?: ListsRecordDetails) => !list?.fqlQuery;
 

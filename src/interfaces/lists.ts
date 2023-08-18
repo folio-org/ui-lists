@@ -16,6 +16,27 @@ export enum POLLING_STATUS {
   CANCELLED = 'CANCELLED'
 }
 
+export type InProgressRefresh = {
+  id: string;
+  listId: string,
+  status: POLLING_STATUS,
+  refreshStartDate: string,
+  refreshedBy: string,
+  refreshedByUsername: string
+};
+
+export type SuccessRefresh = {
+  id: string;
+  listId: string,
+  status: POLLING_STATUS.SUCCESS,
+  refreshStartDate: string,
+  refreshEndDate: string,
+  refreshedBy: string,
+  refreshedByUsername: string
+  recordsCount: number,
+  contentVersion: number
+};
+
 export interface ListExport {
   createdBy: string;
   endDate?: string;
@@ -53,8 +74,8 @@ export interface ListsRecordBase {
 }
 
 export interface ListsRecordDetails extends ListsRecordBase {
-  successRefresh?: ListRefresh;
-  inProgressRefresh?: ListRefresh;
+  successRefresh?: SuccessRefresh;
+  inProgressRefresh?: InProgressRefresh;
   failedRefresh?: FailedListRefresh;
 }
 

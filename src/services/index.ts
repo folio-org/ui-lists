@@ -1,5 +1,18 @@
 export { t } from './translation';
 
-export { isCanned, isActive, isInDraft } from './list';
+
+export { isCanned, isInactive, isInDraft } from './list';
+
 
 export { computeErrorMessage } from './error';
+
+
+export {
+  isRefreshDisabled,
+  isCancelRefreshDisabled,
+  isEditDisabled,
+  isDeleteDisabled,
+  isExportDisabled,
+  isCancelExportDisabled
+} from './action-menu';
+export { type ActionButton, type DisablingConditions } from './action-menu';

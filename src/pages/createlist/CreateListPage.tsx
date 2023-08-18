@@ -2,17 +2,17 @@ import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateList, useCreateListFormState } from './hooks';
+import { useMessages } from '../../hooks';
 import { AsideForm, CreateListLayout, MainCreateListForm } from './components';
 import { HOME_PAGE_URL } from '../../constants';
 import { ListsRecordBase } from '../../interfaces';
-import { useMessageContext } from '../../contexts/MessageContext';
 import { FIELD_NAMES } from './types';
 
 
 export const CreateListPage:FC = () => {
   const history = useHistory();
   const { state, onValueChange, hasChanges } = useCreateListFormState();
-  const { showSuccessMessage, showErrorMessage } = useMessageContext();
+  const { showSuccessMessage, showErrorMessage } = useMessages();
   const { saveList, isLoading } = useCreateList({
     listObject: state,
     onError: async (error) => {
@@ -49,15 +49,15 @@ export const CreateListPage:FC = () => {
       isQueryButtonDisabled={isRequiredMissing || isLoading}
     />
   );
-  const renderMain = () => {
-    return <MainCreateListForm
+  const renderMain = () => (
+    <MainCreateListForm
       descriptionField={description}
       listNameField={listName}
       visibilityField={visibility}
       statusField={status}
       onValueChange={onValueChange}
-    />;
-  };
+    />
+  );
 
   return (
     <CreateListLayout

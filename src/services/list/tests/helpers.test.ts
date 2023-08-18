@@ -1,22 +1,22 @@
 import { describe, expect } from '@jest/globals';
-import { isActive, isCanned, isInDraft } from '../helpers';
+import { isInactive, isCanned, isInDraft } from '../helpers';
 import list from '../../../../test/data/listDetails.json';
 import { ListsRecordDetails } from '../../../interfaces';
 
 describe('List helpers tests', () => {
-  describe('isActive', () => {
+  describe('isInactive', () => {
     describe('When list is active', () => {
       const activeList = { ...list, isActive: true } as ListsRecordDetails;
 
-      it('is expected to return true', () => {
-        expect(isActive(activeList)).toEqual(true);
+      it('is expected to return false', () => {
+        expect(isInactive(activeList)).toEqual(false);
       });
     });
     describe('When list is not active', () => {
       const activeList = { ...list, isActive: false } as ListsRecordDetails;
 
       it('is expected to return true', () => {
-        expect(isActive(activeList)).toEqual(false);
+        expect(isInactive(activeList)).toEqual(true);
       });
     });
   });

@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
-import { Accordion, TextLink } from '@folio/stripes/components';
+import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
 import { ChangedFieldType } from '../../types';
-import { MainListInfoForm } from '../../../../components/MainListInfoForm';
+import { MainListInfoForm } from '../../../../components';
 
 import css from './MainCreateListForm.module.css';
 
@@ -47,19 +47,21 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
       <div className={css.mainFormCollapseButton}>
         {renderCollapseButton()}
       </div>
-      <Accordion
-        label={t('create-list.main.list-information')}
-        open={isOpened}
-        onToggle={onToggleHandler}
-      >
-        <MainListInfoForm
-          onValueChange={onValueChange}
-          listName={listNameField}
-          description={descriptionField}
-          visibility={visibilityField}
-          status={statusField}
-        />
-      </Accordion>
+      <AccordionSet>
+        <Accordion
+          label={t('create-list.main.list-information')}
+          open={isOpened}
+          onToggle={onToggleHandler}
+        >
+          <MainListInfoForm
+            onValueChange={onValueChange}
+            listName={listNameField}
+            description={descriptionField}
+            visibility={visibilityField}
+            status={statusField}
+          />
+        </Accordion>
+      </AccordionSet>
     </div>
   );
 };

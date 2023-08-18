@@ -3,8 +3,7 @@ import {
   Dropdown,
   DropdownMenu
 } from '@folio/stripes/components';
-import { t } from '../../services';
-import { ActionButton } from './types';
+import { t, ActionButton } from '../../services';
 import { ActionButtonsList } from './components';
 
 import css from './ActionMenu.module.css';

@@ -1,7 +1,7 @@
 import { useOkapiKy } from '@folio/stripes/core';
 import { KyInstance } from 'ky/distribution/types/ky';
-import { useMessageContext } from '../../contexts/MessageContext';
 import { ListExport } from '../../interfaces';
+import { useMessages } from '../useMessages';
 import { t } from '../../services';
 import { downloadCSV } from './downloadCSV';
 import { POLLING_DELAY } from './constants';
@@ -12,7 +12,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
 
   // @ts-ignore:next-line
   const ky = useOkapiKy() as KyInstance;
-  const { showSuccessMessage, showErrorMessage } = useMessageContext();
+  const { showSuccessMessage, showErrorMessage } = useMessages();
 
   const poll = (listID: string, exportId: string) => {
     setTimeout(async () => {

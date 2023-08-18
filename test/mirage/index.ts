@@ -1,0 +1,1 @@
+export { startMirage } from './mirage';
