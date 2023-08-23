@@ -162,16 +162,3 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: ./module-descriptor.json
-
-      - name: Publish module descriptor
-        if: ${{ env.PUBLISH_MOD_DESCRIPTOR == 'true' && github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
-        id: modDescriptorPost
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: ${{ env.FOLIO_MD_REGISTRY }}/_/proxy/modules
-          method: 'POST'
-          contentType: 'application/json; charset=utf-8'
-          customHeaders: '{ "Accept": "application/json; charset=utf-8" }'
-          data: ${{ steps.moduleDescriptor.outputs.content }}
-          username: ${{ secrets.FOLIO_REGISTRY_USERNAME }}
-          password: ${{ secrets.FOLIO_REGISTRY_PASSWORD }}
