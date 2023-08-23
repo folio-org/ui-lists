@@ -38,7 +38,7 @@ export const EditListPage:FC = () => {
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
 
-  const version = listDetails?.version || 0;
+  const version = listDetails?.version ?? 0;
 
   const { saveList, isLoading } = useEditList(
     {

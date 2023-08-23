@@ -32,7 +32,7 @@ export const ListInformationPage: React.FC = () => {
   const { id }: {id: string} = useParams();
 
   const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
-  const { name: listName = '' } = listData || {};
+  const { name: listName = '' } = listData ?? {};
 
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
@@ -143,7 +143,7 @@ export const ListInformationPage: React.FC = () => {
     return <LoadingPane />;
   }
 
-  const recordCount = listData?.successRefresh?.recordsCount || 0;
+  const recordCount = listData?.successRefresh?.recordsCount ?? 0;
 
   const buttonHandlers = {
     'cancel-refresh': () => {
@@ -201,7 +201,7 @@ export const ListInformationPage: React.FC = () => {
             onClose={() => history.push(HOME_PAGE_URL)}
             subheader={<SuccessRefreshSection
               shouldShow={showSuccessRefreshMessage}
-              recordsCount={formatNumber(polledData?.successRefresh?.recordsCount || 0)}
+              recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
               onViewListClick={onVewListClickHandler}
             />}
           >

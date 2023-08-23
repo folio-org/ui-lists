@@ -9,9 +9,9 @@ export const isRefreshDisabled = (conditions: DisablingConditions): boolean => {
   } = conditions;
 
   return Boolean(
-    isRefreshInProgress ||
-    isListInactive ||
-    isListInDraft ||
+    isRefreshInProgress ??
+    isListInactive ??
+    isListInDraft ??
     isExportInProgress
   );
 };
@@ -32,8 +32,8 @@ export const isEditDisabled = (conditions: DisablingConditions): boolean => {
   } = conditions;
 
   return Boolean(
-    isRefreshInProgress ||
-    isListCanned ||
+    isRefreshInProgress ??
+    isListCanned ??
     isExportInProgress
   );
 };
@@ -47,9 +47,9 @@ export const isDeleteDisabled = (conditions: DisablingConditions): boolean => {
   } = conditions;
 
   return Boolean(
-    isDeleteInProgress ||
-    isRefreshInProgress ||
-    isListCanned ||
+    isDeleteInProgress ??
+    isRefreshInProgress ??
+    isListCanned ??
     isExportInProgress
   );
 };
@@ -64,10 +64,10 @@ export const isExportDisabled = (conditions: DisablingConditions): boolean => {
   } = conditions;
 
   return Boolean(
-    isRefreshInProgress ||
-    isDeleteInProgress ||
-    isListInDraft ||
-    isExportInProgress ||
+    isRefreshInProgress ??
+    isDeleteInProgress ??
+    isListInDraft ??
+    isExportInProgress ??
     isListInactive
   );
 };
