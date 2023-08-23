@@ -3,5 +3,5 @@ import React from 'react';
 import { AppIcon } from '@folio/stripes/core';
 
 export const ListAppIcon = () => {
-  return <AppIcon app="@folio-eis/lists" iconKey="app" size="small" />;
+  return <AppIcon app="@folio/lists" iconKey="app" size="small" />;
 };
