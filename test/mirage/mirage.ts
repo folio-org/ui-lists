@@ -22,6 +22,11 @@ export const startMirage = ({
 
       this.get('lists/:id', () => listDetails);
 
+      this.get('lists/configuration', () => {
+        console.log('called');
+        return new Response(200, {}, { maxListSize: '100' });
+      });
+
       this.get('entity-types/:id', () => entityTypeDetails);
 
       this.get('entity-types', () => [entityTypeDetails, entityTypeDetails]);
