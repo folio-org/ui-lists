@@ -16,12 +16,16 @@ export enum STATUS_VALUES {
   INACTIVE = 'inactive'
 }
 
+export type VISIBILITY= 'private' | 'shared';
+
+export type STATUS = 'active' | 'inactive';
+
 export type FormStateType = {
   [FIELD_NAMES.LIST_NAME]: string,
   [FIELD_NAMES.DESCRIPTION]: string,
   [FIELD_NAMES.RECORD_TYPE]?: string,
-  [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES,
-  [FIELD_NAMES.STATUS]: STATUS_VALUES
+  [FIELD_NAMES.VISIBILITY]: VISIBILITY,
+  [FIELD_NAMES.STATUS]: STATUS
 }
 
 export type ChangedFieldType = {

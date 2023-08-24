@@ -13,7 +13,10 @@ jest.mock('@folio/stripes/core', () => {
       return perm === 'permission' ? children : null;
     }),
     Pluggable: jest.fn(({ children }) => [children]),
-    AppIcon: jest.fn(({ ariaLabel }) => <span>{ariaLabel}</span>),
+    AppIcon: jest.fn((props) => (
+      <span data-testid="app-icon">
+        {JSON.stringify(props)}
+      </span>)),
     useOkapiKy: () => kyMock
   };
 });
