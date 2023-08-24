@@ -13,7 +13,7 @@ import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
 import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages } from '../../hooks';
+import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
@@ -22,7 +22,6 @@ import {
 } from './components';
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
-import { getVisibleColumnsKey } from '../../utils';
 
 import './ListInformationPage.module.css';
 
@@ -106,19 +105,13 @@ export const ListInformationPage: React.FC = () => {
   const closeSuccessMessage = () => {
     setShowSuccessRefreshMessage(false);
   };
+  const [columnControls, setColumnControls] = useState<EntityTypeColumn[]>([]);
 
-  const [columnFilterList, setColumnControlList] = useState<EntityTypeColumn[]>([]);
-  const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
-
-  const handleColumnsChange = ({ values }: {values: string[]}) => {
-    // There is always should be at least one selected column
-    if (values.length === 0) {
-      return;
-    }
-    localStorage.setItem(getVisibleColumnsKey(listData?.id), JSON.stringify(values));
-
-    setVisibleColumns(values);
-  };
+  const {
+    handleColumnsChange,
+    visibleColumns,
+    setDefaultVisibleColumns
+  } = useVisibleColumns(id);
 
   const refresh = async () => {
     if (!listData?.inProgressRefresh) {
@@ -193,7 +186,7 @@ export const ListInformationPage: React.FC = () => {
               <>{t('lists.item.compiling')}<Loading /></>}
             lastMenu={<ListInformationMenu
               visibleColumns={visibleColumns}
-              columns={columnFilterList}
+              columns={columnControls}
               onColumnsChange={handleColumnsChange}
               buttonHandlers={buttonHandlers}
               conditions={conditions}
@@ -214,8 +207,8 @@ export const ListInformationPage: React.FC = () => {
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}
-                setColumnControlList={setColumnControlList}
-                setVisibleColumns={setVisibleColumns}
+                setColumnControlList={setColumnControls}
+                setDefaultVisibleColumns={setDefaultVisibleColumns}
                 visibleColumns={visibleColumns}
               />
             </AccordionSet>

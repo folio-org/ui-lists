@@ -3,7 +3,7 @@ import React, { FC, useEffect, ChangeEvent } from 'react';
 import { RadioButton, LoadingPane, RadioButtonGroup } from '@folio/stripes/components';
 import { t } from '../../../../services';
 import { useRecordTypes } from '../../../../hooks';
-import { FIELD_NAMES, ChangedFieldType, STATUS_VALUES, VISIBILITY_VALUES } from '../../types';
+import { FIELD_NAMES, ChangedFieldType, STATUS, VISIBILITY } from '../../types';
 import { QueryBuilder } from '../QueryBuilder';
 
 type AsideFormProps = {
@@ -11,8 +11,8 @@ type AsideFormProps = {
   isQueryButtonDisabled?: boolean,
   selectedType?: string,
   listName?: string,
-  status?: STATUS_VALUES,
-  visibility?: VISIBILITY_VALUES,
+  status?: STATUS,
+  visibility?: VISIBILITY,
   description?: string,
 }
 

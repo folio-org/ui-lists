@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-import { STATUS_VALUES, VISIBILITY_VALUES } from '../../types';
+import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../types';
 import { t } from '../../../../services';
 import { useRecordsLimit, useMessages } from '../../../../hooks';
 import { HOME_PAGE_URL } from '../../../../constants';
@@ -11,8 +11,8 @@ type QueryBuilderProps = {
   selectedType?: string,
   isQueryButtonDisabled?: boolean,
   listName?: string,
-  status?: STATUS_VALUES,
-  visibility?: VISIBILITY_VALUES,
+  status?: STATUS,
+  visibility?: VISIBILITY,
   description?: string,
   isEditQuery?: boolean,
   listId?: string,

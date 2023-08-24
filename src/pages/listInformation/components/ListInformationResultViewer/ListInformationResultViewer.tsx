@@ -1,20 +1,17 @@
 import React from 'react';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-
 import { t } from '../../../../services';
-
-import { getVisibleColumnsKey } from '../../../../utils/helpers';
 import { EntityTypeColumn } from '../../../../interfaces';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string,
   contentVersion?: number,
   setColumnControlList?: (columns:EntityTypeColumn[]) => void,
-  setVisibleColumns?: (columns:string[]) => void,
+  setDefaultVisibleColumns?: (columns:string[]) => void,
   listID?: string,
   entityTypeId?: string,
-  visibleColumns?: string[]
+  visibleColumns?: string[] | null
 }
 
 
@@ -24,17 +21,10 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   setColumnControlList = () => {},
   listID = '',
   entityTypeId = '',
-  setVisibleColumns = () => {},
+  setDefaultVisibleColumns = () => {},
   visibleColumns = []
 }) => {
   const ky = useOkapiKy();
-
-  const handleDefaultVisibleColumnsSet = (defaultColumns: string[]) => {
-    const cachedColumns = localStorage.getItem(getVisibleColumnsKey(listID));
-    const finalVisibleColumns = cachedColumns ? JSON.parse(cachedColumns) : defaultColumns;
-
-    setVisibleColumns(finalVisibleColumns);
-  };
 
   const getAsyncContentData = ({ limit, offset }: any) => {
     return ky.get(`lists/${listID}/contents?offset=${offset}&size=${limit}`).json();
@@ -60,7 +50,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
-      onSetDefaultVisibleColumns={handleDefaultVisibleColumnsSet}
+      onSetDefaultVisibleColumns={setDefaultVisibleColumns}
       onSetDefaultColumns={setColumnControlList}
       height={500}
     >

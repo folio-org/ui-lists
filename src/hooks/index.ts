@@ -8,3 +8,4 @@ export { useCSVExport } from './useCSVListExport';
 export { useMessages } from './useMessages';
 export { useLocalStorageToggle } from './useLocalStorageToggle';
 export { usePrevious } from './usePrevious';
+export { useVisibleColumns } from './useVisibleColumns';

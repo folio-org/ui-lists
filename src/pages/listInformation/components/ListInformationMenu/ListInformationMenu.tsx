@@ -18,7 +18,7 @@ import { EntityTypeColumn, ICONS } from '../../../../interfaces';
 
 interface ListInformationMenuProps {
   columns?: EntityTypeColumn[]
-  visibleColumns?: string[]
+  visibleColumns?: string[] | null,
   buttonHandlers: {
     'cancel-refresh': () => void,
     'refresh': () => void,
