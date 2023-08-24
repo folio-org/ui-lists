@@ -47,7 +47,7 @@ Information can be combined with others to form a person’s identity.
 - [X] Date of birth
 - [ ] Place of birth
 - [ ] Racial or ethnic origin
-- [ ] Address
+- [X] Address
 - [ ] Location information
 - [ ] Geolocation data
 - [X] Phone number(s)
@@ -59,6 +59,10 @@ Information can be combined with others to form a person’s identity.
 - [ ] Web cookies
 - [ ] IP address / MAC address
 - [ ] Photographs of users (profile picture)
+- [X] Enrollment Date
+- [X] Department
+- [X] External System ID
+- [X] Proxy For
 <!--- - [ ] Other PD - Please list as needed -->
 
 **NOTE** This is not intended to be a comprehensive list, but instead provides a starting point for module developers/maintainers to use. If needed, append additional lines and check those accordingly.
