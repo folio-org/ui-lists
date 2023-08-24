@@ -1,0 +1,1 @@
+export { useDeleteList } from './useDeleteList';
