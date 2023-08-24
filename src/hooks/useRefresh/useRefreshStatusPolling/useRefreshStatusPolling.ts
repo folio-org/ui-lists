@@ -30,7 +30,7 @@ export const useRefreshStatusPolling = ({
     setPollingOn
   } = usePollingToggle(Boolean(inProgressRefresh?.id));
 
-  const [currentRefreshId, setCurrentRefreshId] = useState<string>(inProgressRefresh?.id || '');
+  const [currentRefreshId, setCurrentRefreshId] = useState<string>(inProgressRefresh?.id ?? '');
 
   const stopPolling = () => {
     setCurrentRefreshId('');
