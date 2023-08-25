@@ -33,7 +33,7 @@ export const EditListPage:FC = () => {
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName: listDetails?.name || '' });
+  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName: listDetails?.name ?? '' });
   const backToList = () => {
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
