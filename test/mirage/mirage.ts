@@ -20,9 +20,11 @@ export const startMirage = ({
 
       this.get('lists', () => lists);
 
-      this.get('lists/:id', () => listDetails);
+      this.get('lists/:id', () => new Response(200, {}, listDetails));
 
       this.delete('lists/:id', () => new Response(200, {}));
+
+      this.put('lists/;id', () => new Response(200, {}));
 
       this.get('lists/configuration', () => new Response(200, {}, { maxListSize: '100' }));
 

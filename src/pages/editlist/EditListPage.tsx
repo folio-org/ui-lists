@@ -172,8 +172,7 @@ export const EditListPage:FC = () => {
             <EditListResultViewer
               id={id}
               version={version}
-              // @ts-ignore:next-line
-              fqlQuery={listDetails?.fqlQuery}
+              fqlQuery={listDetails?.fqlQuery || ''}
               userFriendlyQuery={listDetails?.userFriendlyQuery || ''}
               contentVersion={listDetails?.successRefresh?.contentVersion || 0}
               entityTypeId={listDetails?.entityTypeId || ''}

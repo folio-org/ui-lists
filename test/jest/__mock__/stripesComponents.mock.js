@@ -16,16 +16,18 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </button>
   )),
-  ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel }) => (
-    <div data-testid="ConfirmationModal">
-      <span>ConfirmationModal</span>
-      {heading}
-      <div>{message}</div>
-      <div>
-        <button type="button" onClick={onConfirm}>confirm</button>
-        <button type="button" onClick={onCancel}>cancel</button>
+  ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel, cancelLabel, confirmLabel, open }) => (
+    open ? (
+      <div data-testid="ConfirmationModal">
+        <span>ConfirmationModal</span>
+        {heading}
+        <div>{message}</div>
+        <div>
+          <button type="button" data-testid="conformation" onClick={onConfirm}>{confirmLabel || 'confirm'}</button>
+          <button type="button" data-testid="cancel" onClick={onCancel}>{ cancelLabel || 'cancel'}</button>
+        </div>
       </div>
-    </div>
+    ) : ('')
   )),
   Col: jest.fn(({ children }) => <div className="col">{children}</div>),
   Datepicker: jest.fn(({ ref, children, ...rest }) => (

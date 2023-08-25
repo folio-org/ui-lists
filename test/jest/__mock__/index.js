@@ -7,3 +7,4 @@ import './stripesComponents.mock';
 import './stripesSmartComponents.mock';
 import './stripesUtils.mock';
 import './stripesAcqComponents.mock';
+import './reactRouterDom.mock';
