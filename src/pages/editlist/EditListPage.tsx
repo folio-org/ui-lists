@@ -44,7 +44,7 @@ export const EditListPage:FC = () => {
     {
       id,
       version,
-      listObject: { ...state, fqlQuery: listDetails?.fqlQuery || '' },
+      listObject: { ...state, fqlQuery: listDetails?.fqlQuery ?? '' },
       onSuccess: () => {
         showSuccessMessage({ message: t('callout.list.save.success', {
           listName: state[FIELD_NAMES.LIST_NAME]
