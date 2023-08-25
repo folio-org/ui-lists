@@ -95,7 +95,7 @@ describe('CreateList Page', () => {
 
   describe('interactions', () => {
     describe('Close pane', () => {
-      it('is expected to cal history push', async () => {
+      it('is expected to call history push', async () => {
         const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         await user.click(closeButton);

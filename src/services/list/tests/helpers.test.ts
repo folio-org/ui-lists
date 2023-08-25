@@ -1,6 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import { isInactive, isCanned, isInDraft } from '../helpers';
-import list from '../../../../test/data/listDetails.json';
+import list from '../../../../test/data/listDetails.refreshed.json';
 import { ListsRecordDetails } from '../../../interfaces';
 
 describe('List helpers tests', () => {

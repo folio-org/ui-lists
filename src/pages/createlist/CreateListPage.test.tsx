@@ -95,7 +95,7 @@ describe('CreateList Page', () => {
 
   describe('interactions', () => {
     describe('Close pane', () => {
-      it('is expected to cal history push', async () => {
+      it('is expected to call history push', async () => {
         const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         await user.click(closeButton);
@@ -137,8 +137,6 @@ describe('CreateList Page', () => {
             // We show conformation modal
             expect(conformationModal).toBeInTheDocument();
 
-            screen.logTestingPlaygroundURL();
-
             const conformationCancelButton = within(conformationModal).getByRole('button', {
               name: /ui-lists.list.modal.cancel-edit/i
             });
@@ -169,8 +167,6 @@ describe('CreateList Page', () => {
 
               // We show conformation modal
               expect(conformationModal).toBeInTheDocument();
-
-              screen.logTestingPlaygroundURL();
 
               const conformationCancelButton = within(conformationModal).getByRole('button', {
                 name: /ui-lists.list.modal.keep-edit/i
