@@ -15,10 +15,3 @@ export const removeSpaces = (object: {[key: string]: boolean | string}) => {
 
   return result;
 };
-
-export const checkIsStateChanged = (
-  originalState: {[key: string]: boolean | string},
-  currentState: {[key: string]: boolean | string}
-) => {
-  return JSON.stringify(removeSpaces(originalState)) !== JSON.stringify(removeSpaces(currentState));
-};

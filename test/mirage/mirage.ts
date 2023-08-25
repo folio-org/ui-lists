@@ -1,6 +1,6 @@
 import { createServer, Response } from 'miragejs';
 import lists from '../data/lists.json';
-import listDetails from '../data/listDetails.json';
+import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
 
 interface IParams {
@@ -20,7 +20,13 @@ export const startMirage = ({
 
       this.get('lists', () => lists);
 
-      this.get('lists/:id', () => listDetails);
+      this.get('lists/:id', () => new Response(200, {}, listDetailsRefreshed));
+
+      this.delete('lists/:id', () => new Response(200, {}));
+
+      this.put('lists/;id', () => new Response(200, {}));
+
+      this.get('lists/configuration', () => new Response(200, {}, { maxListSize: '100' }));
 
       this.get('entity-types/:id', () => entityTypeDetails);
 

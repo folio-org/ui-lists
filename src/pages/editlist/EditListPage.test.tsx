@@ -5,7 +5,7 @@ import { screen, waitFor, within } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
 import { startMirage } from '../../../test/mirage';
-import { CreateListPage } from './CreateListPage';
+import { EditListPage } from './EditListPage';
 import { queryClient } from '../../../test/utils';
 
 const historyPushMock = jest.fn();
@@ -18,11 +18,11 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock })),
 }));
 
-const renderCreateListPage = () => {
+const renderEditListPage = () => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>
-        <CreateListPage />
+        <EditListPage />
       </MemoryRouter>
     </QueryClientProvider>
   );
@@ -34,7 +34,7 @@ beforeEach(async () => {
   jest.clearAllMocks();
   server = startMirage({});
 
-  await renderCreateListPage();
+  await renderEditListPage();
 });
 
 afterEach(() => {
@@ -46,7 +46,7 @@ describe('CreateList Page', () => {
   describe('Loading', () => {
     describe('When components mounted', () => {
       it('it is expected to show loader', () => {
-        const loader = screen.getByText('LoadingPane');
+        const loader = screen.getByText('Loading');
 
         expect(loader).toBeInTheDocument();
       });
@@ -54,7 +54,7 @@ describe('CreateList Page', () => {
 
     describe('When loading finished mounted', () => {
       it('it is expected to hide loader', async () => {
-        const loader = screen.getByText('LoadingPane');
+        const loader = screen.getByText('Loading');
 
         await waitFor(() => {
           return expect(loader).not.toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('CreateList Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyPushMock).toBeCalledWith('/lists');
+        expect(historyPushMock).toBeCalledWith('/lists/list/id');
       });
     });
 
@@ -113,7 +113,7 @@ describe('CreateList Page', () => {
 
           await user.click(cancelButton);
 
-          expect(historyPushMock).toBeCalledWith('/lists');
+          expect(historyPushMock).toBeCalledWith('/lists/list/id');
         });
       });
 
@@ -136,6 +136,8 @@ describe('CreateList Page', () => {
 
             // We show conformation modal
             expect(conformationModal).toBeInTheDocument();
+
+            screen.logTestingPlaygroundURL();
 
             const conformationCancelButton = within(conformationModal).getByRole('button', {
               name: /ui-lists.list.modal.cancel-edit/i
@@ -167,6 +169,8 @@ describe('CreateList Page', () => {
 
               // We show conformation modal
               expect(conformationModal).toBeInTheDocument();
+
+              screen.logTestingPlaygroundURL();
 
               const conformationCancelButton = within(conformationModal).getByRole('button', {
                 name: /ui-lists.list.modal.keep-edit/i
