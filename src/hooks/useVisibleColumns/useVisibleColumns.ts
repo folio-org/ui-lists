@@ -8,7 +8,7 @@ export const useVisibleColumns = (listID: string) => {
   const [cachedColumns = [], setCachedColumns] = useLocalStorage<string[]>(storageKey);
 
   const setDefaultVisibleColumns = (defaultColumns: string[] = []) => {
-    setCachedColumns(cachedColumns || defaultColumns);
+    setCachedColumns(cachedColumns ?? defaultColumns);
   };
 
   const handleColumnsChange = ({ values }: {values: string[]}) => {
