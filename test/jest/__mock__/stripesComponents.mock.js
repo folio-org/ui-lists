@@ -16,9 +16,15 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </button>
   )),
-  ConfirmationModal: jest.fn(({ ...rest }) => (
-    <div {...rest}>
-      Modal
+  ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel }) => (
+    <div data-testid="ConfirmationModal">
+      <span>ConfirmationModal</span>
+      {heading}
+      <div>{message}</div>
+      <div>
+        <button type="button" onClick={onConfirm}>confirm</button>
+        <button type="button" onClick={onCancel}>cancel</button>
+      </div>
     </div>
   )),
   Col: jest.fn(({ children }) => <div className="col">{children}</div>),
@@ -118,6 +124,7 @@ jest.mock('@folio/stripes/components', () => ({
   }) => {
     return (
       <div
+        data-testid="Pane"
         className={className}
         {...rest}
         style={!fluidContentWidth ? { width: '960px' } : { width: defaultWidth }}
@@ -138,7 +145,7 @@ jest.mock('@folio/stripes/components', () => ({
   }),
   Paneset: jest.fn(({ children, defaultWidth, isRoot, ...rest }) => {
     return (
-      <div {...rest} style={{ width: defaultWidth }}>
+      <div data-testid="Paneset" {...rest} style={{ width: defaultWidth }}>
         {children}
         {isRoot && <div className="container" />}
       </div>
@@ -258,9 +265,16 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>)),
   DropdownMenu: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
-  TextArea: jest.fn(({
-    'data-testid': testId,
-  }) => <div data-testid={testId}>TextArea</div>),
+  TextArea: jest.fn((props) => (
+    <div>
+      <label htmlFor={props.label}>{props.label}</label>
+      <textarea
+        id={props.label}
+        value={props.value}
+        cols="30"
+        rows="10"
+      />
+    </div>)),
   TextField: jest.fn(({
     label,
     onChange,
