@@ -7,12 +7,12 @@ jest.mock('@folio/stripes/components', () => ({
     </span>
   )),
   TextLink: jest.fn(({ children, onClick }) => (
-    <span onClick={onClick}>
+    <button type="button" onClick={onClick}>
       <span>{children}</span>
-    </span>
+    </button>
   )),
   Button: jest.fn(({ children, onClick, ...rest }) => (
-    <button {...rest} onClick={onClick} data-test-button type="button">
+    <button {...rest} onClick={onClick} type="button">
       {children}
     </button>
   )),
@@ -36,7 +36,13 @@ jest.mock('@folio/stripes/components', () => ({
       <input type="text" />
     </div>
   )),
-  FilterGroups: jest.fn(({ config, filters, onChangeFilter }) => <div config={config} filters={filters} onChangeFilter={onChangeFilter} />),
+  FilterGroups: jest.fn(({ config, filters, onChangeFilter }) => (
+    <div>
+      {JSON.stringify(config)}
+      {JSON.stringify(filters)}
+      {JSON.stringify(onChangeFilter)}
+    </div>
+  )),
   Headline: jest.fn(({ children }) => <div>{children}</div>),
   Icon: jest.fn((props) => (props && props.children ? props.children :
   <span />)),
@@ -130,6 +136,7 @@ jest.mock('@folio/stripes/components', () => ({
         className={className}
         {...rest}
         style={!fluidContentWidth ? { width: '960px' } : { width: defaultWidth }}
+        data-appicon={appIcon}
       >
         <div>
           {dismissible &&
@@ -178,8 +185,9 @@ jest.mock('@folio/stripes/components', () => ({
   PaneMenu: jest.fn((props) => <div>{props.children}</div>),
   RadioButton: jest.fn(({ label, name, ...rest }) => (
     <div>
-      <label htmlFor="male">{label}</label>
+      <label htmlFor={name}>{label}</label>
       <input
+        aria-label={rest.value}
         type="radio"
         name={name}
         {...rest}
@@ -193,7 +201,7 @@ jest.mock('@folio/stripes/components', () => ({
     </fieldset>
   )),
   Row: jest.fn(({ children }) => <div className="row">{children}</div>),
-  SearchField: jest.fn(({ aria_label, className }) => <div aria-label={aria_label} className={className} />),
+  SearchField: jest.fn(({ ariaLabel, className }) => <div aria-label={ariaLabel} className={className} />),
   Select: jest.fn(({ children, dataOptions }) => (
     <div>
       <select>
@@ -261,6 +269,7 @@ jest.mock('@folio/stripes/components', () => ({
           backgroundColor: buttonStyle === 'primary' ? '#1960a4' : 'transparent',
           margin: bottomMargin0 ? '0px' : '14px'
         }}
+        {...buttonProps}
       >
         <span {...rest} />
       </button>

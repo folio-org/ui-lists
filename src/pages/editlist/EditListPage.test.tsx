@@ -44,8 +44,7 @@ afterEach(() => {
   server.shutdown();
 });
 
-
-describe('CreateList Page', () => {
+describe('EditList Page', () => {
   describe('Loading', () => {
     describe('When components mounted', () => {
       it('it is expected to show loader', () => {
@@ -261,6 +260,25 @@ describe('CreateList Page', () => {
           await waitFor(() => expect(showErrorMessageMock).toBeCalled());
         });
       });
+      describe('Cancel delete', () => {
+        it('is expected to show error message', async () => {
+          const deleteButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.delete/i
+          });
+
+          await user.click(deleteButton);
+
+          const conformationModal = screen.getByTestId('ConfirmationModal');
+
+          const confirmButton = within(conformationModal).getByRole('button', {
+            name: /cancel/i
+          });
+
+          await user.click(confirmButton);
+
+          expect(conformationModal).not.toBeInTheDocument();
+        });
+      });
     });
 
     describe('Edit and save', () => {
@@ -300,6 +318,43 @@ describe('CreateList Page', () => {
 
           const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
           expect(successMessage).toContain('ui-lists.callout.list.save.success');
+        });
+      });
+
+      describe('Success save and become inactive', () => {
+        it('is expected to redirect after successful deletion and call success message', async () => {
+          const showSuccessMessageHookMock = jest.fn();
+          const updatedListObject = { ...listDetailsRefreshed, version: listDetailsRefreshed.version + 1 };
+
+          server.put('lists/:id', () => new Response(200, {}, updatedListObject));
+          jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+            showSuccessMessage: showSuccessMessageHookMock,
+            showErrorMessage: jest.fn(),
+            showInfoMessage: jest.fn(),
+            showWarningMessage: jest.fn(),
+            showMessage: jest.fn()
+          }));
+
+          const saveButton = screen.getByRole('button', {
+            name: 'ui-lists.button.save'
+          });
+
+          screen.logTestingPlaygroundURL();
+
+          const activeStatusRadioButton = screen.getByLabelText('active');
+
+          await user.click(activeStatusRadioButton);
+
+          expect(saveButton).toBeEnabled();
+
+          await user.click(saveButton);
+
+          await waitFor(() => expect(saveButton).toBeDisabled());
+
+          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists/list/id'));
+
+          const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
+          expect(successMessage).toContain('ui-lists.callout.list.active');
         });
       });
 
