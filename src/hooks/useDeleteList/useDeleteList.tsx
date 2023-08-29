@@ -2,7 +2,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { useMutation } from 'react-query';
 import { HTTPError, KyResponse } from 'ky';
 
-export const useDeleteList = (props: { id: string, onError?: (e:HTTPError) => void, onSuccess?: () => void }) => {
+export const useDeleteList = (props: { id: string, onError?: (e:HTTPError) => void | Promise<void>, onSuccess?: () => void }) => {
   const {
     id,
     onSuccess = () => {},
