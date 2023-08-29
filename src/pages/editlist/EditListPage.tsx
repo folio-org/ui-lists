@@ -100,7 +100,6 @@ export const EditListPage:FC = () => {
     }
   );
 
-
   const closeHandler = () => {
     if (hasChanges) {
       setShowConfirmCancelEditModal(true);
