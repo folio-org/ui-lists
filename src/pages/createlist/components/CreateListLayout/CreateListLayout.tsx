@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useState } from 'react';
-import { Pane, PaneFooter, Button, Loading, ConfirmationModal } from '@folio/stripes/components';
-import { ListAppIcon } from '../../../../components';
+import { Pane, PaneFooter, Button, Loading } from '@folio/stripes/components';
+import { CancelEditModal, ListAppIcon } from '../../../../components';
 import { t } from '../../../../services';
 
 import css from './CreateListLayout.module.css';
@@ -83,16 +83,12 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({ renderAsideContent,
           </Pane>
         </div>
       </Pane>
-      <ConfirmationModal
-        confirmLabel={t('list.modal.keep-edit')}
-        cancelLabel={t('list.modal.cancel-edit')}
-        heading={t('list.model.sure-heading')}
-        message={t('list.modal.confirm-cancel-message')}
+      <CancelEditModal
         onCancel={() => {
           setShowConfirmCancelEditModal(false);
           onClose();
         }}
-        onConfirm={() => setShowConfirmCancelEditModal(false)}
+        onKeepEdit={() => setShowConfirmCancelEditModal(false)}
         open={showModalOnCancel && showConfirmCancelEditModal}
       />
     </>
