@@ -139,8 +139,6 @@ describe('EditList Page', () => {
             // We show conformation modal
             expect(conformationModal).toBeInTheDocument();
 
-            screen.logTestingPlaygroundURL();
-
             const conformationCancelButton = within(conformationModal).getByRole('button', {
               name: /ui-lists.list.modal.cancel-edit/i
             });
@@ -171,8 +169,6 @@ describe('EditList Page', () => {
 
               // We show conformation modal
               expect(conformationModal).toBeInTheDocument();
-
-              screen.logTestingPlaygroundURL();
 
               const conformationCancelButton = within(conformationModal).getByRole('button', {
                 name: /ui-lists.list.modal.keep-edit/i
@@ -338,8 +334,6 @@ describe('EditList Page', () => {
           const saveButton = screen.getByRole('button', {
             name: 'ui-lists.button.save'
           });
-
-          screen.logTestingPlaygroundURL();
 
           const activeStatusRadioButton = screen.getByLabelText('active');
 
