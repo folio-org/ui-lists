@@ -117,7 +117,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
       onQueryRunFail={() => {}}
       recordsLimit={recordsLimit}
       saveBtnLabel={t('list.modal.run-query-and-save')}
-      triggerButtonLabel={isEditQuery && t('list.modal.edit-query')}
+      triggerButtonLabel={isEditQuery ? t('list.modal.edit-query') : undefined}
     />
   );
 };
