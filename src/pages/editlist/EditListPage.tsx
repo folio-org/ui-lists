@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react';
 import {
   Accordion,
-  AccordionSet, Button, ConfirmationModal,
+  AccordionSet,
+  Button,
   Layer,
   Layout,
   Loading,
@@ -14,9 +15,9 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useCSVExport, useListDetails, useMessages } from '../../hooks';
+import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned } from '../../services';
-import { MainListInfoForm, ListAppIcon } from '../../components';
+import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal } from '../../components';
 
 import { EditListResultViewer, EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
@@ -30,10 +31,37 @@ export const EditListPage:FC = () => {
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
   const { data: listDetails, isLoading: loadingListDetails } = useListDetails(id);
+
+  const listName = listDetails?.name ?? '';
+
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
+  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName });
+  const { deleteList, isDeleteInProgress } = useDeleteList(({ id,
+    onSuccess: () => {
+      showSuccessMessage({
+        message: t('callout.list.delete.success', {
+          listName
+        })
+      });
+      history.push(HOME_PAGE_URL);
+    },
+    onError: async (error: HTTPError) => {
+      const errorMessage = await computeErrorMessage(error, 'callout.list.delete.error', {
+        listName
+      });
+
+      showErrorMessage({ message: errorMessage });
+    } }));
+
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName: listDetails?.name ?? '' });
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
+
+  const deleteListHandler = () => {
+    setShowConfirmDeleteModal(false);
+    deleteList();
+  };
+
   const backToList = () => {
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
@@ -72,7 +100,6 @@ export const EditListPage:FC = () => {
     }
   );
 
-
   const closeHandler = () => {
     if (hasChanges) {
       setShowConfirmCancelEditModal(true);
@@ -86,7 +113,9 @@ export const EditListPage:FC = () => {
   };
 
   const buttonHandlers = {
-    'delete': () => {},
+    'delete': () => {
+      setShowConfirmDeleteModal(true);
+    },
     'export': () => {
       requestExport();
     },
@@ -96,6 +125,7 @@ export const EditListPage:FC = () => {
   };
 
   const conditions = {
+    isDeleteInProgress,
     isExportInProgress,
     isCancelExportInProgress,
     isListInactive: isInactive(listDetails),
@@ -115,7 +145,7 @@ export const EditListPage:FC = () => {
             dismissible
             defaultWidth="fill"
             appIcon={<ListAppIcon />}
-            paneTitle={t('lists.edit.title', { listName: listDetails?.name || '' })}
+            paneTitle={t('lists.edit.title', { listName })}
             paneSub={!loadingListDetails ?
               t('mainPane.subTitle',
                 { count: formatNumber(listDetails?.successRefresh?.recordsCount || 0) })
@@ -184,17 +214,21 @@ export const EditListPage:FC = () => {
           </Pane>
         </Paneset>
       </Layer>
-      <ConfirmationModal
-        confirmLabel={t('list.modal.keep-edit')}
-        cancelLabel={t('list.modal.cancel-edit')}
-        heading={t('list.model.sure-heading')}
-        message={t('list.modal.confirm-cancel-message')}
+      <CancelEditModal
         onCancel={() => {
           setShowConfirmCancelEditModal(false);
           backToList();
         }}
-        onConfirm={() => setShowConfirmCancelEditModal(false)}
+        onKeepEdit={() => setShowConfirmCancelEditModal(false)}
         open={showConfirmCancelEditModal}
+      />
+      <ConfirmDeleteModal
+        listName={listName}
+        onCancel={() => setShowConfirmDeleteModal(false)}
+        onConfirm={() => {
+          deleteListHandler();
+        }}
+        open={showConfirmDeleteModal}
       />
     </Paneset>
   );

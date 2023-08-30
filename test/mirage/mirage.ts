@@ -22,7 +22,7 @@ export const startMirage = ({
 
       this.get('lists/:id', () => new Response(200, {}, listDetailsRefreshed));
 
-      this.delete('lists/:id', () => new Response(200, {}));
+      this.delete('lists/:id', () => new Response(204, {}));
 
       this.put('lists/;id', () => new Response(200, {}));
 

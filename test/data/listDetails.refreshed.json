@@ -7,7 +7,7 @@
     "fqlQuery": "{\"$and\":[{\"item_status\":{\"$eq\":\"Claimed returned\"}}]}",
     "createdByUsername": "SYSTEM",
     "createdDate": "2023-01-31T22:11:48.574301Z",
-    "isActive": true,
+    "isActive": false,
     "isPrivate": true,
     "isCanned": false,
     "version": 1,

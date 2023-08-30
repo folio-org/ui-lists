@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   AccordionSet,
-  ConfirmationModal,
   Layer,
   Loading,
   LoadingPane,
@@ -24,6 +23,7 @@ import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
 import './ListInformationPage.module.css';
+import { ConfirmDeleteModal } from '../../components';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
@@ -98,10 +98,11 @@ export const ListInformationPage: React.FC = () => {
     queryClient.setQueryData(['listDetails', id], polledData);
   };
 
-  const deleteListHandler = async () => {
+  const deleteListHandler = () => {
     setShowConfirmDeleteModal(false);
-    await deleteList();
+    deleteList();
   };
+
   const closeSuccessMessage = () => {
     setShowSuccessRefreshMessage(false);
   };
@@ -113,7 +114,7 @@ export const ListInformationPage: React.FC = () => {
     setDefaultVisibleColumns
   } = useVisibleColumns(id);
 
-  const refresh = async () => {
+  const refresh = () => {
     if (!listData?.inProgressRefresh) {
       initRefresh();
       closeSuccessMessage();
@@ -215,11 +216,8 @@ export const ListInformationPage: React.FC = () => {
           </Pane>
         </Paneset>
       </Layer>
-      <ConfirmationModal
-        buttonStyle="danger"
-        confirmLabel={t('list.modal.delete')}
-        heading={t('list.modal.delete-list')}
-        message={t('list.modal.confirm-message', { listName })}
+      <ConfirmDeleteModal
+        listName={listName}
         onCancel={() => setShowConfirmDeleteModal(false)}
         onConfirm={() => {
           deleteListHandler();
