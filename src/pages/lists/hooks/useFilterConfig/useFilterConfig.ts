@@ -19,7 +19,7 @@ export const useFilterConfig = () => {
       name: 'record_types',
       cql: 'record.types',
       values: recordTypes?.map((item) => (
-        { name: item.id ?? item.label, displayName: item.label }
+        { name: item.id ?? item.label, displayName: item.label, cql: item.id }
       ))
     }
   ];
