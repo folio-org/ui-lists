@@ -12,7 +12,7 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      lines: 78
+      lines: 81
     },
   },
   coverageDirectory: './artifacts/coverage-jest/',

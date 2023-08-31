@@ -4,7 +4,8 @@ import { QueryClientProvider } from 'react-query';
 import { waitFor, screen, within } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { Server } from 'miragejs';
+import { Response, Server } from 'miragejs';
+import * as acq from '@folio/stripes-acq-components';
 import { startMirage } from '../../../test/mirage';
 import { ListInformationPage } from './ListInformationPage';
 import { queryClient } from '../../../test/utils';
@@ -144,6 +145,92 @@ describe('ListInformationPage Page', () => {
           await user.click(editList);
 
           await waitFor(() => expect(historyPushMock).toBeCalledWith('id/edit'));
+        });
+      });
+    });
+
+    describe('Export list', () => {
+      describe('When user successfully initialize', () => {
+        it('it is expected to replace export button with cancel export', async () => {
+          const exportButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.export/i
+          });
+
+          expect(exportButton).toBeEnabled();
+
+          await user.click(exportButton);
+
+          await waitFor(() => expect(exportButton).not.toBeInTheDocument());
+
+          const cancelExportButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.cancel-export/i
+          });
+
+          expect(cancelExportButton).toBeInTheDocument();
+        });
+      });
+
+      describe('Cancel export', () => {
+        describe('When user cancel export', () => {
+          it('is expected to show success cancel message', async () => {
+            const showMessageMock = jest.fn();
+
+            jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
+
+            const exportButton = screen.getByRole('menuitem', {
+              name: /ui-lists.pane.dropdown.export/i
+            });
+
+            expect(exportButton).toBeEnabled();
+
+            await user.click(exportButton);
+
+            await waitFor(() => expect(exportButton).not.toBeInTheDocument());
+
+            const cancelExportButton = screen.getByRole('menuitem', {
+              name: /ui-lists.pane.dropdown.cancel-export/i
+            });
+
+            await user.click(cancelExportButton);
+
+            await waitFor(() => expect(showMessageMock).toBeCalled());
+
+
+            const successMessage = JSON.stringify(showMessageMock.mock.lastCall);
+            expect(successMessage).toContain('ui-lists.callout.list.csv-export.cancel');
+          });
+
+          it('is expected to show error cancel message', async () => {
+            const showMessageMock = jest.fn();
+
+            server.post('lists/:listId/exports/:exportId/cancel', () => new Response(404, {}, {
+              code: 'some.error'
+            }));
+
+            jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
+
+            const exportButton = screen.getByRole('menuitem', {
+              name: /ui-lists.pane.dropdown.export/i
+            });
+
+            expect(exportButton).toBeEnabled();
+
+            await user.click(exportButton);
+
+            await waitFor(() => expect(exportButton).not.toBeInTheDocument());
+
+            const cancelExportButton = screen.getByRole('menuitem', {
+              name: /ui-lists.pane.dropdown.cancel-export/i
+            });
+
+            await user.click(cancelExportButton);
+
+            await waitFor(() => expect(showMessageMock).toBeCalled());
+
+
+            const errorMessage = JSON.stringify(showMessageMock.mock.lastCall);
+            expect(errorMessage).toContain('ui-lists.some.error');
+          });
         });
       });
     });
