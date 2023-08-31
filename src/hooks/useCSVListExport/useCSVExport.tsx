@@ -57,21 +57,23 @@ export const useCSVExport = ({
   });
 
   const { cancelInProgress, cancelExport } = useCSVExportCancel({ listId,
-    exportId: data?.exportId || getExportIdFormStorage(),
+    exportId: data?.exportId ?? getExportIdFormStorage(),
     onSuccess: () => {
       showSuccessMessage({
         message: t('callout.list.csv-export.cancel', { listName })
       });
       removeListFromStorage();
     },
-    onError: async (error: HTTPError) => {
-      const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.cancel-error', {
-        listName
-      });
+    onError: (error: HTTPError) => {
+      (async () => {
+        const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.cancel-error', {
+          listName
+        });
 
-      showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage });
 
-      removeListFromStorage();
+        removeListFromStorage();
+      })();
     } });
 
   return {

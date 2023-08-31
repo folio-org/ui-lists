@@ -7,12 +7,6 @@ interface IListsApp {
   match: {
     path: string
   };
-  showSettings: boolean;
-  stripes: {
-    okapi: {
-      url: string
-    }
-  }
 }
 
 export const queryClient = new QueryClient();

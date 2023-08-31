@@ -15,12 +15,14 @@ export const CreateListPage:FC = () => {
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { saveList, isLoading } = useCreateList({
     listObject: state,
-    onError: async (error) => {
-      const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
-        listName: state[FIELD_NAMES.LIST_NAME]
-      });
+    onError: (error) => {
+      (async () => {
+        const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
+          listName: state[FIELD_NAMES.LIST_NAME]
+        });
 
-      showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage });
+      })();
     },
     onSuccess: (list: ListsRecordBase) => {
       if (list.id) {
