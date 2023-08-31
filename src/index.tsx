@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ListsSettings } from './settings';
 import { ListPage, ListInformationPage, CreateListPage, EditListPage } from './pages';
 
 interface IListsApp {
@@ -20,11 +19,7 @@ export const queryClient = new QueryClient();
 
 
 export const ListsApp: FC<IListsApp> = (props) => {
-  const { showSettings, match: { path } } = props;
-
-  if (showSettings) {
-    return <ListsSettings {...props} />;
-  }
+  const { match: { path } } = props;
 
   return (
     <QueryClientProvider client={queryClient}>

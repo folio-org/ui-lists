@@ -96,13 +96,12 @@
   },
   "stripes": {
     "actsAs": [
-      "app",
-      "settings"
+      "app"
     ],
     "displayName": "ui-lists.meta.title",
     "route": "/lists",
     "home": "/lists",
-    "hasSettings": true,
+    "hasSettings": false,
     "okapiInterfaces": {
       "lists": "1.0"
     },
@@ -143,20 +142,11 @@
         ]
       },
       {
-        "permissionName": "settings.lists.enabled",
-        "displayName": "Settings (lists): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": true
-      },
-      {
         "permissionName": "module.lists.all",
         "displayName": "Lists (Admin): All permissions",
         "visible": true,
         "subPermissions": [
           "module.lists.refresh",
-          "settings.lists.enabled",
           "lists.item.delete"
         ]
       }
