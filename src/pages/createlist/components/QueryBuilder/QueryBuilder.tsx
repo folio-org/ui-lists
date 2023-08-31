@@ -7,6 +7,8 @@ import { t } from '../../../../services';
 import { useRecordsLimit, useMessages } from '../../../../hooks';
 import { HOME_PAGE_URL } from '../../../../constants';
 
+import './QueryBuilder.module.css';
+
 type QueryBuilderProps = {
   selectedType?: string,
   isQueryButtonDisabled?: boolean,
@@ -39,6 +41,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
   const { showSuccessMessage } = useMessages();
+  const triggerButtonLabel = isEditQuery ? t('list.modal.edit-query') : undefined;
 
   const entityTypeDataSource = async () => {
     return ky.get(`entity-types/${selectedType}`).json();
@@ -115,7 +118,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
       onQueryRunFail={() => {}}
       recordsLimit={recordsLimit}
       saveBtnLabel={t('list.modal.run-query-and-save')}
-      triggerButtonLabel={isEditQuery && t('list.modal.edit-query')}
+      triggerButtonLabel={triggerButtonLabel}
     />
   );
 };

@@ -57,7 +57,7 @@ export const ListsTable: FC<ListsTableProps> = ({
     );
   }
 
-  const { content, totalRecords = 0, totalPages } = listsData || {};
+  const { content, totalRecords = 0, totalPages } = listsData ?? {};
 
   setTotalRecords(totalRecords);
 

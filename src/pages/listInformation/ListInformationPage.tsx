@@ -173,13 +173,13 @@ export const ListInformationPage: React.FC = () => {
 
   return (
     <Paneset data-testid="listInformation">
-      <Layer isOpen contentLabel="">
+      <Layer isOpen contentLabel={listName}>
         <Paneset isRoot>
           <Pane
             dismissible
             defaultWidth="fill"
             appIcon={<ListAppIcon />}
-            paneTitle={listData?.name}
+            paneTitle={listName}
             paneSub={!isRefreshInProgress ?
               t('mainPane.subTitle',
                 { count: formatNumber(recordCount) })
