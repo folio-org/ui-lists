@@ -67,6 +67,7 @@ export const ListPage: React.FC = () => {
             config={filterConfig}
             filters={appliedFilters}
             onChangeFilter={onChangeFilter}
+            onClearFilter={noop}
           />
         </Pane>
       }

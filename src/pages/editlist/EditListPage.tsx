@@ -139,7 +139,7 @@ export const EditListPage:FC = () => {
 
   return (
     <Paneset>
-      <Layer isOpen contentLabel="">
+      <Layer isOpen contentLabel={listName}>
         <Paneset isRoot>
           <Pane
             dismissible
@@ -148,7 +148,7 @@ export const EditListPage:FC = () => {
             paneTitle={t('lists.edit.title', { listName })}
             paneSub={!loadingListDetails ?
               t('mainPane.subTitle',
-                { count: formatNumber(listDetails?.successRefresh?.recordsCount || 0) })
+                { count: formatNumber(listDetails?.successRefresh?.recordsCount ?? 0) })
               :
               <>{t('lists.item.loading')}<Loading /></>}
             onClose={closeHandler}
