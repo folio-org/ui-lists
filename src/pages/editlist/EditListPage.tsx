@@ -85,12 +85,14 @@ export const EditListPage:FC = () => {
         }
         backToList();
       },
-      onError: async (error: HTTPError) => {
-        const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
-          listName: state[FIELD_NAMES.LIST_NAME]
-        });
+      onError: (error: HTTPError) => {
+        (async () => {
+          const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
+            listName: state[FIELD_NAMES.LIST_NAME]
+          });
 
-        showErrorMessage({ message: errorMessage });
+          showErrorMessage({ message: errorMessage });
+        })();
       },
       onChangeVersionError: () => {
         showErrorMessage({ message: t('update-optimistic.lock.exception', {

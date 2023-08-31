@@ -64,14 +64,16 @@ export const useCSVExport = ({
       });
       removeListFromStorage();
     },
-    onError: async (error: HTTPError) => {
-      const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.cancel-error', {
-        listName
-      });
+    onError: (error: HTTPError) => {
+      (async () => {
+        const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.cancel-error', {
+          listName
+        });
 
-      showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage });
 
-      removeListFromStorage();
+        removeListFromStorage();
+      })();
     } });
 
   return {
