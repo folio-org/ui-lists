@@ -2,6 +2,7 @@ import { createServer, Response } from 'miragejs';
 import lists from '../data/lists.json';
 import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
+import exportStarted from '../data/exportStarted.json';
 
 interface IParams {
   urlPrefix?: string;
@@ -33,6 +34,12 @@ export const startMirage = ({
       this.get('entity-types', () => [entityTypeDetails, entityTypeDetails]);
 
       this.delete('lists/:listId/refresh', () => new Response(200));
+
+      this.post('lists/:listId/exports/:exportId/cancel', () => new Response(204));
+
+      this.get('lists/:listId/exports/:exportId/download', (shem, req) => new Response(200, {}, { exportStarted, listId: req.params.listId }));
+
+      this.post('lists/:listId/exports', (shem, req) => new Response(201, {}, { exportStarted, listId: req.params.listId }));
 
       this.post('lists/:listId/refresh', () => new Response(200, {}, { success: 'true' }));
     },
