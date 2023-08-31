@@ -57,7 +57,7 @@ export const useCSVExport = ({
   });
 
   const { cancelInProgress, cancelExport } = useCSVExportCancel({ listId,
-    exportId: data?.exportId || getExportIdFormStorage(),
+    exportId: data?.exportId ?? getExportIdFormStorage(),
     onSuccess: () => {
       showSuccessMessage({
         message: t('callout.list.csv-export.cancel', { listName })

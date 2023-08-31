@@ -205,9 +205,9 @@ export const EditListPage:FC = () => {
               id={id}
               version={version}
               fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery || ''}
-              contentVersion={listDetails?.successRefresh?.contentVersion || 0}
-              entityTypeId={listDetails?.entityTypeId || ''}
+              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+              contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+              entityTypeId={listDetails?.entityTypeId ?? ''}
               status={state[FIELD_NAMES.STATUS]}
               listName={state[FIELD_NAMES.LIST_NAME]}
               visibility={state[FIELD_NAMES.VISIBILITY]}
