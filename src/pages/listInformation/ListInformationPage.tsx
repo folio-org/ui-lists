@@ -54,19 +54,23 @@ export const ListInformationPage: React.FC = () => {
     onSuccessPolling: () => {
       setShowSuccessRefreshMessage(true);
     },
-    onError: async (error: HTTPError) => {
-      const errorMessage = await computeErrorMessage(error, 'callout.list.refresh.error', {
-        listName
-      });
+    onError: (error: HTTPError) => {
+      (async () => {
+        const errorMessage = await computeErrorMessage(error, 'callout.list.refresh.error', {
+          listName
+        });
 
-      showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage });
+      })();
     },
-    onCancelError: async (error: HTTPError) => {
-      const errorMessage = await computeErrorMessage(error, 'cancel-refresh.default', {
-        listName
-      });
+    onCancelError: (error: HTTPError) => {
+      (async () => {
+        const errorMessage = await computeErrorMessage(error, 'cancel-refresh.default', {
+          listName
+        });
 
-      showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage });
+      })();
     },
     onCancelSuccess: () => {
       showSuccessMessage({

@@ -85,12 +85,14 @@ export const EditListPage:FC = () => {
         }
         backToList();
       },
-      onError: async (error: HTTPError) => {
-        const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
-          listName: state[FIELD_NAMES.LIST_NAME]
-        });
+      onError: (error: HTTPError) => {
+        (async () => {
+          const errorMessage = await computeErrorMessage(error, 'callout.list.save.error', {
+            listName: state[FIELD_NAMES.LIST_NAME]
+          });
 
-        showErrorMessage({ message: errorMessage });
+          showErrorMessage({ message: errorMessage });
+        })();
       },
       onChangeVersionError: () => {
         showErrorMessage({ message: t('update-optimistic.lock.exception', {
@@ -203,9 +205,9 @@ export const EditListPage:FC = () => {
               id={id}
               version={version}
               fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery || ''}
-              contentVersion={listDetails?.successRefresh?.contentVersion || 0}
-              entityTypeId={listDetails?.entityTypeId || ''}
+              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+              contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+              entityTypeId={listDetails?.entityTypeId ?? ''}
               status={state[FIELD_NAMES.STATUS]}
               listName={state[FIELD_NAMES.LIST_NAME]}
               visibility={state[FIELD_NAMES.VISIBILITY]}
