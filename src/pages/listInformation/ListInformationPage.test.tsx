@@ -150,7 +150,7 @@ describe('ListInformationPage Page', () => {
     });
 
     describe('Export list', () => {
-      describe('When user successfully initialize', () => {
+      describe('When user starts export', () => {
         it('it is expected to replace export button with cancel export', async () => {
           const exportButton = screen.getByRole('menuitem', {
             name: /ui-lists.pane.dropdown.export/i
@@ -231,6 +231,28 @@ describe('ListInformationPage Page', () => {
             const errorMessage = JSON.stringify(showMessageMock.mock.lastCall);
             expect(errorMessage).toContain('ui-lists.some.error');
           });
+        });
+      });
+    });
+
+    describe('Refresh list', () => {
+      describe('When user starts refresh', () => {
+        it('it is expected to replace refresh button with cancel refresh', async () => {
+          const refreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.refresh/i
+          });
+
+          expect(refreshButton).toBeEnabled();
+
+          await user.click(refreshButton);
+
+          await waitFor(() => expect(refreshButton).not.toBeInTheDocument());
+
+          const cancelRefreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.cancel-refresh/i
+          });
+
+          expect(cancelRefreshButton).toBeInTheDocument();
         });
       });
     });
