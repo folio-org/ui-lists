@@ -255,6 +255,65 @@ describe('ListInformationPage Page', () => {
           expect(cancelRefreshButton).toBeInTheDocument();
         });
       });
+
+      describe('When refresh cancel success', () => {
+        it('it is expected to show success cancel message', async () => {
+          const showMessageMock = jest.fn();
+          jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
+
+          const refreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.refresh/i
+          });
+
+          expect(refreshButton).toBeEnabled();
+
+          await user.click(refreshButton);
+
+          await waitFor(() => expect(refreshButton).not.toBeInTheDocument());
+
+          const cancelRefreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.cancel-refresh/i
+          });
+
+          await user.click(cancelRefreshButton);
+
+          await waitFor(() => expect(showMessageMock).toBeCalled());
+
+          const successMessage = JSON.stringify(showMessageMock.mock.lastCall);
+          expect(successMessage).toContain('ui-lists.cancel-refresh.success');
+        });
+      });
+
+      describe('When refresh cancel failed', () => {
+        it('it is expected to show error cancel message', async () => {
+          const showMessageMock = jest.fn();
+          jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
+          server.delete('lists/:listId/refresh', () => new Response(404, {}, {
+            code: 'cancel.error.code'
+          }));
+
+          const refreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.refresh/i
+          });
+
+          expect(refreshButton).toBeEnabled();
+
+          await user.click(refreshButton);
+
+          await waitFor(() => expect(refreshButton).not.toBeInTheDocument());
+
+          const cancelRefreshButton = screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.cancel-refresh/i
+          });
+
+          await user.click(cancelRefreshButton);
+
+          await waitFor(() => expect(showMessageMock).toBeCalled());
+
+          const errorMessage = JSON.stringify(showMessageMock.mock.lastCall);
+          expect(errorMessage).toContain('ui-lists.cancel.error.code');
+        });
+      });
     });
   });
 });
