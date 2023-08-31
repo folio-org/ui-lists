@@ -15,8 +15,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
   const poll = (listID: string, exportId: string) => {
     setTimeout(() => {
       (async () => {
-        // NOSONAR
-        const { listId, status } = await ky.get(`lists/${listID}/exports/${exportId}`).json() as ListExport;
+        const { listId, status } : ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
 
         if (isFailed(status)) {
           showErrorMessage({
