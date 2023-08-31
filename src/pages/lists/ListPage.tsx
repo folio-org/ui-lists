@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import { noop } from 'lodash';
 import {
   Icon,
   Pane,
@@ -16,7 +17,6 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 
 import { ListsTable, ListAppIcon } from '../../components';
 import { useLocalStorageToggle } from '../../hooks';
-import { noop } from '../../utils';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY } from '../../utils/constants';
