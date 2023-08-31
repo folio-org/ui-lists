@@ -39,4 +39,5 @@ export const getListsFilterUrlParams = (filters: Array<string>, size?: number, o
   return params;
 };
 
+// NOSONAR
 export const noop = () => {};
