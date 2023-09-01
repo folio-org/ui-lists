@@ -54,7 +54,7 @@ describe('helpers', () => {
   ${true}             | ${false}       | ${false}             | ${true}
   ${false}            | ${true}        | ${false}             | ${true}
   ${false}            | ${false}       | ${true}              | ${true}
-  ${false}            | ${false}       | ${false}             | ${true}
+  ${false}            | ${false}       | ${false}             | ${false}
 `('returns $expected when one of conditions $expected', async (
       { isRefreshInProgress,
         isListCanned,
