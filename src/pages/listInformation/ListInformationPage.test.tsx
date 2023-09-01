@@ -9,6 +9,7 @@ import * as acq from '@folio/stripes-acq-components';
 import { startMirage } from '../../../test/mirage';
 import { ListInformationPage } from './ListInformationPage';
 import { queryClient } from '../../../test/utils';
+import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
 
@@ -69,7 +70,18 @@ describe('ListInformationPage Page', () => {
     describe('Delete list', () => {
       describe('When user try to delete list button in dropdown', () => {
         describe('And user clicks on confirm button in modal', () => {
-          it('is expected to delete list and redirects to home page', async () => {
+          it('is expected to delete list and redirects to home page if delete was successful', async () => {
+            const showSuccessMessageMock = jest.fn();
+
+            jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+              showSuccessMessage: showSuccessMessageMock,
+              showErrorMessage: jest.fn(),
+              showInfoMessage: jest.fn(),
+              showWarningMessage: jest.fn(),
+              showMessage: jest.fn()
+            }));
+
+
             await renderListInformation();
 
             await awaitLoading();
@@ -89,6 +101,50 @@ describe('ListInformationPage Page', () => {
             await user.click(conformationDeleteButton);
 
             await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists'));
+
+            const successMessage = JSON.stringify(showSuccessMessageMock.mock.lastCall);
+            expect(successMessage).toContain('ui-lists.callout.list.delete.success');
+          });
+
+          it('is expected to show error message when delete was failed', async () => {
+            server.delete('lists/:id', () => new Response(404, {}, {
+              code: 'failed.delete.code'
+            }));
+
+            const showErrorMessageMock = jest.fn();
+
+            jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+              showSuccessMessage: jest.fn(),
+              showErrorMessage: showErrorMessageMock,
+              showInfoMessage: jest.fn(),
+              showWarningMessage: jest.fn(),
+              showMessage: jest.fn()
+            }));
+
+            await renderListInformation();
+
+            await awaitLoading();
+
+            const deleteList = screen.getByRole('menuitem', {
+              name: /ui-lists.pane.dropdown.delete/i
+            });
+
+            await user.click(deleteList);
+
+            const conformationModal = screen.getByTestId('ConfirmationModal');
+
+            const conformationDeleteButton = within(conformationModal).getByRole('button', {
+              name: /ui-lists.list.modal.delete/i
+            });
+
+            await user.click(conformationDeleteButton);
+
+            await waitFor(() => expect(historyPushMock).not.toBeCalled());
+            await waitFor(() => expect(showErrorMessageMock).toBeCalled());
+
+            const errorMessage = JSON.stringify(showErrorMessageMock.mock.lastCall);
+
+            expect(errorMessage).toContain('ui-lists.failed.delete.code');
           });
         });
 
@@ -241,6 +297,16 @@ describe('ListInformationPage Page', () => {
 
       describe('When refresh cancel success', () => {
         it('it is expected to show success cancel message', async () => {
+          const showSuccessMessageMock = jest.fn();
+
+          jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+            showSuccessMessage: showSuccessMessageMock,
+            showErrorMessage: jest.fn(),
+            showInfoMessage: jest.fn(),
+            showWarningMessage: jest.fn(),
+            showMessage: jest.fn()
+          }));
+
           await renderListInformation();
 
           await awaitLoading();
@@ -264,9 +330,9 @@ describe('ListInformationPage Page', () => {
 
           await user.click(cancelRefreshButton);
 
-          await waitFor(() => expect(showMessageMock).toBeCalled());
+          await waitFor(() => expect(showSuccessMessageMock).toBeCalled());
 
-          const successMessage = JSON.stringify(showMessageMock.mock.lastCall);
+          const successMessage = JSON.stringify(showSuccessMessageMock.mock.lastCall);
           expect(successMessage).toContain('ui-lists.cancel-refresh.success');
         });
       });
@@ -277,8 +343,16 @@ describe('ListInformationPage Page', () => {
 
           await awaitLoading();
 
-          const showMessageMock = jest.fn();
-          jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
+          const showErrorMessageMock = jest.fn();
+
+          jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+            showSuccessMessage: jest.fn(),
+            showErrorMessage: showErrorMessageMock,
+            showInfoMessage: jest.fn(),
+            showWarningMessage: jest.fn(),
+            showMessage: jest.fn()
+          }));
+
           server.delete('lists/:listId/refresh', () => new Response(404, {}, {
             code: 'cancel.error.code'
           }));
@@ -299,9 +373,9 @@ describe('ListInformationPage Page', () => {
 
           await user.click(cancelRefreshButton);
 
-          await waitFor(() => expect(showMessageMock).toBeCalled());
+          await waitFor(() => expect(showErrorMessageMock).toBeCalled());
 
-          const errorMessage = JSON.stringify(showMessageMock.mock.lastCall);
+          const errorMessage = JSON.stringify(showErrorMessageMock.mock.lastCall);
           expect(errorMessage).toContain('ui-lists.cancel.error.code');
         });
       });
