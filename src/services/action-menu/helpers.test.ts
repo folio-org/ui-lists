@@ -27,11 +27,11 @@ describe('helpers', () => {
   describe('isRefreshDisabled', () => {
     it.each`
   refreshing | inactive | inDraft  | exporting   | expected
-  ${true} | ${false} | ${false} | ${false} | ${true}
-  ${false}| ${true}  | ${false} | ${false} | ${true}
-  ${false}| ${false} | ${true}  | ${false} | ${true}
-  ${false}| ${false} | ${false} | ${true}  | ${true}
-  ${false}| ${false} | ${false} | ${false} | ${false}
+  ${true}    | ${false} | ${false} | ${false}    | ${true}
+  ${false}   | ${true}  | ${false} | ${false}    | ${true}
+  ${false}   | ${false} | ${true}  | ${false}    | ${true}
+  ${false}   | ${false} | ${false} | ${true}     | ${true}
+  ${false}   | ${false} | ${false} | ${false}    | ${false}
 `('returns $expected when one of conditions $expected', async (
       { refreshing,
         inactive,
@@ -51,10 +51,10 @@ describe('helpers', () => {
   describe('isEditDisabled', () => {
     it.each`
   refreshing | canned   | exporting   | expected
-  ${true} | ${false} | ${false} | ${true}
-  ${false}| ${true}  | ${false} | ${true}
-  ${false}| ${false} | ${true}  | ${true}
-  ${false}| ${false} | ${false} | ${true}
+  ${true}    | ${false} | ${false}    | ${true}
+  ${false}   | ${true}  | ${false}    | ${true}
+  ${false}   | ${false} | ${true}     | ${true}
+  ${false}   | ${false} | ${false}    | ${true}
 `('returns $expected when one of conditions $expected', async (
       { refreshing,
         canned,
