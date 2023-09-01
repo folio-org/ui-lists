@@ -50,21 +50,21 @@ describe('helpers', () => {
 
   describe('isEditDisabled', () => {
     it.each`
-  refreshing | canned   | exporting   | expected
-  ${true}    | ${false} | ${false}    | ${true}
-  ${false}   | ${true}  | ${false}    | ${true}
-  ${false}   | ${false} | ${true}     | ${true}
-  ${false}   | ${false} | ${false}    | ${true}
+  isRefreshInProgress | isListCanned   | isExportInProgress   | expected
+  ${true}             | ${false}       | ${false}             | ${true}
+  ${false}            | ${true}        | ${false}             | ${true}
+  ${false}            | ${false}       | ${true}              | ${true}
+  ${false}            | ${false}       | ${false}             | ${true}
 `('returns $expected when one of conditions $expected', async (
-      { refreshing,
-        canned,
-        exporting,
+      { isRefreshInProgress,
+        isListCanned,
+        isExportInProgress,
         expected }
     ) => {
       expect(isEditDisabled(
-        { isRefreshInProgress: refreshing,
-          isListCanned: canned,
-          isExportInProgress: exporting }
+        { isRefreshInProgress,
+          isListCanned,
+          isExportInProgress }
       )).toBe(expected);
     });
   });
