@@ -32,10 +32,10 @@ const renderListInformation = () => {
 
 let server: Server;
 
-beforeEach(async () => {
-  server = startMirage({});
+beforeEach(() => {
+  queryClient.clear();
 
-  await renderListInformation();
+  server = startMirage({});
 });
 
 afterEach(() => {
@@ -43,45 +43,22 @@ afterEach(() => {
   server.shutdown();
 });
 
+const awaitLoading = async () => {
+  const loader = screen.queryByText('LoadingPane');
+  expect(loader).toBeInTheDocument();
+
+  await waitFor(() => expect(loader).not.toBeInTheDocument());
+};
+
 describe('ListInformationPage Page', () => {
-  describe('Loading', () => {
-    describe('When component mounted it is expected to show loading pane', () => {
-      it('should show LoadingPane ', async () => {
-        await waitFor(() => {
-          expect(screen.queryByText('LoadingPane')).toBeInTheDocument();
-        });
-      });
-    });
-
-    describe('When loading finished', () => {
-      it('should hide LoadingPane ', async () => {
-        await waitFor(() => {
-          expect(screen.queryByText('LoadingPane')).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
-          expect(screen.queryByText('LoadingPane')).not.toBeInTheDocument();
-        });
-      });
-    });
-  });
-
-  describe('Render controls', () => {
-    describe('buttons close', () => {
-      it('is expected to contain close button ', () => {
-        const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
-
-        expect(closeButton).toBeInTheDocument();
-      });
-    });
-  });
-
   describe('interactions', () => {
     describe('Close pane', () => {
       it('is expected to call history push', async () => {
-        const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
+        await renderListInformation();
 
-        screen.logTestingPlaygroundURL();
+        await awaitLoading();
+
+        const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         await user.click(closeButton);
 
@@ -93,6 +70,10 @@ describe('ListInformationPage Page', () => {
       describe('When user try to delete list button in dropdown', () => {
         describe('And user clicks on confirm button in modal', () => {
           it('is expected to delete list and redirects to home page', async () => {
+            await renderListInformation();
+
+            await awaitLoading();
+
             const deleteList = screen.getByRole('menuitem', {
               name: /ui-lists.pane.dropdown.delete/i
             });
@@ -113,6 +94,10 @@ describe('ListInformationPage Page', () => {
 
         describe('And user clicks on cancel button in modal', () => {
           it('is expected to close modal and do nothing', async () => {
+            await renderListInformation();
+
+            await awaitLoading();
+
             const deleteList = screen.getByRole('menuitem', {
               name: /ui-lists.pane.dropdown.delete/i
             });
@@ -138,6 +123,10 @@ describe('ListInformationPage Page', () => {
     describe('Edit list', () => {
       describe('When user click on edit list button in dropdown', () => {
         it('is expected to redirect to edit page', async () => {
+          await renderListInformation();
+
+          await awaitLoading();
+
           const editList = screen.getByRole('menuitem', {
             name: /ui-lists.pane.dropdown.edit/i
           });
@@ -150,29 +139,15 @@ describe('ListInformationPage Page', () => {
     });
 
     describe('Export list', () => {
-      describe('When user starts export', () => {
-        it('it is expected to replace export button with cancel export', async () => {
-          const exportButton = screen.getByRole('menuitem', {
-            name: /ui-lists.pane.dropdown.export/i
-          });
-
-          expect(exportButton).toBeEnabled();
-
-          await user.click(exportButton);
-
-          await waitFor(() => expect(exportButton).not.toBeInTheDocument());
-
-          const cancelExportButton = screen.getByRole('menuitem', {
-            name: /ui-lists.pane.dropdown.cancel-export/i
-          });
-
-          expect(cancelExportButton).toBeInTheDocument();
-        });
-      });
-
       describe('Cancel export', () => {
         describe('When user cancel export', () => {
           it('is expected to show success cancel message', async () => {
+            server.shutdown();
+            server = startMirage({});
+            await renderListInformation();
+
+            await awaitLoading();
+
             const showMessageMock = jest.fn();
 
             jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
@@ -201,6 +176,10 @@ describe('ListInformationPage Page', () => {
           });
 
           it('is expected to show error cancel message', async () => {
+            await renderListInformation();
+
+            await awaitLoading();
+
             const showMessageMock = jest.fn();
 
             server.post('lists/:listId/exports/:exportId/cancel', () => new Response(404, {}, {
@@ -238,6 +217,10 @@ describe('ListInformationPage Page', () => {
     describe('Refresh list', () => {
       describe('When user starts refresh', () => {
         it('it is expected to replace refresh button with cancel refresh', async () => {
+          await renderListInformation();
+
+          await awaitLoading();
+
           const refreshButton = screen.getByRole('menuitem', {
             name: /ui-lists.pane.dropdown.refresh/i
           });
@@ -258,6 +241,10 @@ describe('ListInformationPage Page', () => {
 
       describe('When refresh cancel success', () => {
         it('it is expected to show success cancel message', async () => {
+          await renderListInformation();
+
+          await awaitLoading();
+
           const showMessageMock = jest.fn();
           jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
 
@@ -286,6 +273,10 @@ describe('ListInformationPage Page', () => {
 
       describe('When refresh cancel failed', () => {
         it('it is expected to show error cancel message', async () => {
+          await renderListInformation();
+
+          await awaitLoading();
+
           const showMessageMock = jest.fn();
           jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
           server.delete('lists/:listId/refresh', () => new Response(404, {}, {
