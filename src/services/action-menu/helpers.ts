@@ -8,12 +8,10 @@ export const isRefreshDisabled = (conditions: DisablingConditions): boolean => {
     isExportInProgress
   } = conditions;
 
-  return Boolean(
-    isRefreshInProgress ??
-    isListInactive ??
-    isListInDraft ??
-    isExportInProgress
-  );
+  return [isRefreshInProgress,
+    isListInactive,
+    isListInDraft,
+    isExportInProgress].some(value => value);
 };
 
 export const isCancelRefreshDisabled = (conditions: DisablingConditions): boolean => {
@@ -31,11 +29,9 @@ export const isEditDisabled = (conditions: DisablingConditions): boolean => {
     isExportInProgress
   } = conditions;
 
-  return Boolean(
-    isRefreshInProgress ??
-    isListCanned ??
-    isExportInProgress
-  );
+  return [isRefreshInProgress,
+    isListCanned,
+    isExportInProgress].some(value => value);
 };
 
 export const isDeleteDisabled = (conditions: DisablingConditions): boolean => {
@@ -46,12 +42,10 @@ export const isDeleteDisabled = (conditions: DisablingConditions): boolean => {
     isExportInProgress
   } = conditions;
 
-  return Boolean(
-    isDeleteInProgress ??
-    isRefreshInProgress ??
-    isListCanned ??
-    isExportInProgress
-  );
+  return [isDeleteInProgress,
+    isRefreshInProgress,
+    isListCanned,
+    isExportInProgress].some(value => value);
 };
 
 export const isExportDisabled = (conditions: DisablingConditions): boolean => {
@@ -63,13 +57,11 @@ export const isExportDisabled = (conditions: DisablingConditions): boolean => {
     isListInactive
   } = conditions;
 
-  return Boolean(
-    isRefreshInProgress ??
-    isDeleteInProgress ??
-    isListInDraft ??
-    isExportInProgress ??
-    isListInactive
-  );
+  return [isRefreshInProgress,
+    isDeleteInProgress,
+    isExportInProgress,
+    isListInDraft,
+    isListInactive].some(value => value);
 };
 
 export const isCancelExportDisabled = (conditions: DisablingConditions): boolean => {

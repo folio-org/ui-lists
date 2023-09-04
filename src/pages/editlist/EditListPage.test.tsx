@@ -36,68 +36,56 @@ let server: Server;
 beforeEach(async () => {
   jest.clearAllMocks();
   server = startMirage({});
-
-  await renderEditListPage();
 });
 
 afterEach(() => {
+  queryClient.clear();
   server.shutdown();
 });
 
-describe('EditList Page', () => {
-  describe('Loading', () => {
-    describe('When components mounted', () => {
-      it('it is expected to show loader', () => {
-        const loader = screen.getByText('Loading');
+const awaitLoading = async () => {
+  const loader = screen.getByText('Loading');
+  expect(loader).toBeInTheDocument();
 
-        expect(loader).toBeInTheDocument();
-      });
-    });
-
-    describe('When loading finished mounted', () => {
-      it('it is expected to hide loader', async () => {
-        const loader = screen.getByText('Loading');
-
-        await waitFor(() => {
-          return expect(loader).not.toBeInTheDocument();
-        });
-      });
-    });
+  await waitFor(() => {
+    return expect(loader).not.toBeInTheDocument();
   });
+};
 
+describe('EditList Page', () => {
   describe('Render controls', () => {
-    describe('buttons cancel', () => {
-      it('is expected to contain cancel button ', () => {
-        const cancelButton = screen.getByRole('button', {
-          name: 'ui-lists.button.cancel'
-        });
+    it('is expected to render all controls', async () => {
+      await renderEditListPage();
 
-        expect(cancelButton).toBeInTheDocument();
+      await awaitLoading();
+
+      const cancelButton = screen.getByRole('button', {
+        name: 'ui-lists.button.cancel'
       });
-    });
 
-    describe('buttons save', () => {
-      it('is expected to contain cancel button ', () => {
-        const cancelButton = screen.getByRole('button', {
-          name: 'ui-lists.button.save'
-        });
-
-        expect(cancelButton).toBeInTheDocument();
+      const buttonSave = screen.getByRole('button', {
+        name: 'ui-lists.button.save'
       });
-    });
 
-    describe('buttons close', () => {
-      it('is expected to contain close button ', () => {
-        const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
-
-        expect(closeButton).toBeInTheDocument();
+      const closeButton = screen.getByLabelText('Close button', {
+        selector: 'button'
       });
+
+      expect(closeButton).toBeInTheDocument();
+
+      expect(buttonSave).toBeInTheDocument();
+
+      expect(cancelButton).toBeInTheDocument();
     });
   });
 
   describe('interactions', () => {
     describe('Close pane', () => {
       it('is expected to call history push', async () => {
+        await renderEditListPage();
+
+        await awaitLoading();
+
         const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         await user.click(closeButton);
@@ -109,6 +97,10 @@ describe('EditList Page', () => {
     describe('Cancel editing', () => {
       describe('Cancel edit without changes', () => {
         it('is expected to call history push', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const cancelButton = screen.getByRole('button', {
             name: 'ui-lists.button.cancel'
           });
@@ -122,6 +114,10 @@ describe('EditList Page', () => {
       describe('Cancel edit with changes', () => {
         describe('Confirm cancel', () => {
           it('is expected to call history push', async () => {
+            await renderEditListPage();
+
+            await awaitLoading();
+
             const cancelButton = screen.getByRole('button', {
               name: 'ui-lists.button.cancel'
             });
@@ -153,6 +149,10 @@ describe('EditList Page', () => {
 
           describe('Cancel cancel', () => {
             it('is expected to not history push', async () => {
+              await renderEditListPage();
+
+              await awaitLoading();
+
               const cancelButton = screen.getByRole('button', {
                 name: 'ui-lists.button.cancel'
               });
@@ -189,6 +189,10 @@ describe('EditList Page', () => {
     describe('Delete list', () => {
       describe('Success delete', () => {
         it('is expected to redirect after successful deletion and call success message', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const showSuccessMessageHookMock = jest.fn();
 
           jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
@@ -223,6 +227,10 @@ describe('EditList Page', () => {
       });
       describe('Failure delete', () => {
         it('is expected to show error message', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           server.delete('lists/:id', () => new Response(404));
 
           const showErrorMessageMock = jest.fn();
@@ -258,6 +266,10 @@ describe('EditList Page', () => {
       });
       describe('Cancel delete', () => {
         it('is expected to show error message', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const deleteButton = screen.getByRole('menuitem', {
             name: /ui-lists.pane.dropdown.delete/i
           });
@@ -279,7 +291,11 @@ describe('EditList Page', () => {
 
     describe('Edit and save', () => {
       describe('Success save', () => {
-        it('is expected to redirect after successful deletion and call success message', async () => {
+        it('is expected to redirect after successful save and call success message', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const showSuccessMessageHookMock = jest.fn();
           const updatedListObject = { ...listDetailsRefreshed, version: listDetailsRefreshed.version + 1 };
 
@@ -318,11 +334,19 @@ describe('EditList Page', () => {
       });
 
       describe('Success save and become inactive', () => {
-        it('is expected to redirect after successful deletion and call success message', async () => {
+        it('is expected to redirect after successful save and call success message', async () => {
+          server.get('lists/:id', () => new Response(200, {},
+            { ...listDetailsRefreshed, isActive: false }));
+
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const showSuccessMessageHookMock = jest.fn();
           const updatedListObject = { ...listDetailsRefreshed, version: listDetailsRefreshed.version + 1 };
 
           server.put('lists/:id', () => new Response(200, {}, updatedListObject));
+
           jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
             showSuccessMessage: showSuccessMessageHookMock,
             showErrorMessage: jest.fn(),
@@ -331,13 +355,14 @@ describe('EditList Page', () => {
             showMessage: jest.fn()
           }));
 
+          const activeStatusRadioButton = screen.getByRole('radio', { name: 'active' });
+
+          await user.click(activeStatusRadioButton);
+
           const saveButton = screen.getByRole('button', {
             name: 'ui-lists.button.save'
           });
 
-          const activeStatusRadioButton = screen.getByLabelText('active');
-
-          await user.click(activeStatusRadioButton);
 
           expect(saveButton).toBeEnabled();
 
@@ -353,7 +378,11 @@ describe('EditList Page', () => {
       });
 
       describe('Fail save', () => {
-        it('is expected to redirect after successful deletion and call success message', async () => {
+        it('is expected to call error message', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const showErrorMessageMock = jest.fn();
 
           server.put('lists/:id', () => new Response(404, {}, { code: 'error_code' }));
@@ -395,6 +424,10 @@ describe('EditList Page', () => {
 
       describe('Fail due changed version', () => {
         it('is expected to show optimistic lock error', async () => {
+          await renderEditListPage();
+
+          await awaitLoading();
+
           const showErrorMessageHookMock = jest.fn();
           const updatedListObject = { ...listDetailsRefreshed, version: listDetailsRefreshed.version + 1 };
           server.get('lists/:id', () => new Response(200, {}, updatedListObject));
