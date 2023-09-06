@@ -1,1 +1,1 @@
-export { ListsTable } from './listsTable';
+export { ListsTable } from './ListsTable';
