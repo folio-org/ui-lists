@@ -34,7 +34,6 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     return ky.get(`entity-types/${entityTypeId}`).json();
   };
 
-
   return (
     <Pluggable
       type="query-builder"

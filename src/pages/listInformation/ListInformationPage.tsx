@@ -209,9 +209,11 @@ export const ListInformationPage: React.FC = () => {
 
             <AccordionSet>
               <ListInformationResultViewer
+                key={listData?.version}
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}
+                contentVersion={listData?.version}
                 setColumnControlList={setColumnControls}
                 setDefaultVisibleColumns={setDefaultVisibleColumns}
                 visibleColumns={visibleColumns}
