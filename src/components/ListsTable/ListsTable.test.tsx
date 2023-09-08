@@ -12,7 +12,7 @@ import { queryClient } from '../../../test/utils';
 import { ListsTable } from './ListsTable';
 import { STATUS_ACTIVE } from '../../utils/constants';
 
-let filterConfig = [STATUS_ACTIVE];
+const filterConfig = [STATUS_ACTIVE];
 
 const historyPushMock = jest.fn();
 
@@ -69,13 +69,10 @@ describe('ListsTable', () => {
   });
 
   describe('Render controls', () => {
-
     it('expected to render the ListsTable component', () => {
-      const list = screen.getByTestId("ItemsList");
+      const list = screen.getByTestId('ItemsList');
 
       expect(list).toBeInTheDocument();
     });
-
   });
-
 });
