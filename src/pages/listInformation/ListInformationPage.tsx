@@ -19,6 +19,8 @@ import {
   SuccessRefreshSection,
   ListInformationResultViewer
 } from './components';
+import { useStripes } from '@folio/stripes/core';
+
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
@@ -27,6 +29,7 @@ import { ConfirmDeleteModal } from '../../components';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
+  const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
@@ -150,9 +153,6 @@ export const ListInformationPage: React.FC = () => {
     'refresh': () => {
       refresh();
     },
-    'edit':  () => {
-      history.push(`${id}/edit`);
-    },
     'delete': () => {
       setShowConfirmDeleteModal(true);
     },
@@ -163,6 +163,13 @@ export const ListInformationPage: React.FC = () => {
       cancelExport();
     },
   };
+
+  if (stripes.hasPerm('lists.item.update')) {
+    // @ts-ignore:next-line
+    buttonHandlers['edit'] =  () => {
+      history.push(`${id}/edit`);
+    }
+  }
 
   const conditions = {
     isRefreshInProgress,
@@ -193,6 +200,7 @@ export const ListInformationPage: React.FC = () => {
               visibleColumns={visibleColumns}
               columns={columnControls}
               onColumnsChange={handleColumnsChange}
+              // @ts-ignore:next-line
               buttonHandlers={buttonHandlers}
               conditions={conditions}
             />}

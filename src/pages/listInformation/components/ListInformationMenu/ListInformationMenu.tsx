@@ -1,6 +1,7 @@
 import React from 'react';
 // @ts-ignore:next-line
 import { CheckboxFilter } from '@folio/stripes/smart-components';
+import { useStripes } from '@folio/stripes/core';
 import {
   Headline
 } from '@folio/stripes/components';
@@ -38,6 +39,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   buttonHandlers,
   onColumnsChange,
 }) => {
+  const stripes = useStripes();
   const { isExportInProgress, isRefreshInProgress } = conditions;
   const cancelRefreshButton = {
     label: 'cancel-refresh',
@@ -76,21 +78,29 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
 
   const actionButtons:ActionButton[] = [
-    refreshSlot,
-    {
-      label: 'edit',
-      icon: ICONS.edit,
-      onClick: buttonHandlers.edit,
-      disabled: isEditDisabled(conditions),
-    },
-    {
+    refreshSlot
+  ];
+
+  if (stripes.hasPerm('lists.item.update')) {
+    actionButtons.push(
+      {
+        label: 'edit',
+        icon: ICONS.edit,
+        onClick: buttonHandlers.edit,
+        disabled: isEditDisabled(conditions),
+      }
+    );
+  }
+
+  if (stripes.hasPerm('lists.item.delete')) {
+    actionButtons.push({
       label: 'delete',
       icon: ICONS.trash,
       onClick: buttonHandlers.delete,
       disabled: isDeleteDisabled(conditions)
-    },
-    exportSlot
-  ];
+    });
+  }
+  actionButtons.push(exportSlot);
 
   return (
     <ActionMenu actionButtons={actionButtons}>
