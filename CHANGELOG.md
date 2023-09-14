@@ -1,7 +1,7 @@
 # Change history for ui-lists
 
-## 1.1.0 (IN PROGRESS)
-
+## 2.0.0 (IN PROGRESS)
+* Update Stripes, React, React-Intl dependencies for Poppy release.
 
 ## 1.0.0
 
