@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { isEqual } from 'lodash';
+import { isEqual, noop } from 'lodash';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
 // @ts-ignore:next-line
@@ -18,7 +18,7 @@ export interface ListsTableProps {
 
 export const ListsTable: FC<ListsTableProps> = ({
   activeFilters,
-  setTotalRecords = () => {}
+  setTotalRecords = noop
 }) => {
   const [storedCurrentPageOffset] = useLocalStorage(CURRENT_PAGE_OFFSET_KEY, 0);
   const [recordIds, setRecordIds] = useState([] as string[]);

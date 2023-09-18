@@ -8,7 +8,7 @@ import { startMirage } from '../../../test/mirage';
 import { HOME_PAGE_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
 
-jest.mock('../../components/listsTable', () => ({
+jest.mock('../../components/ListsTable', () => ({
   ListsTable: jest.fn(() => (
     <div data-testid="ListTable" />
   ))
