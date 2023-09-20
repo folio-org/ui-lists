@@ -78,7 +78,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
 
   const actionButtons:ActionButton[] = [
-    refreshSlot
+    stripes.hasPerm('lists.item.refresh') ?? refreshSlot
   ];
 
   if (stripes.hasPerm('lists.item.update')) {
@@ -100,7 +100,10 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
       disabled: isDeleteDisabled(conditions)
     });
   }
-  actionButtons.push(exportSlot);
+
+  if (stripes.hasPerm('lists.item.export.get')) {
+    actionButtons.push(exportSlot);
+  }
 
   return (
     <ActionMenu actionButtons={actionButtons}>

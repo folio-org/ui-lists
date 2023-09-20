@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { IfPermission } from '@folio/stripes/core';
+
 import { ListPage, ListInformationPage, CreateListPage, EditListPage } from './pages';
 
 interface IListsApp {
@@ -21,22 +23,38 @@ export const ListsApp: FC<IListsApp> = (props) => {
         <Route
           path={path}
           exact
-          component={ListPage}
+          render={() => (
+            <IfPermission perm="lists.collection.get">
+              <ListPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/list/:id`}
           exact
-          component={ListInformationPage}
+          render={() => (
+            <IfPermission perm="lists.item.get">
+              <ListInformationPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/list/:id/edit`}
           exact
-          component={EditListPage}
+          render={() => (
+            <IfPermission perm="lists.item.update">
+              <EditListPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/new`}
           exact
-          component={CreateListPage}
+          render={() => (
+            <IfPermission perm="lists.collection.post">
+              <CreateListPage />
+            </IfPermission>
+          )}
         />
       </Switch>
     </QueryClientProvider>
