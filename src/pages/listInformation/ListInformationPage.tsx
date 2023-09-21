@@ -168,7 +168,7 @@ export const ListInformationPage: React.FC = () => {
     // @ts-ignore:next-line
     buttonHandlers['edit'] =  () => {
       history.push(`${id}/edit`);
-    }
+    };
   }
 
   const conditions = {

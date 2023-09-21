@@ -14,6 +14,7 @@ import {
 } from '@folio/stripes/components';
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
+import { IfPermission } from '@folio/stripes/core';
 
 import { ListsTable, ListAppIcon } from '../../components';
 import { useLocalStorageToggle } from '../../hooks';
@@ -88,15 +89,17 @@ export const ListPage: React.FC = () => {
             ) : null
         }
         lastMenu={
-          <Link to={CREATE_LIST_URL}>
-            <Button
-              bottomMargin0
-              buttonStyle="primary"
-              onClick={noop}
-            >
-              {t('paneHeader.button.new')}
-            </Button>
-          </Link>
+          <IfPermission perm="lists.collection.post">
+            <Link to={CREATE_LIST_URL}>
+              <Button
+                bottomMargin0
+                buttonStyle="primary"
+                onClick={noop}
+              >
+                {t('paneHeader.button.new')}
+              </Button>
+            </Link>
+          </IfPermission>
         }
       >
         <ListsTable

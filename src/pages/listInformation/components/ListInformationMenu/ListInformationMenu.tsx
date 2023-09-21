@@ -77,9 +77,11 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
 
-  const actionButtons:ActionButton[] = [
-    stripes.hasPerm('lists.item.refresh') ?? refreshSlot
-  ];
+  const actionButtons:ActionButton[] = [];
+
+  if (stripes.hasPerm('lists.item.refresh')) {
+    actionButtons.push(refreshSlot);
+  }
 
   if (stripes.hasPerm('lists.item.update')) {
     actionButtons.push(
