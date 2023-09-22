@@ -17,7 +17,7 @@ import { t,
 import { ActionMenu } from '../../../../components';
 import { EntityTypeColumn, ICONS } from '../../../../interfaces';
 
-interface ListInformationMenuProps {
+export interface ListInformationMenuProps {
   columns?: EntityTypeColumn[]
   visibleColumns?: string[] | null,
   buttonHandlers: {

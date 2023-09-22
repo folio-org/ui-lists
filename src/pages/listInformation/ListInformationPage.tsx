@@ -11,6 +11,7 @@ import {
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
 import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
 import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
 import {
@@ -19,7 +20,6 @@ import {
   SuccessRefreshSection,
   ListInformationResultViewer
 } from './components';
-import { useStripes } from '@folio/stripes/core';
 
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
@@ -166,7 +166,7 @@ export const ListInformationPage: React.FC = () => {
 
   if (stripes.hasPerm('lists.item.update')) {
     // @ts-ignore:next-line
-    buttonHandlers['edit'] =  () => {
+    buttonHandlers.edit = () => {
       history.push(`${id}/edit`);
     };
   }
