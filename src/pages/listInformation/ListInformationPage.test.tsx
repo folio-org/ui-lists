@@ -1,4 +1,5 @@
 import React from 'react';
+import ky from 'ky';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 import { waitFor, screen, within } from '@testing-library/dom';
@@ -12,6 +13,9 @@ import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
+const kyMock = ky.create({
+  prefixUrl: 'https://test.c',
+});
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -19,6 +23,14 @@ jest.mock('react-router-dom', () => ({
     id: 'id',
   }),
   useHistory: jest.fn(() => ({ push: historyPushMock })),
+}));
+
+jest.mock('@folio/stripes/core', () => ({
+  Pluggable: jest.fn(({ children }) => [children]),
+  useOkapiKy: () => kyMock,
+  useStripes: () => ({
+    hasPerm: jest.fn().mockReturnValue(true),
+  })
 }));
 
 const renderListInformation = () => {
