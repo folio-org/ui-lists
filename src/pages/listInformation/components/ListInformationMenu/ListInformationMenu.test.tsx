@@ -25,38 +25,37 @@ beforeEach(() => {
 });
 
 describe('ListInformationMenu', () => {
-
   describe('All Permissions Enabled', () => {
     it('should render Refresh list link', () => {
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.refresh');
-  
+
       expect(link).toBeInTheDocument();
     });
 
     it('should render Edit list link', () => {
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.edit');
-  
+
       expect(link).toBeInTheDocument();
     });
 
     it('should render Delete list link', () => {
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.delete');
-  
+
       expect(link).toBeInTheDocument();
     });
 
     it('should render Export list link', () => {
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.export');
-  
+
       expect(link).toBeInTheDocument();
     });
   });
 
-  
+
   describe('All Permissions Disabled', () => {
     it('should not render Refresh list link', () => {
       mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
@@ -70,7 +69,7 @@ describe('ListInformationMenu', () => {
       mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.edit');
-  
+
       expect(link).toBeNull();
     });
 
@@ -78,7 +77,7 @@ describe('ListInformationMenu', () => {
       mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.delete');
-  
+
       expect(link).toBeNull();
     });
 
@@ -86,7 +85,7 @@ describe('ListInformationMenu', () => {
       mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.export');
-  
+
       expect(link).toBeNull();
     });
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import ky from 'ky';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 import { waitFor, screen, within } from '@testing-library/dom';
@@ -13,9 +12,6 @@ import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
-const kyMock = ky.create({
-  prefixUrl: 'https://test.c',
-});
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
