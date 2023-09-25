@@ -104,7 +104,7 @@
     "okapiInterfaces": {
       "lists": "1.0",
       "query": "1.0",
-      "entity_types": "1.0"
+      "entity-types": "1.0"
     },
     "stripesDeps": [
       "@folio/stripes-acq-components"
