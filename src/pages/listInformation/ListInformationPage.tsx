@@ -197,6 +197,7 @@ export const ListInformationPage: React.FC = () => {
               :
               <>{t('lists.item.compiling')}<Loading /></>}
             lastMenu={<ListInformationMenu
+              stripes={stripes}
               visibleColumns={visibleColumns}
               columns={columnControls}
               onColumnsChange={handleColumnsChange}

@@ -25,14 +25,6 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock })),
 }));
 
-jest.mock('@folio/stripes/core', () => ({
-  Pluggable: jest.fn(({ children }) => [children]),
-  useOkapiKy: () => kyMock,
-  useStripes: () => ({
-    hasPerm: jest.fn().mockReturnValue(true),
-  })
-}));
-
 const renderListInformation = () => {
   return render(
     <QueryClientProvider client={queryClient}>

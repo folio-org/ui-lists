@@ -1,7 +1,6 @@
 import React from 'react';
 // @ts-ignore:next-line
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { useStripes } from '@folio/stripes/core';
 import {
   Headline
 } from '@folio/stripes/components';
@@ -18,6 +17,7 @@ import { ActionMenu } from '../../../../components';
 import { EntityTypeColumn, ICONS } from '../../../../interfaces';
 
 export interface ListInformationMenuProps {
+  stripes: any,
   columns?: EntityTypeColumn[]
   visibleColumns?: string[] | null,
   buttonHandlers: {
@@ -33,13 +33,13 @@ export interface ListInformationMenuProps {
 }
 
 export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
+  stripes,
   columns,
   visibleColumns,
   conditions,
   buttonHandlers,
   onColumnsChange,
 }) => {
-  const stripes = useStripes();
   const { isExportInProgress, isRefreshInProgress } = conditions;
   const cancelRefreshButton = {
     label: 'cancel-refresh',
