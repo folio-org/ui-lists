@@ -26,6 +26,7 @@ import { EntityTypeColumn } from '../../interfaces';
 
 import './ListInformationPage.module.css';
 import { ConfirmDeleteModal } from '../../components';
+import { USER_PERMS } from '../../utils/constants';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
@@ -146,28 +147,35 @@ export const ListInformationPage: React.FC = () => {
 
   const recordCount = listData?.successRefresh?.recordsCount ?? 0;
 
-  const buttonHandlers = {
-    'cancel-refresh': () => {
-      cancelRefresh();
-    },
-    'refresh': () => {
-      refresh();
-    },
-    'delete': () => {
-      setShowConfirmDeleteModal(true);
-    },
-    'export': () => {
-      requestExport();
-    },
-    'cancel-export': () => {
-      cancelExport();
-    },
-  };
+  const buttonHandlers : any = {};
 
-  if (stripes.hasPerm('lists.item.update')) {
-    // @ts-ignore:next-line
-    buttonHandlers.edit = () => {
+  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+    buttonHandlers['cancel-refresh'] = () => {
+      cancelRefresh();
+    };
+    buttonHandlers['refresh'] = () => {
+      refresh();
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+    buttonHandlers['edit'] = () => {
       history.push(`${id}/edit`);
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+    buttonHandlers['delete'] = () => {
+      setShowConfirmDeleteModal(true);
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+    buttonHandlers['export'] = () => {
+      requestExport();
+    };
+    buttonHandlers['cancel-export'] = () => {
+      cancelExport();
     };
   }
 

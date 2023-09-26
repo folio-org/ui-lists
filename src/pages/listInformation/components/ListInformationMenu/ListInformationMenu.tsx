@@ -15,6 +15,7 @@ import { t,
   DisablingConditions } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { EntityTypeColumn, ICONS } from '../../../../interfaces';
+import { USER_PERMS } from '../../../../utils/constants';
 
 export interface ListInformationMenuProps {
   stripes: any,
@@ -79,11 +80,11 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const actionButtons:ActionButton[] = [];
 
-  if (stripes.hasPerm('lists.item.refresh')) {
+  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
     actionButtons.push(refreshSlot);
   }
 
-  if (stripes.hasPerm('lists.item.update')) {
+  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
     actionButtons.push(
       {
         label: 'edit',
@@ -94,7 +95,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     );
   }
 
-  if (stripes.hasPerm('lists.item.delete')) {
+  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
     actionButtons.push({
       label: 'delete',
       icon: ICONS.trash,
@@ -103,7 +104,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     });
   }
 
-  if (stripes.hasPerm('lists.item.export.get')) {
+  if (stripes.hasPerm(USER_PERMS.ExportList)) {
     actionButtons.push(exportSlot);
   }
 

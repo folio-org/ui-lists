@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { IfPermission } from '@folio/stripes/core';
 
 import { ListPage, ListInformationPage, CreateListPage, EditListPage } from './pages';
+import { USER_PERMS } from './utils/constants';
 
 interface IListsApp {
   match: {
@@ -24,7 +25,7 @@ export const ListsApp: FC<IListsApp> = (props) => {
           path={path}
           exact
           render={() => (
-            <IfPermission perm="lists.collection.get">
+            <IfPermission perm={USER_PERMS.ReadList}>
               <ListPage />
             </IfPermission>
           )}
@@ -33,7 +34,7 @@ export const ListsApp: FC<IListsApp> = (props) => {
           path={`${path}/list/:id`}
           exact
           render={() => (
-            <IfPermission perm="lists.item.get">
+            <IfPermission perm={USER_PERMS.ReadList}>
               <ListInformationPage />
             </IfPermission>
           )}
@@ -42,7 +43,7 @@ export const ListsApp: FC<IListsApp> = (props) => {
           path={`${path}/list/:id/edit`}
           exact
           render={() => (
-            <IfPermission perm="lists.item.update">
+            <IfPermission perm={USER_PERMS.UpdateList}>
               <EditListPage />
             </IfPermission>
           )}
@@ -51,7 +52,7 @@ export const ListsApp: FC<IListsApp> = (props) => {
           path={`${path}/new`}
           exact
           render={() => (
-            <IfPermission perm="lists.collection.post">
+            <IfPermission perm={USER_PERMS.CreateList}>
               <CreateListPage />
             </IfPermission>
           )}
