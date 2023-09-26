@@ -103,7 +103,7 @@
     "hasSettings": false,
     "okapiInterfaces": {
       "lists": "1.0",
-      "query": "1.0",
+      "fqm-query": "1.0",
       "entity-types": "1.0"
     },
     "stripesDeps": [
