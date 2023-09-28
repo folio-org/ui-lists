@@ -11,6 +11,7 @@ import {
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
 import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
 import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
 import {
@@ -19,14 +20,17 @@ import {
   SuccessRefreshSection,
   ListInformationResultViewer
 } from './components';
+
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
 import './ListInformationPage.module.css';
 import { ConfirmDeleteModal } from '../../components';
+import { USER_PERMS } from '../../utils/constants';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
+  const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
@@ -143,26 +147,37 @@ export const ListInformationPage: React.FC = () => {
 
   const recordCount = listData?.successRefresh?.recordsCount ?? 0;
 
-  const buttonHandlers = {
-    'cancel-refresh': () => {
+  const buttonHandlers : any = {};
+
+  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+    buttonHandlers['cancel-refresh'] = () => {
       cancelRefresh();
-    },
-    'refresh': () => {
+    };
+    buttonHandlers['refresh'] = () => {
       refresh();
-    },
-    'edit':  () => {
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+    buttonHandlers['edit'] = () => {
       history.push(`${id}/edit`);
-    },
-    'delete': () => {
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+    buttonHandlers['delete'] = () => {
       setShowConfirmDeleteModal(true);
-    },
-    'export': () => {
+    };
+  }
+
+  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+    buttonHandlers['export'] = () => {
       requestExport();
-    },
-    'cancel-export': () => {
+    };
+    buttonHandlers['cancel-export'] = () => {
       cancelExport();
-    },
-  };
+    };
+  }
 
   const conditions = {
     isRefreshInProgress,
@@ -190,9 +205,11 @@ export const ListInformationPage: React.FC = () => {
               :
               <>{t('lists.item.compiling')}<Loading /></>}
             lastMenu={<ListInformationMenu
+              stripes={stripes}
               visibleColumns={visibleColumns}
               columns={columnControls}
               onColumnsChange={handleColumnsChange}
+              // @ts-ignore:next-line
               buttonHandlers={buttonHandlers}
               conditions={conditions}
             />}

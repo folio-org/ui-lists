@@ -17,6 +17,9 @@ jest.mock('@folio/stripes/core', () => {
       <span data-testid="app-icon">
         {JSON.stringify(props)}
       </span>)),
-    useOkapiKy: () => kyMock
+    useOkapiKy: () => kyMock,
+    useStripes: () => ({
+      hasPerm: jest.fn().mockReturnValue(true)
+    })
   };
 });
