@@ -1,7 +1,7 @@
 export { t } from './translation';
 
 
-export { isCanned, isInactive, isInDraft } from './list';
+export { isCanned, isInactive, isInDraft, isEmptyList } from './list';
 
 
 export { computeErrorMessage } from './error';
