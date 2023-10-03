@@ -1,3 +1,12 @@
 .mainFormVisibility {
     margin-right: 40px;
 }
+
+.recordTypeField {
+    width: 130px;
+}
+
+.radioLabels {
+    font-size: 1.05rem;
+    font-weight: bold;
+}

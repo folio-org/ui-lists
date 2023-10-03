@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
-import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField } from '@folio/stripes/components';
+import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import {
   MAX_SUPPORTED_DESCRIPTION_LENGTH,
@@ -17,10 +17,20 @@ type MainListInfoFormProps = {
     visibility: string,
     status: string,
     isLoading?: boolean,
-    showInactiveWarning?: boolean
+    showInactiveWarning?: boolean,
+    recordTypeOptions?: {label: string, value: string, selected: boolean}[]
 }
 
-export const MainListInfoForm = ({ showInactiveWarning = false, onValueChange = () => {}, listName, description, visibility, status, isLoading }: MainListInfoFormProps) => {
+export const MainListInfoForm = (
+  { showInactiveWarning = false,
+    onValueChange = () => {},
+    listName,
+    description,
+    visibility,
+    status,
+    isLoading,
+    recordTypeOptions }: MainListInfoFormProps
+) => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
   };
@@ -34,6 +44,24 @@ export const MainListInfoForm = ({ showInactiveWarning = false, onValueChange = 
 
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
+
+  const renderSelect = () => {
+    if (recordTypeOptions?.length) {
+      return (
+        <div className={css.recordTypeField}>
+          {/* @ts-ignore:next-line */}
+          <Select
+            required
+            name={FIELD_NAMES.RECORD_TYPE}
+            dataOptions={recordTypeOptions}
+            onChange={onChangeHandler}
+            label={t('create-list.aside.record-types')}
+          />
+        </div>);
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -58,13 +86,14 @@ export const MainListInfoForm = ({ showInactiveWarning = false, onValueChange = 
         maxLength={MAX_SUPPORTED_DESCRIPTION_LENGTH}
         label={t('create-list.main.list-description')}
       />
+      {renderSelect()}
       <Layout className="display-flex flex-align-items-start">
         <RadioButtonGroup
           value={visibility}
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
           className={css.mainFormVisibility}
-          label={<strong>{t('create-list.main.list-visibility')}</strong>}
+          label={<span className={css.radioLabels}>{t('create-list.main.list-visibility')}</span>}
         >
           <RadioButton
             inline
@@ -88,9 +117,9 @@ export const MainListInfoForm = ({ showInactiveWarning = false, onValueChange = 
           }}
           name={FIELD_NAMES.STATUS}
           label={
-            <strong>
+            <span className={css.radioLabels}>
               {t('create-list.main.list-status')}
-            </strong>
+            </span>
             }
         >
           <RadioButton
