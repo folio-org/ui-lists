@@ -153,25 +153,25 @@ export const ListInformationPage: React.FC = () => {
     buttonHandlers['cancel-refresh'] = () => {
       cancelRefresh();
     };
-    buttonHandlers['refresh'] = () => {
+    buttonHandlers.refresh = () => {
       refresh();
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.UpdateList)) {
-    buttonHandlers['edit'] = () => {
+    buttonHandlers.edit = () => {
       history.push(`${id}/edit`);
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.DeleteList)) {
-    buttonHandlers['delete'] = () => {
+    buttonHandlers.delete = () => {
       setShowConfirmDeleteModal(true);
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers['export'] = () => {
+    buttonHandlers.export = () => {
       requestExport();
     };
     buttonHandlers['cancel-export'] = () => {
@@ -226,6 +226,7 @@ export const ListInformationPage: React.FC = () => {
 
             <AccordionSet>
               <ListInformationResultViewer
+                refreshInProgress={isRefreshInProgress}
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}

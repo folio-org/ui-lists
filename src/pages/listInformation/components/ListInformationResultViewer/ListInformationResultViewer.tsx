@@ -11,7 +11,8 @@ type ListInformationResultViewerType = {
   setDefaultVisibleColumns?: (columns:string[]) => void,
   listID?: string,
   entityTypeId?: string,
-  visibleColumns?: string[] | null
+  visibleColumns?: string[] | null,
+  refreshInProgress: boolean
 }
 
 
@@ -22,7 +23,8 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   listID = '',
   entityTypeId = '',
   setDefaultVisibleColumns = () => {},
-  visibleColumns = []
+  visibleColumns = [],
+  refreshInProgress
 }) => {
   const ky = useOkapiKy();
 
@@ -46,6 +48,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
         t('mainPane.subTitle',
           { count: totalRecords === 'NaN' ? 0 : totalRecords })
       )}
+      refreshInProgress={refreshInProgress}
       refreshTrigger={contentVersion}
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
