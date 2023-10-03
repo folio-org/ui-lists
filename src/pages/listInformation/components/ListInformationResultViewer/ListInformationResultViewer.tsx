@@ -3,6 +3,7 @@ import React from 'react';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { t } from '../../../../services';
 import { EntityTypeColumn } from '../../../../interfaces';
+import { CompilingLoader } from '../../../../components';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string,
@@ -36,6 +37,14 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     return ky.get(`entity-types/${entityTypeId}`).json();
   };
 
+  const computeHeading = (totalRecords: any) => {
+    if (refreshInProgress && !Number(totalRecords)) {
+      return <CompilingLoader />;
+    }
+
+    return t('mainPane.subTitle',
+      { count: totalRecords === 'NaN' ? 0 : totalRecords });
+  };
 
   return (
     <Pluggable
@@ -44,10 +53,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       accordionHeadline={
         t('accordion.title.query',
           { query: userFriendlyQuery || '' })}
-      headline={({ totalRecords }: any) => (
-        t('mainPane.subTitle',
-          { count: totalRecords === 'NaN' ? 0 : totalRecords })
-      )}
+      headline={({ totalRecords }: any) => computeHeading(totalRecords)}
       refreshInProgress={refreshInProgress}
       refreshTrigger={contentVersion}
       contentDataSource={getAsyncContentData}
@@ -59,6 +65,5 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     >
       No loaded
     </Pluggable>
-
   );
 };
