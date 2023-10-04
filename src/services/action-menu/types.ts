@@ -8,7 +8,8 @@ export type DisablingConditions = {
   isExportInProgress?: boolean,
   isListInactive?: boolean,
   isListInDraft?: boolean,
-  isListCanned?: boolean
+  isListCanned?: boolean,
+  isListEmpty?: boolean
 };
 
 

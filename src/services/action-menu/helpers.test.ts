@@ -93,19 +93,22 @@ describe('helpers', () => {
 
   describe('isExportDisabled', () => {
     it.each`
-  deleting | refreshing | inDraft  | inactive | exporting | expected
-  ${true}  | ${false}   | ${false} | ${false} | ${false}  | ${true}
-  ${false} | ${true}    | ${false} | ${false} | ${false}  | ${true}
-  ${false} | ${false}   | ${true}  | ${false} | ${false}  | ${true}
-  ${false} | ${false}   | ${false} | ${true}  | ${false}  | ${true}
-  ${false} | ${false}   | ${false} | ${false} | ${true}   | ${true}
-  ${false} | ${false}   | ${false} | ${false} | ${false}  | ${false}
+  deleting | refreshing | inDraft  | inactive | exporting | isListEmpty | expected
+  ${true}  | ${false}   | ${false} | ${false} | ${false}  | ${false}    | ${true}
+  ${false} | ${true}    | ${false} | ${false} | ${false}  | ${false}    | ${true}
+  ${false} | ${false}   | ${true}  | ${false} | ${false}  | ${false}    | ${true}
+  ${false} | ${false}   | ${false} | ${true}  | ${false}  | ${false}    | ${true}
+  ${false} | ${false}   | ${false} | ${false} | ${true}   | ${false}    | ${true}
+  ${false} | ${false}   | ${false} | ${false} | ${false}  | ${false}    | ${false}
+  ${false} | ${false}   | ${false} | ${false} | ${false}  | ${true}     | ${true}
+
 `('returns $expected when one of conditions $expected', async (
       { deleting,
         refreshing,
         inDraft,
         inactive,
         exporting,
+        isListEmpty,
         expected }
     ) => {
       expect(isExportDisabled({
@@ -113,7 +116,8 @@ describe('helpers', () => {
         isDeleteInProgress: deleting,
         isExportInProgress: exporting,
         isListInDraft: inDraft,
-        isListInactive: inactive
+        isListInactive: inactive,
+        isListEmpty
       })).toBe(expected);
     });
   });

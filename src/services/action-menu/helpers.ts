@@ -54,13 +54,15 @@ export const isExportDisabled = (conditions: DisablingConditions): boolean => {
     isDeleteInProgress,
     isExportInProgress,
     isListInDraft,
-    isListInactive
+    isListInactive,
+    isListEmpty
   } = conditions;
 
   return [isRefreshInProgress,
     isDeleteInProgress,
     isExportInProgress,
     isListInDraft,
+    isListEmpty,
     isListInactive].some(value => value);
 };
 
