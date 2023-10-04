@@ -55,7 +55,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
           { query: userFriendlyQuery || '' })}
       headline={({ totalRecords }: any) => computeHeading(totalRecords)}
       refreshInProgress={refreshInProgress}
-      refreshTrigger={contentVersion}
+      refreshTrigger={refreshTrigger}
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
