@@ -128,7 +128,7 @@ export const ListInformationPage: React.FC = () => {
     if (!listData?.inProgressRefresh) {
       initRefresh();
       closeSuccessMessage();
-      if (polledData) {
+      if (showSuccessRefreshMessage && polledData) {
         updateListDetailsData();
       }
     }
