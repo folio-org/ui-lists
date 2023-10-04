@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { IfPermission } from '@folio/stripes/core';
+
 import { ListPage, ListInformationPage, CreateListPage, EditListPage } from './pages';
+import { USER_PERMS } from './utils/constants';
 
 interface IListsApp {
   match: {
@@ -21,22 +24,38 @@ export const ListsApp: FC<IListsApp> = (props) => {
         <Route
           path={path}
           exact
-          component={ListPage}
+          render={() => (
+            <IfPermission perm={USER_PERMS.ReadList}>
+              <ListPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/list/:id`}
           exact
-          component={ListInformationPage}
+          render={() => (
+            <IfPermission perm={USER_PERMS.ReadList}>
+              <ListInformationPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/list/:id/edit`}
           exact
-          component={EditListPage}
+          render={() => (
+            <IfPermission perm={USER_PERMS.UpdateList}>
+              <EditListPage />
+            </IfPermission>
+          )}
         />
         <Route
           path={`${path}/new`}
           exact
-          component={CreateListPage}
+          render={() => (
+            <IfPermission perm={USER_PERMS.CreateList}>
+              <CreateListPage />
+            </IfPermission>
+          )}
         />
       </Switch>
     </QueryClientProvider>

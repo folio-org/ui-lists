@@ -7,8 +7,6 @@ import { t } from '../../../../services';
 import { useRecordsLimit, useMessages } from '../../../../hooks';
 import { HOME_PAGE_URL } from '../../../../constants';
 
-import './QueryBuilder.module.css';
-
 type QueryBuilderProps = {
   selectedType?: string,
   isQueryButtonDisabled?: boolean,

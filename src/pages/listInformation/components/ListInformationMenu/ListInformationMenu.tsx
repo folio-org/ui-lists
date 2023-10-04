@@ -15,8 +15,10 @@ import { t,
   DisablingConditions } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { EntityTypeColumn, ICONS } from '../../../../interfaces';
+import { USER_PERMS } from '../../../../utils/constants';
 
-interface ListInformationMenuProps {
+export interface ListInformationMenuProps {
+  stripes: any,
   columns?: EntityTypeColumn[]
   visibleColumns?: string[] | null,
   buttonHandlers: {
@@ -32,6 +34,7 @@ interface ListInformationMenuProps {
 }
 
 export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
+  stripes,
   columns,
   visibleColumns,
   conditions,
@@ -75,22 +78,35 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
 
-  const actionButtons:ActionButton[] = [
-    refreshSlot,
-    {
-      label: 'edit',
-      icon: ICONS.edit,
-      onClick: buttonHandlers.edit,
-      disabled: isEditDisabled(conditions),
-    },
-    {
+  const actionButtons:ActionButton[] = [];
+
+  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+    actionButtons.push(refreshSlot);
+  }
+
+  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+    actionButtons.push(
+      {
+        label: 'edit',
+        icon: ICONS.edit,
+        onClick: buttonHandlers.edit,
+        disabled: isEditDisabled(conditions),
+      }
+    );
+  }
+
+  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+    actionButtons.push({
       label: 'delete',
       icon: ICONS.trash,
       onClick: buttonHandlers.delete,
       disabled: isDeleteDisabled(conditions)
-    },
-    exportSlot
-  ];
+    });
+  }
+
+  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+    actionButtons.push(exportSlot);
+  }
 
   return (
     <ActionMenu actionButtons={actionButtons}>

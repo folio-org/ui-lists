@@ -3,6 +3,8 @@ import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 import { waitFor, screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
+import { IfPermission } from '@folio/stripes/core';
+
 import { ListPage } from './ListPage';
 import { startMirage } from '../../../test/mirage';
 import { HOME_PAGE_URL } from '../../constants';
@@ -44,4 +46,22 @@ describe('ListPage Page', () => {
       expect(screen.getByTestId('ListTable')).toBeInTheDocument();
     });
   });
+
+  it('should render New button when user has permission', async () => {
+    // @ts-ignore:next-line
+    IfPermission.mockImplementation(({ children }) => children);
+
+    await waitFor(() => {
+      expect(screen.queryByText('ui-lists.paneHeader.button.new')).toBeInTheDocument();
+    });
+  });
+
+  it('should not render New button when user doesn\'t have permission', async () => {
+    IfPermission.mockImplementation(() => null);
+
+    await waitFor(() => {
+      expect(screen.queryByText('ui-lists.paneHeader.button.new')).toBeNull();
+    });
+  });
+
 });
