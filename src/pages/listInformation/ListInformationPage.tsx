@@ -229,6 +229,7 @@ export const ListInformationPage: React.FC = () => {
 
             <AccordionSet>
               <ListInformationResultViewer
+                refreshInProgress={isRefreshInProgress}
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}

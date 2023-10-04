@@ -3,6 +3,7 @@ import React from 'react';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { t } from '../../../../services';
 import { EntityTypeColumn } from '../../../../interfaces';
+import { CompilingLoader } from '../../../../components';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string,
@@ -11,7 +12,8 @@ type ListInformationResultViewerType = {
   setDefaultVisibleColumns?: (columns:string[]) => void,
   listID?: string,
   entityTypeId?: string,
-  visibleColumns?: string[] | null
+  visibleColumns?: string[] | null,
+  refreshInProgress: boolean
 }
 
 
@@ -22,7 +24,8 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   listID = '',
   entityTypeId = '',
   setDefaultVisibleColumns = () => {},
-  visibleColumns = []
+  visibleColumns = [],
+  refreshInProgress
 }) => {
   const ky = useOkapiKy();
 
@@ -34,6 +37,15 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     return ky.get(`entity-types/${entityTypeId}`).json();
   };
 
+  const computeHeading = (totalRecords: any) => {
+    if (refreshInProgress && !parseInt(totalRecords, 10)) {
+      return <CompilingLoader />;
+    }
+
+    return t('mainPane.subTitle',
+      { count: totalRecords === 'NaN' ? 0 : totalRecords });
+  };
+
   return (
     <Pluggable
       type="query-builder"
@@ -41,10 +53,8 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       accordionHeadline={
         t('accordion.title.query',
           { query: userFriendlyQuery || '' })}
-      headline={({ totalRecords }: any) => (
-        t('mainPane.subTitle',
-          { count: totalRecords === 'NaN' ? 0 : totalRecords })
-      )}
+      headline={({ totalRecords }: any) => computeHeading(totalRecords)}
+      refreshInProgress={refreshInProgress}
       refreshTrigger={refreshTrigger}
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
@@ -55,6 +65,5 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     >
       No loaded
     </Pluggable>
-
   );
 };
