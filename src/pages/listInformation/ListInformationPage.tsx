@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { uniqueId } from 'lodash';
 import {
   AccordionSet,
   Layer,
@@ -12,7 +13,7 @@ import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
-import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
+import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
 import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
@@ -35,6 +36,7 @@ export const ListInformationPage: React.FC = () => {
 
   const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
   const { name: listName = '' } = listData ?? {};
+  const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
@@ -125,7 +127,7 @@ export const ListInformationPage: React.FC = () => {
     if (!listData?.inProgressRefresh) {
       initRefresh();
       closeSuccessMessage();
-      if (polledData) {
+      if (showSuccessRefreshMessage && polledData) {
         updateListDetailsData();
       }
     }
@@ -135,7 +137,7 @@ export const ListInformationPage: React.FC = () => {
     if (polledData) {
       updateListDetailsData();
     }
-
+    setRefreshTrigger(uniqueId());
     setShowSuccessRefreshMessage(false);
   };
 
@@ -152,25 +154,25 @@ export const ListInformationPage: React.FC = () => {
     buttonHandlers['cancel-refresh'] = () => {
       cancelRefresh();
     };
-    buttonHandlers['refresh'] = () => {
+    buttonHandlers.refresh = () => {
       refresh();
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.UpdateList)) {
-    buttonHandlers['edit'] = () => {
+    buttonHandlers.edit = () => {
       history.push(`${id}/edit`);
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.DeleteList)) {
-    buttonHandlers['delete'] = () => {
+    buttonHandlers.delete = () => {
       setShowConfirmDeleteModal(true);
     };
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers['export'] = () => {
+    buttonHandlers.export = () => {
       requestExport();
     };
     buttonHandlers['cancel-export'] = () => {
@@ -186,7 +188,8 @@ export const ListInformationPage: React.FC = () => {
     isDeleteInProgress,
     isListInactive: isInactive(listData),
     isListInDraft: isInDraft(listData),
-    isListCanned: isCanned(listData)
+    isListCanned: isCanned(listData),
+    isListEmpty: isEmptyList(listData)
   };
 
   return (
@@ -225,9 +228,11 @@ export const ListInformationPage: React.FC = () => {
 
             <AccordionSet>
               <ListInformationResultViewer
+                refreshInProgress={isRefreshInProgress}
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}
+                refreshTrigger={Number(refreshTrigger)}
                 setColumnControlList={setColumnControls}
                 setDefaultVisibleColumns={setDefaultVisibleColumns}
                 visibleColumns={visibleColumns}
