@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { uniqueId } from 'lodash';
 import {
   AccordionSet,
   Layer,
@@ -36,6 +37,7 @@ export const ListInformationPage: React.FC = () => {
 
   const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
   const { name: listName = '' } = listData ?? {};
+  const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
@@ -136,7 +138,7 @@ export const ListInformationPage: React.FC = () => {
     if (polledData) {
       updateListDetailsData();
     }
-
+    setRefreshTrigger(uniqueId());
     setShowSuccessRefreshMessage(false);
   };
 
@@ -231,6 +233,7 @@ export const ListInformationPage: React.FC = () => {
                 listID={listData?.id}
                 userFriendlyQuery={listData?.userFriendlyQuery}
                 entityTypeId={listData?.entityTypeId}
+                refreshTrigger={Number(refreshTrigger)}
                 setColumnControlList={setColumnControls}
                 setDefaultVisibleColumns={setDefaultVisibleColumns}
                 visibleColumns={visibleColumns}

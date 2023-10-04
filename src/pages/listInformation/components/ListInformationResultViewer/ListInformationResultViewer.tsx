@@ -7,7 +7,7 @@ import { CompilingLoader } from '../../../../components';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string,
-  contentVersion?: number,
+  refreshTrigger?: number | boolean,
   setColumnControlList?: (columns:EntityTypeColumn[]) => void,
   setDefaultVisibleColumns?: (columns:string[]) => void,
   listID?: string,
@@ -19,7 +19,7 @@ type ListInformationResultViewerType = {
 
 export const ListInformationResultViewer: React.FC<ListInformationResultViewerType> = ({
   userFriendlyQuery = '',
-  contentVersion = 0,
+  refreshTrigger = 0,
   setColumnControlList = () => {},
   listID = '',
   entityTypeId = '',
