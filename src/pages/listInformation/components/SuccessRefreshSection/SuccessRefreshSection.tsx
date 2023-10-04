@@ -27,7 +27,7 @@ export const SuccessRefreshSection :FC<RefreshStatusToastProps> = (
         <span style={{ color: 'black' }}>
           {(t('status-toast.success.refresh-complete', { count: recordsCount }))}
         </span>
-        <TextLink style={{ cursor: 'pointer' }} onClick={onViewListClick}>
+        <TextLink style={{ cursor: 'pointer', 'font-weight': 'bold' }} onClick={onViewListClick}>
           <strong>
             {t('status-toast.success.link')}
           </strong>
