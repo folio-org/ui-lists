@@ -25,7 +25,6 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
-import './ListInformationPage.module.css';
 import { ConfirmDeleteModal } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
 
