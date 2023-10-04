@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { isInactive, isCanned, isInDraft } from '../helpers';
+import { isInactive, isCanned, isInDraft, isEmptyList } from '../helpers';
 import list from '../../../../test/data/listDetails.refreshed.json';
 import { ListsRecordDetails } from '../../../interfaces';
 
@@ -20,6 +20,25 @@ describe('List helpers tests', () => {
       });
     });
   });
+
+  describe('isEmptyList', () => {
+    describe('When list dont contains records', () => {
+      const listWithRecords = { ...list } as ListsRecordDetails;
+      delete listWithRecords.successRefresh;
+
+      it('is expected to return true', () => {
+        expect(isEmptyList(listWithRecords)).toEqual(true);
+      });
+    });
+    describe('When list contains records', () => {
+      const activeList = { ...list, successRefresh: { recordsCount: 100 } } as ListsRecordDetails;
+
+      it('is expected to return false', () => {
+        expect(isEmptyList(activeList)).toEqual(false);
+      });
+    });
+  });
+
   describe('isCanned', () => {
     describe('When list is canned', () => {
       const cannedList = { ...list, isCanned: true } as ListsRecordDetails;

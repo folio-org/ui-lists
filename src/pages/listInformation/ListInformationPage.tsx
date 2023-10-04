@@ -12,7 +12,7 @@ import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
-import { t, isInactive, isInDraft, isCanned, computeErrorMessage } from '../../services';
+import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
 import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
@@ -187,7 +187,8 @@ export const ListInformationPage: React.FC = () => {
     isDeleteInProgress,
     isListInactive: isInactive(listData),
     isListInDraft: isInDraft(listData),
-    isListCanned: isCanned(listData)
+    isListCanned: isCanned(listData),
+    isListEmpty: isEmptyList(listData)
   };
 
   return (

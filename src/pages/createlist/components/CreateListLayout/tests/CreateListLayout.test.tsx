@@ -7,11 +7,13 @@ describe('CreateListLayout', () => {
   test('Expected to call onClose function when user click on close button', async () => {
     const onCloseHandlerMock = jest.fn();
 
-    const configuredComponent = <CreateListLayout
-      onClose={onCloseHandlerMock}
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <h1>Main</h1>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout
+        onClose={onCloseHandlerMock}
+      >
+        <h1>Main</h1>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
@@ -25,38 +27,28 @@ describe('CreateListLayout', () => {
   });
 
   test('Expected to render main content', () => {
-    const configuredComponent = <CreateListLayout
-      renderAsideContent={() => <section>Aside content</section>}
-      renderMainContent={() => <span>Main content</span>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout>
+        <span>Main content</span>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
-    const asideContent = screen.getByText(/aside content/i);
+    const asideContent = screen.getByText(/Main content/i);
 
     expect(asideContent).toBeInTheDocument();
   });
 
-  test('Expected to render aside content', () => {
-    const configuredComponent = <CreateListLayout
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <section>Main content</section>}
-    />;
-
-    render(configuredComponent);
-
-    const mainContent = screen.getByText(/main content/i);
-
-    expect(mainContent).toBeInTheDocument();
-  });
-
   test('Expected to render cancel button', async () => {
     const onCancelMock = jest.fn();
-    const configuredComponent = <CreateListLayout
-      onCancel={onCancelMock}
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <section>Main</section>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout
+        onCancel={onCancelMock}
+      >
+        <section>Main</section>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
@@ -70,11 +62,13 @@ describe('CreateListLayout', () => {
 
   test('Expected to render save button', async () => {
     const onSaveMock = jest.fn();
-    const configuredComponent = <CreateListLayout
-      onSave={onSaveMock}
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <section>Main</section>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout
+        onSave={onSaveMock}
+      >
+        <section>Main</section>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
@@ -86,11 +80,13 @@ describe('CreateListLayout', () => {
   });
 
   test('Expected to disable save button when isSaveButtonDisabled passed', async () => {
-    const configuredComponent = <CreateListLayout
-      isSaveButtonDisabled
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <section>Main</section>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout
+        isSaveButtonDisabled
+      >
+        <section>Main</section>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
@@ -100,11 +96,13 @@ describe('CreateListLayout', () => {
   });
 
   test('Expected to disable save button when isSavingInProgress is passed', async () => {
-    const configuredComponent = <CreateListLayout
-      isSavingInProgress
-      renderAsideContent={() => <h1>Aside</h1>}
-      renderMainContent={() => <section>Main</section>}
-    />;
+    const configuredComponent = (
+      <CreateListLayout
+        isSavingInProgress
+      >
+        <section>Main</section>
+      </CreateListLayout>
+    );
 
     render(configuredComponent);
 
