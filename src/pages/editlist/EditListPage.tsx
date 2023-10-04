@@ -16,7 +16,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
 import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
-import { t, computeErrorMessage, isInactive, isInDraft, isCanned } from '../../services';
+import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal } from '../../components';
 
 import { EditListResultViewer, EditListMenu } from './components';
@@ -132,7 +132,8 @@ export const EditListPage:FC = () => {
     isCancelExportInProgress,
     isListInactive: isInactive(listDetails),
     isListInDraft: isInDraft(listDetails),
-    isListCanned: isCanned(listDetails)
+    isListCanned: isCanned(listDetails),
+    isListEmpty: isEmptyList(listDetails)
   };
 
   if (loadingListDetails) {
