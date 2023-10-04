@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import { Pane, PaneFooter, Button, Loading } from '@folio/stripes/components';
 import { CancelEditModal, ListAppIcon } from '../../../../components';
 import { t } from '../../../../services';
@@ -6,24 +6,24 @@ import { t } from '../../../../services';
 import css from './CreateListLayout.module.css';
 
 type CreateListLayoutProps = {
-    renderAsideContent: () => ReactNode;
-    renderMainContent: () => ReactNode;
     isSaveButtonDisabled?: boolean;
     isSavingInProgress?: boolean;
     onCancel?: () => void;
     onSave?: () => void;
     onClose?: () => void;
-    showModalOnCancel?: boolean
+    showModalOnCancel?: boolean,
+    children?: ReactElement
 };
 
-export const CreateListLayout:FC<CreateListLayoutProps> = ({ renderAsideContent,
-  renderMainContent,
+export const CreateListLayout:FC<CreateListLayoutProps> = ({
   isSaveButtonDisabled = false,
   isSavingInProgress = false,
   onCancel = () => {},
   onSave = () => {},
   onClose = () => {},
-  showModalOnCancel = false }) => {
+  showModalOnCancel = false,
+  children
+}) => {
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
   const cancelHandler = () => {
     if (showModalOnCancel) {
@@ -70,16 +70,10 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({ renderAsideContent,
       >
         <div className={css.createListForm}>
           <Pane
-            defaultWidth="20%"
-            paneTitle={t('create-list.aside.set-criteria')}
-          >
-            {renderAsideContent()}
-          </Pane>
-          <Pane
             renderHeader={() => <span />}
-            defaultWidth="80%"
+            defaultWidth="fill"
           >
-            {renderMainContent()}
+            {children}
           </Pane>
         </div>
       </Pane>
