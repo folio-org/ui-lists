@@ -6,7 +6,7 @@ import { EntityTypeColumn } from '../../../../interfaces';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string,
-  contentVersion?: number,
+  refreshTrigger?: number | boolean,
   setColumnControlList?: (columns:EntityTypeColumn[]) => void,
   setDefaultVisibleColumns?: (columns:string[]) => void,
   listID?: string,
@@ -17,7 +17,7 @@ type ListInformationResultViewerType = {
 
 export const ListInformationResultViewer: React.FC<ListInformationResultViewerType> = ({
   userFriendlyQuery = '',
-  contentVersion = 0,
+  refreshTrigger = 0,
   setColumnControlList = () => {},
   listID = '',
   entityTypeId = '',
@@ -34,7 +34,6 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
     return ky.get(`entity-types/${entityTypeId}`).json();
   };
 
-
   return (
     <Pluggable
       type="query-builder"
@@ -46,7 +45,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
         t('mainPane.subTitle',
           { count: totalRecords === 'NaN' ? 0 : totalRecords })
       )}
-      refreshTrigger={contentVersion}
+      refreshTrigger={refreshTrigger}
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
