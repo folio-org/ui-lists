@@ -38,7 +38,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   };
 
   const computeHeading = (totalRecords: any) => {
-    if (refreshInProgress && !Number(totalRecords)) {
+    if (refreshInProgress && !parseInt(totalRecords, 10)) {
       return <CompilingLoader />;
     }
 

@@ -1,0 +1,5 @@
+.compilerWrapper {
+    display: flex;
+    width: 130px;
+    align-items: center;
+}
