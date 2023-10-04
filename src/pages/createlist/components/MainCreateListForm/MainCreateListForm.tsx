@@ -2,17 +2,22 @@ import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
 import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
-import { ChangedFieldType } from '../../types';
+import { ChangedFieldType, STATUS, VISIBILITY } from '../../types';
 import { MainListInfoForm } from '../../../../components';
 
 import css from './MainCreateListForm.module.css';
+import { QueryBuilder } from '../QueryBuilder';
+
 
 type MainCreateListFormProps = {
   onValueChange?: (field: ChangedFieldType) => void;
   listNameField: string,
   descriptionField: string,
-  visibilityField: string,
-  statusField: string
+  visibilityField: VISIBILITY,
+  statusField: STATUS,
+  isQueryButtonDisabled?: boolean,
+  recordTypesOptions: {label: string, value: string, selected: boolean}[],
+  selectedType: string
 }
 
 export const MainCreateListForm:FC<MainCreateListFormProps> = (
@@ -20,7 +25,10 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
     listNameField,
     descriptionField,
     visibilityField,
-    statusField }
+    statusField,
+    selectedType = '',
+    recordTypesOptions,
+    isQueryButtonDisabled }
 ) => {
   const [isOpened, setIsOpen] = useState(true);
   const onToggleHandler = () => {
@@ -55,6 +63,7 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
         >
           <MainListInfoForm
             onValueChange={onValueChange}
+            recordTypeOptions={recordTypesOptions}
             listName={listNameField}
             description={descriptionField}
             visibility={visibilityField}
@@ -62,6 +71,16 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
           />
         </Accordion>
       </AccordionSet>
+      <div className={css.queryBuilderButton}>
+        <QueryBuilder
+          selectedType={selectedType}
+          isQueryButtonDisabled={isQueryButtonDisabled}
+          listName={listNameField}
+          status={statusField}
+          visibility={visibilityField}
+          description={descriptionField}
+        />
+      </div>
     </div>
   );
 };
