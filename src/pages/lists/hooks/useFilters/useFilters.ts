@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { APPLIED_FILTERS_KEY } from '../../../../utils/constants';
 import { getFilters } from '../../../../utils';
@@ -16,16 +16,32 @@ export const useFilters = (filterConfig: filterConfigType) => {
 
   const filterCount = activeFilters?.length;
 
+  const saveFilters = (theFilters: SetStateAction<filterConfigType>) => {
+    setFilters(theFilters);
+    writeStorage(APPLIED_FILTERS_KEY, theFilters);
+  };
+
   const onChangeFilter = (e: any) => {
     const aFilters = { ...appliedFilters };
     aFilters[e.target.name] = e.target.checked;
-    setFilters(aFilters);
-    writeStorage(APPLIED_FILTERS_KEY, aFilters);
+    saveFilters(aFilters);
   };
 
-  const resetAll = () => {
-    setFilters(filterConfig);
+  const onResetAll = () => {
+    saveFilters(filterConfig);
   };
 
-  return { onChangeFilter, resetAll, filterCount, activeFilters, appliedFilters };
+  const onClearGroup = (groupName: string) => {
+    const aFilters = { ...appliedFilters };
+
+    for(var name in aFilters) {
+      if (name.startsWith(groupName)) {
+        delete aFilters[name];
+      }
+    }
+
+    saveFilters(aFilters);
+  }
+
+  return { onChangeFilter, onClearGroup, onResetAll, filterCount, activeFilters, appliedFilters };
 };
