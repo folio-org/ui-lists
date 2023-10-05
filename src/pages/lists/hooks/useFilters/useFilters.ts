@@ -25,6 +25,7 @@ export const useFilters = (filterConfig: filterConfigType) => {
 
   const resetAll = () => {
     setFilters(filterConfig);
+    writeStorage(APPLIED_FILTERS_KEY, filterConfig);
   };
 
   return { onChangeFilter, resetAll, filterCount, activeFilters, appliedFilters };
