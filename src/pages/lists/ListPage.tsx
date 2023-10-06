@@ -32,7 +32,8 @@ export const ListPage: React.FC = () => {
   const { filterConfig, isLoadingConfigData } = useFilterConfig();
   const {
     onChangeFilter,
-    resetAll,
+    onResetAll,
+    onClearGroup,
     filterCount,
     activeFilters,
     appliedFilters
@@ -57,7 +58,7 @@ export const ListPage: React.FC = () => {
               buttonStyle="default"
               disabled={!filterCount}
               id="clickable-reset-all"
-              onClick={resetAll}
+              onClick={onResetAll}
             >
               <Icon icon="times-circle-solid">
                 <FormattedMessage id="stripes-smart-components.resetAll" />
@@ -68,7 +69,7 @@ export const ListPage: React.FC = () => {
             config={filterConfig}
             filters={appliedFilters}
             onChangeFilter={onChangeFilter}
-            onClearFilter={noop}
+            onClearFilter={onClearGroup}
           />
         </Pane>
       }

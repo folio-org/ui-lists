@@ -17,4 +17,4 @@ export const enum USER_PERMS {
   UpdateList = 'lists.item.update',
   DeleteList = 'lists.item.delete',
   ExportList = 'lists.item.export.get'
-};
+}
