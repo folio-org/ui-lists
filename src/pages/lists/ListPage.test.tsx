@@ -63,5 +63,4 @@ describe('ListPage Page', () => {
       expect(screen.queryByText('ui-lists.paneHeader.button.new')).toBeNull();
     });
   });
-
 });

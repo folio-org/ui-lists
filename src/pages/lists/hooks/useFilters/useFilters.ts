@@ -34,14 +34,14 @@ export const useFilters = (filterConfig: filterConfigType) => {
   const onClearGroup = (groupName: string) => {
     const aFilters = { ...appliedFilters };
 
-    for(var name in aFilters) {
+    for (const name in aFilters) {
       if (name.startsWith(groupName)) {
         delete aFilters[name];
       }
     }
 
     saveFilters(aFilters);
-  }
+  };
 
   return { onChangeFilter, onClearGroup, onResetAll, filterCount, activeFilters, appliedFilters };
 };
