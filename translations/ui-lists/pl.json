@@ -38,7 +38,7 @@
     "pane.dropdown.delete": "Delete list",
     "pane.dropdown.edit": "Edit list",
     "pane.dropdown.export": "Export list (CSV)",
-    "pane.dropdown.cancel-export": "Cancel export",
+    "pane.dropdown.cancel-export": "Anuluj eksport",
     "status-toast.success.refresh-complete": "<strong>Refresh complete</strong> with <strong>{count}</strong> records: ",
     "status-toast.success.link": "View updated list",
     "create-list.subtitle": "Set criteria to build query",
