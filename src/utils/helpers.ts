@@ -7,7 +7,7 @@ export const getFilters = (appliedFilters: Array<any>) => {
   return appliedFilters && Object.keys(appliedFilters).filter(filterKey => appliedFilters[filterKey] === true);
 };
 
-export const getListsFilterUrlParams = (filters: Array<string>, size?: number, offset?: number) => {
+export const getListsFilterUrlParams = (filters: Array<string>, size?: number, offset?: number, updatedAsOf?: string) => {
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
 
@@ -35,6 +35,8 @@ export const getListsFilterUrlParams = (filters: Array<string>, size?: number, o
   if (offset) params.append('offset', offset.toString());
 
   if (size) params.append('size', size.toString());
+
+  if (updatedAsOf) params.append('updatedAsOf', updatedAsOf);
 
   return params;
 };

@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import { isEqual, noop } from 'lodash';
+import moment from 'moment';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
+import { useOkapiKy } from '@folio/stripes/core';
 // @ts-ignore:next-line
 import { PrevNextPagination, usePagination } from '@folio/stripes-acq-components';
 
@@ -10,16 +12,23 @@ import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
+import { ShowMessageHandlerType } from '../../hooks/useMessages/useMessages';
+import { t } from '../../services';
 
 export interface ListsTableProps {
   activeFilters: any,
-  setTotalRecords: (totalRecords: number) => void
+  setTotalRecords: (totalRecords: number) => void,
+  showSuccessMessage: (value: ShowMessageHandlerType) => void
 }
+
+let updatedAsOf = moment.utc().format();
 
 export const ListsTable: FC<ListsTableProps> = ({
   activeFilters,
-  setTotalRecords = noop
+  setTotalRecords = noop,
+  showSuccessMessage = noop
 }) => {
+  const ky = useOkapiKy();
   const [storedCurrentPageOffset] = useLocalStorage(CURRENT_PAGE_OFFSET_KEY, 0);
   const [recordIds, setRecordIds] = useState([] as string[]);
 
@@ -48,6 +57,13 @@ export const ListsTable: FC<ListsTableProps> = ({
   }, [activeFilters]);
 
   const { listsData, isLoading } = useLists(activeFilters, recordIds, pagination.limit, pagination.offset);
+
+  const updatedListsData = useLists([], [], undefined, undefined, updatedAsOf);
+
+  if (updatedListsData?.listsData?.content) {
+    updatedAsOf = moment.utc().format();
+    showSuccessMessage({ message: t('callout.list.save.success')});
+  }
 
   if (isLoading) {
     return (

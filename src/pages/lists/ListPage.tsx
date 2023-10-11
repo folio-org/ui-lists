@@ -22,6 +22,7 @@ import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
+import { useMessages } from '../../hooks/useMessages';
 
 import css from './ListPage.module.css';
 
@@ -38,6 +39,7 @@ export const ListPage: React.FC = () => {
     activeFilters,
     appliedFilters
   } = useFilters(filterConfig);
+  const { showSuccessMessage } = useMessages();
 
   if (isLoadingConfigData) return <LoadingPane />;
 
@@ -106,6 +108,7 @@ export const ListPage: React.FC = () => {
         <ListsTable
           activeFilters={activeFilters}
           setTotalRecords={setTotalRecords}
+          showSuccessMessage={showSuccessMessage}
         />
       </Pane>
     </Paneset>

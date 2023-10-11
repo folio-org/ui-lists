@@ -8,11 +8,11 @@ import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 let pageCount = 0;
 let totalRecordCount = 0;
 
-export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, size?: number, offset?: number) => {
+export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, size?: number, offset?: number, updatedAsOf?: string) => {  
   const ky = useOkapiKy();
 
   // If tracking IDs, don't use offset
-  const urlParams = getListsFilterUrlParams(filters, size, (!idsToTrack?.length) ? offset : 0);
+  const urlParams = getListsFilterUrlParams(filters, size, (!idsToTrack?.length) ? offset : 0, updatedAsOf);
 
   if (idsToTrack?.length) {
     urlParams.append('ids', idsToTrack.join(','));
