@@ -18,7 +18,7 @@ type MainCreateListFormProps = {
   statusField: STATUS,
   isQueryButtonDisabled?: boolean,
   recordTypesOptions: EntityTypeOption[],
-  selectedType: string
+  selectedType?: string
 }
 
 export const MainCreateListForm:FC<MainCreateListFormProps> = (

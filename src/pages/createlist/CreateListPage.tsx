@@ -62,7 +62,7 @@ export const CreateListPage:FC = () => {
       showModalOnCancel={hasChanges}
     >
       <MainCreateListForm
-        selectedType={recordType || ''}
+        selectedType={recordType}
         descriptionField={description}
         listNameField={listName}
         visibilityField={visibility}
