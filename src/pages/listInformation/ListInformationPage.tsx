@@ -33,7 +33,7 @@ export const ListInformationPage: React.FC = () => {
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
-  const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
+  const { data: listData, isLoading: isDetailsLoading, refetchDetails } = useListDetails(id);
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
@@ -77,6 +77,7 @@ export const ListInformationPage: React.FC = () => {
       })();
     },
     onCancelSuccess: () => {
+      refetchDetails();
       showSuccessMessage({
         message: t('cancel-refresh.success', {
           listName
