@@ -127,7 +127,7 @@
       },
       {
         "permissionName": "module.lists.refresh",
-        "displayName": "Lists (Edit): Can create, edit, export, and refresh lists",
+        "displayName": "Lists (Edit): Can create, edit, and refresh lists",
         "visible": true,
         "subPermissions": [
           "module.lists.enabled",
@@ -135,9 +135,26 @@
           "fqm.query.async.delete",
           "lists.item.refresh",
           "lists.item.refresh.cancel",
-          "lists.item.export.download.get",
           "lists.collection.post",
-          "lists.item.update",
+          "lists.item.update"
+        ]
+      },
+      {
+        "permissionName": "module.lists.delete",
+        "displayName": "Lists (Delete): Can create, edit, refresh, and delete lists",
+        "visible": true,
+        "subPermissions": [
+          "module.lists.refresh",
+          "lists.item.delete"
+        ]
+      },
+      {
+        "permissionName": "module.lists.export",
+        "displayName": "Lists (Export): Can create, edit, refresh, and export lists",
+        "visible": true,
+        "subPermissions": [
+          "module.lists.refresh",
+          "lists.item.export.download.get",
           "lists.item.export.post",
           "lists.item.export.get"
         ]
@@ -147,8 +164,8 @@
         "displayName": "Lists (Admin): All permissions",
         "visible": true,
         "subPermissions": [
-          "module.lists.refresh",
-          "lists.item.delete"
+          "module.lists.export",
+          "module.lists.delete"
         ]
       }
     ],
