@@ -11,13 +11,13 @@ type filterConfigType = {
 
 export const useFilters = (filterConfig: filterConfigType) => {
   const [storedAppliedFilters] = useLocalStorage(APPLIED_FILTERS_KEY, filterConfig);
-  const [appliedFilters, setFilters] = useState(storedAppliedFilters);
+  const [appliedFilters, setAppliedFilters] = useState(storedAppliedFilters);
   const activeFilters = getFilters(appliedFilters);
 
   const filterCount = activeFilters?.length;
 
   const saveFilters = (theFilters: SetStateAction<filterConfigType>) => {
-    setFilters(theFilters);
+    setAppliedFilters(theFilters);
     writeStorage(APPLIED_FILTERS_KEY, theFilters);
   };
 

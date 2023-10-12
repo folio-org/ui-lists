@@ -18,7 +18,7 @@ type MainCreateListFormProps = {
   statusField: STATUS,
   isQueryButtonDisabled?: boolean,
   recordTypesOptions: EntityTypeSelectOption[],
-  selectedType: string
+  selectedType?: string
 }
 
 export const MainCreateListForm:FC<MainCreateListFormProps> = (
@@ -31,9 +31,9 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
     recordTypesOptions,
     isQueryButtonDisabled }
 ) => {
-  const [isOpened, setIsOpen] = useState(true);
+  const [isOpened, setIsOpened] = useState(true);
   const onToggleHandler = () => {
-    setIsOpen((prevValue) => !prevValue);
+    setIsOpened((prevValue) => !prevValue);
   };
 
   const renderCollapseButton = () => {
