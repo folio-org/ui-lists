@@ -3,7 +3,7 @@ import { t } from '../../services';
 
 export const computeRecordTypeOptions = (entityTypes: EntityType[], selected: string): EntityTypeOption[] => {
   const defaultPlaceholder = {
-    label: t('list.edit.entity-type-default'),
+    label: t('create-list.choose-record-type'),
     selected: false,
     value: '',
   };

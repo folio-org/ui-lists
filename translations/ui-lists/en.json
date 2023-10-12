@@ -106,7 +106,6 @@
   "lists.edit.saving": "Saving",
   "lists.edit.loading": "Loading",
   "lists.edit.title": "Edit {listName}",
-  "list.edit.entity-type-default": "Choose record type",
 
   "form.field.empty-error": "Please fill this in to continue",
 
