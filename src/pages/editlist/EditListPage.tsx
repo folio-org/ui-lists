@@ -81,7 +81,9 @@ export const EditListPage:FC = () => {
         if (isListBecameActive) {
           showSuccessMessage({ message: t('callout.list.active', {
             listName: state[FIELD_NAMES.LIST_NAME]
-          }) });
+          }),
+          // Auto-removing does not work if messages appears in same time and has same timout
+          timeout: 5999 });
         }
         backToList();
       },
