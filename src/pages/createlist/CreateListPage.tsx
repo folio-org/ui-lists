@@ -1,15 +1,15 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from '@folio/stripes/components';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateList, useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
+import { computeRecordTypeOptions } from './helpers';
 import { HOME_PAGE_URL } from '../../constants';
-import { EntityType, ListsRecordBase } from '../../interfaces';
-import { FIELD_NAMES } from './types';
 
-const DEFAULT_SELECTED_VALUE_INDEX = 0;
+import { ListsRecordBase } from '../../interfaces';
+import { FIELD_NAMES } from './types';
 
 export const CreateListPage:FC = () => {
   const history = useHistory();
@@ -43,23 +43,10 @@ export const CreateListPage:FC = () => {
   const { description, listName, visibility, status, recordType } = state;
   const isRequiredMissing = !listName?.length || !recordType?.length;
 
-  useEffect(() => {
-    if (recordTypes?.length && !recordType) {
-      onValueChange({
-        [FIELD_NAMES.RECORD_TYPE]: recordTypes[DEFAULT_SELECTED_VALUE_INDEX].id
-      });
-    }
-  }, [recordType, onValueChange, recordTypes]);
-
-  const computeRecordTypeOptions = (entityTypes: EntityType[], selected: string) => {
-    return entityTypes.map(({ id, label }) => ({
-      label,
-      value: id,
-      selected: id === selected
-    }));
-  };
-
-  const recordTypesOptions = computeRecordTypeOptions(recordTypes, recordType || '');
+  const recordTypesOptions = computeRecordTypeOptions(
+    recordTypes,
+    recordType
+  );
 
   if (isLoading || isLoadingRecords) {
     return <LoadingPane />;
@@ -87,4 +74,3 @@ export const CreateListPage:FC = () => {
     </CreateListLayout>
   );
 };
-

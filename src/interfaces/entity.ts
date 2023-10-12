@@ -1,6 +1,20 @@
+import { ReactNode } from 'react';
+
 export interface Value {
     label: string;
     name: string;
+}
+
+export type EntityTypeOption = {
+    label: string,
+    id: string
+};
+
+export type EntityTypeSelectOption = {
+    label: string | ReactNode,
+    value: string,
+    selected: boolean,
+    disabled?: boolean
 }
 
 export interface EntityTypeColumn {

@@ -3,6 +3,7 @@ import lists from '../data/lists.json';
 import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
 import exportStarted from '../data/exportStarted.json';
+import entityTypes from '../data/entityTypes.json';
 
 interface IParams {
   urlPrefix?: string;
@@ -31,7 +32,7 @@ export const startMirage = ({
 
       this.get('entity-types/:id', () => entityTypeDetails);
 
-      this.get('entity-types', () => [entityTypeDetails, entityTypeDetails]);
+      this.get('entity-types', () => entityTypes);
 
       this.delete('lists/:listId/refresh', () => new Response(200));
 
