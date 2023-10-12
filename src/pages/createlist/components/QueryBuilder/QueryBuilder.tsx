@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
+import { noop } from 'lodash';
 import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../types';
 import { t } from '../../../../services';
 import { useRecordsLimit, useMessages } from '../../../../hooks';
@@ -42,7 +43,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   const triggerButtonLabel = isEditQuery ? t('list.modal.edit-query') : undefined;
 
   const entityTypeDataSource = async () => {
-    return ky.get(`entity-types/${selectedType}`).json();
+    return selectedType ? ky.get(`entity-types/${selectedType}`).json() : noop;
   };
 
   const queryDetailsDataSource = async ({ queryId, includeContent, offset, limit }

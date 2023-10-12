@@ -5,8 +5,10 @@ import { computeErrorMessage, t } from '../../services';
 import { useCreateList, useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
+import { computeRecordTypeOptions } from './helpers';
 import { HOME_PAGE_URL } from '../../constants';
-import { EntityType, ListsRecordBase } from '../../interfaces';
+
+import { ListsRecordBase } from '../../interfaces';
 import { FIELD_NAMES } from './types';
 
 export const CreateListPage:FC = () => {
@@ -41,27 +43,10 @@ export const CreateListPage:FC = () => {
   const { description, listName, visibility, status, recordType } = state;
   const isRequiredMissing = !listName?.length || !recordType?.length;
 
-  const computeRecordTypeOptions = (entityTypes: EntityType[], selected: string) => {
-    const defaultPlaceholder = {
-      label: 'default select',
-      selected: false,
-      value: '',
-    };
-
-    let options = entityTypes.map(({ id, label }) => ({
-      label,
-      value: id,
-      selected: id === selected
-    }));
-
-    if (!selected) {
-      options = [defaultPlaceholder, ...options];
-    }
-
-    return options;
-  };
-
-  const recordTypesOptions = computeRecordTypeOptions(recordTypes, recordType || '');
+  const recordTypesOptions = computeRecordTypeOptions(
+    recordTypes,
+    recordType || ''
+  );
 
   if (isLoading || isLoadingRecords) {
     return <LoadingPane />;
