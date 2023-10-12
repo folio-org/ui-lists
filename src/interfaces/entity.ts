@@ -6,6 +6,11 @@ export interface Value {
 }
 
 export type EntityTypeOption = {
+    label: string,
+    id: string
+};
+
+export type EntityTypeSelectOption = {
     label: string | ReactNode,
     value: string,
     selected: boolean,

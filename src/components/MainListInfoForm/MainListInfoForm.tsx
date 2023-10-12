@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
 import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
-import { EntityTypeOption } from '../../interfaces';
+import { EntityTypeSelectOption } from '../../interfaces';
 import {
   MAX_SUPPORTED_DESCRIPTION_LENGTH,
   MAX_SUPPORTED_NAME_LENGTH
@@ -19,7 +19,7 @@ type MainListInfoFormProps = {
     status: string,
     isLoading?: boolean,
     showInactiveWarning?: boolean,
-    recordTypeOptions?: EntityTypeOption[]
+    recordTypeOptions?: EntityTypeSelectOption[]
 }
 
 export const MainListInfoForm = (

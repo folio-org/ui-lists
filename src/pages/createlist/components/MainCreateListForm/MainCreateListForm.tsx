@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
 import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
-import { EntityTypeOption } from '../../../../interfaces';
+import { EntityTypeSelectOption } from '../../../../interfaces';
 import { ChangedFieldType, STATUS, VISIBILITY } from '../../types';
 import { MainListInfoForm } from '../../../../components';
 
@@ -17,7 +17,7 @@ type MainCreateListFormProps = {
   visibilityField: VISIBILITY,
   statusField: STATUS,
   isQueryButtonDisabled?: boolean,
-  recordTypesOptions: EntityTypeOption[],
+  recordTypesOptions: EntityTypeSelectOption[],
   selectedType: string
 }
 
