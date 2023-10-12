@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from '@folio/stripes/components';
 import { computeErrorMessage, t } from '../../services';
@@ -8,8 +8,6 @@ import { CreateListLayout, MainCreateListForm } from './components';
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityType, ListsRecordBase } from '../../interfaces';
 import { FIELD_NAMES } from './types';
-
-const DEFAULT_SELECTED_VALUE_INDEX = 0;
 
 export const CreateListPage:FC = () => {
   const history = useHistory();
@@ -43,20 +41,24 @@ export const CreateListPage:FC = () => {
   const { description, listName, visibility, status, recordType } = state;
   const isRequiredMissing = !listName?.length || !recordType?.length;
 
-  useEffect(() => {
-    if (recordTypes?.length && !recordType) {
-      onValueChange({
-        [FIELD_NAMES.RECORD_TYPE]: recordTypes[DEFAULT_SELECTED_VALUE_INDEX].id
-      });
-    }
-  }, [recordType, onValueChange, recordTypes]);
-
   const computeRecordTypeOptions = (entityTypes: EntityType[], selected: string) => {
-    return entityTypes.map(({ id, label }) => ({
+    const defaultPlaceholder = {
+      label: 'default select',
+      selected: false,
+      value: '',
+    };
+
+    let options = entityTypes.map(({ id, label }) => ({
       label,
       value: id,
       selected: id === selected
     }));
+
+    if (!selected) {
+      options = [defaultPlaceholder, ...options];
+    }
+
+    return options;
   };
 
   const recordTypesOptions = computeRecordTypeOptions(recordTypes, recordType || '');

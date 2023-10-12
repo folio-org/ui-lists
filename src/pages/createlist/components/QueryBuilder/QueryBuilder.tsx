@@ -99,7 +99,6 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   };
 
   return (
-    selectedType &&
     <Pluggable
       componentType="builder"
       type="query-builder"
