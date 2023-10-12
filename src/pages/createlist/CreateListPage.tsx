@@ -45,7 +45,7 @@ export const CreateListPage:FC = () => {
 
   const recordTypesOptions = computeRecordTypeOptions(
     recordTypes,
-    recordType || ''
+    recordType
   );
 
   if (isLoading || isLoadingRecords) {
@@ -62,7 +62,7 @@ export const CreateListPage:FC = () => {
       showModalOnCancel={hasChanges}
     >
       <MainCreateListForm
-        selectedType={recordType}
+        selectedType={recordType || ''}
         descriptionField={description}
         listNameField={listName}
         visibilityField={visibility}
@@ -74,4 +74,3 @@ export const CreateListPage:FC = () => {
     </CreateListLayout>
   );
 };
-

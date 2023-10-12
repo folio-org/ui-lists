@@ -1,7 +1,7 @@
 import { EntityType, EntityTypeOption } from '../../interfaces';
 import { t } from '../../services';
 
-export const computeRecordTypeOptions = (entityTypes: EntityType[], selected: string): EntityTypeOption[] => {
+export const computeRecordTypeOptions = (entityTypes: EntityType[], selected = ''): EntityTypeOption[] => {
   const defaultPlaceholder = {
     label: t('create-list.choose-record-type'),
     selected: false,
