@@ -135,5 +135,6 @@
   "cancel-refresh.default": "Error: the refresh for <strong>{listName}</strong> was not cancelled. Verify a refresh is in progress and try again.",
   "cancel_refresh-list.not.refreshing": "Error: the refresh for <strong>{listName}</strong> was not cancelled. Verify a refresh is in progress and try again.",
 
-  "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again."
+  "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
+  "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it."
 }
