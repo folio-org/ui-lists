@@ -4,7 +4,7 @@ import { ListsRecordDetails } from '../interfaces';
 
 export const useListDetails = (id: string, queryOptions = {}) => {
   const ky = useOkapiKy();
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     {
       queryKey: ['listDetails', id],
       queryFn: async () => {
@@ -17,6 +17,7 @@ export const useListDetails = (id: string, queryOptions = {}) => {
     },
   );
   return ({
+    refetchDetails: refetch,
     isLoading,
     data,
   });
