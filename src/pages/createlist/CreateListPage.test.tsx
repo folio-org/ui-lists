@@ -33,39 +33,31 @@ let server: any;
 beforeEach(async () => {
   jest.clearAllMocks();
   server = startMirage({});
-
-  await renderCreateListPage();
 });
 
 afterEach(() => {
+  queryClient.clear();
   server.shutdown();
 });
 
+const awaitLoading = async () => {
+  const loader = screen.getByText('LoadingPane');
+
+  expect(loader).toBeInTheDocument();
+
+  await waitFor(() => {
+    return expect(loader).not.toBeInTheDocument();
+  });
+};
 
 describe('CreateList Page', () => {
-  describe('Loading', () => {
-    describe('When components mounted', () => {
-      it('it is expected to show loader', () => {
-        const loader = screen.getByText('LoadingPane');
-
-        expect(loader).toBeInTheDocument();
-      });
-    });
-
-    describe('When loading finished mounted', () => {
-      it('it is expected to hide loader', async () => {
-        const loader = screen.getByText('LoadingPane');
-
-        await waitFor(() => {
-          return expect(loader).not.toBeInTheDocument();
-        });
-      });
-    });
-  });
-
   describe('Render controls', () => {
     describe('buttons cancel', () => {
-      it('is expected to contain cancel button ', () => {
+      it('is expected to contain cancel button ', async () => {
+        await renderCreateListPage();
+
+        await awaitLoading();
+
         const cancelButton = screen.getByRole('button', {
           name: 'ui-lists.button.cancel'
         });
@@ -75,7 +67,11 @@ describe('CreateList Page', () => {
     });
 
     describe('buttons save', () => {
-      it('is expected to contain cancel button ', () => {
+      it('is expected to contain cancel button ', async () => {
+        await renderCreateListPage();
+
+        await awaitLoading();
+
         const cancelButton = screen.getByRole('button', {
           name: 'ui-lists.button.save'
         });
@@ -85,7 +81,11 @@ describe('CreateList Page', () => {
     });
 
     describe('buttons close', () => {
-      it('is expected to contain close button ', () => {
+      it('is expected to contain close button ', async () => {
+        await renderCreateListPage();
+
+        await awaitLoading();
+
         const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         expect(closeButton).toBeInTheDocument();
@@ -93,9 +93,13 @@ describe('CreateList Page', () => {
     });
   });
 
-  test.skip('interactions', () => {
+  describe('interactions', () => {
     describe('Close pane', () => {
       it('is expected to call history push', async () => {
+        await renderCreateListPage();
+
+        await awaitLoading();
+
         const closeButton = screen.getByLabelText('Close button', { selector: 'button' });
 
         await user.click(closeButton);
@@ -107,6 +111,10 @@ describe('CreateList Page', () => {
     describe('Cancel editing', () => {
       describe('Cancel edit without changes', () => {
         it('is expected to call history push', async () => {
+          await renderCreateListPage();
+
+          await awaitLoading();
+
           const cancelButton = screen.getByRole('button', {
             name: 'ui-lists.button.cancel'
           });
@@ -120,6 +128,10 @@ describe('CreateList Page', () => {
       describe('Cancel edit with changes', () => {
         describe('Confirm cancel', () => {
           it('is expected to call history push', async () => {
+            await renderCreateListPage();
+
+            await awaitLoading();
+
             const cancelButton = screen.getByRole('button', {
               name: 'ui-lists.button.cancel'
             });
@@ -151,6 +163,10 @@ describe('CreateList Page', () => {
 
           describe('Cancel cancel', () => {
             it('is expected to not history push', async () => {
+              await renderCreateListPage();
+
+              await awaitLoading();
+
               const cancelButton = screen.getByRole('button', {
                 name: 'ui-lists.button.cancel'
               });
@@ -185,7 +201,11 @@ describe('CreateList Page', () => {
 
       describe('Disable/Enable save button', () => {
         describe('When user dont made any changes', () => {
-          it('it is expected to keep save button disabled', () => {
+          it('it is expected to keep save button disabled', async () => {
+            await renderCreateListPage();
+
+            await awaitLoading();
+
             const saveButton = screen.getByRole('button', {
               name: 'ui-lists.button.save'
             });
@@ -197,13 +217,19 @@ describe('CreateList Page', () => {
 
         describe('When user made changes', () => {
           it('it is expected to enable save button', async () => {
+            await renderCreateListPage();
+
+            await awaitLoading();
+
             const saveButton = screen.getByRole('button', {
               name: 'ui-lists.button.save'
             });
             const nameField = screen.getByLabelText('ui-lists.create-list.main.list-name', {
               selector: 'input'
             });
+            const select = screen.getByRole('combobox');
 
+            await user.selectOptions(select, 'Users');
             await user.type(nameField, ' some text');
 
             expect(saveButton).toBeEnabled();
