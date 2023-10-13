@@ -49,7 +49,10 @@ export const MainListInfoForm = (
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
       return (
-        <div className={css.recordTypeField}>
+        <div
+          key={recordTypeOptions.length}
+          className={css.recordTypeField}
+        >
           {/* @ts-ignore:next-line */}
           <Select
             required
