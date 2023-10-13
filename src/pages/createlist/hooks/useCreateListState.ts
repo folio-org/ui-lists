@@ -23,6 +23,7 @@ export const useCreateListFormState = () => {
       return { ...prevState,
         ...value };
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const hasDirtyFields = Boolean(JSON.stringify(initialState) !== JSON.stringify(state));
