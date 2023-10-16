@@ -34,6 +34,7 @@ export const MainListInfoForm = (
 ) => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
+    onValueChange({ [event.target.name]: event.target.value });
   };
   const onTrimOnBlur = (event: FocusEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value.trim() });
@@ -48,13 +49,21 @@ export const MainListInfoForm = (
 
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
+      /**
+       * Select component breaks in cases where amount of options changes after selection
+       * even if they have selected property, so we duplicate selected value in value
+       */
+
+      const value = recordTypeOptions?.find(item => item.selected)?.value;
+
       return (
         <div className={css.recordTypeField}>
           {/* @ts-ignore:next-line */}
           <Select
             required
+            value={value}
             name={FIELD_NAMES.RECORD_TYPE}
-            dataOptions={recordTypeOptions}
+            dataOptions={[...recordTypeOptions]}
             onChange={onChangeHandler}
             label={t('create-list.aside.record-types')}
           />
