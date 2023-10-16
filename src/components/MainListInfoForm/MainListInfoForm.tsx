@@ -34,7 +34,6 @@ export const MainListInfoForm = (
 ) => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
-    onValueChange({ [event.target.name]: event.target.value });
   };
   const onTrimOnBlur = (event: FocusEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value.trim() });
