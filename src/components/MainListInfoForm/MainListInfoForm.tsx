@@ -56,7 +56,10 @@ export const MainListInfoForm = (
       const value = recordTypeOptions?.find(item => item.selected)?.value;
 
       return (
-        <div className={css.recordTypeField}>
+        <div
+          key={recordTypeOptions.length}
+          className={css.recordTypeField}
+        >
           {/* @ts-ignore:next-line */}
           <Select
             required
