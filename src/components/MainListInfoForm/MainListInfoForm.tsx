@@ -62,7 +62,7 @@ export const MainListInfoForm = (
             required
             value={value}
             name={FIELD_NAMES.RECORD_TYPE}
-            dataOptions={[...recordTypeOptions]}
+            dataOptions={recordTypeOptions}
             onChange={onChangeHandler}
             label={t('create-list.aside.record-types')}
           />
