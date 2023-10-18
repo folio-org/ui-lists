@@ -48,6 +48,13 @@ export const MainListInfoForm = (
 
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
+      /**
+       * Select component breaks in cases where amount of options changes after selection
+       * even if they have selected property, so we duplicate selected value in value
+       */
+
+      const value = recordTypeOptions?.find(item => item.selected)?.value;
+
       return (
         <div
           key={recordTypeOptions.length}
@@ -56,6 +63,7 @@ export const MainListInfoForm = (
           {/* @ts-ignore:next-line */}
           <Select
             required
+            value={value}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
             onChange={onChangeHandler}
