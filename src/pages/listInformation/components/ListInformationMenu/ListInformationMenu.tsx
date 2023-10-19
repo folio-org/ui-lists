@@ -109,6 +109,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   }
 
   return (
+    actionButtons.length ?
     <ActionMenu actionButtons={actionButtons}>
       <Headline size="medium" margin="none" tag="p" faded>
         {t('pane.dropdown.show-columns')}
@@ -121,6 +122,6 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
         onChange={onColumnsChange}
         selectedValues={visibleColumns}
       />
-    </ActionMenu>
+    </ActionMenu> : <></>
   );
 };

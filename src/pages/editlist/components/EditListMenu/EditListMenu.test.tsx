@@ -3,6 +3,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { EditListMenu } from './EditListMenu';
 
 describe('EditListMenu', () => {
+  const stripes = {
+    hasPerm: jest.fn().mockReturnValue(true)
+  };
+
   const mockButtonHandlers = {
     'delete': jest.fn(),
     'export': jest.fn(),
@@ -15,7 +19,7 @@ describe('EditListMenu', () => {
   };
 
   it('should render delete and initial export buttons', () => {
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
 
     const deleteButton = screen.getByText('ui-lists.pane.dropdown.delete');
     const exportButton = screen.getByText('ui-lists.pane.dropdown.export');
@@ -25,7 +29,7 @@ describe('EditListMenu', () => {
   });
 
   it('should call delete handler when delete button is clicked', async () => {
-    await render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
+    await render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
 
     const deleteButton = screen.getByText('ui-lists.pane.dropdown.delete');
     fireEvent.click(deleteButton);
@@ -34,7 +38,7 @@ describe('EditListMenu', () => {
   });
 
   it('should call export handler when export button is clicked', () => {
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
 
     const exportButton = screen.getByText('ui-lists.pane.dropdown.export');
     fireEvent.click(exportButton);
@@ -48,7 +52,7 @@ describe('EditListMenu', () => {
       isExportInProgress: true,
     };
 
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} stripes={stripes} />);
 
     const cancelExportButton = screen.getByText('ui-lists.pane.dropdown.cancel-export');
 
@@ -60,7 +64,7 @@ describe('EditListMenu', () => {
       ...mockConditions,
       isExportInProgress: true,
     };
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} stripes={stripes} />);
 
     const cancelExportButton = screen.getByText('ui-lists.pane.dropdown.cancel-export');
     fireEvent.click(cancelExportButton);

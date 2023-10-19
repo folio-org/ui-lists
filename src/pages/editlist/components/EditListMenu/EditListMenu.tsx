@@ -8,6 +8,7 @@ import {
 } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS } from '../../../../interfaces';
+import { USER_PERMS } from '../../../../utils/constants';
 
 interface ListInformationMenuProps {
   buttonHandlers: {
@@ -15,14 +16,18 @@ interface ListInformationMenuProps {
     'export': () => void,
     'cancel-export': () => void
   },
-  conditions: DisablingConditions
+  conditions: DisablingConditions,
+  stripes: any
 }
 
 export const EditListMenu: React.FC<ListInformationMenuProps> = ({
   conditions,
   buttonHandlers,
+  stripes
 }) => {
   const { isExportInProgress } = conditions;
+
+  const actionButtons:ActionButton[] = [];
 
   const initExportButton = {
     label: 'export',
@@ -39,16 +44,20 @@ export const EditListMenu: React.FC<ListInformationMenuProps> = ({
   };
 
   const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
+  const deleteSlot = {
+    label: 'delete',
+    icon: ICONS.trash,
+    onClick: buttonHandlers.delete,
+    disabled: isDeleteDisabled(conditions)
+  };
 
-  const actionButtons:ActionButton[] = [
-    {
-      label: 'delete',
-      icon: ICONS.trash,
-      onClick: buttonHandlers.delete,
-      disabled: isDeleteDisabled(conditions)
-    },
-    exportSlot
-  ];
+  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+    actionButtons.push(exportSlot);
+  }
 
-  return <ActionMenu actionButtons={actionButtons} />;
+  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+    actionButtons.push(deleteSlot);
+  }
+
+  return actionButtons.length ? <ActionMenu actionButtons={actionButtons} /> : <></>;
 };
