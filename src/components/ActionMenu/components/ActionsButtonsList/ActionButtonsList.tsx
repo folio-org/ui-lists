@@ -1,5 +1,5 @@
-import { Button, Icon } from '@folio/stripes/components';
 import React, { FC } from 'react';
+import { Button, Icon } from '@folio/stripes/components';
 import { t, ActionButton } from '../../../../services';
 
 type ActionButtonsListProps = {
