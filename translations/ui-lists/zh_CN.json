@@ -108,5 +108,7 @@
     "cancel-refresh.success": "<strong> {listName} </strong>的刷新已成功取消。",
     "cancel-refresh.default": "错误： <strong> {listName} </strong>的刷新未取消。验证刷新正在进行中，然后重试。",
     "cancel_refresh-list.not.refreshing": "错误： <strong> {listName} </strong>的刷新未取消。验证刷新正在进行中，然后重试。",
-    "read-list.not.found": "错误：未找到<strong> {listName} </strong> 。验证列表位置并重试。"
+    "read-list.not.found": "错误：未找到<strong> {listName} </strong> 。验证列表位置并重试。",
+    "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
+    "create-list.choose-record-type": "Select record type"
 }

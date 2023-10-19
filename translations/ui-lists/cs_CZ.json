@@ -108,5 +108,7 @@
     "cancel-refresh.success": "Obnovení pro <strong>{listName}</strong> bylo úspěšně zrušeno.",
     "cancel-refresh.default": "Chyba: obnovení pro <strong>{listName}</strong> nebylo zrušeno. Ověřte, zda probíhá aktualizace, a zkuste to znovu.",
     "cancel_refresh-list.not.refreshing": "Chyba: obnovení pro <strong>{listName}</strong> nebylo zrušeno. Ověřte, zda probíhá aktualizace, a zkuste to znovu.",
-    "read-list.not.found": "Chyba: <strong>{listName}</strong> nebyl nalezen. Ověřte umístění seznamu a zkuste to znovu."
+    "read-list.not.found": "Chyba: <strong>{listName}</strong> nebyl nalezen. Ověřte umístění seznamu a zkuste to znovu.",
+    "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
+    "create-list.choose-record-type": "Select record type"
 }
