@@ -7,6 +7,10 @@ describe('EditListMenu', () => {
     hasPerm: jest.fn().mockReturnValue(true)
   };
 
+  const stripesNoPerm = {
+    hasPerm: jest.fn().mockReturnValue(false)
+  };
+
   const mockButtonHandlers = {
     'delete': jest.fn(),
     'export': jest.fn(),
@@ -70,5 +74,15 @@ describe('EditListMenu', () => {
     fireEvent.click(cancelExportButton);
 
     expect(mockButtonHandlers['cancel-export']).toHaveBeenCalled();
+  });
+
+  it('should not render buttons when user doesn\'t have permission', () => {
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripesNoPerm} />);
+
+    const deleteButton = screen.queryByText('ui-lists.pane.dropdown.delete');
+    const exportButton = screen.queryByText('ui-lists.pane.dropdown.export');
+
+    expect(deleteButton).toBeNull();
+    expect(exportButton).toBeNull();
   });
 });
