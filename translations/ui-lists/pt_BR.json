@@ -94,7 +94,7 @@
     "update-list.refresh.in.progress": "Erro: as alterações em <strong>{listName}</strong> não foram salvas. As listas não podem ser atualizadas enquanto uma atualização estiver em andamento.",
     "update-export.in.progress": "Erro: as alterações em <strong>{listName}</strong> não foram salvas. As listas não podem ser atualizadas enquanto uma exportação estiver em andamento.",
     "update-list.not.found": "Erro: as alterações em <strong>{listName}</strong> não foram salvas porque a lista não foi encontrada. Verifique o local da lista e tente novamente.",
-    "update-optimistic.lock.exception": "Erro: as alterações em <strong>{listName}</strong> não foram salvas. Outra pessoa modificou esta lista enquanto você a editava. Atualize esta página para cancelar as alterações e mostrar a nova versão.",
+    "update-optimistic.lock.exception": "Erro: outra pessoa modificou <strong>{listName}</strong>. Atualize a página para ver a versão mais recente desta lista.",
     "refresh-list.is.inactive": "Erro: <strong>{listName}</strong> não foi atualizado porque está inativo. Defina o status da lista como ativo para atualizar a lista.",
     "refresh-list.refresh.in.progress": "Erro: a atualização de <strong>{listName}</strong> falhou porque uma atualização desta lista já está em andamento.",
     "refresh-export.in.progress": "Erro: <strong>{listName}</strong> não foi atualizado. As listas não podem ser atualizadas enquanto uma exportação está em andamento.",
@@ -108,5 +108,7 @@
     "cancel-refresh.success": "A atualização de <strong>{listName}</strong> foi cancelada com sucesso.",
     "cancel-refresh.default": "Erro: a atualização de <strong>{listName}</strong> não foi cancelada. Verifique se uma atualização está em andamento e tente novamente.",
     "cancel_refresh-list.not.refreshing": "Erro: a atualização de <strong>{listName}</strong> não foi cancelada. Verifique se uma atualização está em andamento e tente novamente.",
-    "read-list.not.found": "Erro: <strong>{listName}</strong> não foi encontrado. Verifique o local da lista e tente novamente."
+    "read-list.not.found": "Erro: <strong>{listName}</strong> não foi encontrado. Verifique o local da lista e tente novamente.",
+    "read-list.is.private": "Erro: as alterações em <strong>{listName}</strong> não foram salvas. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
+    "create-list.choose-record-type": "Selecione o tipo de registro"
 }
