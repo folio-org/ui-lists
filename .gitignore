@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.vscode
 .env
 *.swp
 *.swo
@@ -9,5 +10,7 @@ npm-debug.log
 yarn.lock
 yarn-error.log
 package-lock.json
+bun.lockb
 junit.xml
 output
+stripes.config.js
