@@ -7,7 +7,7 @@ type filterConfigType = {
   label: string,
   name: string,
   values: string[] | {name: string, displayName: string}[]
-}[]
+}[] | boolean[]
 
 export const useFilters = (filterConfig: filterConfigType) => {
   const [storedAppliedFilters] = useLocalStorage(APPLIED_FILTERS_KEY, filterConfig);
@@ -22,8 +22,13 @@ export const useFilters = (filterConfig: filterConfigType) => {
   };
 
   const onChangeFilter = (e: any) => {
+    const aTarget = e?.target;
     const aFilters = { ...appliedFilters };
-    aFilters[e.target.name] = e.target.checked;
+    if (aTarget?.checked) {
+      aFilters[aTarget?.name] = true;
+    } else {
+      delete aFilters[aTarget?.name];
+    }
     saveFilters(aFilters);
   };
 
