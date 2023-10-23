@@ -12,6 +12,7 @@ import {
   PaneFooter,
   Paneset
 } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
@@ -28,6 +29,7 @@ import { HOME_PAGE_URL } from '../../constants';
 
 export const EditListPage:FC = () => {
   const history = useHistory();
+  const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
   const { data: listDetails, isLoading: loadingListDetails } = useListDetails(id);
@@ -160,6 +162,7 @@ export const EditListPage:FC = () => {
             lastMenu={<EditListMenu
               conditions={conditions}
               buttonHandlers={buttonHandlers}
+              stripes={stripes}
             />}
             footer={<PaneFooter
               renderStart={
