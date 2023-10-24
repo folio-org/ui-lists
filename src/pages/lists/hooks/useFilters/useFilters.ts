@@ -7,7 +7,7 @@ type filterConfigType = {
   label: string,
   name: string,
   values: string[] | {name: string, displayName: string}[]
-}[]
+}[] | boolean[]
 
 export const useFilters = (filterConfig: filterConfigType) => {
   const [storedAppliedFilters] = useLocalStorage(APPLIED_FILTERS_KEY, filterConfig);
@@ -16,15 +16,20 @@ export const useFilters = (filterConfig: filterConfigType) => {
 
   const filterCount = activeFilters?.length;
 
-  const saveFilters = (theFilters: SetStateAction<filterConfigType>) => {
-    setAppliedFilters(theFilters);
-    writeStorage(APPLIED_FILTERS_KEY, theFilters);
+  const saveFilters = (filters: SetStateAction<filterConfigType>) => {
+    setAppliedFilters(filters);
+    writeStorage(APPLIED_FILTERS_KEY, filters);
   };
 
   const onChangeFilter = (e: any) => {
-    const aFilters = { ...appliedFilters };
-    aFilters[e.target.name] = e.target.checked;
-    saveFilters(aFilters);
+    const target = e?.target;
+    const filters = { ...appliedFilters };
+    if (target?.checked) {
+      filters[target?.name] = true;
+    } else {
+      delete filters[target?.name];
+    }
+    saveFilters(filters);
   };
 
   const onResetAll = () => {
@@ -32,15 +37,15 @@ export const useFilters = (filterConfig: filterConfigType) => {
   };
 
   const onClearGroup = (groupName: string) => {
-    const aFilters = { ...appliedFilters };
+    const filters = { ...appliedFilters };
 
-    for (const name in aFilters) {
+    for (const name in filters) {
       if (name.startsWith(groupName)) {
-        delete aFilters[name];
+        delete filters[name];
       }
     }
 
-    saveFilters(aFilters);
+    saveFilters(filters);
   };
 
   return { onChangeFilter, onClearGroup, onResetAll, filterCount, activeFilters, appliedFilters };
