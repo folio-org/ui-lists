@@ -1,5 +1,11 @@
 # Change history for ui-lists
 
+# [2.0.1](https://github.com/folio-org/ui-lists/tree/v2.0.0) (2023-10-24)
+
+* Fix select in list create.
+* Permissions Fix. Refs UILISTS-39.
+* Fix clear group icon to disappear when no items selected. Refs UILISTS-25.
+
 # [2.0.0](https://github.com/folio-org/ui-lists/tree/v2.0.0) (2023-10-13)
 
 * Initial release with core functionality.
