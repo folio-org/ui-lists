@@ -6,6 +6,7 @@ import { getVisibleColumnsKey } from '../../../../utils';
 
 import { QueryBuilder } from '../../../createlist/components/QueryBuilder';
 import { STATUS_VALUES, VISIBILITY_VALUES } from '../../types';
+import css from '../../../createlist/components/MainCreateListForm/MainCreateListForm.module.css';
 
 type EditListResultViewerProps = {
     id: string,
@@ -71,19 +72,22 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       onSetDefaultVisibleColumns={handleDefaultVisibleColumnsSet}
       onSetDefaultColumns={() => {}}
       height={500}
-      additionalControls={
-        <QueryBuilder
-          listId={id}
-          version={version}
-          isEditQuery
-          initialValues={fqlQuery ? JSON.parse(fqlQuery) : undefined}
-          selectedType={entityTypeId}
-          isQueryButtonDisabled={false}
-          listName={listName}
-          status={status === STATUS_VALUES.ACTIVE ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE}
-          visibility={visibility === VISIBILITY_VALUES.SHARED ? VISIBILITY_VALUES.SHARED : VISIBILITY_VALUES.PRIVATE}
-          description={description}
-        />}
+      additionalControls={(
+        <div className={css.queryBuilderButton}>
+          <QueryBuilder
+            listId={id}
+            version={version}
+            isEditQuery
+            initialValues={fqlQuery ? JSON.parse(fqlQuery) : undefined}
+            selectedType={entityTypeId}
+            isQueryButtonDisabled={false}
+            listName={listName}
+            status={status === STATUS_VALUES.ACTIVE ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE}
+            visibility={visibility === VISIBILITY_VALUES.SHARED ? VISIBILITY_VALUES.SHARED : VISIBILITY_VALUES.PRIVATE}
+            description={description}
+          />
+        </div>
+      )}
     >
       {t('loading-fallback')}
     </Pluggable>

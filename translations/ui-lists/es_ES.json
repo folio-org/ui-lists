@@ -94,7 +94,7 @@
     "update-list.refresh.in.progress": "Error: changes to <strong>{listName}</strong> were not saved. Lists can't be updated while a refresh is in progress.",
     "update-export.in.progress": "Error: changes to <strong>{listName}</strong> were not saved. Lists can't be updated while an export is in progress.",
     "update-list.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list was not found. Verify the list location and try again.",
-    "update-optimistic.lock.exception": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list while you were editing it. Refresh this page to cancel changes and show new version.",
+    "update-optimistic.lock.exception": "Error: someone else modified <strong>{listName}</strong>. Reload the page to view the latest version of this list.",
     "refresh-list.is.inactive": "Error: <strong>{listName}</strong> was not refreshed because it is inactive. Set the list status to active to refresh the list.",
     "refresh-list.refresh.in.progress": "Error: refresh for <strong>{listName}</strong> failed because a refresh for this list is already in progress.",
     "refresh-export.in.progress": "Error: <strong>{listName}</strong> was not refreshed. Lists can't be refreshed while an export is in progress.",
@@ -108,5 +108,7 @@
     "cancel-refresh.success": "The refresh for <strong>{listName}</strong> was successfully cancelled.",
     "cancel-refresh.default": "Error: the refresh for <strong>{listName}</strong> was not cancelled. Verify a refresh is in progress and try again.",
     "cancel_refresh-list.not.refreshing": "Error: the refresh for <strong>{listName}</strong> was not cancelled. Verify a refresh is in progress and try again.",
-    "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again."
+    "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
+    "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
+    "create-list.choose-record-type": "Select record type"
 }

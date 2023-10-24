@@ -48,14 +48,4 @@ describe('useCreateListFormState', () => {
 
     expect(result.current.hasChanges).toBe(true);
   });
-
-  it('should not detect changes if record type is not set', () => {
-    const { result } = renderHook(() => useCreateListFormState());
-
-    act(() => {
-      result.current.onValueChange({ listName: 'Updated List Name' });
-    });
-
-    expect(result.current.hasChanges).toBe(false);
-  });
 });

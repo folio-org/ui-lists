@@ -2,8 +2,10 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
+import { noop } from 'lodash';
+import { HTTPError } from 'ky';
 import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../types';
-import { t } from '../../../../services';
+import { computeErrorMessage, t } from '../../../../services';
 import { useRecordsLimit, useMessages } from '../../../../hooks';
 import { HOME_PAGE_URL } from '../../../../constants';
 
@@ -38,11 +40,11 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   const history = useHistory();
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
-  const { showSuccessMessage } = useMessages();
+  const { showSuccessMessage, showErrorMessage } = useMessages();
   const triggerButtonLabel = isEditQuery ? t('list.modal.edit-query') : undefined;
 
   const entityTypeDataSource = async () => {
-    return ky.get(`entity-types/${selectedType}`).json();
+    return selectedType ? ky.get(`entity-types/${selectedType}`).json() : noop;
   };
 
   const queryDetailsDataSource = async ({ queryId, includeContent, offset, limit }
@@ -90,6 +92,16 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
 
+  const onQueryRunFail = (error: HTTPError) => {
+    (async () => {
+      const errorMessage = await computeErrorMessage(error, 'update-optimistic.lock.exception', {
+        listName
+      });
+
+      showErrorMessage({ message: errorMessage });
+    })();
+  };
+
   const getParamsSource = async ({ entityTypeId, columnName, searchValue }: any) => {
     return ky.get(`entity-types/${entityTypeId}/columns/${columnName}/values?search=${searchValue}`).json();
   };
@@ -99,7 +111,6 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   };
 
   return (
-    selectedType &&
     <Pluggable
       componentType="builder"
       type="query-builder"
@@ -113,7 +124,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
       cancelQueryDataSource={cancelQueryDataSource}
       queryDetailsDataSource={queryDetailsDataSource}
       onQueryRunSuccess={onQueryRunSuccess}
-      onQueryRunFail={() => {}}
+      onQueryRunFail={onQueryRunFail}
       recordsLimit={recordsLimit}
       saveBtnLabel={t('list.modal.run-query-and-save')}
       triggerButtonLabel={triggerButtonLabel}

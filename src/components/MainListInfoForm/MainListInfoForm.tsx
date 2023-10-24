@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
 import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
+import { EntityTypeSelectOption } from '../../interfaces';
 import {
   MAX_SUPPORTED_DESCRIPTION_LENGTH,
   MAX_SUPPORTED_NAME_LENGTH
@@ -18,7 +19,7 @@ type MainListInfoFormProps = {
     status: string,
     isLoading?: boolean,
     showInactiveWarning?: boolean,
-    recordTypeOptions?: {label: string, value: string, selected: boolean}[]
+    recordTypeOptions?: EntityTypeSelectOption[]
 }
 
 export const MainListInfoForm = (
@@ -47,11 +48,22 @@ export const MainListInfoForm = (
 
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
+      /**
+       * Select component breaks in cases where amount of options changes after selection
+       * even if they have selected property, so we duplicate selected value in value
+       */
+
+      const value = recordTypeOptions?.find(item => item.selected)?.value;
+
       return (
-        <div className={css.recordTypeField}>
+        <div
+          key={recordTypeOptions.length}
+          className={css.recordTypeField}
+        >
           {/* @ts-ignore:next-line */}
           <Select
             required
+            value={value}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
             onChange={onChangeHandler}

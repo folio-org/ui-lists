@@ -4,7 +4,6 @@ import { uniqueId } from 'lodash';
 import {
   AccordionSet,
   Layer,
-  Loading,
   LoadingPane,
   Pane,
   Paneset,
@@ -25,7 +24,7 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
-import { ConfirmDeleteModal } from '../../components';
+import { ConfirmDeleteModal, CompilingLoader } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
 
 export const ListInformationPage: React.FC = () => {
@@ -34,7 +33,7 @@ export const ListInformationPage: React.FC = () => {
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
-  const { data: listData, isLoading: isDetailsLoading } = useListDetails(id);
+  const { data: listData, isLoading: isDetailsLoading, refetchDetails } = useListDetails(id);
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
@@ -78,6 +77,7 @@ export const ListInformationPage: React.FC = () => {
       })();
     },
     onCancelSuccess: () => {
+      refetchDetails();
       showSuccessMessage({
         message: t('cancel-refresh.success', {
           listName
@@ -205,7 +205,7 @@ export const ListInformationPage: React.FC = () => {
               t('mainPane.subTitle',
                 { count: formatNumber(recordCount) })
               :
-              <>{t('lists.item.compiling')}<Loading /></>}
+              <CompilingLoader />}
             lastMenu={<ListInformationMenu
               stripes={stripes}
               visibleColumns={visibleColumns}

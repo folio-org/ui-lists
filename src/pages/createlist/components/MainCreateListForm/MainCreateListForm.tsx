@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
 import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
+import { EntityTypeSelectOption } from '../../../../interfaces';
 import { ChangedFieldType, STATUS, VISIBILITY } from '../../types';
 import { MainListInfoForm } from '../../../../components';
 
@@ -16,8 +17,8 @@ type MainCreateListFormProps = {
   visibilityField: VISIBILITY,
   statusField: STATUS,
   isQueryButtonDisabled?: boolean,
-  recordTypesOptions: {label: string, value: string, selected: boolean}[],
-  selectedType: string
+  recordTypesOptions: EntityTypeSelectOption[],
+  selectedType?: string
 }
 
 export const MainCreateListForm:FC<MainCreateListFormProps> = (
@@ -30,9 +31,9 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
     recordTypesOptions,
     isQueryButtonDisabled }
 ) => {
-  const [isOpened, setIsOpen] = useState(true);
+  const [isOpened, setIsOpened] = useState(true);
   const onToggleHandler = () => {
-    setIsOpen((prevValue) => !prevValue);
+    setIsOpened((prevValue) => !prevValue);
   };
 
   const renderCollapseButton = () => {

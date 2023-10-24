@@ -202,19 +202,21 @@ jest.mock('@folio/stripes/components', () => ({
   )),
   Row: jest.fn(({ children }) => <div className="row">{children}</div>),
   SearchField: jest.fn(({ ariaLabel, className }) => <div aria-label={ariaLabel} className={className} />),
-  Select: jest.fn(({ children, dataOptions }) => (
-    <div>
-      <select>
-        {dataOptions.forEach((option, i) => (
+  Select: jest.fn(({ children, dataOptions, onChange, label, name }) => (
+    <label>
+      {label}
+      <select name={name} onChange={onChange}>
+        {dataOptions.map((option, i) => (
           <option
             value={option.value}
             key={option.id || `option-${i}`}
+            selected={option.selected}
           >
             {option.label}
           </option>))}
       </select>
       {children}
-    </div>
+    </label>
   )),
   Loading: jest.fn(() => <div>Loading</div>),
   LoadingPane: jest.fn(() => <div>LoadingPane</div>),
