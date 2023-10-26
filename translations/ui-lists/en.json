@@ -131,7 +131,7 @@
 
   "export-list.refresh.in.progress": "Error: <strong>{listName}</strong> was not exported. Lists can't be exported while a refresh is in progress.",
   "export-export.in.progress": "Error: export of <strong>{listName}</strong> failed because an export for this list is already in progress.",
-  "export-list.is.inactive": "Error: export of <listName> failed. Verify the list is active and try to export the list again.",
+  "export-list.is.inactive": "Error: export of <strong>{listName}</strong> failed. Verify the list is active and try to export the list again.",
   "export-list.is.private": "Error: export of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
   "export-list.not.found": "Error: export of <strong>{listName}</strong> failed because the list was not found. Verify the list location and try again.",
 
