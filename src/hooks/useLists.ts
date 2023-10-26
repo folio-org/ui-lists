@@ -8,7 +8,7 @@ import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 let pageCount = 0;
 let totalRecordCount = 0;
 
-export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, size?: number, offset?: number, updatedAsOf?: string) => {  
+export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, size?: number, offset?: number, updatedAsOf?: string) => {
   const ky = useOkapiKy();
 
   // If tracking IDs, don't use offset
@@ -27,7 +27,7 @@ export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, siz
   const { data, isLoading, error } = useQuery<Response<ListsRecord[]>, Error>(
     {
       queryKey: [url],
-      refetchInterval: PULLING_STATUS_DELAY,
+      refetchInterval: response => (updatedAsOf && response?.content?.length ? false : PULLING_STATUS_DELAY),
       queryFn: async () => {
         const response = await ky.get(url);
 

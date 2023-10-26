@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { noop } from 'lodash';
+import moment from 'moment';
 import {
   Icon,
   Pane,
@@ -17,7 +18,7 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 import { IfPermission } from '@folio/stripes/core';
 
 import { ListsTable, ListAppIcon } from '../../components';
-import { useLocalStorageToggle } from '../../hooks';
+import { useLists, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
@@ -26,6 +27,7 @@ import { useMessages } from '../../hooks/useMessages';
 
 import css from './ListPage.module.css';
 
+let updatedAsOf = moment.utc().format();
 
 export const ListPage: React.FC = () => {
   const [totalRecords, setTotalRecords] = useState(0);
@@ -40,6 +42,16 @@ export const ListPage: React.FC = () => {
     appliedFilters
   } = useFilters(filterConfig);
   const { showSuccessMessage } = useMessages();
+
+  const updatedListsData = useLists([], [], undefined, undefined, updatedAsOf);
+
+  if (updatedListsData?.listsData?.content) {
+    updatedAsOf = moment.utc().format();
+
+    const listName = updatedListsData?.listsData?.content[0].name;
+
+    showSuccessMessage({ message: t('callout.list.created', { listName }) });
+  }
 
   if (isLoadingConfigData) return <LoadingPane />;
 
