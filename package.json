@@ -156,7 +156,8 @@
           "module.lists.refresh",
           "lists.item.export.download.get",
           "lists.item.export.post",
-          "lists.item.export.get"
+          "lists.item.export.get",
+          "lists.item.export.cancel"
         ]
       },
       {
