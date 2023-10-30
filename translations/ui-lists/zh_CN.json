@@ -94,7 +94,7 @@
     "update-list.refresh.in.progress": "错误：对<strong> {listName} </strong>的更改未保存。刷新过程中无法更新列表。",
     "update-export.in.progress": "错误：对<strong> {listName} </strong>的更改未保存。导出过程中无法更新列表。",
     "update-list.not.found": "错误：由于未找到列表，因此未保存对<strong> {listName} </strong>的更改。验证列表位置并重试。",
-    "update-optimistic.lock.exception": "错误：对<strong> {listName} </strong>的更改未保存。当您编辑此列表时，其他人修改了该列表。刷新此页面可取消更改并显示新版本。",
+    "update-optimistic.lock.exception": "错误：其他人修改了<strong> {listName} </strong> 。重新加载页面以查看此列表的最新版本。",
     "refresh-list.is.inactive": "错误： <strong> {listName} </strong>未刷新，因为它处于未激活状态。将列表状态设置为激活以刷新列表。",
     "refresh-list.refresh.in.progress": "错误： <strong> {listName} </strong>刷新失败，因为该列表的刷新已在进行中。",
     "refresh-export.in.progress": "错误： <strong> {listName} </strong>未刷新。导出过程中无法刷新列表。",
@@ -109,6 +109,10 @@
     "cancel-refresh.default": "错误： <strong> {listName} </strong>的刷新未取消。验证刷新正在进行中，然后重试。",
     "cancel_refresh-list.not.refreshing": "错误： <strong> {listName} </strong>的刷新未取消。验证刷新正在进行中，然后重试。",
     "read-list.not.found": "错误：未找到<strong> {listName} </strong> 。验证列表位置并重试。",
-    "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
-    "create-list.choose-record-type": "Select record type"
+    "read-list.is.private": "错误：对<strong> {listName} </strong>的更改未保存。其他人修改了此列表，您无法再访问它。",
+    "create-list.choose-record-type": "选择记录类型",
+    "export-list.is.inactive": "Error: export of <strong>{listName}</strong> failed. Verify the list is active and try to export the list again.",
+    "refresh-list.is.private": "Error: refresh of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
+    "export-list.is.private": "Error: export of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
+    "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it"
 }

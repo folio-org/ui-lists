@@ -110,5 +110,9 @@
     "cancel_refresh-list.not.refreshing": "Error: the refresh for <strong>{listName}</strong> was not cancelled. Verify a refresh is in progress and try again.",
     "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
     "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
-    "create-list.choose-record-type": "Select record type"
+    "create-list.choose-record-type": "Select record type",
+    "export-list.is.inactive": "Error: export of <strong>{listName}</strong> failed. Verify the list is active and try to export the list again.",
+    "refresh-list.is.private": "Error: refresh of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
+    "export-list.is.private": "Error: export of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
+    "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it"
 }
