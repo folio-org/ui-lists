@@ -94,7 +94,7 @@
     "update-list.refresh.in.progress": "Chyba: změny v <strong>{listName}</strong> nebyly uloženy. Seznamy nelze aktualizovat, pokud probíhá obnovení.",
     "update-export.in.progress": "Chyba: změny v <strong>{listName}</strong> nebyly uloženy. Seznamy nelze aktualizovat, pokud probíhá export.",
     "update-list.not.found": "Chyba: změny v <strong>{listName}</strong> nebyly uloženy, protože seznam nebyl nalezen. Ověřte umístění seznamu a zkuste to znovu.",
-    "update-optimistic.lock.exception": "Chyba: změny v <strong>{listName}</strong> nebyly uloženy. Někdo jiný upravil tento seznam během vašich úprav. Obnovením této stránky zrušíte změny a zobrazíte novou verzi.",
+    "update-optimistic.lock.exception": "Chyba: někdo jiný provedl změny v <strong>{listName}</strong>. Pro zobrazení nejnovější verze tohoto seznamu obnovte stránku.",
     "refresh-list.is.inactive": "Chyba: <strong>{listName}</strong> nebyl obnoven, protože je neaktivní. Nastavte stav seznamu na aktivní, aby se seznam obnovil.",
     "refresh-list.refresh.in.progress": "Chyba: Obnovení pro <strong>{listName}</strong> se nezdařilo, protože obnovení tohoto seznamu již probíhá.",
     "refresh-export.in.progress": "Chyba: <strong>{listName}</strong> nebyl obnoven. Seznamy nelze obnovovat, pokud probíhá export.",
@@ -109,6 +109,10 @@
     "cancel-refresh.default": "Chyba: obnovení pro <strong>{listName}</strong> nebylo zrušeno. Ověřte, zda probíhá aktualizace, a zkuste to znovu.",
     "cancel_refresh-list.not.refreshing": "Chyba: obnovení pro <strong>{listName}</strong> nebylo zrušeno. Ověřte, zda probíhá aktualizace, a zkuste to znovu.",
     "read-list.not.found": "Chyba: <strong>{listName}</strong> nebyl nalezen. Ověřte umístění seznamu a zkuste to znovu.",
-    "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
-    "create-list.choose-record-type": "Select record type"
+    "read-list.is.private": "Chyba: změny v <strong>{listName}</strong> nebyly uloženy. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
+    "create-list.choose-record-type": "Vyberte typ záznamu",
+    "export-list.is.inactive": "Chyba: export <strong>{listName}</strong> se nezdařil. Ověřte, zda je seznam aktivní, a zkuste jej znovu exportovat.",
+    "refresh-list.is.private": "Chyba: obnovení seznamu <strong>{listName}</strong> se nezdařilo. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
+    "export-list.is.private": "Chyba: export <strong>{listName}</strong> se nezdařil. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
+    "delete-list.is.private": "Chyba: seznam <strong>{listName}</strong> nebyl smazán. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup."
 }
