@@ -110,5 +110,9 @@
     "cancel_refresh-list.not.refreshing": "Erro: a atualização de <strong>{listName}</strong> não foi cancelada. Verifique se uma atualização está em andamento e tente novamente.",
     "read-list.not.found": "Erro: <strong>{listName}</strong> não foi encontrado. Verifique o local da lista e tente novamente.",
     "read-list.is.private": "Erro: as alterações em <strong>{listName}</strong> não foram salvas. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
-    "create-list.choose-record-type": "Selecione o tipo de registro"
+    "create-list.choose-record-type": "Selecione o tipo de registro",
+    "export-list.is.inactive": "Erro: falha na exportação de <strong>{listName}</strong>. Verifique se a lista está ativa e tente exportá-la novamente.",
+    "refresh-list.is.private": "Erro: falha na atualização de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
+    "export-list.is.private": "Erro: falha na exportação de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
+    "delete-list.is.private": "Erro: a lista <strong>{listName}</strong> não foi excluída. Outra pessoa modificou essa lista e você não tem mais acesso a ela"
 }
