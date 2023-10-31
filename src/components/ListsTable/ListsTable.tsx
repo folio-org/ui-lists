@@ -18,7 +18,7 @@ export interface ListsTableProps {
 
 export const ListsTable: FC<ListsTableProps> = ({
   activeFilters,
-  setTotalRecords = noop,
+  setTotalRecords = noop
 }) => {
   const [storedCurrentPageOffset] = useLocalStorage(CURRENT_PAGE_OFFSET_KEY, 0);
   const [recordIds, setRecordIds] = useState([] as string[]);
