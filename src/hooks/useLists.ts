@@ -27,7 +27,7 @@ export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, siz
   const { data, isLoading, error } = useQuery<Response<ListsRecord[]>, Error>(
     {
       queryKey: [url],
-      refetchInterval: response => (updatedAsOf && response?.content?.length ? false : PULLING_STATUS_DELAY),
+      refetchInterval: PULLING_STATUS_DELAY,
       queryFn: async () => {
         const response = await ky.get(url);
 
@@ -37,8 +37,9 @@ export const useLists = (filters: Array<string>, idsToTrack?: Array<string>, siz
     },
   );
 
-  // If tracking IDs response total records and pages are invalid, so use established values instead.
-  if (!idsToTrack?.length) {
+  // If tracking IDs response or checking for updates since last timestamp:
+  // total records and pages are invalid, so use established values instead.
+  if (!idsToTrack?.length && !updatedAsOf) {
     totalRecordCount = data?.totalRecords ?? 0;
     pageCount = data?.totalPages ?? 0;
   } else if (data) {
