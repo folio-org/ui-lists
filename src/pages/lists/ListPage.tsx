@@ -44,13 +44,18 @@ export const ListPage: React.FC = () => {
   const { showSuccessMessage } = useMessages();
 
   const updatedListsData = useLists([], [], undefined, undefined, updatedAsOf);
+  const updatedListsContent = updatedListsData?.listsData?.content;
 
-  if (updatedListsData?.listsData?.content) {
+  if (updatedListsContent) {
     updatedAsOf = moment.utc().format();
 
-    const listName = updatedListsData?.listsData?.content[0].name;
+    if (updatedListsContent.length > 1) {
+      showSuccessMessage({ message: t('callout.list.multiple-created') });
+    } else {
+      const listName = updatedListsContent[0].name;
 
-    showSuccessMessage({ message: t('callout.list.created', { listName }) });
+      showSuccessMessage({ message: t('callout.list.created', { listName }) });
+    }
   }
 
   if (isLoadingConfigData) return <LoadingPane />;
@@ -120,7 +125,6 @@ export const ListPage: React.FC = () => {
         <ListsTable
           activeFilters={activeFilters}
           setTotalRecords={setTotalRecords}
-          showSuccessMessage={showSuccessMessage}
         />
       </Pane>
     </Paneset>

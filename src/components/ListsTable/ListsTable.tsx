@@ -10,12 +10,10 @@ import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
-import { ShowMessageHandlerType } from '../../hooks/useMessages/useMessages';
 
 export interface ListsTableProps {
   activeFilters: any,
-  setTotalRecords: (totalRecords: number) => void,
-  showSuccessMessage: (value: ShowMessageHandlerType) => void
+  setTotalRecords: (totalRecords: number) => void
 }
 
 export const ListsTable: FC<ListsTableProps> = ({
