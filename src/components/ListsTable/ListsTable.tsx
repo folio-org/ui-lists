@@ -47,7 +47,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  const { listsData, isLoading } = useLists(activeFilters, recordIds, pagination.limit, pagination.offset);
+  const { listsData, isLoading } = useLists({ filters: activeFilters, idsToTrack: recordIds, size: pagination.limit, offset: pagination.offset });
 
   if (isLoading) {
     return (

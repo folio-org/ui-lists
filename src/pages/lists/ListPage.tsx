@@ -43,7 +43,7 @@ export const ListPage: React.FC = () => {
   } = useFilters(filterConfig);
   const { showSuccessMessage } = useMessages();
 
-  const updatedListsData = useLists([], [], undefined, undefined, updatedAsOf);
+  const updatedListsData = useLists({ updatedAsOf: updatedAsOf });
   const updatedListsContent = updatedListsData?.listsData?.content;
 
   if (updatedListsContent) {
