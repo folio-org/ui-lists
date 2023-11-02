@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { ListsRequest, ListsResponse, ListsRecord } from '../interfaces';
-import { getListsFilterUrlParams } from '../utils';
+import { getListsFilterUrlParams as buildListsUrl } from '../utils';
 import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 
 let pageCount = 0;
@@ -12,14 +12,7 @@ export const useLists = (request: ListsRequest) => {
   const ky = useOkapiKy();
   const { idsToTrack, updatedAsOf } = request;
 
-  // If tracking IDs, don't use offset
-  const urlParams = getListsFilterUrlParams(request);
-
-  let url = 'lists';
-
-  if (urlParams.size) {
-    url += `?${urlParams.toString()}`;
-  }
+  const url = buildListsUrl('lists', request);
 
   const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>(
     {

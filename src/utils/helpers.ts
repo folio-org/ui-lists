@@ -8,7 +8,7 @@ export const getFilters = (appliedFilters: Array<any>) => {
   return appliedFilters && Object.keys(appliedFilters).filter(filterKey => appliedFilters[filterKey] === true);
 };
 
-export const getListsFilterUrlParams = (request: ListsRequest) => {
+export const getListsFilterUrlParams = (url: string, request: ListsRequest) => {
   const { filters, offset, size, idsToTrack, updatedAsOf } = request;
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
@@ -48,5 +48,9 @@ export const getListsFilterUrlParams = (request: ListsRequest) => {
 
   if (updatedAsOf) params.append('updatedAsOf', updatedAsOf);
 
-  return params;
+  if (params.size) {
+    url += `?${params.toString()}`;
+  }
+
+  return url;
 };
