@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { noop } from 'lodash';
-import moment from 'moment';
 import {
   Icon,
   Pane,
@@ -18,16 +17,13 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 import { IfPermission } from '@folio/stripes/core';
 
 import { ListsTable, ListAppIcon } from '../../components';
-import { useListsLastFetchedTimestamp, useLocalStorageToggle } from '../../hooks';
+import { useListsFetchedSinceTimestamp, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
-import { useMessages } from '../../hooks/useMessages';
 
 import css from './ListPage.module.css';
-
-let listsLastFetchedTimestamp = moment.utc().format();
 
 export const ListPage: React.FC = () => {
   const [totalRecords, setTotalRecords] = useState(0);
@@ -41,22 +37,8 @@ export const ListPage: React.FC = () => {
     activeFilters,
     appliedFilters
   } = useFilters(filterConfig);
-  const { showSuccessMessage } = useMessages();
 
-  const updatedListsData = useListsLastFetchedTimestamp({ listsLastFetchedTimestamp });
-  const updatedListsContent = updatedListsData?.listsData?.content;
-
-  if (updatedListsContent?.length) {
-    listsLastFetchedTimestamp = moment.utc().format();
-
-    if (updatedListsContent.length > 1) {
-      showSuccessMessage({ message: t('callout.list.multiple-created') });
-    } else {
-      const listName = updatedListsContent[0].name;
-
-      showSuccessMessage({ message: t('callout.list.created', { listName }) });
-    }
-  }
+  useListsFetchedSinceTimestamp();
 
   if (isLoadingConfigData) return <LoadingPane />;
 
