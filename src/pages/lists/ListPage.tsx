@@ -18,7 +18,7 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 import { IfPermission } from '@folio/stripes/core';
 
 import { ListsTable, ListAppIcon } from '../../components';
-import { useLists, useLocalStorageToggle } from '../../hooks';
+import { useListsLastFetchedTimestamp, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
@@ -43,7 +43,7 @@ export const ListPage: React.FC = () => {
   } = useFilters(filterConfig);
   const { showSuccessMessage } = useMessages();
 
-  const updatedListsData = useLists({ listsLastFetchedTimestamp });
+  const updatedListsData = useListsLastFetchedTimestamp({ listsLastFetchedTimestamp });
   const updatedListsContent = updatedListsData?.listsData?.content;
 
   if (updatedListsContent?.length) {

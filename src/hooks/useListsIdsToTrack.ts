@@ -3,8 +3,9 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { ListsRequest, ListsResponse, ListsRecord } from '../interfaces';
 import { buildListsUrl } from '../utils';
+import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 
-export const useLists = (request: ListsRequest) => {
+export const useListsIdsToTrack = (request: ListsRequest) => {
   const ky = useOkapiKy();
 
   const url = buildListsUrl('lists', request);
@@ -12,6 +13,7 @@ export const useLists = (request: ListsRequest) => {
   const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>(
     {
       queryKey: [url],
+      refetchInterval: PULLING_STATUS_DELAY,
       queryFn: async () => {
         const response = await ky.get(url);
 
@@ -22,7 +24,7 @@ export const useLists = (request: ListsRequest) => {
   );
 
   return ({
-    listsData: data,
+    updatedListsData: data,
     isLoading,
     error
   });
