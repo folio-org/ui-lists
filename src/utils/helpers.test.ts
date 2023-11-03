@@ -20,7 +20,7 @@ describe('Get Lists Filters', () => {
   });
 
   it('should set active=true when Active checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(baseUrl, { filters: [STATUS_ACTIVE]});
+    const result = getListsFilterUrlParams(baseUrl, { filters: [STATUS_ACTIVE] });
 
     expect(result).toEqual(`${baseUrl}?active=true`);
   });

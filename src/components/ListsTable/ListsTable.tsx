@@ -12,7 +12,7 @@ import { useLists, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
 
 export interface ListsTableProps {
-  activeFilters: any,
+  activeFilters: string[],
   setTotalRecords: (totalRecords: number) => void
 }
 
@@ -47,7 +47,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  const { listsData, isLoading } = useLists({ filters: activeFilters, idsToTrack: recordIds, size: pagination.limit, offset: pagination.offset });
+  const { listsData, isLoading } = useLists({ filters: activeFilters, idsToTrack: recordIds, size: pagination?.limit, offset: pagination?.offset });
 
   if (isLoading) {
     return (
