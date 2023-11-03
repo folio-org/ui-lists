@@ -52,7 +52,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   let updatedListsData : ListsResponse<ListsRecord[]> | undefined;
   
   if (recordIds) {
-    updatedListsData = useListsIdsToTrack({ idsToTrack: recordIds }).updatedListsData;
+    updatedListsData = useListsIdsToTrack({ idsToTrack: recordIds })?.updatedListsData;
   }
 
   if (isLoading) {

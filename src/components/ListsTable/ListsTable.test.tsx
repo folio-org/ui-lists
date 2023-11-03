@@ -58,7 +58,7 @@ describe('ListsTable', () => {
     });
 
     describe('When loading finished mounted', () => {
-      it.skip('it is expected to hide loader', async () => {
+      it('it is expected to hide loader', async () => {
         const loader = screen.getByText('Loading');
 
         await waitFor(() => {
@@ -69,7 +69,7 @@ describe('ListsTable', () => {
   });
 
   describe('Render controls', () => {
-    it.skip('expected to render the ListsTable component', () => {
+    it('expected to render the ListsTable component', () => {
       const list = screen.getByTestId('ItemsList');
 
       expect(list).toBeInTheDocument();
