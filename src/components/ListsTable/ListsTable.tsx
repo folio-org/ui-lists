@@ -10,7 +10,6 @@ import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
-import { ListsRecord, ListsResponse } from '../../interfaces';
 
 export interface ListsTableProps {
   activeFilters: string[],
@@ -49,11 +48,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   }, [activeFilters]);
 
   const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
-  let updatedListsData : ListsResponse<ListsRecord[]> | undefined;
-  
-  if (recordIds) {
-    updatedListsData = useListsIdsToTrack({ idsToTrack: recordIds })?.updatedListsData;
-  }
+  const { updatedListsData } = useListsIdsToTrack({ idsToTrack: recordIds });
 
   if (isLoading) {
     return (
@@ -63,9 +58,10 @@ export const ListsTable: FC<ListsTableProps> = ({
     );
   }
 
-  let { content, totalRecords = 0, totalPages } = listsData ?? {};
+  const { totalRecords = 0, totalPages } = listsData ?? {};
+  let { content } = listsData ?? {};
 
-  if (updatedListsData) {
+  if (updatedListsData?.content) {
     content = updatedListsData.content;
   }
 

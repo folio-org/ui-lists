@@ -1,7 +1,7 @@
 export { useListDetails } from './useListDetails';
 export { useLists } from './useLists';
 export { useListsIdsToTrack } from './useListsIdsToTrack';
-export { useListsFetchedSinceTimestamp } from './useListsFetchedSinceTimestamp'
+export { useListsFetchedSinceTimestamp } from './useListsFetchedSinceTimestamp';
 export { useRefresh } from './useRefresh';
 export { useRecordTypes } from './useRecordTypes';
 export { useDeleteList } from './useDeleteList';
