@@ -27,7 +27,7 @@ import { useMessages } from '../../hooks/useMessages';
 
 import css from './ListPage.module.css';
 
-let updatedAsOf = moment.utc().format();
+let listsLastFetchedTimestamp = moment.utc().format();
 
 export const ListPage: React.FC = () => {
   const [totalRecords, setTotalRecords] = useState(0);
@@ -43,11 +43,11 @@ export const ListPage: React.FC = () => {
   } = useFilters(filterConfig);
   const { showSuccessMessage } = useMessages();
 
-  const updatedListsData = useLists({ updatedAsOf: updatedAsOf });
+  const updatedListsData = useLists({ listsLastFetchedTimestamp });
   const updatedListsContent = updatedListsData?.listsData?.content;
 
-  if (updatedListsContent) {
-    updatedAsOf = moment.utc().format();
+  if (updatedListsContent?.length) {
+    listsLastFetchedTimestamp = moment.utc().format();
 
     if (updatedListsContent.length > 1) {
       showSuccessMessage({ message: t('callout.list.multiple-created') });

@@ -10,7 +10,7 @@ let totalRecordCount = 0;
 
 export const useLists = (request: ListsRequest) => {
   const ky = useOkapiKy();
-  const { idsToTrack, updatedAsOf } = request;
+  const { idsToTrack, listsLastFetchedTimestamp: updatedAsOf } = request;
 
   const url = buildListsUrl('lists', request);
 

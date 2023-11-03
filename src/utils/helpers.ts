@@ -9,7 +9,7 @@ export const getFilters = (appliedFilters: Array<any>) => {
 };
 
 export const getListsFilterUrlParams = (url: string, request: ListsRequest) => {
-  const { filters, offset, size, idsToTrack, updatedAsOf } = request;
+  const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp } = request;
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
 
@@ -46,7 +46,7 @@ export const getListsFilterUrlParams = (url: string, request: ListsRequest) => {
     params.append('ids', idsToTrack.join(','));
   }
 
-  if (updatedAsOf) params.append('updatedAsOf', updatedAsOf);
+  if (listsLastFetchedTimestamp) params.append('updatedAsOf', listsLastFetchedTimestamp);
 
   if (params.size) {
     url += `?${params.toString()}`;
