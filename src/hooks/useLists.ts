@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { ListsRequest, ListsResponse, ListsRecord } from '../interfaces';
-import { getListsFilterUrlParams as buildListsUrl } from '../utils';
+import { buildListsUrl } from '../utils';
 import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 
 let pageCount = 0;

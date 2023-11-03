@@ -1,6 +1,6 @@
 import { createServer, Response } from 'miragejs';
 import lists from '../data/lists.json';
-import listsUpdate from '../data/lists-update.json'
+//import listsUpdate from '../data/lists-update.json'
 import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
 import exportStarted from '../data/exportStarted.json';
@@ -21,15 +21,17 @@ export const startMirage = ({
       this.urlPrefix = urlPrefix;
       this.namespace = '';
 
-      this.get('lists', (schema, request) => {
-        const updatedAsOf = request.queryParams.updatedAsOf;
+      this.get('lists', () => new Response(200, {}, lists));
 
-        if (updatedAsOf) {
-          return listsUpdate;
-        } else {
-          return lists;
-        }
-      });
+      // this.get('lists', (schema, request) => {
+      //   const updatedAsOf = request.queryParams.updatedAsOf;
+
+      //   if (updatedAsOf) {
+      //     return listsUpdate;
+      //   } else {
+      //     return lists;
+      //   }
+      // });
 
       this.get('lists/:id', () => new Response(200, {}, listDetailsRefreshed));
 

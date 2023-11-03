@@ -8,7 +8,7 @@ export const getFilters = (appliedFilters: Array<any>) => {
   return appliedFilters && Object.keys(appliedFilters).filter(filterKey => appliedFilters[filterKey] === true);
 };
 
-export const getListsFilterUrlParams = (url: string, request?: ListsRequest) => {
+export const buildListsUrl = (url: string, request?: ListsRequest) => {
   const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp } = request || {};
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
