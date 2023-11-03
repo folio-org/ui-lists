@@ -6,7 +6,7 @@ import { getListsFilterUrlParams as buildListsUrl } from '../utils';
 import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 
 let pageCount = 0;
-let totalRecordCount = 0; 
+let totalRecordCount = 0;
 
 export const useLists = (request: ListsRequest) => {
   const ky = useOkapiKy();
