@@ -10,7 +10,7 @@ let totalRecordCount = 0;
 
 export const useLists = (request: ListsRequest) => {
   const ky = useOkapiKy();
-  const { idsToTrack, listsLastFetchedTimestamp: updatedAsOf } = request;
+  const { idsToTrack, listsLastFetchedTimestamp } = request;
 
   const url = buildListsUrl('lists', request);
 
@@ -29,7 +29,7 @@ export const useLists = (request: ListsRequest) => {
 
   // If tracking IDs response or checking for updates since last timestamp:
   // total records and pages are invalid, so use established values instead.
-  if (!idsToTrack?.length && !updatedAsOf) {
+  if (!idsToTrack?.length && !listsLastFetchedTimestamp) {
     totalRecordCount = data?.totalRecords ?? 0;
     pageCount = data?.totalPages ?? 0;
   } else if (data) {
