@@ -53,6 +53,14 @@ export interface FailedListRefresh extends ListRefresh {
   }
 }
 
+export interface ListsRequest {
+  filters?: Array<string>,
+  idsToTrack?: Array<string>,
+  size?: number,
+  offset?: number,
+  listsLastFetchedTimestamp?: string
+}
+
 export interface ListsRecordBase {
   id: string;
   name: string;
