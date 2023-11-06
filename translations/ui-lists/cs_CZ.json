@@ -114,5 +114,7 @@
     "export-list.is.inactive": "Chyba: export <strong>{listName}</strong> se nezdařil. Ověřte, zda je seznam aktivní, a zkuste jej znovu exportovat.",
     "refresh-list.is.private": "Chyba: obnovení seznamu <strong>{listName}</strong> se nezdařilo. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
     "export-list.is.private": "Chyba: export <strong>{listName}</strong> se nezdařil. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
-    "delete-list.is.private": "Chyba: seznam <strong>{listName}</strong> nebyl smazán. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup."
+    "delete-list.is.private": "Chyba: seznam <strong>{listName}</strong> nebyl smazán. Tento seznam upravil někdo jiný a vy k němu již nemáte přístup.",
+    "callout.list.created": "<strong>{listName}</strong> was created. Refresh to see changes. Note that list may not appear if filters are applied.",
+    "callout.list.multiple-created": "New lists were created. Refresh to see changes. Note that list may not appear if filters are applied."
 }
