@@ -1,5 +1,11 @@
 # Change history for ui-lists
 
+# [2.0.3](https://github.com/folio-org/ui-lists/tree/v2.0.3) (2023-11-07)
+
+* Fix source of lastUpdatedDate and lastUpdatedBy fields. Refs UILISTS-54.
+* Update error message and polling delay. Refs UILISTS-59.
+* Fix list icon whichs gets cut off when the list name is long. Refs UILISTS-4.
+
 # [2.0.2](https://github.com/folio-org/ui-lists/tree/v2.0.2) (2023-10-26)
 
 * Add missing cancel export permission. Refs UILISTS-52.
