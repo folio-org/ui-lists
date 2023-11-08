@@ -150,5 +150,5 @@
   "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
 
   "error-component.read-list.not.found": "List not found",
-  "error-component.read-list.is.private": "You don't have permission to view this app/record"
+  "error-component.read-list.is.private": "You don't have permission to view this list"
 }
