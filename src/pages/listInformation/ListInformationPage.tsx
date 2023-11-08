@@ -24,7 +24,7 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { EntityTypeColumn } from '../../interfaces';
 
-import { ConfirmDeleteModal, CompilingLoader } from '../../components';
+import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
 
 export const ListInformationPage: React.FC = () => {
@@ -33,7 +33,7 @@ export const ListInformationPage: React.FC = () => {
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
-  const { data: listData, isLoading: isDetailsLoading, refetchDetails } = useListDetails(id);
+  const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id);
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
@@ -50,7 +50,7 @@ export const ListInformationPage: React.FC = () => {
     inProgressRefresh: listData?.inProgressRefresh,
     onErrorPolling: (code) => {
       showErrorMessage({
-        message: t(code || 'callout.list.refresh.error', {
+        message: t(code || 'callout.list.refresh.ErrorComponent', {
           listName
         })
       });
@@ -60,7 +60,7 @@ export const ListInformationPage: React.FC = () => {
     },
     onError: (error: HTTPError) => {
       (async () => {
-        const errorMessage = await computeErrorMessage(error, 'callout.list.refresh.error', {
+        const errorMessage = await computeErrorMessage(error, 'callout.list.refresh.ErrorComponent', {
           listName
         });
 
@@ -122,6 +122,10 @@ export const ListInformationPage: React.FC = () => {
     visibleColumns,
     setDefaultVisibleColumns
   } = useVisibleColumns(id);
+
+  if (detailsError) {
+    return <ErrorComponent error={detailsError} />;
+  }
 
   const refresh = () => {
     if (!listData?.inProgressRefresh) {
