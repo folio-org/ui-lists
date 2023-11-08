@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
 import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
-import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal } from '../../components';
+import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal, ErrorComponent } from '../../components';
 
 import { EditListResultViewer, EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
@@ -32,7 +32,7 @@ export const EditListPage:FC = () => {
   const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
-  const { data: listDetails, isLoading: loadingListDetails } = useListDetails(id);
+  const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
 
@@ -105,6 +105,10 @@ export const EditListPage:FC = () => {
       }
     }
   );
+
+  if (detailsError) {
+    return <ErrorComponent error={detailsError} />;
+  }
 
   const closeHandler = () => {
     if (hasChanges) {

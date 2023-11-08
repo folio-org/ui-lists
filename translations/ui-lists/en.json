@@ -147,5 +147,8 @@
   "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it",
 
   "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
-  "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it."
+  "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
+
+  "error-component.read-list.not.found": "List not found",
+  "error-component.read-list.is.private": "You don't have permission to view this list"
 }
