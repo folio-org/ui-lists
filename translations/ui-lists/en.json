@@ -151,5 +151,5 @@
 
   "error-component.read-list.not.found": "List not found",
   "error-component.read-list.is.private": "You don't have permission to view this list",
-  "error-component.read-list.invalid.request": "List not found"
+  "error-component.invalid.request": "List not found"
 }
