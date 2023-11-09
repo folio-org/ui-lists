@@ -8,11 +8,11 @@ import { PrevNextPagination, usePagination } from '@folio/stripes-acq-components
 import { listTableMapping } from './helpers/mappers';
 import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
-import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
+import { useLists, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
 
 export interface ListsTableProps {
-  activeFilters: string[],
+  activeFilters: any,
   setTotalRecords: (totalRecords: number) => void
 }
 
@@ -47,8 +47,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
-  const { updatedListsData } = useListsIdsToTrack({ idsToTrack: recordIds });
+  const { listsData, isLoading } = useLists(activeFilters, recordIds, pagination.limit, pagination.offset);
 
   if (isLoading) {
     return (
@@ -58,12 +57,7 @@ export const ListsTable: FC<ListsTableProps> = ({
     );
   }
 
-  const { totalRecords = 0, totalPages } = listsData ?? {};
-  let { content } = listsData ?? {};
-
-  if (updatedListsData?.content) {
-    content = updatedListsData.content;
-  }
+  const { content, totalRecords = 0, totalPages } = listsData ?? {};
 
   setTotalRecords(totalRecords);
 

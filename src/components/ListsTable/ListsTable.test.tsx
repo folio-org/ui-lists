@@ -24,7 +24,7 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock })),
 }));
 
-const renderListsTablePage = () => {
+const renderEditListPage = () => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>
@@ -40,7 +40,7 @@ beforeEach(async () => {
   jest.clearAllMocks();
   server = startMirage({});
 
-  await renderListsTablePage();
+  await renderEditListPage();
 });
 
 afterEach(() => {
