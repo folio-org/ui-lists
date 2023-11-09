@@ -12,7 +12,7 @@ export enum MESSAGE_TYPES {
   WARNING = 'warning'
 }
 
-export type ShowMessageHandlerType = {
+type ShowMessageHandlerType = {
   message: string | React.ReactNode, timeout?: number
 }
 

@@ -10,16 +10,6 @@ import { startMirage } from '../../../test/mirage';
 import { HOME_PAGE_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
 
-jest.mock('moment', () => {
-  return {
-    utc: () => {
-      return {
-        format: () => jest.fn().mockReturnValue('2020-01-01T00:00:00.000Z')
-      };
-    }
-  };
-});
-
 jest.mock('../../components/ListsTable', () => ({
   ListsTable: jest.fn(() => (
     <div data-testid="ListTable" />
