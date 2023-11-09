@@ -1,5 +1,12 @@
 # Change history for ui-lists
 
+# [2.0.4](https://github.com/folio-org/ui-lists/tree/v2.0.4) (2023-11-09)
+
+* Add translation for invalid request. Refs UILISTS-14.
+* Restrict user access to the list which is private or removed. Refs UILISTS-58.
+* Sort record types when creating lists. Refs UILISTS-61.
+* Fix display unknown user for list detail page. Refs UILISTS-63.
+
 # [2.0.3](https://github.com/folio-org/ui-lists/tree/v2.0.3) (2023-11-07)
 
 * Fix source of lastUpdatedDate and lastUpdatedBy fields. Refs UILISTS-54.
