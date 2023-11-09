@@ -20,8 +20,9 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
   ) : (
     listInfo?.createdByUsername
   );
-  const lastUpdatedDate = listInfo?.updatedDate || listInfo?.createdDate;
-  const lastUpdatedBy = listInfo?.updatedByUsername || listInfo?.createdByUsername;
+
+  const lastUpdatedDate = listInfo?.updatedDate ? listInfo?.updatedDate : listInfo?.createdDate;
+  const lastUpdatedBy = listInfo?.updatedByUsername ? listInfo?.updatedByUsername : listInfo?.createdByUsername;
 
 
   return (
