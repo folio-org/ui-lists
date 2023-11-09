@@ -20,6 +20,9 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
   ) : (
     listInfo?.createdByUsername
   );
+  const lastUpdatedDate = listInfo?.updatedDate || listInfo?.createdDate;
+  const lastUpdatedBy = listInfo?.updatedByUsername || listInfo?.createdByUsername;
+
 
   return (
     <Accordion
@@ -31,8 +34,8 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
         createdDate={listInfo?.createdDate}
         createdBy={listInfo?.createdByUsername}
         id="userInfoRecordMeta"
-        lastUpdatedDate={listInfo?.updatedDate}
-        lastUpdatedBy={listInfo?.updatedByUsername}
+        lastUpdatedDate={lastUpdatedDate}
+        lastUpdatedBy={lastUpdatedBy}
       />
       <KeyValue
         label={<FormattedMessage
