@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
-import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select } from '@folio/stripes/components';
+import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select, Tooltip, IconButton } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
 import {
@@ -105,7 +105,23 @@ export const MainListInfoForm = (
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
           className={css.mainFormVisibility}
-          label={<span className={css.radioLabels}>{t('create-list.main.list-visibility')}</span>}
+          label={<span className={css.radioLabels}>{t('create-list.main.list-visibility')}
+            <Tooltip
+            id="my-tooltip"
+            text="Visibility"
+            sub="Deletes the record permanently"
+            placement="top-end"
+          >
+            { // @ts-ignore:next-line
+            ({ ref, ariaIds }) => (
+              <IconButton
+                icon="info"
+                ref={ref}
+                aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
+              />
+            )}
+            </Tooltip>
+          </span>}
         >
           <RadioButton
             inline
