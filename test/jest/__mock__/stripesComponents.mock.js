@@ -310,6 +310,16 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     );
   }),
+  Tooltip: jest.fn(({
+    children,
+    text,
+    ...rest
+  }) => (
+    <div {...rest}>
+      {text}
+      {children}
+    </div>
+  )),
   Checkbox: jest.fn(({
     label,
     checked,
