@@ -107,21 +107,23 @@ export const MainListInfoForm = (
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
           className={css.mainFormVisibility}
-          label={<span className={css.radioLabels}>{t('create-list.main.list-visibility')}
-            <Tooltip
-              text={tString(intl, 'create-list.main.list-visibility')}
-              sub={tString(intl, 'create-list.main.list-visibility.tooltip')}
-              placement="top-end"
-            >
-            {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
-              <IconButton
-                icon="info"
-                ref={ref}
-                aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
-              />
-            )}
-            </Tooltip>
-          </span>}
+          label={
+            <span className={css.radioLabels}>{t('create-list.main.list-visibility')}
+              <Tooltip
+                text={tString(intl, 'create-list.main.list-visibility')}
+                sub={tString(intl, 'create-list.main.list-visibility.tooltip')}
+                placement="top-end"
+              >
+                {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
+                  <IconButton
+                    icon="info"
+                    ref={ref}
+                    aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
+                  />
+                )}
+              </Tooltip>
+            </span>
+            }
         >
           <RadioButton
             inline
@@ -152,13 +154,13 @@ export const MainListInfoForm = (
                 sub={tString(intl, 'create-list.main.list-status.tooltip')}
                 placement="top-end"
               >
-              {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
-                <IconButton
-                  icon="info"
-                  ref={ref}
-                  aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
-                />
-              )}
+                {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
+                  <IconButton
+                    icon="info"
+                    ref={ref}
+                    aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
+                  />
+                )}
               </Tooltip>
             </span>
             }
