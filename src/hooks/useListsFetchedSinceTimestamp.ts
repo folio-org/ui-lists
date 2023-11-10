@@ -31,13 +31,16 @@ export const useListsFetchedSinceTimestamp = () => {
 
   const updatedListsContent = data?.content;
 
-  if (updatedListsContent?.length) {
+  // Created lists don't include update or refresh date
+  const createdLists = updatedListsContent?.filter(list => !list.updatedDate && !list.refreshedDate)
+
+  if (createdLists?.length) {
     listsLastFetchedTimestamp = moment.utc().format();
 
-    if (updatedListsContent.length > 1) {
+    if (createdLists.length > 1) {
       showSuccessMessage({ message: t('callout.list.multiple-created') });
     } else {
-      const listName = updatedListsContent[0].name;
+      const listName = createdLists[0].name;
 
       showSuccessMessage({ message: t('callout.list.created', { listName }) });
     }
