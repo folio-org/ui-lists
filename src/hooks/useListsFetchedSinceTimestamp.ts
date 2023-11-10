@@ -32,7 +32,7 @@ export const useListsFetchedSinceTimestamp = () => {
   const updatedListsContent = data?.content;
 
   // Created lists don't include update or refresh date
-  const createdLists = updatedListsContent?.filter(list => !list.updatedDate && !list.refreshedDate)
+  const createdLists = updatedListsContent?.filter(list => !list.updatedDate && !list.refreshedDate);
 
   if (createdLists?.length) {
     listsLastFetchedTimestamp = moment.utc().format();
