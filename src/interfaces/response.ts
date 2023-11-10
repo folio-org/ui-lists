@@ -22,7 +22,7 @@ export interface InitRefreshResponse {
   status: string
 }
 
-export interface Response<T> {
+export interface ListsResponse<T> {
   content: T;
   pageable: Pagination;
   totalPages: number;
