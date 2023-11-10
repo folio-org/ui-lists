@@ -58,7 +58,7 @@
 
   "create-list.aside.set-criteria": "Set criteria",
   "create-list.aside.set-criteria-to-build": "Set criteria to build query",
-  "create-list.aside.record-types": "Record types",
+  "create-list.aside.record-types": "Record type",
   "create-list.aside.build-query": "Build query",
 
   "create-list.main.collapse-all": "Collapse all",
@@ -147,5 +147,9 @@
   "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it",
 
   "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
-  "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it."
+  "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
+
+  "error-component.read-list.not.found": "List not found",
+  "error-component.read-list.is.private": "You don't have permission to view this list",
+  "error-component.invalid.request": "List not found"
 }

@@ -104,7 +104,7 @@
     "export-list.refresh.in.progress": "Erro: <strong>{listName}</strong> não foi exportado. As listas não podem ser exportadas enquanto uma atualização estiver em andamento.",
     "export-export.in.progress": "Erro: a exportação de <strong>{listName}</strong> falhou porque uma exportação para esta lista já está em andamento.",
     "export-list.not.found": "Erro: a exportação de <strong>{listName}</strong> falhou porque a lista não foi encontrada. Verifique o local da lista e tente novamente.",
-    "cancel_export-export.not.in.progress": "Erro: a exportação de <strong>{listName}</strong> não foi cancelada. Verifique se uma exportação está em andamento e tente novamente.",
+    "cancel_export-export.not.in.progress": "Erro: a exportação para <strong>{listName}</strong> não foi cancelada porque a exportação não está em andamento. A exportação pode já ter sido concluída.",
     "cancel-refresh.success": "A atualização de <strong>{listName}</strong> foi cancelada com sucesso.",
     "cancel-refresh.default": "Erro: a atualização de <strong>{listName}</strong> não foi cancelada. Verifique se uma atualização está em andamento e tente novamente.",
     "cancel_refresh-list.not.refreshing": "Erro: a atualização de <strong>{listName}</strong> não foi cancelada. Verifique se uma atualização está em andamento e tente novamente.",
@@ -114,5 +114,7 @@
     "export-list.is.inactive": "Erro: falha na exportação de <strong>{listName}</strong>. Verifique se a lista está ativa e tente exportá-la novamente.",
     "refresh-list.is.private": "Erro: falha na atualização de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
     "export-list.is.private": "Erro: falha na exportação de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
-    "delete-list.is.private": "Erro: a lista <strong>{listName}</strong> não foi excluída. Outra pessoa modificou essa lista e você não tem mais acesso a ela"
+    "delete-list.is.private": "Erro: a lista <strong>{listName}</strong> não foi excluída. Outra pessoa modificou essa lista e você não tem mais acesso a ela",
+    "callout.list.created": "<strong>{listName}</strong> was created. Refresh to see changes. Note that list may not appear if filters are applied.",
+    "callout.list.multiple-created": "New lists were created. Refresh to see changes. Note that list may not appear if filters are applied."
 }
