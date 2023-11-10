@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { ListsResponse, ListsRecord } from '../interfaces';
@@ -8,7 +9,9 @@ import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 import { useMessages } from './useMessages';
 import { t } from '../services';
 
-let listsLastFetchedTimestamp = moment.utc().format();
+dayjs.extend(utc);
+
+let listsLastFetchedTimestamp = dayjs.utc().format();
 
 export const useListsFetchedSinceTimestamp = () => {
   const { showSuccessMessage } = useMessages();
@@ -35,7 +38,7 @@ export const useListsFetchedSinceTimestamp = () => {
   const createdLists = updatedListsContent?.filter(list => !list.updatedDate && !list.refreshedDate);
 
   if (createdLists?.length) {
-    listsLastFetchedTimestamp = moment.utc().format();
+    listsLastFetchedTimestamp = dayjs.utc().format();
 
     if (createdLists.length > 1) {
       showSuccessMessage({ message: t('callout.list.multiple-created') });
