@@ -115,6 +115,6 @@
     "refresh-list.is.private": "Error: refresh of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
     "export-list.is.private": "Chyba: export <strong>{listName}</strong> zlyhal. Tento zoznam upravil niekto iný a vy už k nemu nemáte prístup.",
     "delete-list.is.private": "Chyba: zoznam <strong>{listName}</strong> nebol odstránený. Niekto iný upravil tento zoznam a vy už k nemu nemáte prístup",
-    "callout.list.created": "<strong>{listName}</strong> was created. Refresh to see changes. Note that list may not appear if filters are applied.",
-    "callout.list.multiple-created": "New lists were created. Refresh to see changes. Note that list may not appear if filters are applied."
+    "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
+    "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters."
 }

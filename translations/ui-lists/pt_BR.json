@@ -115,6 +115,6 @@
     "refresh-list.is.private": "Erro: falha na atualização de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
     "export-list.is.private": "Erro: falha na exportação de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
     "delete-list.is.private": "Erro: a lista <strong>{listName}</strong> não foi excluída. Outra pessoa modificou essa lista e você não tem mais acesso a ela",
-    "callout.list.created": "<strong>{listName}</strong> was created. Refresh to see changes. Note that list may not appear if filters are applied.",
-    "callout.list.multiple-created": "New lists were created. Refresh to see changes. Note that list may not appear if filters are applied."
+    "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
+    "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters."
 }
