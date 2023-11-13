@@ -48,6 +48,14 @@ export const ListsTable: FC<ListsTableProps> = ({
   }, [activeFilters]);
 
   const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
+
+  useEffect(() => {
+    if (listsData?.content?.length) {
+      setRecordIds(listsData?.content.map(({ id }) => id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listsData]);
+
   const { updatedListsData } = useListsIdsToTrack({ idsToTrack: recordIds });
 
   if (isLoading) {
@@ -66,10 +74,6 @@ export const ListsTable: FC<ListsTableProps> = ({
   }
 
   setTotalRecords(totalRecords);
-
-  if (!recordIds?.length && content?.length) {
-    setRecordIds(content.map(({ id }) => id));
-  }
 
   return (
     <>
