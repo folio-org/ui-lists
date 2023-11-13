@@ -1,4 +1,4 @@
-export { t } from './translation';
+export { t, tString } from './translation';
 
 
 export { isCanned, isInactive, isInDraft, isEmptyList } from './list';
