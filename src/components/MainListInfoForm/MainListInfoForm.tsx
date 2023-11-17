@@ -1,14 +1,13 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
-import { useIntl } from 'react-intl';
 // @ts-ignore:next-line
-import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select, Tooltip, IconButton } from '@folio/stripes/components';
+import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select, InfoPopover } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
 import {
   MAX_SUPPORTED_DESCRIPTION_LENGTH,
   MAX_SUPPORTED_NAME_LENGTH
 } from './constants';
-import { t, tString } from '../../services';
+import { t } from '../../services';
 
 import css from './MainListInfoForm.module.css';
 
@@ -33,7 +32,6 @@ export const MainListInfoForm = (
     isLoading,
     recordTypeOptions }: MainListInfoFormProps
 ) => {
-  const intl = useIntl();
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
   };
@@ -109,19 +107,11 @@ export const MainListInfoForm = (
           className={css.mainFormVisibility}
           label={
             <span className={css.radioLabels}>{t('create-list.main.list-visibility')}
-              <Tooltip
-                text={tString(intl, 'create-list.main.list-visibility')}
-                sub={tString(intl, 'create-list.main.list-visibility.tooltip')}
-                placement="top-end"
-              >
-                {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
-                  <IconButton
-                    icon="info"
-                    ref={ref}
-                    aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
-                  />
-                )}
-              </Tooltip>
+              <InfoPopover
+                iconSize="medium"
+                contentClass={css.tooltipContent}
+                content={t('create-list.main.list-visibility.tooltip')}
+              />
             </span>
             }
         >
@@ -149,19 +139,11 @@ export const MainListInfoForm = (
           label={
             <span className={css.radioLabels}>
               {t('create-list.main.list-status')}
-              <Tooltip
-                text={tString(intl, 'create-list.main.list-status')}
-                sub={tString(intl, 'create-list.main.list-status.tooltip')}
-                placement="top-end"
-              >
-                {({ ref, ariaIds } : { ref: any, ariaIds: any }) => (
-                  <IconButton
-                    icon="info"
-                    ref={ref}
-                    aria-labelledby={`${ariaIds.text} ${ariaIds.sub}`}
-                  />
-                )}
-              </Tooltip>
+              <InfoPopover
+                iconSize="medium"
+                contentClass={css.tooltipContent}
+                content={t('create-list.main.list-status.tooltip')}
+              />
             </span>
             }
         >

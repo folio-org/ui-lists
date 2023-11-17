@@ -9,4 +9,10 @@
 .radioLabels {
     font-size: 1.05rem;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.tooltipContent {
+    text-align: center;
 }

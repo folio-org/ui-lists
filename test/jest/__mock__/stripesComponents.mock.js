@@ -16,6 +16,7 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </button>
   )),
+  InfoPopover: jest.fn(({ content }) => <div>{content}</div>),
   ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel, cancelLabel, confirmLabel, open }) => (
     open ? (
       <div data-testid="ConfirmationModal">
