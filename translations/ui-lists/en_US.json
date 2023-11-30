@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists",
+    "meta.title": "Lists (Beta)",
     "settings.general": "General",
     "settings.general.message": "These are your general app settings.",
     "paneHeader.button.new": "New",
     "paneHeader.button.actions": "Actions",
     "filterPane.title": "Filter",
-    "mainPane.title": "Lists",
+    "mainPane.title": "Lists (Beta)",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "Record type",
