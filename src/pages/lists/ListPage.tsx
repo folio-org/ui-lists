@@ -35,7 +35,8 @@ export const ListPage: React.FC = () => {
     onClearGroup,
     filterCount,
     activeFilters,
-    appliedFilters
+    appliedFilters,
+    isDefaultState
   } = useFilters(filterConfig);
 
   useListsFetchedSinceTimestamp();
@@ -56,9 +57,10 @@ export const ListPage: React.FC = () => {
         >
           <div className={css.resetButtonWrap}>
             <Button
-              buttonStyle="default"
-              disabled={!filterCount}
+              // @ts-ignore:next-line
+              buttonStyle="none"
               id="clickable-reset-all"
+              disabled={isDefaultState}
               onClick={onResetAll}
             >
               <Icon icon="times-circle-solid">

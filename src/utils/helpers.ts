@@ -3,11 +3,6 @@ import { RECORD_TYPES_PREFIX, STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
 
-export const getFilters = (appliedFilters: Array<any>) => {
-  // @ts-ignore:next-line
-  return appliedFilters && Object.keys(appliedFilters).filter(filterKey => appliedFilters[filterKey] === true);
-};
-
 export const buildListsUrl = (url: string, request?: ListsRequest) => {
   const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp } = request || {};
   const params = new URLSearchParams();
