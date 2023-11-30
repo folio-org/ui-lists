@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import { ChangeEvent } from 'react';
 import { useFilters } from './useFilters';
 
 const filterConfig = [
@@ -34,7 +35,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
@@ -50,7 +51,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
@@ -73,7 +74,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
