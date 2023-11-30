@@ -7,5 +7,5 @@ export type FilterOptionType = {
 export type FilterConfigType = FilterOptionType[];
 
 export type AppliedFiltersType = {
-  [key: string | number]: FilterOptionType | boolean
+  [key: string]: FilterOptionType | boolean
 }
