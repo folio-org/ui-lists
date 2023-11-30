@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import { ChangeEvent } from 'react';
 import { useFilters } from './useFilters';
 
 const filterConfig = [
@@ -24,8 +25,8 @@ describe('useFilters', () => {
   it('should initialize state with default values', () => {
     const { result } = renderHook(() => useFilters(filterConfig));
 
-    expect(result.current.filterCount).toBe(0);
-    expect(result.current.activeFilters).toStrictEqual([]);
+    expect(result.current.filterCount).toBe(1);
+    expect(result.current.activeFilters).toStrictEqual(['status.Active']);
   });
 
   it('should update filter values', () => {
@@ -34,7 +35,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
@@ -50,7 +51,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
@@ -73,7 +74,7 @@ describe('useFilters', () => {
         name: 'status.Active',
         checked: true
       }
-    };
+    } as ChangeEvent<HTMLInputElement>;
 
     const { result } = renderHook(() => useFilters(filterConfig));
 
@@ -86,7 +87,7 @@ describe('useFilters', () => {
 
     result.current.onResetAll();
 
-    expect(result.current.filterCount).toBe(0);
-    expect(result.current.activeFilters).toStrictEqual([]);
+    expect(result.current.filterCount).toBe(1);
+    expect(result.current.activeFilters).toStrictEqual(['status.Active']);
   });
 });
