@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { isEqual } from 'lodash';
 import { APPLIED_FILTERS_KEY } from '../../../../utils/constants';
@@ -18,14 +18,15 @@ export const useFilters = (filterConfig: FilterConfigType) => {
     writeStorage(APPLIED_FILTERS_KEY, filters);
   };
 
-  const onChangeFilter = (e: any) => {
-    const target = e?.target;
+  const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked, name } = e.target;
+
     const filters = { ...appliedFilters };
 
-    if (target?.checked) {
-      filters[target?.name] = true;
+    if (checked) {
+      filters[name] = true;
     } else {
-      delete filters[target?.name];
+      delete filters[name];
     }
 
     saveFilters(filters);
