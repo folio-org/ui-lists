@@ -24,8 +24,8 @@ describe('useFilters', () => {
   it('should initialize state with default values', () => {
     const { result } = renderHook(() => useFilters(filterConfig));
 
-    expect(result.current.filterCount).toBe(0);
-    expect(result.current.activeFilters).toStrictEqual([]);
+    expect(result.current.filterCount).toBe(1);
+    expect(result.current.activeFilters).toStrictEqual(['status.Active']);
   });
 
   it('should update filter values', () => {
@@ -86,7 +86,7 @@ describe('useFilters', () => {
 
     result.current.onResetAll();
 
-    expect(result.current.filterCount).toBe(0);
-    expect(result.current.activeFilters).toStrictEqual([]);
+    expect(result.current.filterCount).toBe(1);
+    expect(result.current.activeFilters).toStrictEqual(['status.Active']);
   });
 });
