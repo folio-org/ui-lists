@@ -1,5 +1,15 @@
 # Change history for ui-lists
 
+# [2.0.5](https://github.com/folio-org/ui-lists/tree/v2.0.5) (2023-12-01)
+
+* Use background polling to pick up new list updates. Refs UILISTS-9
+* Add tooltips to the New List page. Refs UILISTS-2
+* Fix pagination bug
+* Update translations. Refs UILISTS-9
+* Add tooltips for the shared and private settings. Refs UILISTS-2
+* Add default filters for the list landing page. Refs UILISTS-10
+* Add "(Beta)" to the app title
+
 # [2.0.4](https://github.com/folio-org/ui-lists/tree/v2.0.4) (2023-11-09)
 
 * Add translation for invalid request. Refs UILISTS-14.
