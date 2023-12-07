@@ -30,6 +30,7 @@ export const ListsTable: FC<ListsTableProps> = ({
 
   const onNeedMoreData = (thePagination: any) => {
     writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
+    // @ts-ignore:next-line
     changePage(thePagination);
     setRecordIds([]);
   };
