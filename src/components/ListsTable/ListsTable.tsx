@@ -20,8 +20,8 @@ export const ListsTable: FC<ListsTableProps> = ({
   activeFilters,
   setTotalRecords = noop
 }) => {
-  const [storedCurrentPageOffset] = useLocalStorage(CURRENT_PAGE_OFFSET_KEY, 0);
-  const [recordIds, setRecordIds] = useState([] as string[]);
+  const [storedCurrentPageOffset] = useLocalStorage<number>(CURRENT_PAGE_OFFSET_KEY, 0);
+  const [recordIds, setRecordIds] = useState<string[]>([]);
 
   const { changePage, pagination } = usePagination({
     limit: PAGINATION_AMOUNT,
@@ -30,7 +30,6 @@ export const ListsTable: FC<ListsTableProps> = ({
 
   const onNeedMoreData = (thePagination: any) => {
     writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
-    // @ts-ignore:next-line
     changePage(thePagination);
     setRecordIds([]);
   };
