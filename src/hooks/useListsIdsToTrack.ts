@@ -8,6 +8,7 @@ import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 export const useListsIdsToTrack = (request: ListsRequest) => {
   const ky = useOkapiKy();
 
+  const hasIdsToTrack = Boolean(request.idsToTrack?.length);
   const url = buildListsUrl('lists', request);
 
   const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>(
@@ -19,7 +20,8 @@ export const useListsIdsToTrack = (request: ListsRequest) => {
 
         return response.json();
       },
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      enabled: hasIdsToTrack
     },
   );
 
