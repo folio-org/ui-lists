@@ -1,11 +1,11 @@
 {
-    "meta.title": "Listas",
+    "meta.title": "Listas (Beta)",
     "settings.general": "Geral",
     "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
     "paneHeader.button.new": "Novo",
     "paneHeader.button.actions": "Ações",
     "filterPane.title": "Filtro",
-    "mainPane.title": "Listas",
+    "mainPane.title": "Listas (Beta)",
     "mainPane.subTitle": "{count} registros encontrados",
     "lists.columns.list-name": "Nome da lista",
     "lists.columns.record-type": "Tipo de registro",
@@ -48,7 +48,7 @@
     "create-list.title": "Nova lista",
     "create-list.aside.set-criteria": "Definir critérios",
     "create-list.aside.set-criteria-to-build": "Definir critérios para criar consulta",
-    "create-list.aside.record-types": "Tipos de registro",
+    "create-list.aside.record-types": "Tipo de registro",
     "create-list.aside.build-query": "Construir consulta",
     "create-list.main.collapse-all": "Recolher tudo",
     "create-list.main.list-name": "Nome da lista",
@@ -115,6 +115,11 @@
     "refresh-list.is.private": "Erro: falha na atualização de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
     "export-list.is.private": "Erro: falha na exportação de <strong>{listName}</strong>. Outra pessoa modificou essa lista e você não tem mais acesso a ela.",
     "delete-list.is.private": "Erro: a lista <strong>{listName}</strong> não foi excluída. Outra pessoa modificou essa lista e você não tem mais acesso a ela",
-    "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
-    "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters."
+    "error-component.read-list.not.found": "Lista não encontrada",
+    "error-component.read-list.is.private": "Você não tem permissão para visualizar esta lista",
+    "error-component.invalid.request": "Lista não encontrada",
+    "callout.list.created": "A lista <strong>{listName}</strong> foi criada. Recarregue para ver as alterações. Observação: a lista pode não aparecer com base nos filtros.",
+    "callout.list.multiple-created": "Novas listas foram criadas. Recarregue para ver as alterações. Observação: novas listas podem não aparecer com base em filtros.",
+    "create-list.main.list-visibility.tooltip": "As listas <strong>compartilhadas</strong> podem ser acessadas por todos os usuários com permissões para o aplicativo Listas nesta organização. As listas <strong>privadas</strong> só podem ser acessadas pelo usuário com permissão.",
+    "create-list.main.list-status.tooltip": "As listas <strong>ativas</strong> consistem em uma consulta e um conjunto de registros resultante. As listas <strong>inativas</strong> podem ter uma consulta, mas nenhum conjunto de registros."
 }
