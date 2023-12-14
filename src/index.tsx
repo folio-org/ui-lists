@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { IfPermission } from '@folio/stripes/core';
 
-import { ListPage, ListInformationPage, CreateListPage, EditListPage } from './pages';
+import { ListPage, ListInformationPage, CreateListPage, EditListPage, CopyListPage } from './pages';
 import { USER_PERMS } from './utils/constants';
 
 interface IListsApp {
@@ -45,6 +45,15 @@ export const ListsApp: FC<IListsApp> = (props) => {
           render={() => (
             <IfPermission perm={USER_PERMS.UpdateList}>
               <EditListPage />
+            </IfPermission>
+          )}
+        />
+        <Route
+          path={`${path}/list/:id/copy`}
+          exact
+          render={() => (
+            <IfPermission perm={USER_PERMS.UpdateList}>
+              <CopyListPage />
             </IfPermission>
           )}
         />

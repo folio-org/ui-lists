@@ -18,9 +18,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
 import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
-import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal, ErrorComponent } from '../../components';
+import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal, ErrorComponent, EditListResultViewer } from '../../components';
 
-import { EditListResultViewer, EditListMenu } from './components';
+import { EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
 
 import { FIELD_NAMES } from './types';

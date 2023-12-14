@@ -25,7 +25,8 @@ export type FormStateType = {
   [FIELD_NAMES.DESCRIPTION]: string,
   [FIELD_NAMES.RECORD_TYPE]?: string,
   [FIELD_NAMES.VISIBILITY]: VISIBILITY,
-  [FIELD_NAMES.STATUS]: STATUS
+  [FIELD_NAMES.STATUS]: STATUS,
+  fqlQuery?: string
 }
 
 export type ChangedFieldType = {

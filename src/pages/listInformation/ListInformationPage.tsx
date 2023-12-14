@@ -167,6 +167,9 @@ export const ListInformationPage: React.FC = () => {
     buttonHandlers.edit = () => {
       history.push(`${id}/edit`);
     };
+    buttonHandlers.copy = () => {
+      history.push(`${id}/copy`);
+    };
   }
 
   if (stripes.hasPerm(USER_PERMS.DeleteList)) {
