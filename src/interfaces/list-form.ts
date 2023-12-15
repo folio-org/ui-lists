@@ -15,14 +15,29 @@ export enum VISIBILITY_VALUES {
   SHARED = 'shared'
 }
 
+export type VISIBILITY= 'private' | 'shared';
+
+export type STATUS = 'active' | 'inactive';
+
 export enum STATUS_VALUES {
   ACTIVE = 'active',
   INACTIVE = 'inactive'
 }
+
 export type FormStateType = {
   [FIELD_NAMES.LIST_NAME]: string,
   [FIELD_NAMES.DESCRIPTION]: string,
-  [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES,
-  [FIELD_NAMES.STATUS]: STATUS_VALUES
+  [FIELD_NAMES.RECORD_TYPE]?: string,
+  [FIELD_NAMES.VISIBILITY]: VISIBILITY,
+  [FIELD_NAMES.STATUS]: STATUS,
+  fqlQuery?: string
 }
 
+export type CreateListFormatType = {
+  name: string,
+  description: string,
+  entityTypeId?: string,
+  fqlQuery?: string,
+  isActive: boolean,
+  isPrivate: boolean
+}

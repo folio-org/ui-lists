@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { noop } from 'lodash';
 import { HTTPError } from 'ky';
-import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../pages/createlist/types';
+import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
 import { computeErrorMessage, t } from '../../services';
 import { useRecordsLimit, useMessages } from '../../hooks';
 import { HOME_PAGE_URL } from '../../constants';

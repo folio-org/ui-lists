@@ -8,8 +8,7 @@ import { CreateListLayout, MainCreateListForm } from './components';
 import { computeRecordTypeOptions } from './helpers';
 import { HOME_PAGE_URL } from '../../constants';
 
-import { ListsRecordBase } from '../../interfaces';
-import { FIELD_NAMES } from './types';
+import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
 
 export const CreateListPage:FC = () => {
   const history = useHistory();

@@ -1,7 +1,7 @@
 import {
   FormStateType,
   CreateListFormatType
-} from '../types';
+} from '../../../interfaces';
 import { STATUS_VALUES, VISIBILITY_VALUES } from '../../../components/MainListInfoForm';
 
 export const checkIsActive = (value: string) => {

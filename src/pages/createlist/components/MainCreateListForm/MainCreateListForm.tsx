@@ -2,8 +2,7 @@ import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
 import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
-import { EntityTypeSelectOption } from '../../../../interfaces';
-import { ChangedFieldType, STATUS, VISIBILITY } from '../../types';
+import { ChangedFieldType, STATUS, VISIBILITY, EntityTypeSelectOption } from '../../../../interfaces';
 import { MainListInfoForm, ConfigureQuery } from '../../../../components';
 
 import css from './MainCreateListForm.module.css';
