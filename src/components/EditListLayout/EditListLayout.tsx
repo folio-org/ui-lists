@@ -29,11 +29,14 @@ export const EditListLayout: FC<EditListLayoutProps> = ({
   lastMenu
 }) => {
   const { formatNumber } = useIntl();
-  const paneSub = !isLoading ?
-    isNumber(recordsCount) ? t('mainPane.subTitle',
-      { count: formatNumber(recordsCount) }) : ''
+  const getRecordCountString = (count: any) => {
+    return isNumber(count) ? t('mainPane.subTitle',
+      { count: formatNumber(count) }) : '';
+  };
+
+  const paneSub = !isLoading ? getRecordCountString(recordsCount)
     :
-      <>{t('lists.item.loading')}<Loading /></>;
+  <>{t('lists.item.loading')}<Loading /></>;
 
   if (isLoading) {
     return <Loading />;
