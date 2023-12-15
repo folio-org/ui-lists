@@ -13,7 +13,7 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useListDetails, useMessages } from '../../hooks';
+import { useListDetails, useMessages, useInitRefresh } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import { ConfigureQuery, ErrorComponent, ListAppIcon, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
@@ -24,7 +24,6 @@ import { ListsRecordBase } from '../../interfaces';
 
 import css from './CopyListPage.module.css';
 
-
 export const CopyListPage:FC = () => {
   const history = useHistory();
   const { formatNumber } = useIntl();
@@ -33,12 +32,16 @@ export const CopyListPage:FC = () => {
 
   const listName = listDetails?.name ?? '';
 
+  const { initRefresh } = useInitRefresh({ onSuccess: (data) => {
+    history.push(`/lists/list/${data.listId}`);
+  } });
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, onValueChange } = useCopyListFormState(listDetails, loadingListDetails);
 
   const backToList = () => {
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
+
   const { fqlQuery = '' } = listDetails || {};
   const recordType = listDetails?.entityTypeId;
   const { saveList, isLoading } = useCreateList(
@@ -50,7 +53,7 @@ export const CopyListPage:FC = () => {
             listName: state[FIELD_NAMES.LIST_NAME]
           }) });
 
-          history.push(`/lists/list/${list?.id}`);
+          initRefresh(list.id);
         }
       },
       onError: (error: HTTPError) => {

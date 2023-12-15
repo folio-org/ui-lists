@@ -22,7 +22,6 @@ type ConfigureQueryProps = {
   initialValues?: Record<string, unknown>
 }
 
-// @ts-ignore:next-line
 export const ConfigureQuery:FC<ConfigureQueryProps> = (
   {
     selectedType = '',
