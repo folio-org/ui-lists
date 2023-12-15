@@ -29,6 +29,7 @@ export const CopyListPage:FC = () => {
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
+  const fqlQuery = listDetails?.fqlQuery ?? '';
 
   const { initRefresh } = useInitRefresh({ onSuccess: (data) => {
     history.push(`/lists/list/${data.listId}`);
@@ -40,7 +41,6 @@ export const CopyListPage:FC = () => {
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
 
-  const { fqlQuery = '' } = listDetails || {};
   const recordType = listDetails?.entityTypeId;
   const { saveList, isLoading } = useCreateList(
     {
