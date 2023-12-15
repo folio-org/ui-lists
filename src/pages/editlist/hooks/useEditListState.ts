@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ChangedFieldType, FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from '../types';
+import { ChangedFieldType, FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from '../../../interfaces';
 
 export const useEditListFormState = (initialValues: any, isValueLoading: boolean) => {
   const [listOriginalState, setListOriginalState] = useState({

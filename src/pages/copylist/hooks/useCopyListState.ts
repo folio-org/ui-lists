@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { ChangedFieldType, FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from '../types';
+import { ChangedFieldType, FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from '../../../interfaces';
 import { tString } from '../../../services';
 
 export const useCopyListFormState = (initialValues: any, isValueLoading: boolean) => {

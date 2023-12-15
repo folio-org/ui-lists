@@ -23,7 +23,7 @@ import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal, Err
 import { EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
 
-import { FIELD_NAMES } from './types';
+import { FIELD_NAMES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 
 

@@ -17,10 +17,9 @@ import { useListDetails, useMessages, useInitRefresh } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import { ConfigureQuery, ErrorComponent, ListAppIcon, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
-import { FIELD_NAMES } from './types';
+import { FIELD_NAMES, ListsRecordBase } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { useCreateList } from '../createlist/hooks';
-import { ListsRecordBase } from '../../interfaces';
 
 import css from './CopyListPage.module.css';
 
