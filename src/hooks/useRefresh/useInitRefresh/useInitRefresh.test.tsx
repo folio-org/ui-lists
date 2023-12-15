@@ -29,7 +29,6 @@ describe('useInitRefresh', () => {
 
       const { result, waitForNextUpdate } = renderHook(
         () => useInitRefresh({
-          listId: '123',
           onSuccess: onSuccessMock,
           onError: onErrorMock
         }),
@@ -37,7 +36,7 @@ describe('useInitRefresh', () => {
       );
 
       await act(() => {
-        result.current.initRefresh();
+        result.current.initRefresh('123');
       });
 
 
@@ -56,7 +55,6 @@ describe('useInitRefresh', () => {
 
       const { result, waitForNextUpdate } = renderHook(
         () => useInitRefresh({
-          listId: '123',
           onSuccess: onSuccessMock,
           onError: (data) => {
             onErrorMock(data.name);
@@ -66,7 +64,7 @@ describe('useInitRefresh', () => {
       );
 
       await act(() => {
-        result.current.initRefresh();
+        result.current.initRefresh('123');
       });
 
 
