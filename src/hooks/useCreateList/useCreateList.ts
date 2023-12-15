@@ -1,9 +1,8 @@
 import { useOkapiKy } from '@folio/stripes/core';
 import { useMutation } from 'react-query';
 import { HTTPError } from 'ky';
-import { ListsRecordBase } from '../../interfaces';
+import { ListsRecordBase, FormStateType } from '../../interfaces';
 import { prepareDataForRequest } from '../../pages/createlist/hooks/helpers';
-import { FormStateType } from '../../pages/createlist/types';
 
 type UseCreateListProps = {
   listObject: FormStateType,
