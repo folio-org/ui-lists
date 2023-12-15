@@ -12,6 +12,7 @@ const mockProps: ListInformationMenuProps = {
     'cancel-refresh': jest.fn(),
     'refresh': jest.fn(),
     'edit': jest.fn(),
+    'copy': jest.fn(),
     'delete': jest.fn(),
     'export': jest.fn(),
     'cancel-export': jest.fn()
