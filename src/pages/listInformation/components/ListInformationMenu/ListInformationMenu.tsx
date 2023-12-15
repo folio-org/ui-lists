@@ -102,7 +102,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
         label: 'copy',
         icon: ICONS.duplicate,
         onClick: buttonHandlers.copy,
-        disabled: isEditDisabled(conditions),
+        disabled: false,
       }
     );
   }
