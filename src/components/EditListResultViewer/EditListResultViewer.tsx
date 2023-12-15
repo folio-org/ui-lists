@@ -6,7 +6,7 @@ import { getVisibleColumnsKey } from '../../utils';
 
 import { ConfigureQuery } from '../ConfigureQuery';
 import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
-import css from '../../pages/createlist/components/MainCreateListForm/MainCreateListForm.module.css';
+import css from './EditListResultViewer.module.css';
 
 type EditListResultViewerProps = {
     id: string,
