@@ -1,5 +1,4 @@
 export {
   getVisibleColumnsKey,
-  buildListsUrl,
-  removeSpaces
+  buildListsUrl
 } from './helpers';
