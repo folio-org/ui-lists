@@ -13,13 +13,12 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useListDetails, useMessages, useInitRefresh } from '../../hooks';
+import { useListDetails, useMessages, useInitRefresh, useCreateList } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import { ConfigureQuery, ErrorComponent, ListAppIcon, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
-import { useCreateList } from '../createlist/hooks';
 
 import css from './CopyListPage.module.css';
 
