@@ -1,13 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { ChangedFieldType, FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from '../../../interfaces';
+import { tString } from '../../../services';
 
-export const useEditListFormState = (initialValues: any, isValueLoading: boolean) => {
-  const [listOriginalState, setListOriginalState] = useState({
+export const useCopyListFormState = (initialValues: any, isValueLoading: boolean) => {
+  const intl = useIntl();
+  const postfix = tString(intl, 'lists.copy.name-postfix');
+  const defaultName = `${initialValues?.name} - ${postfix}`;
+
+  const list = {
     [FIELD_NAMES.LIST_NAME]: initialValues?.name,
     [FIELD_NAMES.DESCRIPTION]: initialValues?.description,
     [FIELD_NAMES.STATUS]: initialValues?.isActive ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE,
     [FIELD_NAMES.VISIBILITY]: initialValues?.isPrivate ? VISIBILITY_VALUES.PRIVATE : VISIBILITY_VALUES.SHARED,
-  });
+  };
+
+  const [listOriginalState, setListOriginalState] = useState(list);
 
   const [state, setState] = useState(listOriginalState);
 
@@ -22,10 +30,8 @@ export const useEditListFormState = (initialValues: any, isValueLoading: boolean
   useEffect(() => {
     if (!isValueLoading && initialValues) {
       const listObject = {
-        [FIELD_NAMES.LIST_NAME]: initialValues.name,
-        [FIELD_NAMES.DESCRIPTION]: initialValues.description,
-        [FIELD_NAMES.STATUS]: initialValues.isActive ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE,
-        [FIELD_NAMES.VISIBILITY]: initialValues.isPrivate ? VISIBILITY_VALUES.PRIVATE : VISIBILITY_VALUES.SHARED,
+        ...list,
+        [FIELD_NAMES.LIST_NAME]: defaultName,
       };
 
       setState(() => listObject);
@@ -34,15 +40,10 @@ export const useEditListFormState = (initialValues: any, isValueLoading: boolean
   }, [initialValues, isValueLoading]);
 
   const hasDirtyFields = !isValueLoading && JSON.stringify(listOriginalState) !== JSON.stringify(state);
-  const isListBecameActive =
-      listOriginalState[FIELD_NAMES.STATUS] === STATUS_VALUES.INACTIVE
-      &&
-      state[FIELD_NAMES.STATUS] === STATUS_VALUES.ACTIVE;
 
   return {
     state,
     onValueChange,
-    hasChanges: hasDirtyFields,
-    isListBecameActive
+    hasChanges: hasDirtyFields
   };
 };

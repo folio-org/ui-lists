@@ -4,12 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { noop } from 'lodash';
 import { HTTPError } from 'ky';
-import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../types';
-import { computeErrorMessage, t } from '../../../../services';
-import { useRecordsLimit, useMessages } from '../../../../hooks';
-import { HOME_PAGE_URL } from '../../../../constants';
+import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
+import { computeErrorMessage, t } from '../../services';
+import { useRecordsLimit, useMessages } from '../../hooks';
+import { HOME_PAGE_URL } from '../../constants';
 
-type QueryBuilderProps = {
+type ConfigureQueryProps = {
   selectedType?: string,
   isQueryButtonDisabled?: boolean,
   listName?: string,
@@ -22,8 +22,7 @@ type QueryBuilderProps = {
   initialValues?: Record<string, unknown>
 }
 
-// @ts-ignore:next-line
-export const QueryBuilder:FC<QueryBuilderProps> = (
+export const ConfigureQuery:FC<ConfigureQueryProps> = (
   {
     selectedType = '',
     isQueryButtonDisabled = true,
@@ -41,7 +40,7 @@ export const QueryBuilder:FC<QueryBuilderProps> = (
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
   const { showSuccessMessage, showErrorMessage } = useMessages();
-  const triggerButtonLabel = isEditQuery ? t('list.modal.edit-query') : undefined;
+  const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
   const entityTypeDataSource = async () => {
     return selectedType ? ky.get(`entity-types/${selectedType}`).json() : noop;

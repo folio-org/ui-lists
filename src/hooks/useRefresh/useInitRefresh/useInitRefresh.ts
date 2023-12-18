@@ -4,15 +4,14 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { InitRefreshResponse } from '../../../interfaces';
 
 type useInitRefreshProps = {
-  listId: string,
   onSuccess?: (data: InitRefreshResponse) => void,
   onError?: (data: HTTPError) => void
 }
 
-export const useInitRefresh = ({ listId, onSuccess, onError }: useInitRefreshProps) => {
+export const useInitRefresh = ({ onSuccess, onError }: useInitRefreshProps) => {
   const ky = useOkapiKy();
 
-  const { mutate: initRefresh, reset, isLoading } = useMutation(() => ky.post(`lists/${listId}/refresh`).json(),
+  const { mutate: initRefresh, reset, isLoading } = useMutation((listId: string) => ky.post(`lists/${listId}/refresh`).json(),
     {
       retry: false,
       onSuccess: (data: InitRefreshResponse) => {

@@ -6,3 +6,6 @@ export { ConfirmDeleteModal } from './ConfirmDeleteModal';
 export { ListAppIcon } from './ListAppIcon';
 export { CompilingLoader } from './CompilingLoader';
 export { ErrorComponent } from './ErrorComponent';
+export { EditListResultViewer } from './EditListResultViewer';
+export { ConfigureQuery } from './ConfigureQuery';
+export { EditListLayout } from './EditListLayout';

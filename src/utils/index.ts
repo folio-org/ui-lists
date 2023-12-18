@@ -1,4 +1,4 @@
 export {
   getVisibleColumnsKey,
-  buildListsUrl,
+  buildListsUrl
 } from './helpers';

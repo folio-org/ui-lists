@@ -2,12 +2,10 @@ import React, { FC, useState } from 'react';
 // @ts-ignore:next-line
 import { AccordionSet, Accordion, TextLink } from '@folio/stripes/components';
 import { t } from '../../../../services';
-import { EntityTypeSelectOption } from '../../../../interfaces';
-import { ChangedFieldType, STATUS, VISIBILITY } from '../../types';
-import { MainListInfoForm } from '../../../../components';
+import { ChangedFieldType, STATUS, VISIBILITY, EntityTypeSelectOption } from '../../../../interfaces';
+import { MainListInfoForm, ConfigureQuery } from '../../../../components';
 
 import css from './MainCreateListForm.module.css';
-import { QueryBuilder } from '../QueryBuilder';
 
 
 type MainCreateListFormProps = {
@@ -73,7 +71,7 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
         </Accordion>
       </AccordionSet>
       <div className={css.queryBuilderButton}>
-        <QueryBuilder
+        <ConfigureQuery
           selectedType={selectedType}
           isQueryButtonDisabled={isQueryButtonDisabled}
           listName={listNameField}

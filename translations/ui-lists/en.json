@@ -42,6 +42,7 @@
 
   "pane.dropdown.delete": "Delete list",
   "pane.dropdown.edit": "Edit list",
+  "pane.dropdown.copy": "Duplicate list",
   "pane.dropdown.export": "Export list (CSV)",
   "pane.dropdown.cancel-export": "Cancel export",
 
@@ -111,6 +112,9 @@
   "lists.edit.saving": "Saving",
   "lists.edit.loading": "Loading",
   "lists.edit.title": "Edit {listName}",
+
+  "lists.copy.title": "Duplicate List: {listName}",
+  "lists.copy.name-postfix": "copy",
 
   "form.field.empty-error": "Please fill this in to continue",
 
