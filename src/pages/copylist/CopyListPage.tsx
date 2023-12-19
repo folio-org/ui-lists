@@ -105,7 +105,6 @@ export const CopyListPage:FC = () => {
               visibility={state[FIELD_NAMES.VISIBILITY]}
               description={state[FIELD_NAMES.DESCRIPTION]}
               isLoading={loadingListDetails}
-              showInactiveWarning
             />
           </Layout>
         </Accordion>
