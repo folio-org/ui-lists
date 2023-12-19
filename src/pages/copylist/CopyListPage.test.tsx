@@ -4,9 +4,12 @@ import { QueryClientProvider } from 'react-query';
 import { screen, waitFor } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
+import { Response } from 'miragejs';
 import { startMirage } from '../../../test/mirage';
 import { CopyListPage } from './CopyListPage';
 import { queryClient } from '../../../test/utils';
+import listDetailsRefreshed from '../../../test/data/listDetails.Initial.json';
+import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
 
@@ -140,6 +143,50 @@ describe('CopyList Page', () => {
           await user.clear(nameField);
 
           expect(saveButton).toBeDisabled();
+        });
+      });
+    });
+
+    describe('Save list', () => {
+      describe('Success save', () => {
+        it('is expected to redirect after successful save and call success message', async () => {
+          await renderCopyListPage();
+
+          await awaitLoading();
+
+          const showSuccessMessageHookMock = jest.fn();
+
+          server.post('lists', () => new Response(200, {}, listDetailsRefreshed));
+          server.post('lists/:listId/refresh', () => new Response(200, {}, { success: 'true', listId: '123' }));
+
+          jest.spyOn(hooks, 'useMessages').mockImplementation(() => ({
+            showSuccessMessage: showSuccessMessageHookMock,
+            showErrorMessage: jest.fn(),
+            showInfoMessage: jest.fn(),
+            showWarningMessage: jest.fn(),
+            showMessage: jest.fn()
+          }));
+
+          const saveButton = screen.getByRole('button', {
+            name: 'ui-lists.button.save'
+          });
+
+          const nameField = screen.getByLabelText('ui-lists.create-list.main.list-name', {
+            selector: 'input'
+          });
+
+          await user.type(nameField, ' name');
+
+          expect(saveButton).toBeEnabled();
+
+          await user.click(saveButton);
+
+          await waitFor(() => expect(saveButton).toBeDisabled());
+
+          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists/list/123'));
+
+          const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
+          expect(successMessage).toContain('ui-lists.callout.list.save.success');
         });
       });
     });

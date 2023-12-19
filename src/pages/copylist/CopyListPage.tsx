@@ -39,10 +39,6 @@ export const CopyListPage:FC = () => {
     {
       listObject: { ...state, fqlQuery, recordType },
       onSuccess: (list: ListsRecordBase) => {
-        if (!list.id) {
-          return;
-        }
-
         showSuccessMessage({ message: t('callout.list.save.success', {
           listName: state[FIELD_NAMES.LIST_NAME]
         }) });
