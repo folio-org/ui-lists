@@ -1,66 +1,76 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import { buildListsUrl } from './helpers';
+import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
 
-import { getListsFilterUrlParams } from './helpers';
+const baseUrl = 'http://www.test.com';
 
-describe('Get Lists Filters', () => {
-  it('should return empty string when no filters are applied', async () => {
-    const result = getListsFilterUrlParams([]);
+describe('Helpers', () => {
+  describe('Helpers', () => {
+    describe('Get Lists Filters', () => {
+      it('should return empty string when no base URL and no filters are applied', async () => {
+        const result = buildListsUrl('');
 
-    expect(result.toString()).toEqual('');
-  });
+        expect(result).toEqual('');
+      });
 
-  it('should set active=true when Active checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['status.Active']);
+      it('should return base URL when no filters are applied', async () => {
+        const result = buildListsUrl(baseUrl);
 
-    expect(result.toString()).toEqual('active=true');
-  });
+        expect(result).toEqual(baseUrl);
+      });
 
-  it('should set active=false when Inactive checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['status.Inactive']);
+      it('should set active=true when Active checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE] });
 
-    expect(result.toString()).toEqual('active=false');
-  });
+        expect(result).toEqual(`${baseUrl}?active=true`);
+      });
 
-  it('should omit active when both Active and Inactive checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['status.Active', 'status.Inactive']);
+      it('should set active=false when Inactive checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_INACTIVE] });
 
-    expect(result.toString()).toEqual('');
-  });
+        expect(result).toEqual(`${baseUrl}?active=false`);
+      });
 
-  it('should set private=true when Private checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['visibility.Private']);
+      it('should omit active when both Active and Inactive checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE, STATUS_INACTIVE] });
 
-    expect(result.toString()).toEqual('private=true');
-  });
+        expect(result).toEqual(baseUrl);
+      });
 
-  it('should set private=false when Shared checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['visibility.Shared']);
+      it('should set private=true when Private checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [VISIBILITY_PRIVATE] });
 
-    expect(result.toString()).toEqual('private=false');
-  });
+        expect(result).toEqual(`${baseUrl}?private=true`);
+      });
 
-  it('should omit visibility when both Private and Shared checkbox is checked', async () => {
-    const result = getListsFilterUrlParams(['visibility.Private', 'visibility.Shared']);
+      it('should set private=false when Shared checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [VISIBILITY_SHARED] });
 
-    expect(result.toString()).toEqual('');
-  });
+        expect(result).toEqual(`${baseUrl}?private=false`);
+      });
 
-  it('should include entity type GUID if checked', async () => {
-    const result = getListsFilterUrlParams(['record_types.1234']);
+      it('should omit visibility when both Private and Shared checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [VISIBILITY_PRIVATE, VISIBILITY_SHARED] });
 
-    expect(result.toString()).toEqual('entityTypeIds=1234');
-  });
+        expect(result).toEqual(baseUrl);
+      });
 
-  it('should include multiple entity type GUIDs if checked', async () => {
-    const result = getListsFilterUrlParams(['record_types.1234', 'record_types.5678']);
+      it('should include entity type GUID if checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: ['record_types.1234'] });
 
-    expect(result.toString()).toEqual('entityTypeIds=1234%2C5678');
-  });
+        expect(result).toEqual(`${baseUrl}?entityTypeIds=1234`);
+      });
 
-  it('should create a complex URL string if multipled filters are checked', async () => {
-    const result = getListsFilterUrlParams(['status.Active', 'visibility.Private', 'record_types.1234', 'record_types.5678']);
+      it('should include multiple entity type GUIDs if checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: ['record_types.1234', 'record_types.5678'] });
 
-    expect(result.toString()).toEqual('active=true&private=true&entityTypeIds=1234%2C5678');
+        expect(result).toEqual(`${baseUrl}?entityTypeIds=1234%2C5678`);
+      });
+
+      it('should create a complex URL string if multipled filters are checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE, VISIBILITY_PRIVATE, 'record_types.1234', 'record_types.5678'] });
+
+        expect(result).toEqual(`${baseUrl}?active=true&private=true&entityTypeIds=1234%2C5678`);
+      });
+    });
   });
 });

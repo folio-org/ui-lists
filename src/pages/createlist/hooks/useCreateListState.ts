@@ -5,7 +5,7 @@ import {
   VISIBILITY_VALUES,
   FormStateType,
   ChangedFieldType
-} from '../types';
+} from '../../../interfaces';
 
 export const useCreateListFormState = () => {
   const initialState: FormStateType = {

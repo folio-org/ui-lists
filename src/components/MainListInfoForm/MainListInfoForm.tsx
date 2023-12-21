@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
-import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select } from '@folio/stripes/components';
+import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select, InfoPopover } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
 import {
@@ -105,7 +105,15 @@ export const MainListInfoForm = (
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
           className={css.mainFormVisibility}
-          label={<span className={css.radioLabels}>{t('create-list.main.list-visibility')}</span>}
+          label={
+            <span className={css.radioLabels}>{t('create-list.main.list-visibility')}
+              <InfoPopover
+                iconSize="medium"
+                contentClass={css.tooltipContent}
+                content={t('create-list.main.list-visibility.tooltip')}
+              />
+            </span>
+            }
         >
           <RadioButton
             inline
@@ -131,6 +139,11 @@ export const MainListInfoForm = (
           label={
             <span className={css.radioLabels}>
               {t('create-list.main.list-status')}
+              <InfoPopover
+                iconSize="medium"
+                contentClass={css.tooltipContent}
+                content={t('create-list.main.list-status.tooltip')}
+              />
             </span>
             }
         >

@@ -67,6 +67,23 @@ describe('ListInformationPage Page', () => {
       });
     });
 
+    describe('error', () => {
+      describe('when we receive error for loading details', () => {
+        it('is expected to render error component', async () => {
+          server.get('lists/:listId', () => new Response(404, {}, {
+            code: 'error.code'
+          }));
+          await renderListInformation();
+
+          await awaitLoading();
+
+          const errorComponent = screen.getByText('ui-lists.error-component.error.code');
+
+          expect(errorComponent).toBeInTheDocument();
+        });
+      });
+    });
+
     describe('Delete list', () => {
       describe('When user try to delete list button in dropdown', () => {
         describe('And user clicks on confirm button in modal', () => {

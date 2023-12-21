@@ -43,7 +43,6 @@ export const useRefresh = ({
   });
 
   const { initRefresh } = useInitRefresh({
-    listId,
     onSuccess(data) {
       startPolling(data.id);
     },
@@ -63,7 +62,9 @@ export const useRefresh = ({
   });
 
   return {
-    initRefresh,
+    initRefresh: () => {
+      initRefresh(listId);
+    },
     isRefreshInProgress: isPollingInProgress,
     cancelRefresh,
     isCancelRefreshInProgress: cancelInProgress,

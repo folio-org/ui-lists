@@ -1,12 +1,12 @@
 // @ts-ignore
 import { useOkapiKy, Pluggable } from '@folio/stripes/core';
 import React, { FC, useState } from 'react';
-import { t } from '../../../../services';
-import { getVisibleColumnsKey } from '../../../../utils';
+import { t } from '../../services';
+import { getVisibleColumnsKey } from '../../utils';
 
-import { QueryBuilder } from '../../../createlist/components/QueryBuilder';
-import { STATUS_VALUES, VISIBILITY_VALUES } from '../../types';
-import css from '../../../createlist/components/MainCreateListForm/MainCreateListForm.module.css';
+import { ConfigureQuery } from '../ConfigureQuery';
+import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
+import css from './EditListResultViewer.module.css';
 
 type EditListResultViewerProps = {
     id: string,
@@ -74,7 +74,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       height={500}
       additionalControls={(
         <div className={css.queryBuilderButton}>
-          <QueryBuilder
+          <ConfigureQuery
             listId={id}
             version={version}
             isEditQuery

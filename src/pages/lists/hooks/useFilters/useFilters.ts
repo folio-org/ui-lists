@@ -1,39 +1,39 @@
-import { SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
+import { isEqual } from 'lodash';
 import { APPLIED_FILTERS_KEY } from '../../../../utils/constants';
-import { getFilters } from '../../../../utils';
+import { getFilters, buildDefaultFilters } from './helpers';
+import { FilterConfigType, AppliedFiltersType } from '../../types';
 
-type filterConfigType = {
-  label: string,
-  name: string,
-  values: string[] | {name: string, displayName: string}[]
-}[] | boolean[]
-
-export const useFilters = (filterConfig: filterConfigType) => {
-  const [storedAppliedFilters] = useLocalStorage(APPLIED_FILTERS_KEY, filterConfig);
-  const [appliedFilters, setAppliedFilters] = useState(storedAppliedFilters);
+export const useFilters = (filterConfig: FilterConfigType) => {
+  const defaultFilterConfig = buildDefaultFilters(filterConfig);
+  const [storedAppliedFilters] = useLocalStorage<AppliedFiltersType>(APPLIED_FILTERS_KEY, defaultFilterConfig);
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFiltersType>(storedAppliedFilters);
   const activeFilters = getFilters(appliedFilters);
 
   const filterCount = activeFilters?.length;
 
-  const saveFilters = (filters: SetStateAction<filterConfigType>) => {
+  const saveFilters = (filters: AppliedFiltersType) => {
     setAppliedFilters(filters);
     writeStorage(APPLIED_FILTERS_KEY, filters);
   };
 
-  const onChangeFilter = (e: any) => {
-    const target = e?.target;
+  const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked, name } = e.target;
+
     const filters = { ...appliedFilters };
-    if (target?.checked) {
-      filters[target?.name] = true;
+
+    if (checked) {
+      filters[name] = true;
     } else {
-      delete filters[target?.name];
+      delete filters[name];
     }
+
     saveFilters(filters);
   };
 
   const onResetAll = () => {
-    saveFilters(filterConfig);
+    saveFilters(defaultFilterConfig);
   };
 
   const onClearGroup = (groupName: string) => {
@@ -48,5 +48,15 @@ export const useFilters = (filterConfig: filterConfigType) => {
     saveFilters(filters);
   };
 
-  return { onChangeFilter, onClearGroup, onResetAll, filterCount, activeFilters, appliedFilters };
+  const isDefaultState = isEqual(defaultFilterConfig, appliedFilters);
+
+  return {
+    onChangeFilter,
+    onClearGroup,
+    onResetAll,
+    filterCount,
+    activeFilters,
+    appliedFilters,
+    isDefaultState
+  };
 };

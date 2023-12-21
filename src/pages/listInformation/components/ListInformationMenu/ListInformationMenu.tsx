@@ -27,7 +27,8 @@ export interface ListInformationMenuProps {
     'edit': () => void,
     'delete':() => void,
     'export': () => void,
-    'cancel-export': () => void
+    'cancel-export': () => void,
+    'copy': () => void
   },
   conditions: DisablingConditions,
   onColumnsChange: ({ values }: {values: string[]}) => void;
@@ -91,6 +92,17 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
         icon: ICONS.edit,
         onClick: buttonHandlers.edit,
         disabled: isEditDisabled(conditions),
+      }
+    );
+  }
+
+  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+    actionButtons.push(
+      {
+        label: 'copy',
+        icon: ICONS.duplicate,
+        onClick: buttonHandlers.copy,
+        disabled: false,
       }
     );
   }

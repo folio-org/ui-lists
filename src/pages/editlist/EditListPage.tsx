@@ -2,37 +2,38 @@ import React, { FC, useState } from 'react';
 import {
   Accordion,
   AccordionSet,
-  Button,
-  Layer,
   Layout,
   Loading,
   // @ts-ignore:next-line
   MetaSection,
-  Pane,
-  PaneFooter,
-  Paneset
 } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { HTTPError } from 'ky';
 import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
-import { MainListInfoForm, ListAppIcon, CancelEditModal, ConfirmDeleteModal } from '../../components';
+import {
+  MainListInfoForm,
+  CancelEditModal,
+  ConfirmDeleteModal,
+  ErrorComponent,
+  EditListResultViewer,
+  EditListLayout
+} from '../../components';
 
-import { EditListResultViewer, EditListMenu } from './components';
+import { EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
 
-import { FIELD_NAMES } from './types';
+import { FIELD_NAMES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 
 
 export const EditListPage:FC = () => {
   const history = useHistory();
   const stripes = useStripes();
-  const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
-  const { data: listDetails, isLoading: loadingListDetails } = useListDetails(id);
+  const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
 
@@ -106,6 +107,10 @@ export const EditListPage:FC = () => {
     }
   );
 
+  if (detailsError) {
+    return <ErrorComponent error={detailsError} />;
+  }
+
   const closeHandler = () => {
     if (hasChanges) {
       setShowConfirmCancelEditModal(true);
@@ -145,83 +150,60 @@ export const EditListPage:FC = () => {
   }
 
   return (
-    <Paneset>
-      <Layer isOpen contentLabel={listName}>
-        <Paneset isRoot>
-          <Pane
-            dismissible
-            defaultWidth="fill"
-            appIcon={<ListAppIcon />}
-            paneTitle={t('lists.edit.title', { listName })}
-            paneSub={!loadingListDetails ?
-              t('mainPane.subTitle',
-                { count: formatNumber(listDetails?.successRefresh?.recordsCount ?? 0) })
-              :
-              <>{t('lists.item.loading')}<Loading /></>}
-            onClose={closeHandler}
-            lastMenu={<EditListMenu
-              conditions={conditions}
-              buttonHandlers={buttonHandlers}
-              stripes={stripes}
-            />}
-            footer={<PaneFooter
-              renderStart={
-                <Button
-                  onClick={closeHandler}
-                >
-                  {t('button.cancel')}
-                </Button>}
-              renderEnd={
-                <Button
-                  buttonStyle="primary"
-                  disabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
-                  onClick={onSave}
-                >
-                  {t('button.save')}
-                </Button>}
-            />}
-          >
-            <AccordionSet>
-              <Accordion
-                data-testid="metaSectionAccordion"
-                label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
-              >
-                <Layout>
-                  <MetaSection
-                    contentId="userInfoRecordMetaContent"
-                    createdDate={listDetails?.createdDate}
-                    createdBy={listDetails?.createdByUsername}
-                    id="userInfoRecordMeta"
-                    lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
-                    lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
-                  />
-                  <MainListInfoForm
-                    onValueChange={onValueChange}
-                    status={state[FIELD_NAMES.STATUS]}
-                    listName={state[FIELD_NAMES.LIST_NAME]}
-                    visibility={state[FIELD_NAMES.VISIBILITY]}
-                    description={state[FIELD_NAMES.DESCRIPTION]}
-                    isLoading={loadingListDetails}
-                    showInactiveWarning
-                  />
-                </Layout>
-              </Accordion>
-            </AccordionSet>
-            <EditListResultViewer
-              id={id}
-              version={version}
-              fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
-              contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
-              entityTypeId={listDetails?.entityTypeId ?? ''}
+    <EditListLayout
+      lastMenu={
+        <EditListMenu
+          conditions={conditions}
+          buttonHandlers={buttonHandlers}
+          stripes={stripes}
+        />
+    }
+      isLoading={loadingListDetails}
+      recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
+      onCancel={closeHandler}
+      onSave={onSave}
+      name={listName}
+      title={t('lists.edit.title', { listName })}
+      isSaveButtonDisabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
+    >
+      <AccordionSet>
+        <Accordion
+          data-testid="metaSectionAccordion"
+          label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+        >
+          <Layout>
+            <MetaSection
+              contentId="userInfoRecordMetaContent"
+              createdDate={listDetails?.createdDate}
+              createdBy={listDetails?.createdByUsername}
+              id="userInfoRecordMeta"
+              lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
+              lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+            />
+            <MainListInfoForm
+              onValueChange={onValueChange}
               status={state[FIELD_NAMES.STATUS]}
               listName={state[FIELD_NAMES.LIST_NAME]}
               visibility={state[FIELD_NAMES.VISIBILITY]}
               description={state[FIELD_NAMES.DESCRIPTION]}
+              isLoading={loadingListDetails}
+              showInactiveWarning
             />
-          </Pane>
-        </Paneset>
-      </Layer>
+          </Layout>
+        </Accordion>
+      </AccordionSet>
+      <EditListResultViewer
+        id={id}
+        version={version}
+        fqlQuery={listDetails?.fqlQuery ?? ''}
+        userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+        contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+        entityTypeId={listDetails?.entityTypeId ?? ''}
+        status={state[FIELD_NAMES.STATUS]}
+        listName={state[FIELD_NAMES.LIST_NAME]}
+        visibility={state[FIELD_NAMES.VISIBILITY]}
+        description={state[FIELD_NAMES.DESCRIPTION]}
+      />
       <CancelEditModal
         onCancel={() => {
           setShowConfirmCancelEditModal(false);
@@ -238,6 +220,6 @@ export const EditListPage:FC = () => {
         }}
         open={showConfirmDeleteModal}
       />
-    </Paneset>
+    </EditListLayout>
   );
 };

@@ -2,14 +2,13 @@ import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from '@folio/stripes/components';
 import { computeErrorMessage, t } from '../../services';
-import { useCreateList, useCreateListFormState } from './hooks';
-import { useMessages, useRecordTypes } from '../../hooks';
+import { useCreateListFormState } from './hooks';
+import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { computeRecordTypeOptions } from './helpers';
 import { HOME_PAGE_URL } from '../../constants';
 
-import { ListsRecordBase } from '../../interfaces';
-import { FIELD_NAMES } from './types';
+import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
 
 export const CreateListPage:FC = () => {
   const history = useHistory();

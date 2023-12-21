@@ -1,1 +1,1 @@
-export { t, formatNumber, formatTime, formatDate } from './translation';
+export { t, tString, formatNumber, formatTime, formatDate } from './translation';

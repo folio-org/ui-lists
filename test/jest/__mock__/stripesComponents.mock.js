@@ -16,6 +16,7 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </button>
   )),
+  InfoPopover: jest.fn(({ content }) => <div>{content}</div>),
   ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel, cancelLabel, confirmLabel, open }) => (
     open ? (
       <div data-testid="ConfirmationModal">
@@ -310,6 +311,16 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     );
   }),
+  Tooltip: jest.fn(({
+    children,
+    text,
+    ...rest
+  }) => (
+    <div {...rest}>
+      {text}
+      {children}
+    </div>
+  )),
   Checkbox: jest.fn(({
     label,
     checked,

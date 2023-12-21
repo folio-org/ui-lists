@@ -17,14 +17,13 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 import { IfPermission } from '@folio/stripes/core';
 
 import { ListsTable, ListAppIcon } from '../../components';
-import { useLocalStorageToggle } from '../../hooks';
+import { useListsFetchedSinceTimestamp, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
 
 import css from './ListPage.module.css';
-
 
 export const ListPage: React.FC = () => {
   const [totalRecords, setTotalRecords] = useState(0);
@@ -36,8 +35,11 @@ export const ListPage: React.FC = () => {
     onClearGroup,
     filterCount,
     activeFilters,
-    appliedFilters
+    appliedFilters,
+    isDefaultState
   } = useFilters(filterConfig);
+
+  useListsFetchedSinceTimestamp();
 
   if (isLoadingConfigData) return <LoadingPane />;
 
@@ -55,9 +57,10 @@ export const ListPage: React.FC = () => {
         >
           <div className={css.resetButtonWrap}>
             <Button
-              buttonStyle="default"
-              disabled={!filterCount}
+              // @ts-ignore:next-line
+              buttonStyle="none"
               id="clickable-reset-all"
+              disabled={isDefaultState}
               onClick={onResetAll}
             >
               <Icon icon="times-circle-solid">

@@ -1,1 +1,1 @@
-export { computeErrorMessage } from './error-message-extractor';
+export { computeErrorMessage, parseErrorPayload } from './error-message-extractor';

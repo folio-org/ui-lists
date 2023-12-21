@@ -1,5 +1,4 @@
 export {
   getVisibleColumnsKey,
-  getFilters,
-  getListsFilterUrlParams,
+  buildListsUrl
 } from './helpers';
