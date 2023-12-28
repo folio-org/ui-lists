@@ -80,10 +80,9 @@ export const ListsTable: FC<ListsTableProps> = ({
       <MultiColumnList
         interactive
         data-testid="ItemsList"
-        contentData={content}
+        contentData={content ?? []}
         visibleColumns={LISTS_VISIBLE_COLUMNS}
         formatter={listTableResultFormatter}
-        pagingType={null}
         pageAmount={totalPages}
         totalCount={totalRecords}
         onNeedMoreData={onNeedMoreData}
