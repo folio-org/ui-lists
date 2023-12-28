@@ -11,7 +11,12 @@ type useInitRefreshProps = {
 export const useInitRefresh = ({ onSuccess, onError }: useInitRefreshProps) => {
   const ky = useOkapiKy();
 
-  const { mutate: initRefresh, reset, isLoading } = useMutation((listId: string) => ky.post(`lists/${listId}/refresh`).json(),
+  const {
+    mutate: initRefresh,
+    reset,
+    isLoading,
+  } = useMutation<InitRefreshResponse, HTTPError, string>(
+    (listId: string) => ky.post(`lists/${listId}/refresh`).json(),
     {
       retry: false,
       onSuccess: (data: InitRefreshResponse) => {
@@ -21,8 +26,9 @@ export const useInitRefresh = ({ onSuccess, onError }: useInitRefreshProps) => {
       onError: (error: HTTPError) => {
         onError?.(error);
         reset();
-      }
-    });
+      },
+    },
+  );
 
   return {
     initRefresh,
@@ -30,5 +36,3 @@ export const useInitRefresh = ({ onSuccess, onError }: useInitRefreshProps) => {
     initRefreshInProgress: isLoading
   };
 };
-
-
