@@ -121,5 +121,8 @@
     "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
     "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters.",
     "create-list.main.list-visibility.tooltip": "<strong>Shared</strong> lists can be accessed by all users with permissions to the Lists app in this organization. <strong>Private</strong> lists can only be accessed by the user logged in.",
-    "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set."
+    "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
+    "pane.dropdown.copy": "Lista duplicada",
+    "lists.copy.title": "Lista duplicada: {listName}",
+    "lists.copy.name-postfix": "cópia"
 }

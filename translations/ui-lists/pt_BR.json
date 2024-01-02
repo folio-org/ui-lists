@@ -121,5 +121,8 @@
     "callout.list.created": "A lista <strong>{listName}</strong> foi criada. Recarregue para ver as alterações. Observação: a lista pode não aparecer com base nos filtros.",
     "callout.list.multiple-created": "Novas listas foram criadas. Recarregue para ver as alterações. Observação: novas listas podem não aparecer com base em filtros.",
     "create-list.main.list-visibility.tooltip": "As listas <strong>compartilhadas</strong> podem ser acessadas por todos os usuários com permissões para o aplicativo Listas nesta organização. As listas <strong>privadas</strong> só podem ser acessadas pelo usuário com permissão.",
-    "create-list.main.list-status.tooltip": "As listas <strong>ativas</strong> consistem em uma consulta e um conjunto de registros resultante. As listas <strong>inativas</strong> podem ter uma consulta, mas nenhum conjunto de registros."
+    "create-list.main.list-status.tooltip": "As listas <strong>ativas</strong> consistem em uma consulta e um conjunto de registros resultante. As listas <strong>inativas</strong> podem ter uma consulta, mas nenhum conjunto de registros.",
+    "pane.dropdown.copy": "Lista duplicada",
+    "lists.copy.title": "Lista duplicada: {listName}",
+    "lists.copy.name-postfix": "cópia"
 }

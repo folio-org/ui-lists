@@ -121,5 +121,8 @@
     "callout.list.created": "Seznam <strong>{listName}</strong> byl vytvořen. Chcete-li zobrazit změny, znovu načtěte. Poznámka: Seznam se nemusí zobrazit na základě filtrů.",
     "callout.list.multiple-created": "Byly vytvořeny nové seznamy. Chcete-li vidět změny, znovu je načtěte. Poznámka: nové seznamy se nemusí zobrazit na základě filtrů.",
     "create-list.main.list-visibility.tooltip": "Ke <strong>sdíleným</strong> seznamům mají přístup všichni uživatelé s oprávněním k aplikaci Seznamy v této organizaci. K <strong>soukromým</strong> seznamům má přístup pouze přihlášený uživatel.",
-    "create-list.main.list-status.tooltip": "<strong>Aktivní</strong> seznamy se skládají z dotazu a výsledného souboru záznamů. <strong>Neaktivní</strong> seznamy mohou obsahovat dotaz, ale žádnou sadu záznamů."
+    "create-list.main.list-status.tooltip": "<strong>Aktivní</strong> seznamy se skládají z dotazu a výsledného souboru záznamů. <strong>Neaktivní</strong> seznamy mohou obsahovat dotaz, ale žádnou sadu záznamů.",
+    "pane.dropdown.copy": "Duplicate list",
+    "lists.copy.title": "Duplicate List: {listName}",
+    "lists.copy.name-postfix": "kopírovat"
 }
