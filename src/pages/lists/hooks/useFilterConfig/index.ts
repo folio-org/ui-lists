@@ -1,1 +1,0 @@
-export { useFilterConfig } from './useFilterConfig';

@@ -57,6 +57,7 @@ describe('ListPage Page', () => {
   });
 
   it('should not render New button when user doesn\'t have permission', async () => {
+    // @ts-ignore:next-line
     IfPermission.mockImplementation(() => null);
 
     await waitFor(() => {

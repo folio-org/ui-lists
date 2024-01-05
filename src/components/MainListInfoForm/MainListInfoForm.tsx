@@ -32,10 +32,10 @@ export const MainListInfoForm = (
     isLoading,
     recordTypeOptions }: MainListInfoFormProps
 ) => {
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
   };
-  const onTrimOnBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const onTrimOnBlur = (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value.trim() });
   };
   const [isNameWasFocused, setIsNameWasFocused] = useState(false);
