@@ -22,7 +22,7 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import { EntityTypeColumn } from '../../interfaces';
+import { QueryBuilderColumnMetadata } from '../../interfaces';
 
 import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
@@ -115,7 +115,7 @@ export const ListInformationPage: React.FC = () => {
   const closeSuccessMessage = () => {
     setShowSuccessRefreshMessage(false);
   };
-  const [columnControls, setColumnControls] = useState<EntityTypeColumn[]>([]);
+  const [columnControls, setColumnControls] = useState<QueryBuilderColumnMetadata[]>([]);
 
   const {
     handleColumnsChange,
@@ -218,7 +218,6 @@ export const ListInformationPage: React.FC = () => {
               visibleColumns={visibleColumns}
               columns={columnControls}
               onColumnsChange={handleColumnsChange}
-              // @ts-ignore:next-line
               buttonHandlers={buttonHandlers}
               conditions={conditions}
             />}

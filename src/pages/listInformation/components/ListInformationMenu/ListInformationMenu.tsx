@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore:next-line
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
   Headline
@@ -14,12 +13,12 @@ import { t,
   isExportDisabled,
   DisablingConditions } from '../../../../services';
 import { ActionMenu } from '../../../../components';
-import { EntityTypeColumn, ICONS } from '../../../../interfaces';
+import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
 import { USER_PERMS } from '../../../../utils/constants';
 
 export interface ListInformationMenuProps {
   stripes: any,
-  columns?: EntityTypeColumn[]
+  columns: QueryBuilderColumnMetadata[]
   visibleColumns?: string[] | null,
   buttonHandlers: {
     'cancel-refresh': () => void,
@@ -126,12 +125,10 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
         {t('pane.dropdown.show-columns')}
       </Headline>
       <CheckboxFilter
-        // @ts-ignore:next-line
         dataOptions={columns}
         name="ui-lists-columns-filter"
-        // @ts-ignore:next-line
         onChange={onColumnsChange}
-        selectedValues={visibleColumns}
+        selectedValues={visibleColumns ?? []}
       />
     </ActionMenu>
   );
