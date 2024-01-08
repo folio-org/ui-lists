@@ -34,3 +34,12 @@ export interface EntityType {
     label: string;
     columns: EntityTypeColumn[];
 }
+
+export interface QueryBuilderColumnMetadata {
+    label: string;
+    value: string;
+    disabled: false;
+    readOnly: false;
+    selected: boolean;
+    dataType: string;
+}
