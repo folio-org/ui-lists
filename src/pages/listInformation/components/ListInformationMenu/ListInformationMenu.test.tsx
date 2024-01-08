@@ -18,7 +18,8 @@ const mockProps: ListInformationMenuProps = {
     'cancel-export': jest.fn()
   },
   conditions: { isListCanned: false },
-  onColumnsChange: jest.fn()
+  onColumnsChange: jest.fn(),
+  columns: [],
 };
 
 beforeEach(() => {
