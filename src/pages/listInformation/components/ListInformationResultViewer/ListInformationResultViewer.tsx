@@ -2,18 +2,18 @@ import React from 'react';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { t } from '../../../../services';
-import { EntityTypeColumn } from '../../../../interfaces';
+import { QueryBuilderColumnMetadata } from '../../../../interfaces';
 
 type ListInformationResultViewerType = {
-  userFriendlyQuery?: string,
-  refreshTrigger?: number | boolean,
-  setColumnControlList?: (columns:EntityTypeColumn[]) => void,
-  setDefaultVisibleColumns?: (columns:string[]) => void,
-  listID?: string,
-  entityTypeId?: string,
-  visibleColumns?: string[] | null,
-  refreshInProgress: boolean
-}
+  userFriendlyQuery?: string;
+  refreshTrigger?: number | boolean;
+  setColumnControlList?: (columns: QueryBuilderColumnMetadata[]) => void;
+  setDefaultVisibleColumns?: (columns: string[]) => void;
+  listID?: string;
+  entityTypeId?: string;
+  visibleColumns?: string[] | null;
+  refreshInProgress: boolean;
+};
 
 
 export const ListInformationResultViewer: React.FC<ListInformationResultViewerType> = ({
