@@ -3,4 +3,4 @@ on: [push, pull_request]
 
 jobs:
   my-job:
-    uses: ncovercash/folio-github-actions/.github/workflows/ui/test.yml@stripes-904
+    uses: ncovercash/folio-github-actions/.github/workflows/test.yml@stripes-904
