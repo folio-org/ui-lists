@@ -1,0 +1,6 @@
+name: buildNPM Snapshot
+on: [push, pull_request]
+
+jobs:
+  my-job:
+    uses: ncovercash/folio-github-actions/workflows/ui/test.yml@stripes-904
