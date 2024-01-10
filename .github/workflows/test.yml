@@ -1,4 +1,4 @@
-name: buildNPM Snapshot
+name: Centralized workflow test
 on: [push, pull_request]
 
 jobs:
