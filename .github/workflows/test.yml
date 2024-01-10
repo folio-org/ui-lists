@@ -2,5 +2,5 @@ name: buildNPM Snapshot
 on: [push, pull_request]
 
 jobs:
-  my-job:
+  outer:
     uses: ncovercash/folio-github-actions/.github/workflows/test.yml@stripes-904
