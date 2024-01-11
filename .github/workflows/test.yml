@@ -4,6 +4,7 @@ on: [push, pull_request]
 jobs:
   ui:
     uses: folio-org/.github/.github/workflows/ui.yml@stripes-904
+    secrets: inherit
     with:
       jest-enabled: true
       jest-test-command: yarn test --coverage
