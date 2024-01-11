@@ -8,4 +8,4 @@ jobs:
     secrets: inherit
     with:
       jest-enabled: true
-      jest-test-command: yarn test --coverage
+      jest-test-command: yarn test --ci --color --coverage
