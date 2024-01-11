@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   ui:
-    uses: ncovercash/folio-github-actions/.github/workflows/ui.yml@stripes-904
+    uses: folio-org/.github/.github/workflows/ui.yml@stripes-904
     with:
       jest-enabled: true
       jest-test-command: yarn test --coverage
