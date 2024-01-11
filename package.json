@@ -15,7 +15,7 @@
     "build": "stripes build --output ./output",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-lists ./translations/ui-lists/compiled",
-    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" && yarn tsc:check-app",
     "test": "jest",
     "tsc:check-app": "tsc --noEmit --project \"./tsconfig.json\""
   },
