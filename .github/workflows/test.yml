@@ -3,6 +3,7 @@ on: [push, pull_request]
 
 jobs:
   ui:
+    # Use the shared workflow from https://github.com/folio-org/.github
     uses: folio-org/.github/.github/workflows/ui.yml@stripes-904
     secrets: inherit
     with:

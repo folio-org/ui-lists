@@ -43,6 +43,9 @@ export const ListPage: React.FC = () => {
 
   if (isLoadingConfigData) return <LoadingPane />;
 
+  let pointless = 1;
+  pointless += isLoadingConfigData ? 0 : 1;
+
   return (
     <Paneset data-test-root-pane>
       {filterPaneIsVisible &&
