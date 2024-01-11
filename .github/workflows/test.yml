@@ -8,3 +8,4 @@ jobs:
     with:
       jest-enabled: true
       jest-test-command: yarn test --coverage
+
