@@ -28,8 +28,10 @@ export const ListsTable: FC<ListsTableProps> = ({
     offset: storedCurrentPageOffset,
   });
 
-  const goToLastPage = (totalPages: number) => {
-    const lastPageOffset = PAGINATION_AMOUNT * (totalPages - 1);
+  const goToLastPage = (totalPages: number = 0) => {
+    const lastPageOffset = totalPages > 1
+      ? PAGINATION_AMOUNT * (totalPages - 1)
+      : 0;
 
     onNeedMoreData({
       offset: lastPageOffset
