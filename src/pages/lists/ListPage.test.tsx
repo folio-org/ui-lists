@@ -11,8 +11,11 @@ import { HOME_PAGE_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
 
 jest.mock('../../components/ListsTable', () => ({
-  ListsTable: jest.fn(() => <div data-testid="ListTable" />),
+  ListsTable: jest.fn(() => (
+    <div data-testid="ListTable" />
+  ))
 }));
+
 
 const renderLists = () => {
   return render(
@@ -20,7 +23,7 @@ const renderLists = () => {
       <MemoryRouter initialEntries={[HOME_PAGE_URL]}>
         <ListPage />
       </MemoryRouter>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
 };
 
@@ -37,14 +40,11 @@ describe('ListPage Page', () => {
     server.shutdown();
   });
 
+
   it('should render multiColumnList ', async () => {
     await waitFor(() => {
       expect(screen.getByTestId('ListTable')).toBeInTheDocument();
     });
-  });
-
-  it('should fail', () => {
-    expect(1).toBe(2);
   });
 
   it('should render New button when user has permission', async () => {
@@ -56,7 +56,7 @@ describe('ListPage Page', () => {
     });
   });
 
-  it("should not render New button when user doesn't have permission", async () => {
+  it('should not render New button when user doesn\'t have permission', async () => {
     // @ts-ignore:next-line
     IfPermission.mockImplementation(() => null);
 
