@@ -1,0 +1,16 @@
+name: Centralized workflow test
+on:
+  - push
+  - pull_request
+  - pull_request_target
+  - workflow_dispatch
+
+jobs:
+  ui:
+    # Use the shared workflow from https://github.com/folio-org/.github
+    uses: folio-org/.github/.github/workflows/ui.yml@stripes-904
+    if: github.ref_name == github.event.repository.default_branch || github.event_name != 'push'
+    secrets: inherit
+    with:
+      jest-enabled: true
+      jest-test-command: yarn test --ci --color --coverage
