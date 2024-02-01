@@ -12,38 +12,31 @@ import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
 
 export interface ListsTableProps {
-  activeFilters: string[],
-  setTotalRecords: (totalRecords: number) => void
+  setTotalRecords: (totalRecords: number) => void;
+  activeFilters: string[];
 }
 
-export const ListsTable: FC<ListsTableProps> = ({
-  activeFilters,
-  setTotalRecords = noop
-}) => {
-  const [storedCurrentPageOffset] = useLocalStorage<number>(CURRENT_PAGE_OFFSET_KEY, 0);
+export const ListsTable: FC<ListsTableProps> = ({ activeFilters, setTotalRecords = noop }) => {
   const [recordIds, setRecordIds] = useState<string[]>([]);
+  const [storedCurrentPageOffset] = useLocalStorage<number>(CURRENT_PAGE_OFFSET_KEY, 0);
 
   const { changePage, pagination } = usePagination({
     limit: PAGINATION_AMOUNT,
     offset: storedCurrentPageOffset,
   });
 
+  const onNeedMoreData = (thePagination: any) => {
+    setRecordIds([]);
+    changePage(thePagination);
+    writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
+  };
+
   const goToLastPage = (totalPages: number = 0) => {
-    const lastPageOffset = totalPages > 1
-      ? PAGINATION_AMOUNT * (totalPages - 1)
-      : 0;
+    const lastPageOffset = totalPages > 1 ? PAGINATION_AMOUNT * (totalPages - 1) : 0;
 
     onNeedMoreData({
-      offset: lastPageOffset
-    })
-  }
-
-  const onNeedMoreData = (thePagination: any) => {
-    console.log(thePagination);
-    writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
-    // @ts-ignore:next-line
-    changePage(thePagination);
-    setRecordIds([]);
+      offset: lastPageOffset,
+    });
   };
 
   const prevActiveFilters = usePrevious(activeFilters);
@@ -55,20 +48,24 @@ export const ListsTable: FC<ListsTableProps> = ({
       changePage({ offset: 0, limit: PAGINATION_AMOUNT });
       setRecordIds([]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
+  const { listsData, isLoading } = useLists({
+    filters: activeFilters,
+    size: pagination?.limit,
+    offset: pagination?.offset,
+  });
 
   useEffect(() => {
-    if(isLoading) {
-      return
+    if (isLoading) {
+      return;
     }
 
     if (listsData?.content?.length) {
       setRecordIds(listsData?.content.map(({ id }) => id));
-    } else if (listsData?.totalPages){
-      goToLastPage(listsData?.totalPages)
+    } else if (listsData?.totalPages) {
+      goToLastPage(listsData?.totalPages);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
@@ -104,11 +101,7 @@ export const ListsTable: FC<ListsTableProps> = ({
         totalCount={totalRecords}
         columnMapping={listTableMapping}
       />
-      <PrevNextPagination
-        {...pagination}
-        totalCount={totalRecords}
-        onChange={onNeedMoreData}
-      />
+      <PrevNextPagination {...pagination} totalCount={totalRecords} onChange={onNeedMoreData} />
     </>
   );
 };
