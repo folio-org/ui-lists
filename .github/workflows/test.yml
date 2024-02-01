@@ -9,7 +9,17 @@ jobs:
   ui:
     # Use the shared workflow from https://github.com/folio-org/.github
     uses: folio-org/.github/.github/workflows/ui.yml@stripes-904
-    if: github.ref_name == github.event.repository.default_branch || github.event_name != 'push'
+    # run if any of:
+    #  1. we are on default branch (for publishing)
+    #  2. we are on a pull request from inside the repository (use normal pull_request, to include changes to this workflow file)
+    #  3. we are on a pull request from a fork (use pull_request_target to get secrets safely)
+    #  4. we are running manually (workflow_dispatch)
+    if: ${{
+      github.ref_name == github.event.repository.default_branch ||
+      (!github.event.pull_request.head.repo.fork && github.event_name == 'pull_request') ||
+      (github.event.pull_request.head.repo.fork && github.event_name == 'pull_request_target') ||
+      github.event_name == 'workflow_dispatch'
+      }}
     secrets: inherit
     with:
       jest-enabled: true
