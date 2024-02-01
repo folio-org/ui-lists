@@ -28,7 +28,18 @@ export const ListsTable: FC<ListsTableProps> = ({
     offset: storedCurrentPageOffset,
   });
 
+  const goToLastPage = (totalPages: number = 0) => {
+    const lastPageOffset = totalPages > 1
+      ? PAGINATION_AMOUNT * (totalPages - 1)
+      : 0;
+
+    onNeedMoreData({
+      offset: lastPageOffset
+    })
+  }
+
   const onNeedMoreData = (thePagination: any) => {
+    console.log(thePagination);
     writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
     // @ts-ignore:next-line
     changePage(thePagination);
@@ -50,8 +61,14 @@ export const ListsTable: FC<ListsTableProps> = ({
   const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
 
   useEffect(() => {
+    if(isLoading) {
+      return
+    }
+
     if (listsData?.content?.length) {
       setRecordIds(listsData?.content.map(({ id }) => id));
+    } else if (listsData?.totalPages){
+      goToLastPage(listsData?.totalPages)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
@@ -85,7 +102,6 @@ export const ListsTable: FC<ListsTableProps> = ({
         formatter={listTableResultFormatter}
         pageAmount={totalPages}
         totalCount={totalRecords}
-        onNeedMoreData={onNeedMoreData}
         columnMapping={listTableMapping}
       />
       <PrevNextPagination

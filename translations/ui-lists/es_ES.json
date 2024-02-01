@@ -85,7 +85,7 @@
     "callout.list.active": "<strong>{listName}</strong> is active. Refresh <strong>{listName}</strong> to see list contents",
     "lists.edit.saving": "Guardando",
     "lists.edit.loading": "Cargando",
-    "lists.edit.title": "Editar",
+    "lists.edit.title": "Editar {listName}",
     "form.field.empty-error": "Por favor complete ésto para continuar",
     "loading-fallback": "Not loaded",
     "delete-list.refresh.in.progress": "Error: <strong>{listName}</strong> was not deleted. Lists can't be deleted while a refresh is in progress.",

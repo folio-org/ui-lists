@@ -115,14 +115,14 @@
     "refresh-list.is.private": "Error: refresh of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
     "export-list.is.private": "Error: export of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
     "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it",
-    "error-component.read-list.not.found": "List not found",
+    "error-component.read-list.not.found": "リストが見つかりません",
     "error-component.read-list.is.private": "You don't have permission to view this list",
-    "error-component.invalid.request": "List not found",
-    "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
+    "error-component.invalid.request": "リストが見つかりません",
+    "callout.list.created": "リスト<strong> {listName} </strong>が作成されました。変更を確認するには再ロードしてください。注: フィルターに基づいてリストが表示されない場合があります。",
     "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters.",
     "create-list.main.list-visibility.tooltip": "<strong>Shared</strong> lists can be accessed by all users with permissions to the Lists app in this organization. <strong>Private</strong> lists can only be accessed by the user logged in.",
     "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
-    "lists.copy.name-postfix": "copy"
+    "lists.copy.name-postfix": "コピー"
 }
