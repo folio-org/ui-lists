@@ -8,7 +8,6 @@ type ListInformationResultViewerType = {
   userFriendlyQuery?: string;
   refreshTrigger?: number | boolean;
   setColumnControlList?: (columns: QueryBuilderColumnMetadata[]) => void;
-  setDefaultVisibleColumns?: (columns: string[]) => void;
   listID?: string;
   entityTypeId?: string;
   visibleColumns?: string[] | null;
@@ -22,7 +21,6 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   setColumnControlList = () => {},
   listID = '',
   entityTypeId = '',
-  setDefaultVisibleColumns = () => {},
   visibleColumns = [],
   refreshInProgress
 }) => {
@@ -50,7 +48,6 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
-      onSetDefaultVisibleColumns={setDefaultVisibleColumns}
       onSetDefaultColumns={setColumnControlList}
       height={500}
     >

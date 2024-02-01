@@ -22,7 +22,7 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import { QueryBuilderColumnMetadata } from '../../interfaces';
+import { ListsRecordDetails, QueryBuilderColumnMetadata} from '../../interfaces';
 
 import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
@@ -33,7 +33,17 @@ export const ListInformationPage: React.FC = () => {
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
 
-  const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id);
+  const {
+    handleColumnsChange,
+    visibleColumns,
+    setDefaultVisibleColumns
+  } = useVisibleColumns(id);
+
+  const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id, {
+    onSuccess: (data: ListsRecordDetails) => {
+      setDefaultVisibleColumns(data?.fields)
+    }
+  });
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
 
@@ -105,6 +115,7 @@ export const ListInformationPage: React.FC = () => {
 
   const updateListDetailsData = () => {
     queryClient.setQueryData(['listDetails', id], polledData);
+    setDefaultVisibleColumns(polledData?.fields)
   };
 
   const deleteListHandler = () => {
@@ -116,13 +127,7 @@ export const ListInformationPage: React.FC = () => {
     setShowSuccessRefreshMessage(false);
   };
   const [columnControls, setColumnControls] = useState<QueryBuilderColumnMetadata[]>([]);
-
-  const {
-    handleColumnsChange,
-    visibleColumns,
-    setDefaultVisibleColumns
-  } = useVisibleColumns(id);
-
+  console.log(columnControls);
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
   }
@@ -240,7 +245,6 @@ export const ListInformationPage: React.FC = () => {
                 entityTypeId={listData?.entityTypeId}
                 refreshTrigger={Number(refreshTrigger)}
                 setColumnControlList={setColumnControls}
-                setDefaultVisibleColumns={setDefaultVisibleColumns}
                 visibleColumns={visibleColumns}
               />
             </AccordionSet>

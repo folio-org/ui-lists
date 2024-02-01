@@ -69,6 +69,7 @@ export interface ListsRecordBase {
   entityTypeId?: string;
   entityTypeName?: string;
   userFriendlyQuery?: string;
+  fields: string[];
   fqlQuery?: string;
   createdByUsername?: string;
   createdDate?: string;
