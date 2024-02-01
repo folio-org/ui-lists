@@ -28,6 +28,12 @@ export const ListsTable: FC<ListsTableProps> = ({
     offset: storedCurrentPageOffset,
   });
 
+  const onNeedMoreData = (thePagination: any) => {
+    setRecordIds([]);
+    changePage(thePagination);
+    writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
+  };
+
   const goToLastPage = (totalPages: number = 0) => {
     const lastPageOffset = totalPages > 1
       ? PAGINATION_AMOUNT * (totalPages - 1)
@@ -37,14 +43,6 @@ export const ListsTable: FC<ListsTableProps> = ({
       offset: lastPageOffset
     })
   }
-
-  const onNeedMoreData = (thePagination: any) => {
-    console.log(thePagination);
-    writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
-    // @ts-ignore:next-line
-    changePage(thePagination);
-    setRecordIds([]);
-  };
 
   const prevActiveFilters = usePrevious(activeFilters);
 
