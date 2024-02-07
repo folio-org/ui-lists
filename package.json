@@ -75,6 +75,7 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "@folio/plugin-query-builder": "^1.0.2",
     "@folio/stripes-acq-components": "~5.0.0",
     "date-fns": "^2.29.3",
     "ky": "^0.33.2",
@@ -88,9 +89,6 @@
     "react-redux": "^8.0.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
-  },
-  "optionalDependencies": {
-    "@folio/plugin-query-builder": ">=1.0.0"
   },
   "stripes": {
     "actsAs": [
