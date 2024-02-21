@@ -10,6 +10,7 @@ import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
+import { columnWidthsConfig } from "./configs";
 
 export interface ListsTableProps {
   activeFilters: string[],
@@ -98,6 +99,8 @@ export const ListsTable: FC<ListsTableProps> = ({
         interactive
         data-testid="ItemsList"
         contentData={content ?? []}
+        // @ts-ignore:next-line
+        columnWidths={columnWidthsConfig}
         visibleColumns={LISTS_VISIBLE_COLUMNS}
         formatter={listTableResultFormatter}
         pageAmount={totalPages}
