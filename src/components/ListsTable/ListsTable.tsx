@@ -99,7 +99,6 @@ export const ListsTable: FC<ListsTableProps> = ({
         interactive
         data-testid="ItemsList"
         contentData={content ?? []}
-        // @ts-ignore:next-line
         columnWidths={columnWidthsConfig}
         visibleColumns={LISTS_VISIBLE_COLUMNS}
         formatter={listTableResultFormatter}
