@@ -52,3 +52,9 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   return url;
 };
 
+export const createColumnHash = (listColumns: string[]) => {
+  const sortedColumns = [...listColumns].sort();
+  return `${sortedColumns.join()}`
+}
+
+export const createStorageHashKey = (listID: string): string => `${listID}-hash`

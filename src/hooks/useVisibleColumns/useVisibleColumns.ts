@@ -1,12 +1,5 @@
 import { useLocalStorage } from '@rehooks/local-storage';
-import { getVisibleColumnsKey } from '../../utils';
-
-const createColumnHash = (listColumns: string[]) => {
-  const sortedColumns = [...listColumns].sort();
-  return `${sortedColumns.join()}`
-}
-
-const createStorageHashKey = (listID: string): string => `${listID}-hash`
+import { getVisibleColumnsKey, createColumnHash, createStorageHashKey } from '../../utils';
 
 export const useVisibleColumns = (listID: string) => {
   const storageColumnsKey = getVisibleColumnsKey(listID);
