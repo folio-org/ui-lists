@@ -53,7 +53,10 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
 };
 
 export const createColumnHash = (listColumns: string[]) => {
-  const sortedColumns = [...listColumns].sort();
+  const sortedColumns = [...listColumns].sort((a, b) => {
+    return a.localeCompare(b, 'en', { sensitivity: 'base' });
+  })
+
   return `${sortedColumns.join()}`
 }
 
