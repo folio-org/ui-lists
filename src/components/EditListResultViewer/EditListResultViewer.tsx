@@ -1,11 +1,11 @@
 // @ts-ignore
 import { useOkapiKy, Pluggable } from '@folio/stripes/core';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { t } from '../../services';
-import { getVisibleColumnsKey } from '../../utils';
-
 import { ConfigureQuery } from '../ConfigureQuery';
+import { useVisibleColumns } from "../../hooks";
 import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
+
 import css from './EditListResultViewer.module.css';
 
 type EditListResultViewerProps = {
@@ -39,14 +39,9 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
 ) => {
   const ky = useOkapiKy();
 
-  const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
-
-  const handleDefaultVisibleColumnsSet = (defaultColumns: string[]) => {
-    const cachedColumns = localStorage.getItem(getVisibleColumnsKey(id));
-    const finalVisibleColumns = cachedColumns ? JSON.parse(cachedColumns) : defaultColumns;
-
-    setVisibleColumns(finalVisibleColumns);
-  };
+  const {
+    visibleColumns,
+  } = useVisibleColumns(id);
 
   const getAsyncContentData = ({ limit, offset }: any) => {
     return ky.get(`lists/${id}/contents?offset=${offset}&size=${limit}`).json();
@@ -70,7 +65,6 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
-      onSetDefaultVisibleColumns={handleDefaultVisibleColumnsSet}
       onSetDefaultColumns={() => {}}
       height={500}
       additionalControls={(

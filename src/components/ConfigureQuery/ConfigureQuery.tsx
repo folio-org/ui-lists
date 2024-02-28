@@ -1,9 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-// @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-// @ts-ignore:next-line
-import QueryBuilderPlugin from './ui-plugin-query-builder/src'
 import { noop } from 'lodash';
 import { HTTPError } from 'ky';
 import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
@@ -120,7 +117,7 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
   }
 
   return (
-    <QueryBuilderPlugin
+    <Pluggable
       componentType="builder"
       type="query-builder"
       recordColumns={recordColumns}

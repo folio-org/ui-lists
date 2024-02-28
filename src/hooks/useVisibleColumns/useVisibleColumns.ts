@@ -18,7 +18,7 @@ export const useVisibleColumns = (listID: string) => {
   const setDefaultVisibleColumns = (defaultColumns: string[] = []) => {
     const newColumnsHash = createColumnHash(defaultColumns)
     const isDefaultColumnsChanged = columnsHash !== newColumnsHash;
-    debugger
+
     if(isDefaultColumnsChanged) {
       // We updated hash and reset all cashed columns to default stated
       setColumnsHash(newColumnsHash)

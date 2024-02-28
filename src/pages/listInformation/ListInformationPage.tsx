@@ -42,7 +42,6 @@ export const ListInformationPage: React.FC = () => {
 
   const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id, {
     onSuccess: (listData: ListsRecordDetails) => {
-      console.log(listData.fields);
       setDefaultVisibleColumns(listData.fields)
     }
   });
