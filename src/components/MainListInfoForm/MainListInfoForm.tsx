@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
-// @ts-ignore:next-line
 import {
   Layout,
   RadioButton,
