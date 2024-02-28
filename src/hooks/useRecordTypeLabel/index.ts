@@ -1,0 +1,1 @@
+export { useRecordTypeLabel } from "./useRecordTypeLabel";
