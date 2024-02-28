@@ -30,6 +30,8 @@
   "list.info.visibility": "Visibility",
   "list.info.status": "Status",
   "list.info.source": "Source",
+  "list.info.record-type": "Record type",
+
 
   "list.info.source.system": "System",
 

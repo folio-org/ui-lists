@@ -8,13 +8,15 @@ import {
   MetaSection
 } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import { t } from '../../../../services';
 import { ListsRecordDetails } from '../../../../interfaces';
 
 interface MetaSectionAccordionProps {
-  listInfo?: ListsRecordDetails
+  listInfo?: ListsRecordDetails,
+  recordType: string
 }
 
-export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ listInfo }) => {
+export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ listInfo, recordType }) => {
   const listSource = listInfo?.isCanned ? (
     <FormattedMessage id="ui-lists.list.info.source.system" />
   ) : (
@@ -24,7 +26,7 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
   return (
     <Accordion
       data-testid="metaSectionAccordion"
-      label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+      label={t("accordion.title.list-information")}
     >
       <MetaSection
         contentId="userInfoRecordMetaContent"
@@ -41,44 +43,39 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
         value={listInfo?.name}
       />
       <KeyValue
-        label={<FormattedMessage
-          id="ui-lists.list.info.description"
-        />}
+        label={t("list.info.description")}
         value={listInfo?.description}
       />
 
       <Row>
         <Col xs={2}>
           <KeyValue
-            label={<FormattedMessage
-              id="ui-lists.list.info.visibility"
-            />}
-            value={(
-              <FormattedMessage id={listInfo?.isPrivate
-                ? 'ui-lists.lists.item.private'
-                : 'ui-lists.lists.item.shared'}
-              />
+            label={t("list.info.record-type")}
+            value={recordType}
+          />
+        </Col>
+        <Col xs={2}>
+          <KeyValue
+            label={t("list.info.visibility")}
+            value={
+              t(listInfo?.isPrivate
+                ? "lists.item.private"
+                : "lists.item.shared"
+
             )}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={<FormattedMessage
-              id="ui-lists.list.info.status"
-            />}
-            value={(
-              <FormattedMessage id={listInfo?.isActive
-                ? 'ui-lists.lists.item.active'
-                : 'ui-lists.lists.item.inactive'}
-              />
-            )}
+            label={t("list.info.status")}
+            value={t(listInfo?.isActive
+                ? "lists.item.active"
+                : "lists.item.inactive")}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={<FormattedMessage
-              id="ui-lists.list.info.source"
-            />}
+            label={t("list.info.source")}
             value={listSource}
           />
         </Col>

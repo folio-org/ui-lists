@@ -13,7 +13,7 @@ import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns } from '../../hooks';
+import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns, useRecordTypeLabel } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
@@ -48,6 +48,7 @@ export const ListInformationPage: React.FC = () => {
 
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
+  const recordTypeLabel = useRecordTypeLabel(listData?.entityTypeId);
 
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
@@ -235,7 +236,7 @@ export const ListInformationPage: React.FC = () => {
             />}
           >
             <AccordionSet>
-              <MetaSectionAccordion listInfo={listData} />
+              <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel}/>
             </AccordionSet>
 
             <AccordionSet>

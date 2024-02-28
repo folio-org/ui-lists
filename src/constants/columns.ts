@@ -8,5 +8,5 @@ export const COLUMNS_NAME = {
   SOURCE: 'createdByUsername',
   LAST_UPDATED: 'updatedDate',
   VISIBILITY: 'isPrivate',
-};
+} as const;
 export const LISTS_VISIBLE_COLUMNS = Object.values(COLUMNS_NAME) as (keyof ListsRecord)[];

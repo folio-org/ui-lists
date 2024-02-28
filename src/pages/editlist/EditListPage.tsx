@@ -11,7 +11,7 @@ import { useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useCSVExport, useDeleteList, useListDetails, useMessages } from '../../hooks';
+import {useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import {
   MainListInfoForm,
@@ -36,6 +36,8 @@ export const EditListPage:FC = () => {
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
+
+  const recordTypeLabel = useRecordTypeLabel(listDetails?.entityTypeId);
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
@@ -187,6 +189,7 @@ export const EditListPage:FC = () => {
               visibility={state[FIELD_NAMES.VISIBILITY]}
               description={state[FIELD_NAMES.DESCRIPTION]}
               isLoading={loadingListDetails}
+              recordTypeLabel={recordTypeLabel}
               showInactiveWarning
             />
           </Layout>
