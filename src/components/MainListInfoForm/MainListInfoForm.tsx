@@ -1,6 +1,16 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 // @ts-ignore:next-line
-import { Layout, RadioButton, RadioButtonGroup, TextArea, TextField, Select, InfoPopover } from '@folio/stripes/components';
+import {
+  Layout,
+  RadioButton,
+  RadioButtonGroup,
+  TextArea,
+  TextField,
+  Col,
+  KeyValue,
+  Row,
+  Select,
+  InfoPopover } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
 import {
@@ -19,7 +29,8 @@ type MainListInfoFormProps = {
     status: string,
     isLoading?: boolean,
     showInactiveWarning?: boolean,
-    recordTypeOptions?: EntityTypeSelectOption[]
+    recordTypeOptions?: EntityTypeSelectOption[],
+    recordTypeLabel?: string;
 }
 
 export const MainListInfoForm = (
@@ -30,7 +41,8 @@ export const MainListInfoForm = (
     visibility,
     status,
     isLoading,
-    recordTypeOptions }: MainListInfoFormProps
+    recordTypeOptions,
+    recordTypeLabel}: MainListInfoFormProps
 ) => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
@@ -45,7 +57,18 @@ export const MainListInfoForm = (
 
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
-
+  const renderRecordType = () => {
+    return (
+      <Row>
+        <Col xs={2}>
+          <KeyValue
+            label={t("list.info.record-type")}
+            value={recordTypeLabel}
+          />
+        </Col>
+      </Row>
+    )
+  }
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
       /**
@@ -99,6 +122,7 @@ export const MainListInfoForm = (
         label={t('create-list.main.list-description')}
       />
       {renderSelect()}
+      {renderRecordType()}
       <Layout className="display-flex flex-align-items-start">
         <RadioButtonGroup
           value={visibility}
