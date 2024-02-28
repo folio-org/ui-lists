@@ -57,16 +57,18 @@ export const MainListInfoForm = (
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
   const renderRecordType = () => {
-    return (
-      <Row>
-        <Col xs={2}>
-          <KeyValue
-            label={t("list.info.record-type")}
-            value={recordTypeLabel}
-          />
-        </Col>
-      </Row>
-    )
+    if(recordTypeLabel) {
+      return (
+        <Row>
+          <Col xs={2}>
+            <KeyValue
+              label={t("list.info.record-type")}
+              value={recordTypeLabel}
+            />
+          </Col>
+        </Row>
+      )
+    }
   }
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
