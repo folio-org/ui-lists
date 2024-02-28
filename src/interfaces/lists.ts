@@ -74,6 +74,7 @@ export interface ListsRecordBase {
   createdDate?: string;
   isActive?: boolean;
   isPrivate?: boolean;
+  fields?: string[],
   isCanned?: boolean;
   updatedBy?: boolean;
   updatedByUsername?: boolean;

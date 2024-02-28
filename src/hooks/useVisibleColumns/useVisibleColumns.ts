@@ -1,14 +1,32 @@
 import { useLocalStorage } from '@rehooks/local-storage';
 import { getVisibleColumnsKey } from '../../utils';
 
+const createColumnHash = (listColumns: string[]) => {
+  const sortedColumns = [...listColumns].sort();
+  return `${sortedColumns.join()}`
+}
+
+const createStorageHashKey = (listID: string): string => `${listID}-hash`
 
 export const useVisibleColumns = (listID: string) => {
-  const storageKey = getVisibleColumnsKey(listID);
+  const storageColumnsKey = getVisibleColumnsKey(listID);
+  const storageHashKey = createStorageHashKey(listID);
 
-  const [cachedColumns = [], setCachedColumns] = useLocalStorage<string[]>(storageKey);
+  const [columnsHash, setColumnsHash] = useLocalStorage<string>(storageHashKey);
+  const [cachedColumns = [], setCachedColumns] = useLocalStorage<string[]>(storageColumnsKey);
 
   const setDefaultVisibleColumns = (defaultColumns: string[] = []) => {
-    setCachedColumns(cachedColumns ?? defaultColumns);
+    const newColumnsHash = createColumnHash(defaultColumns)
+    const isDefaultColumnsChanged = columnsHash !== newColumnsHash;
+    debugger
+    if(isDefaultColumnsChanged) {
+      // We updated hash and reset all cashed columns to default stated
+      setColumnsHash(newColumnsHash)
+      setCachedColumns(defaultColumns);
+    } else {
+      // We ignore default columns and work with cashed if they exists
+      setCachedColumns(cachedColumns ?? defaultColumns);
+    }
   };
 
   const handleColumnsChange = ({ values }: {values: string[]}) => {

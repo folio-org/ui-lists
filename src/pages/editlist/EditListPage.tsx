@@ -195,6 +195,7 @@ export const EditListPage:FC = () => {
       <EditListResultViewer
         id={id}
         version={version}
+        fields={listDetails?.fields || []}
         fqlQuery={listDetails?.fqlQuery ?? ''}
         userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
         contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}

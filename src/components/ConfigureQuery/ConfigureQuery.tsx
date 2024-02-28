@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
+// @ts-ignore:next-line
+import QueryBuilderPlugin from './ui-plugin-query-builder/src'
 import { noop } from 'lodash';
 import { HTTPError } from 'ky';
 import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
@@ -19,6 +21,7 @@ type ConfigureQueryProps = {
   isEditQuery?: boolean,
   listId?: string,
   version?: number,
+  recordColumns?: string[],
   initialValues?: Record<string, unknown>
 }
 
@@ -33,6 +36,7 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     isEditQuery = false,
     listId,
     version,
+    recordColumns,
     initialValues
   }
 ) => {
@@ -40,6 +44,7 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
   const { showSuccessMessage, showErrorMessage } = useMessages();
+  const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
   const entityTypeDataSource = async () => {
@@ -68,6 +73,7 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     const data = {
       name: listName,
       description,
+      fields: columns,
       isActive: status === STATUS_VALUES.ACTIVE,
       isPrivate: visibility === VISIBILITY_VALUES.PRIVATE,
       queryId,
@@ -109,10 +115,16 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     return ky.delete(`query/${queryId}`);
   };
 
+  const onColumnChange = (columns: string[]) => {
+    setColumns(columns)
+  }
+
   return (
-    <Pluggable
+    <QueryBuilderPlugin
       componentType="builder"
       type="query-builder"
+      recordColumns={recordColumns}
+      onSetDefaultVisibleColumns={onColumnChange}
       key={selectedType}
       disabled={isQueryButtonDisabled}
       initialValues={initialValues}

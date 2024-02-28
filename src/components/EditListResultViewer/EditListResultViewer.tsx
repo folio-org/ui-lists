@@ -15,6 +15,7 @@ type EditListResultViewerProps = {
     fqlQuery: string,
     userFriendlyQuery: string,
     contentVersion: number,
+    fields?: string[],
     status: string,
     listName: string,
     visibility: string,
@@ -32,11 +33,11 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
     status,
     listName,
     visibility,
-    description
+    description,
+    fields
   }
 ) => {
   const ky = useOkapiKy();
-
 
   const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
 
@@ -80,6 +81,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
             isEditQuery
             initialValues={fqlQuery ? JSON.parse(fqlQuery) : undefined}
             selectedType={entityTypeId}
+            recordColumns={fields}
             isQueryButtonDisabled={false}
             listName={listName}
             status={status === STATUS_VALUES.ACTIVE ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE}
