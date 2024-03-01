@@ -124,5 +124,6 @@
     "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
-    "lists.copy.name-postfix": "copy"
+    "lists.copy.name-postfix": "copy",
+    "list.info.record-type": "Tipo de registro"
 }
