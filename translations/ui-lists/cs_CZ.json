@@ -124,5 +124,6 @@
     "create-list.main.list-status.tooltip": "<strong>Aktivní</strong> seznamy se skládají z dotazu a výsledného souboru záznamů. <strong>Neaktivní</strong> seznamy mohou obsahovat dotaz, ale žádnou sadu záznamů.",
     "pane.dropdown.copy": "Duplicitní seznam",
     "lists.copy.title": "Duplicitní seznam: {listName}",
-    "lists.copy.name-postfix": "kopírovat"
+    "lists.copy.name-postfix": "kopírovat",
+    "list.info.record-type": "Typ záznamu"
 }
