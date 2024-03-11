@@ -1,5 +1,10 @@
 {
   "meta.title": "Lists (Beta)",
+  "title.createList": "Lists (Beta) - New list",
+  "title.duplicateList": "Lists (Beta) - Duplicate List {listName}",
+  "title.infoList": "Lists (Beta) - {listName}",
+  "title.editList": "Lists (Beta) - Edit {listName}",
+  "title.viewLists": "Lists (Beta) - Lists",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "paneHeader.button.new": "New",

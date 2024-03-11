@@ -7,11 +7,11 @@ import {
   // @ts-ignore:next-line
   MetaSection,
 } from '@folio/stripes/components';
-import { useStripes } from '@folio/stripes/core';
+import { TitleManager, useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { HTTPError } from 'ky';
-import {useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
+import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import {
   MainListInfoForm,
@@ -152,78 +152,80 @@ export const EditListPage:FC = () => {
   }
 
   return (
-    <EditListLayout
-      lastMenu={
-        <EditListMenu
-          conditions={conditions}
-          buttonHandlers={buttonHandlers}
-          stripes={stripes}
-        />
+    <TitleManager page={t('title.editList', { listName })}>
+      <EditListLayout
+        lastMenu={
+          <EditListMenu
+            conditions={conditions}
+            buttonHandlers={buttonHandlers}
+            stripes={stripes}
+          />
     }
-      isLoading={loadingListDetails}
-      recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-      onCancel={closeHandler}
-      onSave={onSave}
-      name={listName}
-      title={t('lists.edit.title', { listName })}
-      isSaveButtonDisabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
-    >
-      <AccordionSet>
-        <Accordion
-          data-testid="metaSectionAccordion"
-          label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
-        >
-          <Layout>
-            <MetaSection
-              contentId="userInfoRecordMetaContent"
-              createdDate={listDetails?.createdDate}
-              createdBy={listDetails?.createdByUsername}
-              id="userInfoRecordMeta"
-              lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
-              lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
-            />
-            <MainListInfoForm
-              onValueChange={onValueChange}
-              status={state[FIELD_NAMES.STATUS]}
-              listName={state[FIELD_NAMES.LIST_NAME]}
-              visibility={state[FIELD_NAMES.VISIBILITY]}
-              description={state[FIELD_NAMES.DESCRIPTION]}
-              isLoading={loadingListDetails}
-              recordTypeLabel={recordTypeLabel}
-              showInactiveWarning
-            />
-          </Layout>
-        </Accordion>
-      </AccordionSet>
-      <EditListResultViewer
-        id={id}
-        version={version}
-        fields={listDetails?.fields || []}
-        fqlQuery={listDetails?.fqlQuery ?? ''}
-        userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
-        contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
-        entityTypeId={listDetails?.entityTypeId ?? ''}
-        status={state[FIELD_NAMES.STATUS]}
-        listName={state[FIELD_NAMES.LIST_NAME]}
-        visibility={state[FIELD_NAMES.VISIBILITY]}
-        description={state[FIELD_NAMES.DESCRIPTION]}
-      />
-      <CancelEditModal
-        onCancel={() => {
-          setShowConfirmCancelEditModal(false);
-          backToList();
-        }}
-        onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-        open={showConfirmCancelEditModal}
-      />
-      <ConfirmDeleteModal
-        listName={listName}
-        onCancel={() => setShowConfirmDeleteModal(false)}
-        onConfirm={() => {
-          deleteListHandler();
-        }}
-        open={showConfirmDeleteModal}
-      />
-    </EditListLayout>
+        isLoading={loadingListDetails}
+        recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
+        onCancel={closeHandler}
+        onSave={onSave}
+        name={listName}
+        title={t('lists.edit.title', { listName })}
+        isSaveButtonDisabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
+      >
+        <AccordionSet>
+          <Accordion
+            data-testid="metaSectionAccordion"
+            label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+          >
+            <Layout>
+              <MetaSection
+                contentId="userInfoRecordMetaContent"
+                createdDate={listDetails?.createdDate}
+                createdBy={listDetails?.createdByUsername}
+                id="userInfoRecordMeta"
+                lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
+                lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+              />
+              <MainListInfoForm
+                onValueChange={onValueChange}
+                status={state[FIELD_NAMES.STATUS]}
+                listName={state[FIELD_NAMES.LIST_NAME]}
+                visibility={state[FIELD_NAMES.VISIBILITY]}
+                description={state[FIELD_NAMES.DESCRIPTION]}
+                isLoading={loadingListDetails}
+                recordTypeLabel={recordTypeLabel}
+                showInactiveWarning
+              />
+            </Layout>
+          </Accordion>
+        </AccordionSet>
+        <EditListResultViewer
+          id={id}
+          version={version}
+          fields={listDetails?.fields || []}
+          fqlQuery={listDetails?.fqlQuery ?? ''}
+          userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+          contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+          entityTypeId={listDetails?.entityTypeId ?? ''}
+          status={state[FIELD_NAMES.STATUS]}
+          listName={state[FIELD_NAMES.LIST_NAME]}
+          visibility={state[FIELD_NAMES.VISIBILITY]}
+          description={state[FIELD_NAMES.DESCRIPTION]}
+        />
+        <CancelEditModal
+          onCancel={() => {
+            setShowConfirmCancelEditModal(false);
+            backToList();
+          }}
+          onKeepEdit={() => setShowConfirmCancelEditModal(false)}
+          open={showConfirmCancelEditModal}
+        />
+        <ConfirmDeleteModal
+          listName={listName}
+          onCancel={() => setShowConfirmDeleteModal(false)}
+          onConfirm={() => {
+            deleteListHandler();
+          }}
+          open={showConfirmDeleteModal}
+        />
+      </EditListLayout>
+    </TitleManager>
   );
 };

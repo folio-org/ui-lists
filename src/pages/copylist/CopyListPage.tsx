@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Accordion, AccordionSet, Layout, Loading } from '@folio/stripes/components';
+import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
 import { useCreateList, useInitRefresh, useListDetails, useMessages } from '../../hooks';
@@ -80,42 +81,44 @@ export const CopyListPage:FC = () => {
   }
 
   return (
-    <EditListLayout
-      name={listName}
-      onSave={onSave}
-      onCancel={closeHandler}
-      title={t('lists.copy.title', { listName })}
-      isLoading={loadingListDetails}
-      isSaveButtonDisabled={hasName || isLoading}
-    >
-      <AccordionSet>
-        <Accordion
-          data-testid="metaSectionAccordion"
-          label={t('accordion.title.list-information')}
-        >
-          <Layout>
-            <MainListInfoForm
-              onValueChange={onValueChange}
-              status={state[FIELD_NAMES.STATUS]}
-              listName={state[FIELD_NAMES.LIST_NAME]}
-              visibility={state[FIELD_NAMES.VISIBILITY]}
-              description={state[FIELD_NAMES.DESCRIPTION]}
-              isLoading={loadingListDetails}
-            />
-          </Layout>
-        </Accordion>
-      </AccordionSet>
-      <div className={css.queryBuilderButton}>
-        <ConfigureQuery
-          initialValues={fqlQuery && JSON.parse(fqlQuery)}
-          selectedType={listDetails?.entityTypeId}
-          isQueryButtonDisabled={hasName || isLoading}
-          listName={state[FIELD_NAMES.LIST_NAME]}
-          status={state[FIELD_NAMES.STATUS]}
-          visibility={state[FIELD_NAMES.VISIBILITY]}
-          description={state[FIELD_NAMES.DESCRIPTION]}
-        />
-      </div>
-    </EditListLayout>
+    <TitleManager page={t('title.duplicateList', { listName })}>
+      <EditListLayout
+        name={listName}
+        onSave={onSave}
+        onCancel={closeHandler}
+        title={t('lists.copy.title', { listName })}
+        isLoading={loadingListDetails}
+        isSaveButtonDisabled={hasName || isLoading}
+      >
+        <AccordionSet>
+          <Accordion
+            data-testid="metaSectionAccordion"
+            label={t('accordion.title.list-information')}
+          >
+            <Layout>
+              <MainListInfoForm
+                onValueChange={onValueChange}
+                status={state[FIELD_NAMES.STATUS]}
+                listName={state[FIELD_NAMES.LIST_NAME]}
+                visibility={state[FIELD_NAMES.VISIBILITY]}
+                description={state[FIELD_NAMES.DESCRIPTION]}
+                isLoading={loadingListDetails}
+              />
+            </Layout>
+          </Accordion>
+        </AccordionSet>
+        <div className={css.queryBuilderButton}>
+          <ConfigureQuery
+            initialValues={fqlQuery && JSON.parse(fqlQuery)}
+            selectedType={listDetails?.entityTypeId}
+            isQueryButtonDisabled={hasName || isLoading}
+            listName={state[FIELD_NAMES.LIST_NAME]}
+            status={state[FIELD_NAMES.STATUS]}
+            visibility={state[FIELD_NAMES.VISIBILITY]}
+            description={state[FIELD_NAMES.DESCRIPTION]}
+          />
+        </div>
+      </EditListLayout>
+    </TitleManager>
   );
 };

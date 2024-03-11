@@ -11,7 +11,7 @@ import {
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
-import { useStripes } from '@folio/stripes/core';
+import { TitleManager, useStripes } from '@folio/stripes/core';
 import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
 import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns, useRecordTypeLabel } from '../../hooks';
 import {
@@ -22,7 +22,7 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import {ListsRecordDetails, QueryBuilderColumnMetadata} from '../../interfaces';
+import { ListsRecordDetails, QueryBuilderColumnMetadata } from '../../interfaces';
 
 import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
@@ -42,7 +42,7 @@ export const ListInformationPage: React.FC = () => {
 
   const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id, {
     onSuccess: (listData: ListsRecordDetails) => {
-      setDefaultVisibleColumns(listData.fields)
+      setDefaultVisibleColumns(listData.fields);
     }
   });
 
@@ -207,60 +207,62 @@ export const ListInformationPage: React.FC = () => {
   };
 
   return (
-    <Paneset data-testid="listInformation">
-      <Layer isOpen contentLabel={listName}>
-        <Paneset isRoot>
-          <Pane
-            dismissible
-            defaultWidth="fill"
-            appIcon={<ListAppIcon />}
-            paneTitle={listName}
-            paneSub={!isRefreshInProgress ?
-              t('mainPane.subTitle',
-                { count: formatNumber(recordCount) })
-              :
-              <CompilingLoader />}
-            lastMenu={<ListInformationMenu
-              stripes={stripes}
-              visibleColumns={visibleColumns}
-              columns={columnControls}
-              onColumnsChange={handleColumnsChange}
-              buttonHandlers={buttonHandlers}
-              conditions={conditions}
-            />}
-            onClose={() => history.push(HOME_PAGE_URL)}
-            subheader={<SuccessRefreshSection
-              shouldShow={showSuccessRefreshMessage}
-              recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-              onViewListClick={onVewListClickHandler}
-            />}
-          >
-            <AccordionSet>
-              <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel}/>
-            </AccordionSet>
-
-            <AccordionSet>
-              <ListInformationResultViewer
-                refreshInProgress={isRefreshInProgress}
-                listID={listData?.id}
-                userFriendlyQuery={listData?.userFriendlyQuery}
-                entityTypeId={listData?.entityTypeId}
-                refreshTrigger={Number(refreshTrigger)}
-                setColumnControlList={setColumnControls}
+    <TitleManager page={t('title.infoList', { listName })}>
+      <Paneset data-testid="listInformation">
+        <Layer isOpen contentLabel={listName}>
+          <Paneset isRoot>
+            <Pane
+              dismissible
+              defaultWidth="fill"
+              appIcon={<ListAppIcon />}
+              paneTitle={listName}
+              paneSub={!isRefreshInProgress ?
+                t('mainPane.subTitle',
+                  { count: formatNumber(recordCount) })
+                :
+                <CompilingLoader />}
+              lastMenu={<ListInformationMenu
+                stripes={stripes}
                 visibleColumns={visibleColumns}
-              />
-            </AccordionSet>
-          </Pane>
-        </Paneset>
-      </Layer>
-      <ConfirmDeleteModal
-        listName={listName}
-        onCancel={() => setShowConfirmDeleteModal(false)}
-        onConfirm={() => {
-          deleteListHandler();
-        }}
-        open={showConfirmDeleteModal}
-      />
-    </Paneset>
+                columns={columnControls}
+                onColumnsChange={handleColumnsChange}
+                buttonHandlers={buttonHandlers}
+                conditions={conditions}
+              />}
+              onClose={() => history.push(HOME_PAGE_URL)}
+              subheader={<SuccessRefreshSection
+                shouldShow={showSuccessRefreshMessage}
+                recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                onViewListClick={onVewListClickHandler}
+              />}
+            >
+              <AccordionSet>
+                <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
+              </AccordionSet>
+
+              <AccordionSet>
+                <ListInformationResultViewer
+                  refreshInProgress={isRefreshInProgress}
+                  listID={listData?.id}
+                  userFriendlyQuery={listData?.userFriendlyQuery}
+                  entityTypeId={listData?.entityTypeId}
+                  refreshTrigger={Number(refreshTrigger)}
+                  setColumnControlList={setColumnControls}
+                  visibleColumns={visibleColumns}
+                />
+              </AccordionSet>
+            </Pane>
+          </Paneset>
+        </Layer>
+        <ConfirmDeleteModal
+          listName={listName}
+          onCancel={() => setShowConfirmDeleteModal(false)}
+          onConfirm={() => {
+            deleteListHandler();
+          }}
+          open={showConfirmDeleteModal}
+        />
+      </Paneset>
+    </TitleManager>
   );
 };

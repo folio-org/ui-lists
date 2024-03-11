@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import { TitleManager } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes/components';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
@@ -52,24 +53,26 @@ export const CreateListPage:FC = () => {
   }
 
   return (
-    <CreateListLayout
-      isSavingInProgress={isLoading}
-      isSaveButtonDisabled={isRequiredMissing || isLoading}
-      onSave={saveList}
-      onClose={closeViewHandler}
-      onCancel={closeViewHandler}
-      showModalOnCancel={hasChanges}
-    >
-      <MainCreateListForm
-        selectedType={recordType}
-        descriptionField={description}
-        listNameField={listName}
-        visibilityField={visibility}
-        statusField={status}
-        onValueChange={onValueChange}
-        recordTypesOptions={recordTypesOptions}
-        isQueryButtonDisabled={isRequiredMissing || isLoading}
-      />
-    </CreateListLayout>
+    <TitleManager page={t('title.createList')}>
+      <CreateListLayout
+        isSavingInProgress={isLoading}
+        isSaveButtonDisabled={isRequiredMissing || isLoading}
+        onSave={saveList}
+        onClose={closeViewHandler}
+        onCancel={closeViewHandler}
+        showModalOnCancel={hasChanges}
+      >
+        <MainCreateListForm
+          selectedType={recordType}
+          descriptionField={description}
+          listNameField={listName}
+          visibilityField={visibility}
+          statusField={status}
+          onValueChange={onValueChange}
+          recordTypesOptions={recordTypesOptions}
+          isQueryButtonDisabled={isRequiredMissing || isLoading}
+        />
+      </CreateListLayout>
+    </TitleManager>
   );
 };
