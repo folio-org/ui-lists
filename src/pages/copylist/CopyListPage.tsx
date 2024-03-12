@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+import { useIntl } from 'react-intl';
 import { Accordion, AccordionSet, Layout, Loading } from '@folio/stripes/components';
+// @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
@@ -14,6 +16,7 @@ import css from './CopyListPage.module.css';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
+  const intl = useIntl();
   const { id }: {id: string} = useParams();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
@@ -81,7 +84,9 @@ export const CopyListPage:FC = () => {
   }
 
   return (
-    <TitleManager page={t('title.duplicateList', { listName })}>
+    <TitleManager
+      record={intl.formatMessage({ id:'ui-lists.title.duplicateList' }, { listName })}
+    >
       <EditListLayout
         name={listName}
         onSave={onSave}

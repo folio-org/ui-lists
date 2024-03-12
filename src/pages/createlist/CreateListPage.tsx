@@ -1,7 +1,9 @@
 import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+// @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes/components';
+import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
@@ -13,6 +15,7 @@ import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
 
 export const CreateListPage:FC = () => {
   const history = useHistory();
+  const intl = useIntl();
   const { state, onValueChange, hasChanges } = useCreateListFormState();
   const { isLoading: isLoadingRecords, recordTypes = [] } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
@@ -53,7 +56,9 @@ export const CreateListPage:FC = () => {
   }
 
   return (
-    <TitleManager page={t('title.createList')}>
+    <TitleManager
+      record={intl.formatMessage({ id:'ui-lists.title.createList' })}
+    >
       <CreateListLayout
         isSavingInProgress={isLoading}
         isSaveButtonDisabled={isRequiredMissing || isLoading}

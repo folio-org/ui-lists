@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
 import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
@@ -31,6 +31,7 @@ import { HOME_PAGE_URL } from '../../constants';
 
 export const EditListPage:FC = () => {
   const history = useHistory();
+  const intl = useIntl();
   const stripes = useStripes();
   const { id }: {id: string} = useParams();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
@@ -151,8 +152,11 @@ export const EditListPage:FC = () => {
     return <Loading />;
   }
 
+
   return (
-    <TitleManager page={t('title.editList', { listName })}>
+    <TitleManager
+      record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
+    >
       <EditListLayout
         lastMenu={
           <EditListMenu

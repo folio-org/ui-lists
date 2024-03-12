@@ -29,6 +29,7 @@ import { USER_PERMS } from '../../utils/constants';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
+  const intl = useIntl();
   const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
@@ -207,7 +208,9 @@ export const ListInformationPage: React.FC = () => {
   };
 
   return (
-    <TitleManager page={t('title.infoList', { listName })}>
+    <TitleManager
+      page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
+    >
       <Paneset data-testid="listInformation">
         <Layer isOpen contentLabel={listName}>
           <Paneset isRoot>
