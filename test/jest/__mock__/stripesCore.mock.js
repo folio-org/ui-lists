@@ -13,6 +13,7 @@ jest.mock('@folio/stripes/core', () => {
       return perm === 'permission' ? children : null;
     }),
     Pluggable: jest.fn(({ children }) => [children]),
+    TitleManager: jest.fn(({ children }) => <>{children}</>),
     AppIcon: jest.fn((props) => (
       <span data-testid="app-icon">
         {JSON.stringify(props)}
