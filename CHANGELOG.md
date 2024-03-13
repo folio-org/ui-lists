@@ -1,5 +1,8 @@
 # Change history for ui-lists
 
+# In progress
+* Update HTML page title on List detail page. Refs UILISTS-80.
+
 # [2.0.6](https://github.com/folio-org/ui-lists/tree/v2.0.5) (2023-12-07)
 * Revert all changes from 2.0.5 except for the "(Beta)" added to the app title
 
