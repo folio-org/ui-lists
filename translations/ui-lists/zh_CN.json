@@ -125,5 +125,9 @@
     "pane.dropdown.copy": "重复列表",
     "lists.copy.title": "重复列表： {listName}",
     "lists.copy.name-postfix": "复制",
-    "list.info.record-type": "记录类型"
+    "list.info.record-type": "记录类型",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "{listName}",
+    "title.editList": "Edit {listName}"
 }

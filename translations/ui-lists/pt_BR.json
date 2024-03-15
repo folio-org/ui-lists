@@ -125,5 +125,9 @@
     "pane.dropdown.copy": "Lista duplicada",
     "lists.copy.title": "Lista duplicada: {listName}",
     "lists.copy.name-postfix": "cópia",
-    "list.info.record-type": "Tipo de registro"
+    "list.info.record-type": "Tipo de registro",
+    "title.createList": "Listas (Beta) – Nova lista",
+    "title.duplicateList": "Listas (Beta) – Lista duplicada {listName}",
+    "title.infoList": "Listas (Beta) – {listName}",
+    "title.editList": "Listas (Beta) – Editar {listName}"
 }
