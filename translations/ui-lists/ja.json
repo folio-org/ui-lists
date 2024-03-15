@@ -10,7 +10,7 @@
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "レコードタイプ",
     "lists.columns.records": "レコード",
-    "lists.columns.status": "状態",
+    "lists.columns.status": "ステータス",
     "lists.columns.source": "ソース",
     "lists.columns.last-updated": "最終更新",
     "lists.columns.visibility": "可視性",
@@ -27,7 +27,7 @@
     "list.info.list-name": "List name",
     "list.info.description": "説明",
     "list.info.visibility": "可視性",
-    "list.info.status": "状態",
+    "list.info.status": "ステータス",
     "list.info.source": "ソース",
     "list.info.source.system": "システム",
     "accordion.title.list-information": "List information",
@@ -56,7 +56,7 @@
     "create-list.main.list-description": "説明",
     "create-list.main.list-visibility": "可視性",
     "create-list.main.list-shared": "Shared",
-    "create-list.main.list-status": "状態",
+    "create-list.main.list-status": "ステータス",
     "create-list.main.list-private": "プライベート",
     "create-list.main.list-active": "アクティブ",
     "create-list.main.list-inactive": "インアクティブ",
@@ -125,5 +125,9 @@
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
     "lists.copy.name-postfix": "コピー",
-    "list.info.record-type": "レコードタイプ"
+    "list.info.record-type": "レコードタイプ",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "{listName}",
+    "title.editList": "Edit {listName}"
 }

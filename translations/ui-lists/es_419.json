@@ -125,5 +125,9 @@
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
     "lists.copy.name-postfix": "copy",
-    "list.info.record-type": "Tipo de registro"
+    "list.info.record-type": "Tipo de registro",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "{listName}",
+    "title.editList": "Edit {listName}"
 }
