@@ -22,7 +22,7 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import { ListsRecordDetails, QueryBuilderColumnMetadata } from '../../interfaces';
+import { QueryBuilderColumnMetadata } from '../../interfaces';
 
 import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
 import { USER_PERMS } from '../../utils/constants';
@@ -42,8 +42,8 @@ export const ListInformationPage: React.FC = () => {
   } = useVisibleColumns(id);
 
   const { data: listData, isLoading: isDetailsLoading, refetchDetails, detailsError } = useListDetails(id, {
-    onSuccess: (listData: ListsRecordDetails) => {
-      setDefaultVisibleColumns(listData.fields);
+    onSuccess: (newData) => {
+      setDefaultVisibleColumns(newData.fields);
     }
   });
 
@@ -187,12 +187,8 @@ export const ListInformationPage: React.FC = () => {
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers.export = () => {
-      requestExport();
-    };
-    buttonHandlers['cancel-export'] = () => {
-      cancelExport();
-    };
+    buttonHandlers.export = () => requestExport(visibleColumns ?? listData?.fields ?? []);
+    buttonHandlers['cancel-export'] = () => cancelExport();
   }
 
   const conditions = {

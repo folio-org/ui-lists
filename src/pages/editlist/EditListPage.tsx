@@ -11,7 +11,7 @@ import { TitleManager, useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel } from '../../hooks';
+import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel, useVisibleColumns } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import {
   MainListInfoForm,
@@ -33,7 +33,7 @@ export const EditListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
   const stripes = useStripes();
-  const { id }: {id: string} = useParams();
+  const { id }: { id: string } = useParams();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
@@ -110,6 +110,8 @@ export const EditListPage:FC = () => {
     }
   );
 
+  const visibleColumns = useVisibleColumns(id).visibleColumns ?? listDetails?.fields ?? [];
+
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
   }
@@ -127,15 +129,9 @@ export const EditListPage:FC = () => {
   };
 
   const buttonHandlers = {
-    'delete': () => {
-      setShowConfirmDeleteModal(true);
-    },
-    'export': () => {
-      requestExport();
-    },
-    'cancel-export': () => {
-      cancelExport();
-    }
+    'delete': () => setShowConfirmDeleteModal(true),
+    'export': () => requestExport(visibleColumns),
+    'cancel-export': () => cancelExport(),
   };
 
   const conditions = {

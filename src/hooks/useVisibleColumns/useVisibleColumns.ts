@@ -9,12 +9,12 @@ export const useVisibleColumns = (listID: string) => {
   const [cachedColumns = [], setCachedColumns] = useLocalStorage<string[]>(storageColumnsKey);
 
   const setDefaultVisibleColumns = (defaultColumns: string[] = []) => {
-    const newColumnsHash = createColumnHash(defaultColumns)
+    const newColumnsHash = createColumnHash(defaultColumns);
     const isDefaultColumnsChanged = columnsHash !== newColumnsHash;
 
-    if(isDefaultColumnsChanged) {
+    if (isDefaultColumnsChanged) {
       // We updated hash and reset all cashed columns to default stated
-      setColumnsHash(newColumnsHash)
+      setColumnsHash(newColumnsHash);
       setCachedColumns(defaultColumns);
     } else {
       // We ignore default columns and work with cashed if they exists
@@ -22,7 +22,7 @@ export const useVisibleColumns = (listID: string) => {
     }
   };
 
-  const handleColumnsChange = ({ values }: {values: string[]}) => {
+  const handleColumnsChange = ({ values }: { values: string[] }) => {
     // There is always should be at least one selected column
     if (values.length === 0) {
       return;
@@ -34,6 +34,6 @@ export const useVisibleColumns = (listID: string) => {
   return {
     setDefaultVisibleColumns,
     handleColumnsChange,
-    visibleColumns: cachedColumns
+    visibleColumns: cachedColumns,
   };
 };

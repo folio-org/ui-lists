@@ -1,12 +1,12 @@
-import { useMutation } from 'react-query';
-import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { useOkapiKy } from '@folio/stripes/core';
+import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { HTTPError } from 'ky';
-import { useCSVExportPolling } from './useCSVExportPolling';
-import { useCSVExportCancel } from './useCSVExportCancel';
+import { useMutation } from 'react-query';
 import { ListExport } from '../../interfaces';
 import { computeErrorMessage, t } from '../../services';
 import { useMessages } from '../useMessages';
+import { useCSVExportCancel } from './useCSVExportCancel';
+import { useCSVExportPolling } from './useCSVExportPolling';
 
 export const useCSVExport = ({
   listId,
@@ -30,10 +30,8 @@ export const useCSVExport = ({
     removeListFromStorage();
   });
 
-  const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError>({
-    mutationFn: async () => {
-      return ky.post(`lists/${listId}/exports`).json();
-    },
+  const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError, string[]>({
+    mutationFn: (fields: string[]) => ky.post(`lists/${listId}/exports`, { json: fields }).json<ListExport>(),
     onSuccess: async ({ exportId }) => {
       showSuccessMessage({
         message: t('callout.list.csv-export.begin', {
