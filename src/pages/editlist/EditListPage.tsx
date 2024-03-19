@@ -4,7 +4,6 @@ import {
   AccordionSet,
   Layout,
   Loading,
-  // @ts-ignore:next-line
   MetaSection,
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
@@ -33,7 +32,7 @@ export const EditListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
   const stripes = useStripes();
-  const { id }: {id: string} = useParams();
+  const { id }: { id: string } = useParams();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
@@ -42,7 +41,7 @@ export const EditListPage:FC = () => {
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName });
+  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName, listDetails });
   const { deleteList, isDeleteInProgress } = useDeleteList(({ id,
     onSuccess: () => {
       showSuccessMessage({
@@ -127,15 +126,9 @@ export const EditListPage:FC = () => {
   };
 
   const buttonHandlers = {
-    'delete': () => {
-      setShowConfirmDeleteModal(true);
-    },
-    'export': () => {
-      requestExport();
-    },
-    'cancel-export': () => {
-      cancelExport();
-    }
+    'delete': () => setShowConfirmDeleteModal(true),
+    'export': () => requestExport(),
+    'cancel-export': () => cancelExport(),
   };
 
   const conditions = {
