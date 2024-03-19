@@ -4,14 +4,13 @@ import {
   AccordionSet,
   Layout,
   Loading,
-  // @ts-ignore:next-line
   MetaSection,
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel, useVisibleColumns } from '../../hooks';
+import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import {
   MainListInfoForm,
@@ -42,7 +41,7 @@ export const EditListPage:FC = () => {
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName });
+  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName, listDetails });
   const { deleteList, isDeleteInProgress } = useDeleteList(({ id,
     onSuccess: () => {
       showSuccessMessage({
@@ -110,8 +109,6 @@ export const EditListPage:FC = () => {
     }
   );
 
-  const visibleColumns = useVisibleColumns(id).visibleColumns ?? listDetails?.fields ?? [];
-
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
   }
@@ -130,7 +127,7 @@ export const EditListPage:FC = () => {
 
   const buttonHandlers = {
     'delete': () => setShowConfirmDeleteModal(true),
-    'export': () => requestExport(visibleColumns),
+    'export': () => requestExport(),
     'cancel-export': () => cancelExport(),
   };
 

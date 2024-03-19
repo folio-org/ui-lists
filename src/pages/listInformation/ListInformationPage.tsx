@@ -187,7 +187,7 @@ export const ListInformationPage: React.FC = () => {
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers.export = () => requestExport(visibleColumns ?? listData?.fields ?? []);
+    buttonHandlers.export = () => requestExport();
     buttonHandlers['cancel-export'] = () => cancelExport();
   }
 
