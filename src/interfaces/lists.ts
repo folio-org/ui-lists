@@ -82,7 +82,7 @@ export interface ListsRecordBase {
   recordsCount?: number;
 }
 
-interface ListRequestBase {
+export interface ListRequestBase {
   name: string;
   description?: string;
   fqlQuery?: string;
