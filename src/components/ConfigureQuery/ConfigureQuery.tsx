@@ -1,12 +1,12 @@
+import { Pluggable, useOkapiKy } from '@folio/stripes/core';
+import { HTTPError } from 'ky';
+import { noop } from 'lodash';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-import { noop } from 'lodash';
-import { HTTPError } from 'ky';
-import { STATUS_VALUES, STATUS, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
-import { computeErrorMessage, t } from '../../services';
-import { useRecordsLimit, useMessages } from '../../hooks';
 import { HOME_PAGE_URL } from '../../constants';
+import { useMessages, useRecordsLimit } from '../../hooks';
+import { FqlQuery, ListForCreation, ListForUpdate, STATUS, STATUS_VALUES, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
+import { computeErrorMessage, t } from '../../services';
 
 type ConfigureQueryProps = {
   selectedType?: string,
@@ -59,31 +59,41 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     return ky.get(`query/${queryId}`, { searchParams }).json();
   };
 
-  const testQueryDataSource = async ({ fqlQuery } : { fqlQuery: any }) => {
+  const testQueryDataSource = async ({ fqlQuery } : { fqlQuery: FqlQuery }) => {
     return ky.post('query', { json: {
       entityTypeId: selectedType,
       fqlQuery: JSON.stringify(fqlQuery)
     } }).json();
   };
 
-  const runQueryDataSource = ({ fqlQuery, queryId } : { fqlQuery: any, queryId: string }) => {
-    const data = {
-      name: listName,
-      description,
-      fields: columns,
-      isActive: status === STATUS_VALUES.ACTIVE,
-      isPrivate: visibility === VISIBILITY_VALUES.PRIVATE,
-      queryId,
-      version,
-      fqlQuery: JSON.stringify(fqlQuery)
-    };
+  const runQueryDataSource = ({ fqlQuery, queryId } : { fqlQuery: FqlQuery, queryId: string }) => {
+    if (isEditQuery) {
+      const data: ListForUpdate = {
+        name: listName,
+        description,
+        fields: columns,
+        isActive: status === STATUS_VALUES.ACTIVE,
+        isPrivate: visibility === VISIBILITY_VALUES.PRIVATE,
+        queryId,
+        version: version as number,
+        fqlQuery: JSON.stringify(fqlQuery),
+      };
 
-    if (!isEditQuery) {
-      // @ts-ignore:next-line
-      data.entityTypeId = selectedType;
+      return ky.put(`lists/${listId}`, { json: data }).json();
+    } else {
+      const data: ListForCreation = {
+        name: listName,
+        description,
+        fields: columns,
+        isActive: status === STATUS_VALUES.ACTIVE,
+        isPrivate: visibility === VISIBILITY_VALUES.PRIVATE,
+        queryId,
+        fqlQuery: JSON.stringify(fqlQuery),
+        entityTypeId: selectedType,
+      };
+
+      return ky.post('lists', { json: data }).json();
     }
-
-    return isEditQuery ? ky.put(`lists/${listId}`, { json: data }).json() : ky.post('lists', { json: data }).json();
   };
 
   const onQueryRunSuccess = ({ id } : { id: string}) => {
@@ -112,16 +122,12 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     return ky.delete(`query/${queryId}`);
   };
 
-  const onColumnChange = (columns: string[]) => {
-    setColumns(columns)
-  }
-
   return (
     <Pluggable
       componentType="builder"
       type="query-builder"
       recordColumns={recordColumns}
-      onSetDefaultVisibleColumns={onColumnChange}
+      onSetDefaultVisibleColumns={setColumns}
       key={selectedType}
       disabled={isQueryButtonDisabled}
       initialValues={initialValues}

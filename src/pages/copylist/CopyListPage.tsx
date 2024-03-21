@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 import { Accordion, AccordionSet, Layout, Loading } from '@folio/stripes/components';
-// @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
@@ -121,6 +120,7 @@ export const CopyListPage:FC = () => {
             status={state[FIELD_NAMES.STATUS]}
             visibility={state[FIELD_NAMES.VISIBILITY]}
             description={state[FIELD_NAMES.DESCRIPTION]}
+            recordColumns={listDetails?.fields}
           />
         </div>
       </EditListLayout>

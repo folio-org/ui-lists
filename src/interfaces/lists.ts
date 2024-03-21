@@ -82,6 +82,24 @@ export interface ListsRecordBase {
   recordsCount?: number;
 }
 
+interface ListRequestBase {
+  name: string;
+  description?: string;
+  fqlQuery?: string;
+  fields?: string[];
+  isActive: boolean;
+  isPrivate: boolean;
+  queryId?: string;
+}
+
+export interface ListForCreation extends ListRequestBase {
+  entityTypeId: string;
+}
+
+export interface ListForUpdate extends ListRequestBase {
+  version: number;
+}
+
 export interface ListsRecordDetails extends ListsRecordBase {
   successRefresh?: SuccessRefresh;
   inProgressRefresh?: InProgressRefresh;
