@@ -24,7 +24,7 @@ export const downloadCSV = async ({
   })
     .blob()
     .then(data => {
-      downloadBase64(listName, URL.createObjectURL(data));
+      downloadBase64(listName + '.csv', URL.createObjectURL(data));
       onSuccess();
     })
     .catch(() => {
