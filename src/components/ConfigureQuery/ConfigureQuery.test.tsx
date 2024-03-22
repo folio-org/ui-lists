@@ -208,11 +208,7 @@ describe('ConfigureQuery component', () => {
       searchValue: 'search-value',
     });
 
-    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/columns/column-name/values', {
-      searchParams: {
-        search: 'search-value',
-      },
-    }));
+    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/columns/column-name/values?search=search-value'));
   });
 
   test('cancel query data source', async () => {
