@@ -5,38 +5,44 @@ import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HOME_PAGE_URL } from '../../constants';
 import { useMessages, useRecordsLimit } from '../../hooks';
-import { FqlQuery, ListForCreation, ListForUpdate, STATUS, STATUS_VALUES, VISIBILITY, VISIBILITY_VALUES } from '../../interfaces';
+import {
+  FqlQuery,
+  ListForCreation,
+  ListForUpdate,
+  STATUS,
+  STATUS_VALUES,
+  VISIBILITY,
+  VISIBILITY_VALUES,
+} from '../../interfaces';
 import { computeErrorMessage, t } from '../../services';
 
-type ConfigureQueryProps = {
-  selectedType?: string,
-  isQueryButtonDisabled?: boolean,
-  listName?: string,
-  status?: STATUS,
-  visibility?: VISIBILITY,
-  description?: string,
-  isEditQuery?: boolean,
-  listId?: string,
-  version?: number,
-  recordColumns?: string[],
-  initialValues?: Record<string, unknown>
+export interface ConfigureQueryProps {
+  selectedType?: string;
+  isQueryButtonDisabled?: boolean;
+  listName?: string;
+  status?: STATUS;
+  visibility?: VISIBILITY;
+  description?: string;
+  isEditQuery?: boolean;
+  listId?: string;
+  version?: number;
+  recordColumns?: string[];
+  initialValues?: Record<string, unknown>;
 }
 
-export const ConfigureQuery:FC<ConfigureQueryProps> = (
-  {
-    selectedType = '',
-    isQueryButtonDisabled = true,
-    listName = '',
-    status,
-    visibility,
-    description = '',
-    isEditQuery = false,
-    listId,
-    version,
-    recordColumns,
-    initialValues
-  }
-) => {
+export const ConfigureQuery: FC<ConfigureQueryProps> = ({
+  selectedType = '',
+  isQueryButtonDisabled = true,
+  listName = '',
+  status,
+  visibility,
+  description = '',
+  isEditQuery = false,
+  listId,
+  version,
+  recordColumns,
+  initialValues,
+}) => {
   const history = useHistory();
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
@@ -48,25 +54,38 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     return selectedType ? ky.get(`entity-types/${selectedType}`).json() : noop;
   };
 
-  const queryDetailsDataSource = async ({ queryId, includeContent, offset, limit }
-    : { queryId: string, includeContent: boolean, offset: number, limit: number }) => {
+  const queryDetailsDataSource = async ({
+    queryId,
+    includeContent,
+    offset,
+    limit,
+  }: {
+    queryId: string;
+    includeContent: boolean;
+    offset: number;
+    limit: number;
+  }) => {
     const searchParams = {
       includeResults: includeContent,
       offset,
-      limit
+      limit,
     };
 
     return ky.get(`query/${queryId}`, { searchParams }).json();
   };
 
-  const testQueryDataSource = async ({ fqlQuery } : { fqlQuery: FqlQuery }) => {
-    return ky.post('query', { json: {
-      entityTypeId: selectedType,
-      fqlQuery: JSON.stringify(fqlQuery)
-    } }).json();
+  const testQueryDataSource = async ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
+    return ky
+      .post('query', {
+        json: {
+          entityTypeId: selectedType,
+          fqlQuery: JSON.stringify(fqlQuery),
+        },
+      })
+      .json();
   };
 
-  const runQueryDataSource = ({ fqlQuery, queryId } : { fqlQuery: FqlQuery, queryId: string }) => {
+  const runQueryDataSource = ({ fqlQuery, queryId }: { fqlQuery: FqlQuery; queryId: string }) => {
     if (isEditQuery) {
       const data: ListForUpdate = {
         name: listName,
@@ -96,10 +115,12 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
     }
   };
 
-  const onQueryRunSuccess = ({ id } : { id: string}) => {
-    showSuccessMessage({ message: t('callout.list.save.success', {
-      listName
-    }) });
+  const onQueryRunSuccess = ({ id }: { id: string }) => {
+    showSuccessMessage({
+      message: t('callout.list.save.success', {
+        listName,
+      }),
+    });
 
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
@@ -107,18 +128,30 @@ export const ConfigureQuery:FC<ConfigureQueryProps> = (
   const onQueryRunFail = (error: HTTPError) => {
     (async () => {
       const errorMessage = await computeErrorMessage(error, 'update-optimistic.lock.exception', {
-        listName
+        listName,
       });
 
       showErrorMessage({ message: errorMessage });
     })();
   };
 
-  const getParamsSource = async ({ entityTypeId, columnName, searchValue }: any) => {
-    return ky.get(`entity-types/${entityTypeId}/columns/${columnName}/values?search=${searchValue}`).json();
+  const getParamsSource = async ({
+    entityTypeId,
+    columnName,
+    searchValue,
+  }: {
+    entityTypeId: string;
+    columnName: string;
+    searchValue: string;
+  }) => {
+    return ky
+      .get(`entity-types/${entityTypeId}/columns/${columnName}/values`, {
+        searchParams: { search: searchValue },
+      })
+      .json();
   };
 
-  const cancelQueryDataSource = async ({ queryId } : { queryId: string }) => {
+  const cancelQueryDataSource = async ({ queryId }: { queryId: string }) => {
     return ky.delete(`query/${queryId}`);
   };
 
