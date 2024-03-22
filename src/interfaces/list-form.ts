@@ -31,4 +31,5 @@ export type FormStateType = {
   [FIELD_NAMES.VISIBILITY]: VISIBILITY,
   [FIELD_NAMES.STATUS]: STATUS,
   fqlQuery?: string
+  fields?: string[];
 }

@@ -40,7 +40,7 @@ export const CopyListPage:FC = () => {
   const recordType = listDetails?.entityTypeId;
   const { saveList, isLoading } = useCreateList(
     {
-      listObject: { ...state, fqlQuery, recordType },
+      listObject: { ...state, fields: listDetails?.fields, fqlQuery, recordType },
       onSuccess: (list: ListsRecordBase) => {
         showSuccessMessage({ message: t('callout.list.save.success', {
           listName: state[FIELD_NAMES.LIST_NAME]
