@@ -75,14 +75,10 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   };
 
   const testQueryDataSource = async ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
-    return ky
-      .post('query', {
-        json: {
-          entityTypeId: selectedType,
-          fqlQuery: JSON.stringify(fqlQuery),
-        },
-      })
-      .json();
+    return ky.post('query', { json: {
+      entityTypeId: selectedType,
+      fqlQuery: JSON.stringify(fqlQuery),
+    } }).json();
   };
 
   const runQueryDataSource = ({ fqlQuery, queryId }: { fqlQuery: FqlQuery; queryId: string }) => {
@@ -115,12 +111,11 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
     }
   };
 
+
   const onQueryRunSuccess = ({ id }: { id: string }) => {
-    showSuccessMessage({
-      message: t('callout.list.save.success', {
-        listName,
-      }),
-    });
+    showSuccessMessage({ message: t('callout.list.save.success', {
+      listName
+    })});
 
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
