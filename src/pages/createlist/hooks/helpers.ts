@@ -20,8 +20,9 @@ export const prepareDataForRequest = (
     visibility,
     status,
     fqlQuery = '',
-    recordType
-  } : FormStateType & {fqlQuery?: string}
+    recordType,
+    fields,
+  } : FormStateType
 ): ListRequestBase => {
   const object: ListRequestBase & Partial<ListForCreation> = {
     name: listName,
@@ -29,6 +30,7 @@ export const prepareDataForRequest = (
     fqlQuery,
     isActive: checkIsActive(status),
     isPrivate: checkIsPrivate(visibility),
+    fields,
   };
 
   if (recordType) {
