@@ -140,7 +140,11 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
     searchValue: string;
   }) => {
     return ky
-      .get(`entity-types/${entityTypeId}/columns/${columnName}/values?search=${searchValue}`)
+      .get(`entity-types/${entityTypeId}/columns/${columnName}/values`, {
+        searchParams: {
+          search: searchValue,
+        },
+      })
       .json();
   };
 
