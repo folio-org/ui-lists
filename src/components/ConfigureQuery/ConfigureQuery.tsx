@@ -115,7 +115,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const onQueryRunSuccess = ({ id }: { id: string }) => {
     showSuccessMessage({ message: t('callout.list.save.success', {
       listName
-    })});
+    }) });
 
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
