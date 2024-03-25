@@ -129,5 +129,6 @@
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Lists (Beta) - {listName}",
-    "title.editList": "編集{listName}"
+    "title.editList": "編集{listName}",
+    "error-component.unknown": "不明なエラーが発生しました"
 }
