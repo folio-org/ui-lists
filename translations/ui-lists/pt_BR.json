@@ -129,5 +129,6 @@
     "title.createList": "Listas (Beta) – Nova lista",
     "title.duplicateList": "Listas (Beta) – Lista duplicada {listName}",
     "title.infoList": "Listas (Beta) – {listName}",
-    "title.editList": "Listas (Beta) – Editar {listName}"
+    "title.editList": "Listas (Beta) – Editar {listName}",
+    "error-component.unknown": "An unknown error ocurred"
 }

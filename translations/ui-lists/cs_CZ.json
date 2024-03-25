@@ -126,8 +126,9 @@
     "lists.copy.title": "Duplicitní seznam: {listName}",
     "lists.copy.name-postfix": "kopírovat",
     "list.info.record-type": "Typ záznamu",
-    "title.createList": "New list",
-    "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists (Beta) - {listName}",
-    "title.editList": "Edit {listName}"
+    "title.createList": "Nový seznam",
+    "title.duplicateList": "Duplicitní seznam {listName}",
+    "title.infoList": "Seznamy (Beta) - {listName}",
+    "title.editList": "Upravit {listName}",
+    "error-component.unknown": "Nastala neznámá chyba"
 }
