@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "Generale",
     "settings.general.message": "Queste sono le impostazioni generali dell'app.",
     "paneHeader.button.new": "Nuovo",
     "paneHeader.button.actions": "Azioni",
     "filterPane.title": "Filtro",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "Tipologia record",
@@ -128,7 +128,7 @@
     "list.info.record-type": "Tipologia record",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists (Beta) - {listName}",
+    "title.infoList": "Lists - {listName}",
     "title.editList": "Edit {listName}",
     "error-component.unknown": "An unknown error ocurred"
 }
