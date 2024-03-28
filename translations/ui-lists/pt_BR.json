@@ -1,11 +1,11 @@
 {
-    "meta.title": "Listas (Beta)",
+    "meta.title": "Listas",
     "settings.general": "Geral",
     "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
     "paneHeader.button.new": "Novo",
     "paneHeader.button.actions": "Ações",
     "filterPane.title": "Filtro",
-    "mainPane.title": "Listas (Beta)",
+    "mainPane.title": "Listas",
     "mainPane.subTitle": "{count} registros encontrados",
     "lists.columns.list-name": "Nome da lista",
     "lists.columns.record-type": "Tipo de registro",
@@ -126,8 +126,9 @@
     "lists.copy.title": "Lista duplicada: {listName}",
     "lists.copy.name-postfix": "cópia",
     "list.info.record-type": "Tipo de registro",
-    "title.createList": "Listas (Beta) – Nova lista",
-    "title.duplicateList": "Listas (Beta) – Lista duplicada {listName}",
-    "title.infoList": "Listas (Beta) – {listName}",
-    "title.editList": "Listas (Beta) – Editar {listName}"
+    "title.createList": "Listas – Nova lista",
+    "title.duplicateList": "Listas – Lista duplicada {listName}",
+    "title.infoList": "Listas – {listName}",
+    "title.editList": "Listas – Editar {listName}",
+    "error-component.unknown": "Ocorreu um erro desconhecido"
 }

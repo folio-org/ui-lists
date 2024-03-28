@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "عام",
     "settings.general.message": "هذه هي إعداداتك العامة للتطبيق",
     "paneHeader.button.new": "جديد",
     "paneHeader.button.actions": "الإجراءات",
     "filterPane.title": "المنقح",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "نوع التسجيلة",
@@ -128,6 +128,7 @@
     "list.info.record-type": "نوع التسجيلة",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists (Beta) - {listName}",
-    "title.editList": "Edit {listName}"
+    "title.infoList": "Lists - {listName}",
+    "title.editList": "Edit {listName}",
+    "error-component.unknown": "An unknown error ocurred"
 }

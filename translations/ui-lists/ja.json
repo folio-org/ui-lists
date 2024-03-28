@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "一般",
     "settings.general.message": "These are your general app settings.",
     "paneHeader.button.new": "新規",
     "paneHeader.button.actions": "アクション",
     "filterPane.title": "フィルター",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "レコードタイプ",
@@ -128,6 +128,7 @@
     "list.info.record-type": "レコードタイプ",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists (Beta) - {listName}",
-    "title.editList": "編集{listName}"
+    "title.infoList": "Lists - {listName}",
+    "title.editList": "編集{listName}",
+    "error-component.unknown": "不明なエラーが発生しました"
 }
