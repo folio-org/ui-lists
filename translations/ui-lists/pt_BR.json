@@ -130,5 +130,5 @@
     "title.duplicateList": "Listas – Lista duplicada {listName}",
     "title.infoList": "Listas – {listName}",
     "title.editList": "Listas – Editar {listName}",
-    "error-component.unknown": "An unknown error ocurred"
+    "error-component.unknown": "Ocorreu um erro desconhecido"
 }
