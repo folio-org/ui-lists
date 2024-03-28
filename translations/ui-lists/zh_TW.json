@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "一般",
     "settings.general.message": "這是您的一般功能設定。",
     "paneHeader.button.new": "新增",
     "paneHeader.button.actions": "操作",
     "filterPane.title": "篩選器",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "紀錄類型",
@@ -128,7 +128,7 @@
     "list.info.record-type": "紀錄類型",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists (Beta) - {listName}",
+    "title.infoList": "Lists - {listName}",
     "title.editList": "Edit {listName}",
     "error-component.unknown": "An unknown error ocurred"
 }

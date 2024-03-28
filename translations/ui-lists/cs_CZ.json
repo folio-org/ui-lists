@@ -1,11 +1,11 @@
 {
-    "meta.title": "Seznamy (Beta)",
+    "meta.title": "Seznamy",
     "settings.general": "Obecné",
     "settings.general.message": "Toto jsou obecná nastavení aplikace.",
     "paneHeader.button.new": "Nový",
     "paneHeader.button.actions": "Akce",
     "filterPane.title": "Filtr",
-    "mainPane.title": "Seznamy (Beta)",
+    "mainPane.title": "Seznamy",
     "mainPane.subTitle": "{count} nalezených záznamů",
     "lists.columns.list-name": "Název seznamu",
     "lists.columns.record-type": "Typ záznamu",
@@ -128,7 +128,7 @@
     "list.info.record-type": "Typ záznamu",
     "title.createList": "Nový seznam",
     "title.duplicateList": "Duplicitní seznam {listName}",
-    "title.infoList": "Seznamy (Beta) - {listName}",
+    "title.infoList": "Seznamy - {listName}",
     "title.editList": "Upravit {listName}",
     "error-component.unknown": "Nastala neznámá chyba"
 }
