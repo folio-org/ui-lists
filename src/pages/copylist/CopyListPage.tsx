@@ -6,12 +6,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
 import { useCreateList, useInitRefresh, useListDetails, useMessages } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
-import { ConfigureQuery, EditListLayout, ErrorComponent, MainListInfoForm } from '../../components';
+import { EditListLayout, EditListResultViewer, ErrorComponent, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
-
-import css from './CopyListPage.module.css';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
@@ -111,18 +109,22 @@ export const CopyListPage:FC = () => {
             </Layout>
           </Accordion>
         </AccordionSet>
-        <div className={css.queryBuilderButton}>
-          <ConfigureQuery
-            initialValues={fqlQuery && JSON.parse(fqlQuery)}
-            selectedType={listDetails?.entityTypeId}
-            isQueryButtonDisabled={hasName || isLoading}
-            listName={state[FIELD_NAMES.LIST_NAME]}
-            status={state[FIELD_NAMES.STATUS]}
-            visibility={state[FIELD_NAMES.VISIBILITY]}
-            description={state[FIELD_NAMES.DESCRIPTION]}
-            recordColumns={listDetails?.fields}
-          />
-        </div>
+
+        <EditListResultViewer
+          isDuplicating
+          id={id}
+          version={listDetails?.version}
+          fields={listDetails?.fields}
+          fqlQuery={listDetails?.fqlQuery ?? ''}
+          userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+          contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+          entityTypeId={listDetails?.entityTypeId}
+          status={state[FIELD_NAMES.STATUS]}
+          listName={state[FIELD_NAMES.LIST_NAME]}
+          visibility={state[FIELD_NAMES.VISIBILITY]}
+          description={state[FIELD_NAMES.DESCRIPTION]}
+          isQueryButtonDisabled={hasName || isLoading}
+        />
       </EditListLayout>
     </TitleManager>
   );
