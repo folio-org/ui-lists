@@ -69,7 +69,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
       onSetDefaultColumns={() => {}}
-      height={500}
+      height={525}
       additionalControls={(
         <div className={css.queryBuilderButton}>
           <ConfigureQuery
