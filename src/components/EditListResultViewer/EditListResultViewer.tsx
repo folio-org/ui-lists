@@ -1,25 +1,26 @@
-// @ts-ignore
-import { useOkapiKy, Pluggable } from '@folio/stripes/core';
+import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import React, { FC } from 'react';
+import { useVisibleColumns } from '../../hooks';
+import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
 import { t } from '../../services';
 import { ConfigureQuery } from '../ConfigureQuery';
-import { useVisibleColumns } from "../../hooks";
-import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
 
 import css from './EditListResultViewer.module.css';
 
-type EditListResultViewerProps = {
-    id: string,
-    version: number,
-    entityTypeId: string,
-    fqlQuery: string,
-    userFriendlyQuery: string,
-    contentVersion: number,
-    fields?: string[],
-    status: string,
-    listName: string,
-    visibility: string,
-    description: string
+interface EditListResultViewerProps {
+  id: string,
+  version?: number,
+  entityTypeId?: string,
+  fqlQuery: string,
+  userFriendlyQuery: string,
+  contentVersion: number,
+  fields?: string[],
+  status: string,
+  listName: string,
+  visibility: string,
+  description: string,
+  isDuplicating?: boolean,
+  isQueryButtonDisabled?: boolean,
 }
 
 export const EditListResultViewer:FC<EditListResultViewerProps> = (
@@ -34,7 +35,9 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
     listName,
     visibility,
     description,
-    fields
+    fields,
+    isDuplicating = false,
+    isQueryButtonDisabled = false
   }
 ) => {
   const ky = useOkapiKy();
@@ -70,13 +73,13 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       additionalControls={(
         <div className={css.queryBuilderButton}>
           <ConfigureQuery
-            listId={id}
-            version={version}
-            isEditQuery
+            listId={isDuplicating ? undefined : id}
+            version={isDuplicating ? undefined : version}
+            isEditQuery={!isDuplicating}
             initialValues={fqlQuery ? JSON.parse(fqlQuery) : undefined}
             selectedType={entityTypeId}
             recordColumns={fields}
-            isQueryButtonDisabled={false}
+            isQueryButtonDisabled={isQueryButtonDisabled}
             listName={listName}
             status={status === STATUS_VALUES.ACTIVE ? STATUS_VALUES.ACTIVE : STATUS_VALUES.INACTIVE}
             visibility={visibility === VISIBILITY_VALUES.SHARED ? VISIBILITY_VALUES.SHARED : VISIBILITY_VALUES.PRIVATE}
