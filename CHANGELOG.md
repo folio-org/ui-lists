@@ -22,6 +22,7 @@
 * Send list of columns when exporting a list. Refs [UILISTS-110]
 * Bump up stripes-acq-components from 5.0.0 to 5.1.0
 * Improve exception handling. Refs [UILISTS-121]
+* Send list of selected columns as parameter to GET /lists/{listId}/contents API. Refs [UILISTS-109]
 
 [UILISTS-9]: https://folio-org.atlassian.net/browse/UILISTS-9
 [UILISTS-2]: https://folio-org.atlassian.net/browse/UILISTS-2
@@ -42,6 +43,7 @@
 [UILISTS-80]: https://folio-org.atlassian.net/browse/UILISTS-80
 [UILISTS-110]: https://folio-org.atlassian.net/browse/UILISTS-110
 [UILISTS-121]: https://folio-org.atlassian.net/browse/UILISTS-121
+[UILISTS-109]: https://folio-org.atlassian.net/browse/UILISTS-109
 
 ## 2.0.x
 

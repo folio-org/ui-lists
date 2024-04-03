@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import React, { FC } from 'react';
 import { useVisibleColumns } from '../../hooks';
@@ -47,7 +48,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
   } = useVisibleColumns(id);
 
   const getAsyncContentData = ({ limit, offset }: any) => {
-    return ky.get(`lists/${id}/contents?offset=${offset}&size=${limit}`).json();
+    return ky.get(`lists/${id}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`).json();
   };
 
   const getAsyncEntityType = () => {
@@ -69,6 +70,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
       onSetDefaultColumns={() => {}}
+      contentQueryKeys={visibleColumns}
       height={500}
       additionalControls={(
         <div className={css.queryBuilderButton}>
