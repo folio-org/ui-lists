@@ -29,7 +29,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
   const ky = useOkapiKy();
 
   const getAsyncContentData = ({ limit, offset }: any) => {
-    return ky.get(`lists/${listID}/contents?offset=${offset}&size=${limit}`).json();
+    return ky.get(`lists/${listID}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`).json();
   };
 
   const getAsyncEntityType = () => {
@@ -53,6 +53,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       onSetDefaultVisibleColumns={setDefaultVisibleColumns}
       onSetDefaultColumns={setColumnControlList}
       height={500}
+      contentQueryKeys={visibleColumns}
     >
       No loaded
     </Pluggable>
