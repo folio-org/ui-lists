@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "一般",
     "settings.general.message": "這是您的一般功能設定。",
     "paneHeader.button.new": "新增",
     "paneHeader.button.actions": "操作",
     "filterPane.title": "篩選器",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "紀錄類型",
@@ -124,5 +124,11 @@
     "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
-    "lists.copy.name-postfix": "copy"
+    "lists.copy.name-postfix": "copy",
+    "list.info.record-type": "紀錄類型",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "Lists - {listName}",
+    "title.editList": "Edit {listName}",
+    "error-component.unknown": "An unknown error ocurred"
 }

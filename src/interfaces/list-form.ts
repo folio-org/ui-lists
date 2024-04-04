@@ -31,13 +31,5 @@ export type FormStateType = {
   [FIELD_NAMES.VISIBILITY]: VISIBILITY,
   [FIELD_NAMES.STATUS]: STATUS,
   fqlQuery?: string
-}
-
-export type CreateListFormatType = {
-  name: string,
-  description: string,
-  entityTypeId?: string,
-  fqlQuery?: string,
-  isActive: boolean,
-  isPrivate: boolean
+  fields?: string[];
 }

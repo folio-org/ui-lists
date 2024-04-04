@@ -1,6 +1,6 @@
 {
   "name": "@folio/lists",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "description": "FOLIO Reporting Machine Lists",
   "main": "src/index.tsx",
   "license": "Apache-2.0",
@@ -75,7 +75,8 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "@folio/stripes-acq-components": "~5.0.0",
+    "@folio/plugin-query-builder": "^1.1.2",
+    "@folio/stripes-acq-components": "~5.1.0",
     "date-fns": "^2.29.3",
     "ky": "^0.33.2",
     "lodash": "^4.17.21",
@@ -88,9 +89,6 @@
     "react-redux": "^8.0.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
-  },
-  "optionalDependencies": {
-    "@folio/plugin-query-builder": ">=1.0.0"
   },
   "stripes": {
     "actsAs": [

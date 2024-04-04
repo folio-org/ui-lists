@@ -10,6 +10,7 @@ import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
+import { columnWidthsConfig } from './configs';
 
 export interface ListsTableProps {
   activeFilters: string[],
@@ -41,8 +42,8 @@ export const ListsTable: FC<ListsTableProps> = ({
 
     onNeedMoreData({
       offset: lastPageOffset
-    })
-  }
+    });
+  };
 
   const prevActiveFilters = usePrevious(activeFilters);
 
@@ -59,14 +60,14 @@ export const ListsTable: FC<ListsTableProps> = ({
   const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
 
   useEffect(() => {
-    if(isLoading) {
-      return
+    if (isLoading) {
+      return;
     }
 
     if (listsData?.content?.length) {
       setRecordIds(listsData?.content.map(({ id }) => id));
-    } else if (listsData?.totalPages){
-      goToLastPage(listsData?.totalPages)
+    } else if (listsData?.totalPages) {
+      goToLastPage(listsData?.totalPages);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
@@ -96,6 +97,7 @@ export const ListsTable: FC<ListsTableProps> = ({
         interactive
         data-testid="ItemsList"
         contentData={content ?? []}
+        columnWidths={columnWidthsConfig}
         visibleColumns={LISTS_VISIBLE_COLUMNS}
         formatter={listTableResultFormatter}
         pageAmount={totalPages}

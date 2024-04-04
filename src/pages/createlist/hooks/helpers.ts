@@ -1,6 +1,7 @@
 import {
   FormStateType,
-  CreateListFormatType
+  ListForCreation,
+  ListRequestBase
 } from '../../../interfaces';
 import { STATUS_VALUES, VISIBILITY_VALUES } from '../../../components/MainListInfoForm';
 
@@ -19,15 +20,17 @@ export const prepareDataForRequest = (
     visibility,
     status,
     fqlQuery = '',
-    recordType
-  } : FormStateType & {fqlQuery?: string}
-): CreateListFormatType => {
-  const object: CreateListFormatType = {
+    recordType,
+    fields,
+  } : FormStateType
+): ListRequestBase => {
+  const object: ListRequestBase & Partial<ListForCreation> = {
     name: listName,
     description,
     fqlQuery,
     isActive: checkIsActive(status),
-    isPrivate: checkIsPrivate(visibility)
+    isPrivate: checkIsPrivate(visibility),
+    fields,
   };
 
   if (recordType) {

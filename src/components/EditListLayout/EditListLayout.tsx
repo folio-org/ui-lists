@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import { isNumber } from 'lodash';
 import { Button, Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
@@ -10,7 +10,7 @@ type EditListLayoutProps = {
   isLoading?: boolean;
   onCancel?: () => void;
   onSave?: () => void;
-  children?: ReactElement[],
+  children?: ReactNode,
   name: string,
   title: string | ReactElement,
   recordsCount?: number,

@@ -74,11 +74,30 @@ export interface ListsRecordBase {
   createdDate?: string;
   isActive?: boolean;
   isPrivate?: boolean;
+  fields?: string[],
   isCanned?: boolean;
   updatedBy?: boolean;
   updatedByUsername?: boolean;
   updatedDate?: string;
   recordsCount?: number;
+}
+
+export interface ListRequestBase {
+  name: string;
+  description?: string;
+  fqlQuery?: string;
+  fields?: string[];
+  isActive: boolean;
+  isPrivate: boolean;
+  queryId?: string;
+}
+
+export interface ListForCreation extends ListRequestBase {
+  entityTypeId: string;
+}
+
+export interface ListForUpdate extends ListRequestBase {
+  version: number;
 }
 
 export interface ListsRecordDetails extends ListsRecordBase {

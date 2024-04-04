@@ -1,11 +1,11 @@
 {
-    "meta.title": "列表（测试版）",
+    "meta.title": "列表",
     "settings.general": "常规",
     "settings.general.message": "这些是您的常规应用设置。",
     "paneHeader.button.new": "+新建",
     "paneHeader.button.actions": "操作",
     "filterPane.title": "筛选",
-    "mainPane.title": "列表（测试版）",
+    "mainPane.title": "列表",
     "mainPane.subTitle": "找到{count}条记录",
     "lists.columns.list-name": "列表名称",
     "lists.columns.record-type": "记录类型",
@@ -124,5 +124,11 @@
     "create-list.main.list-status.tooltip": "<strong>激活</strong>列表由查询和结果记录集组成。 <strong>未激活</strong>列表可以有查询，但没有记录集。",
     "pane.dropdown.copy": "重复列表",
     "lists.copy.title": "重复列表： {listName}",
-    "lists.copy.name-postfix": "复制"
+    "lists.copy.name-postfix": "复制",
+    "list.info.record-type": "记录类型",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "Lists - {listName}",
+    "title.editList": "Edit {listName}",
+    "error-component.unknown": "An unknown error ocurred"
 }

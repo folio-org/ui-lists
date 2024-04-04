@@ -1,11 +1,15 @@
 {
-  "meta.title": "Lists (Beta)",
+  "meta.title": "Lists",
+  "title.createList": "New list",
+  "title.duplicateList": "Duplicate List {listName}",
+  "title.infoList": "Lists - {listName}",
+  "title.editList": "Edit {listName}",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "paneHeader.button.new": "New",
   "paneHeader.button.actions": "Actions",
   "filterPane.title": "Filter",
-  "mainPane.title": "Lists (Beta)",
+  "mainPane.title": "Lists",
   "mainPane.subTitle": "{count} records found",
   "lists.columns.list-name": "List name",
   "lists.columns.record-type": "Record type",
@@ -30,6 +34,8 @@
   "list.info.visibility": "Visibility",
   "list.info.status": "Status",
   "list.info.source": "Source",
+  "list.info.record-type": "Record type",
+
 
   "list.info.source.system": "System",
 
@@ -157,5 +163,6 @@
 
   "error-component.read-list.not.found": "List not found",
   "error-component.read-list.is.private": "You don't have permission to view this list",
-  "error-component.invalid.request": "List not found"
+  "error-component.invalid.request": "List not found",
+  "error-component.unknown": "An unknown error ocurred"
 }

@@ -1,11 +1,11 @@
 {
-    "meta.title": "Lists (Beta)",
+    "meta.title": "Lists",
     "settings.general": "Général",
     "settings.general.message": "Voici les paramètres généraux de votre application.",
     "paneHeader.button.new": "Nouveau",
     "paneHeader.button.actions": "Actions",
     "filterPane.title": "Filtre",
-    "mainPane.title": "Lists (Beta)",
+    "mainPane.title": "Lists",
     "mainPane.subTitle": "{count} records found",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "Type d'enregistrement",
@@ -124,5 +124,11 @@
     "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
-    "lists.copy.name-postfix": "copy"
+    "lists.copy.name-postfix": "copy",
+    "list.info.record-type": "Type d'enregistrement",
+    "title.createList": "New list",
+    "title.duplicateList": "Duplicate List {listName}",
+    "title.infoList": "Lists - {listName}",
+    "title.editList": "Edit {listName}",
+    "error-component.unknown": "An unknown error ocurred"
 }
