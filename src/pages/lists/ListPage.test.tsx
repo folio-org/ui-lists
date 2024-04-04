@@ -1,6 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
+// @ts-ignore
+import {runAxeTest} from "@folio/stripes-testing";
 import { waitFor, screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { IfPermission } from '@folio/stripes/core';
@@ -62,6 +64,12 @@ describe('ListPage Page', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('ui-lists.paneHeader.button.new')).toBeNull();
+    });
+  });
+
+  it('should render with no axe errors', async () => {
+    await runAxeTest({
+      rootNode: document.body,
     });
   });
 });
