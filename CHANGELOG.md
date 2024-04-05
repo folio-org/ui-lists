@@ -23,6 +23,7 @@
 * Bump up stripes-acq-components from 5.0.0 to 5.1.0
 * Improve exception handling. Refs [UILISTS-121]
 * Send list of selected columns as parameter to GET /lists/{listId}/contents API. Refs [UILISTS-109]
+* Lists - Add accessibility testing to automated tests. Refs [UILISTS-99]
 
 [UILISTS-9]: https://folio-org.atlassian.net/browse/UILISTS-9
 [UILISTS-2]: https://folio-org.atlassian.net/browse/UILISTS-2
@@ -44,6 +45,7 @@
 [UILISTS-110]: https://folio-org.atlassian.net/browse/UILISTS-110
 [UILISTS-121]: https://folio-org.atlassian.net/browse/UILISTS-121
 [UILISTS-109]: https://folio-org.atlassian.net/browse/UILISTS-109
+[UILISTS-99]: https://folio-org.atlassian.net/browse/UILISTS-99
 
 ## 2.0.x
 

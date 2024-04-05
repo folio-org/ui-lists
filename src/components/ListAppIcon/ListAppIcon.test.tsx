@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 
 import { ListAppIcon } from './ListAppIcon';
+// @ts-ignore
+import {runAxeTest} from "@folio/stripes-testing";
 
 describe('ListAppIcon', () => {
   beforeEach(() => {
@@ -31,5 +33,11 @@ describe('ListAppIcon', () => {
     const icon = screen.getByTestId('app-icon');
 
     expect(icon).toContainHTML('small');
+  });
+
+  it('should render with no axe errors', async () => {
+    await runAxeTest({
+      rootNode: document.body,
+    });
   });
 });

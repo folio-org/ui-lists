@@ -1,6 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
+// @ts-ignore
+import {runAxeTest} from "@folio/stripes-testing";
 import { Server } from 'miragejs';
 import { render } from '@testing-library/react';
 import { screen, waitFor } from '@testing-library/dom';
@@ -73,6 +75,12 @@ describe('ListsTable', () => {
       const list = screen.getByTestId('ItemsList');
 
       expect(list).toBeInTheDocument();
+    });
+  });
+
+  it('should render with no axe errors', async () => {
+    await runAxeTest({
+      rootNode: document.body,
     });
   });
 });
