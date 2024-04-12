@@ -126,9 +126,9 @@
     "lists.copy.title": "重复列表： {listName}",
     "lists.copy.name-postfix": "复制",
     "list.info.record-type": "记录类型",
-    "title.createList": "New list",
-    "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists - {listName}",
-    "title.editList": "Edit {listName}",
-    "error-component.unknown": "An unknown error ocurred"
+    "title.createList": "新建列表",
+    "title.duplicateList": "重复列表{listName}",
+    "title.infoList": "列表 - {listName}",
+    "title.editList": "编辑{listName}",
+    "error-component.unknown": "发生未知错误"
 }
