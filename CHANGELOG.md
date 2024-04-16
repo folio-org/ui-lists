@@ -1,5 +1,12 @@
 # Change history for ui-lists
 
+## [3.0.1](https://github.com/folio-org/ui-lists/tree/v3.0.1) (2024-04-16)
+* Duplicated lists have all columns selected [UILISTS-118]
+* Change the app display name from Lists (beta) to Lists [UILISTS-125]
+
+[UILISTS-118]: https://folio-org.atlassian.net/browse/UILISTS-118
+[UILISTS-125]: https://folio-org.atlassian.net/browse/UILISTS-125
+
 ## [3.0.0](https://github.com/folio-org/ui-lists/tree/v3.0.0) (2024-03-22)
 * Use background polling to pick up new list updates. Refs [UILISTS-9]
 * Add tooltips to the New List page. Refs [UILISTS-2]
