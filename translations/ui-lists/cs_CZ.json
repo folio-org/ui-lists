@@ -128,7 +128,7 @@
     "list.info.record-type": "Typ záznamu",
     "title.createList": "Nový seznam",
     "title.duplicateList": "Duplicitní seznam {listName}",
-    "title.infoList": "Seznamy - {listName}",
+    "title.infoList": "Seznamy – {listName}",
     "title.editList": "Upravit {listName}",
     "error-component.unknown": "Nastala neznámá chyba"
 }

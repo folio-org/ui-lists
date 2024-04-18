@@ -1,5 +1,12 @@
 # Change history for ui-lists
 
+## [3.0.1](https://github.com/folio-org/ui-lists/tree/v3.0.1) (2024-04-16)
+* Duplicated lists have all columns selected [UILISTS-118]
+* Change the app display name from Lists (beta) to Lists [UILISTS-125]
+
+[UILISTS-118]: https://folio-org.atlassian.net/browse/UILISTS-118
+[UILISTS-125]: https://folio-org.atlassian.net/browse/UILISTS-125
+
 ## [3.0.0](https://github.com/folio-org/ui-lists/tree/v3.0.0) (2024-03-22)
 * Use background polling to pick up new list updates. Refs [UILISTS-9]
 * Add tooltips to the New List page. Refs [UILISTS-2]
@@ -23,6 +30,7 @@
 * Bump up stripes-acq-components from 5.0.0 to 5.1.0
 * Improve exception handling. Refs [UILISTS-121]
 * Send list of selected columns as parameter to GET /lists/{listId}/contents API. Refs [UILISTS-109]
+* Lists - Add accessibility testing to automated tests. Refs [UILISTS-99]
 
 [UILISTS-9]: https://folio-org.atlassian.net/browse/UILISTS-9
 [UILISTS-2]: https://folio-org.atlassian.net/browse/UILISTS-2
@@ -44,6 +52,7 @@
 [UILISTS-110]: https://folio-org.atlassian.net/browse/UILISTS-110
 [UILISTS-121]: https://folio-org.atlassian.net/browse/UILISTS-121
 [UILISTS-109]: https://folio-org.atlassian.net/browse/UILISTS-109
+[UILISTS-99]: https://folio-org.atlassian.net/browse/UILISTS-99
 
 ## 2.0.x
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
+// @ts-ignore
+import {runAxeTest} from "@folio/stripes-testing";
 import { screen, waitFor } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
@@ -67,6 +69,17 @@ describe('CopyList Page', () => {
 
         expect(cancelButton).toBeInTheDocument();
       });
+
+
+      it('should render with no axe errors', async () => {
+        await renderCopyListPage();
+
+        await awaitLoading();
+
+        await runAxeTest({
+          rootNode: document.body,
+        });
+      });
     });
 
     describe('buttons save', () => {
@@ -82,6 +95,7 @@ describe('CopyList Page', () => {
         expect(cancelButton).toBeInTheDocument();
       });
     });
+
 
     describe('buttons close', () => {
       it('is expected to contain close button ', async () => {
@@ -108,6 +122,16 @@ describe('CopyList Page', () => {
         await user.click(closeButton);
 
         expect(historyPushMock).toBeCalledWith('/lists/list/id');
+      });
+    });
+
+    it('should render with no axe errors', async () => {
+      await renderCopyListPage();
+
+      await awaitLoading();
+
+      await runAxeTest({
+        rootNode: document.body,
       });
     });
 

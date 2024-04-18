@@ -1,6 +1,6 @@
 {
   "name": "@folio/lists",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "FOLIO Reporting Machine Lists",
   "main": "src/index.tsx",
   "license": "Apache-2.0",
@@ -77,6 +77,7 @@
   "dependencies": {
     "@folio/plugin-query-builder": "^1.1.2",
     "@folio/stripes-acq-components": "~5.1.0",
+    "@folio/stripes-testing": "^4.8.10000028785",
     "date-fns": "^2.29.3",
     "ky": "^0.33.2",
     "lodash": "^4.17.21",

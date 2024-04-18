@@ -1,9 +1,12 @@
 import { Pluggable } from '@folio/stripes/core';
+// @ts-ignore
+import { runAxeTest } from '@folio/stripes-testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { queryClient } from '../../../test/utils';
 import { ConfigureQuery, ConfigureQueryProps } from './ConfigureQuery';
+import React from "react";
 
 const PluggableMock = Pluggable as unknown as jest.Mock;
 
@@ -66,6 +69,14 @@ describe('ConfigureQuery component', () => {
     it('exists with values present', () => {
       renderComponent({ initialValues: { foo: 'bar' } });
       expect(PluggableMock.mock.lastCall?.[0].triggerButtonLabel).not.toBeUndefined();
+    });
+
+    it('should render with no axe errors', async () => {
+      renderComponent();
+
+      await runAxeTest({
+        rootNode: document.body,
+      });
     });
 
     it('does not exist with no values present', () => {
