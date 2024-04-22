@@ -241,6 +241,7 @@ export const ListInformationPage: React.FC = () => {
 
               <AccordionSet>
                 <ListInformationResultViewer
+                  key={String(visibleColumns?.length)}
                   refreshInProgress={isRefreshInProgress}
                   listID={listData?.id}
                   userFriendlyQuery={listData?.userFriendlyQuery}
