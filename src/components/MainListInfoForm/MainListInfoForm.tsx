@@ -8,7 +8,7 @@ import {
   Col,
   KeyValue,
   Row,
-  Select,
+  Selection,
   InfoPopover } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
@@ -45,6 +45,9 @@ export const MainListInfoForm = (
 ) => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
+  };
+  const onSelectHandler = (name: string, value: string) => {
+    onValueChange({ [name]: value });
   };
   const onTrimOnBlur = (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value.trim() });
@@ -84,13 +87,14 @@ export const MainListInfoForm = (
           key={recordTypeOptions.length}
           className={css.recordTypeField}
         >
-          {/* @ts-ignore:next-line */}
-          <Select
+          <Selection
             required
             value={value}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
-            onChange={onChangeHandler}
+            onChange={(value: string) => {
+              onSelectHandler(FIELD_NAMES.RECORD_TYPE, value)
+            }}
             label={t('create-list.aside.record-types')}
           />
         </div>);
