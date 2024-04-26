@@ -92,6 +92,24 @@ jest.mock('@folio/stripes/components', () => ({
   ModalFooter: jest.fn((props) => (
     <div>{props.children}</div>
   )),
+  Selection: jest.fn(({ children, dataOptions, onChange, label, name }) => (
+      <label>
+        {label}
+        <select name={name} onChange={(event) => {
+          onChange(event.target.value)
+        }}>
+          {dataOptions.map((option, i) => (
+              <option
+                  value={option.value}
+                  key={option.id || `option-${i}`}
+                  selected={option.selected}
+              >
+                {option.label}
+              </option>))}
+        </select>
+        {children}
+      </label>
+  )),
   MultiSelection: jest.fn(({ children, dataOptions }) => (
     <div>
       <select multiple>

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
+import { useIntl } from 'react-intl';
 import {
   Layout,
   RadioButton,
@@ -8,7 +9,7 @@ import {
   Col,
   KeyValue,
   Row,
-  Select,
+  Selection,
   InfoPopover } from '@folio/stripes/components';
 import { FIELD_NAMES, STATUS_VALUES, VISIBILITY_VALUES } from './type';
 import { EntityTypeSelectOption } from '../../interfaces';
@@ -16,7 +17,7 @@ import {
   MAX_SUPPORTED_DESCRIPTION_LENGTH,
   MAX_SUPPORTED_NAME_LENGTH
 } from './constants';
-import { t } from '../../services';
+import { t, tString } from '../../services';
 
 import css from './MainListInfoForm.module.css';
 
@@ -43,9 +44,12 @@ export const MainListInfoForm = (
     recordTypeOptions,
     recordTypeLabel}: MainListInfoFormProps
 ) => {
+  const intl = useIntl();
+
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
   };
+
   const onTrimOnBlur = (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value.trim() });
   };
@@ -84,13 +88,15 @@ export const MainListInfoForm = (
           key={recordTypeOptions.length}
           className={css.recordTypeField}
         >
-          {/* @ts-ignore:next-line */}
-          <Select
+          <Selection
             required
             value={value}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
-            onChange={onChangeHandler}
+            placeholder={tString(intl, 'create-list.choose-record-type')}
+            onChange={(value: string) => {
+              onValueChange({[FIELD_NAMES.RECORD_TYPE]: value})
+            }}
             label={t('create-list.aside.record-types')}
           />
         </div>);
