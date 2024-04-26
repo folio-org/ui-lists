@@ -95,7 +95,9 @@ jest.mock('@folio/stripes/components', () => ({
   Selection: jest.fn(({ children, dataOptions, onChange, label, name }) => (
       <label>
         {label}
-        <select name={name} onChange={onChange}>
+        <select name={name} onChange={(event) => {
+          onChange(event.target.value)
+        }}>
           {dataOptions.map((option, i) => (
               <option
                   value={option.value}
