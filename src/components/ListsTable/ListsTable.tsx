@@ -12,6 +12,8 @@ import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
 import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
 import { columnWidthsConfig } from './configs';
 
+import css from './ListsTable.module.css';
+
 export interface ListsTableProps {
   activeFilters: string[],
   setTotalRecords: (totalRecords: number) => void
@@ -95,22 +97,28 @@ export const ListsTable: FC<ListsTableProps> = ({
 
   return (
     <>
-      <MultiColumnList
-        interactive
-        data-testid="ItemsList"
-        contentData={content ?? []}
-        columnWidths={columnWidthsConfig}
-        visibleColumns={LISTS_VISIBLE_COLUMNS}
-        formatter={listTableResultFormatter}
-        pageAmount={totalPages}
-        totalCount={totalRecords}
-        columnMapping={listTableMapping}
-      />
-      <PrevNextPagination
-        {...pagination}
-        totalCount={totalRecords}
-        onChange={onNeedMoreData}
-      />
+      <div className={css.tableWrap}>
+        <MultiColumnList
+          autosize
+          interactive
+          data-testid="ItemsList"
+          contentData={content ?? []}
+          headerRowClass={css.listTableHeaderSticky}
+          columnWidths={columnWidthsConfig}
+          visibleColumns={LISTS_VISIBLE_COLUMNS}
+          formatter={listTableResultFormatter}
+          pageAmount={totalPages}
+          totalCount={totalRecords}
+          columnMapping={listTableMapping}
+        />
+        <div className={css.pagingWrap}>
+          <PrevNextPagination
+            {...pagination}
+            totalCount={totalRecords}
+            onChange={onNeedMoreData}
+          />
+        </div>
+      </div>
     </>
   );
 };
