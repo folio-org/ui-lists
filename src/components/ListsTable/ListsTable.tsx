@@ -96,29 +96,27 @@ export const ListsTable: FC<ListsTableProps> = ({
   setTotalRecords(totalRecords);
 
   return (
-    <>
-      <div className={css.tableWrap}>
-        <MultiColumnList
-          autosize
-          interactive
-          data-testid="ItemsList"
-          contentData={content ?? []}
-          headerRowClass={css.listTableHeaderSticky}
-          columnWidths={columnWidthsConfig}
-          visibleColumns={LISTS_VISIBLE_COLUMNS}
-          formatter={listTableResultFormatter}
-          pageAmount={totalPages}
+    <div className={css.tableWrap}>
+      <MultiColumnList
+        autosize
+        interactive
+        data-testid="ItemsList"
+        contentData={content ?? []}
+        headerRowClass={css.listTableHeaderSticky}
+        columnWidths={columnWidthsConfig}
+        visibleColumns={LISTS_VISIBLE_COLUMNS}
+        formatter={listTableResultFormatter}
+        pageAmount={totalPages}
+        totalCount={totalRecords}
+        columnMapping={listTableMapping}
+      />
+      <div className={css.pagingWrap}>
+        <PrevNextPagination
+          {...pagination}
           totalCount={totalRecords}
-          columnMapping={listTableMapping}
+          onChange={onNeedMoreData}
         />
-        <div className={css.pagingWrap}>
-          <PrevNextPagination
-            {...pagination}
-            totalCount={totalRecords}
-            onChange={onNeedMoreData}
-          />
-        </div>
       </div>
-    </>
+    </div>
   );
 };
