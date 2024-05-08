@@ -106,11 +106,10 @@ export const ListPage: React.FC = () => {
           </IfPermission>
         }
       >
-          <ListsTable
-            activeFilters={activeFilters}
-            setTotalRecords={setTotalRecords}
-          />
-
+        <ListsTable
+          activeFilters={activeFilters}
+          setTotalRecords={setTotalRecords}
+        />
       </Pane>
     </Paneset>
   );
