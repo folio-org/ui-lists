@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, FocusEvent } from 'react';
+import React, { ChangeEvent, useState, FocusEvent, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import {
   Layout,
@@ -60,6 +60,10 @@ export const MainListInfoForm = (
 
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
+  const filterEntityTypes = useCallback((args: string, options: EntityTypeSelectOption[]) => {
+    return options.filter(option => option.label.includes(args) || '')
+  }, [])
+
   const renderRecordType = () => {
     if(recordTypeLabel) {
       return (
@@ -91,6 +95,7 @@ export const MainListInfoForm = (
           <Selection
             required
             value={value}
+            onFilter={filterEntityTypes}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
             placeholder={tString(intl, 'create-list.choose-record-type')}

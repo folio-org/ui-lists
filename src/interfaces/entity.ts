@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export interface Value {
     label: string;
     name: string;
@@ -11,7 +9,7 @@ export type EntityTypeOption = {
 };
 
 export type EntityTypeSelectOption = {
-    label: string | ReactNode,
+    label: string,
     value: string,
     selected: boolean,
     disabled?: boolean
