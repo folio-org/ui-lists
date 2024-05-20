@@ -4,7 +4,7 @@ import { Accordion, AccordionSet, Layout, Loading } from '@folio/stripes/compone
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
-import { useCreateList, useInitRefresh, useListDetails, useMessages } from '../../hooks';
+import {useCreateList, useInitRefresh, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import { EditListLayout, EditListResultViewer, ErrorComponent, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
@@ -16,6 +16,7 @@ export const CopyListPage:FC = () => {
   const intl = useIntl();
   const { id }: {id: string} = useParams();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
+  const recordTypeLabel = useRecordTypeLabel(listDetails?.entityTypeId);
 
   const listName = listDetails?.name ?? '';
   const fqlQuery = listDetails?.fqlQuery ?? '';
@@ -104,6 +105,7 @@ export const CopyListPage:FC = () => {
                 listName={state[FIELD_NAMES.LIST_NAME]}
                 visibility={state[FIELD_NAMES.VISIBILITY]}
                 description={state[FIELD_NAMES.DESCRIPTION]}
+                recordTypeLabel={recordTypeLabel}
                 isLoading={loadingListDetails}
               />
             </Layout>
