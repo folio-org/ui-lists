@@ -4,7 +4,13 @@ import { Accordion, AccordionSet, Layout, Loading } from '@folio/stripes/compone
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
-import {useCreateList, useInitRefresh, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
+import {
+  useCreateList,
+  useInitRefresh,
+  useListDetails,
+  useMessages,
+  useRecordTypeLabel
+} from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import { EditListLayout, EditListResultViewer, ErrorComponent, MainListInfoForm } from '../../components';
 import { useCopyListFormState } from './hooks';
