@@ -61,7 +61,7 @@ export const MainListInfoForm = (
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
   const filterEntityTypes = useCallback((args: string, options: EntityTypeSelectOption[]) => {
-    return options.filter(option => option.label.includes(args) || '')
+    return options.filter(option => option.label.toLowerCase().includes(args.toLowerCase()) || '')
   }, [])
 
   const renderRecordType = () => {
