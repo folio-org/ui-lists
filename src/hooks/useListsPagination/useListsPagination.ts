@@ -15,7 +15,7 @@ export const useListsPagination = ({limit = PAGINATION_AMOUNT}: {limit?: number}
 
   const hasPreviousPage = pagination.offset  > 1;
   const checkHasNextPage = (totalRecords: number) => {
-    return pagination.offset <= totalRecords - PAGINATION_AMOUNT;
+    return pagination.offset < totalRecords - PAGINATION_AMOUNT;
   }
 
   const changePage = ({offset}: {offset: number}) => {
