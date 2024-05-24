@@ -94,6 +94,7 @@ export const ListsTable: FC<ListsTableProps> = ({
         formatter={listTableResultFormatter}
         pageAmount={totalPages}
         totalCount={totalRecords}
+        // @ts-ignore:next-line
         pagingOffset={pagination.offset}
         pagingCanGoPrevious={hasPreviousPage && !isLoading}
         pagingCanGoNext={checkHasNextPage(totalRecords) && !isLoading}
