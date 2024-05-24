@@ -15,7 +15,6 @@ import {
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';
-
 import { ListsTable, ListAppIcon } from '../../components';
 import { useListsFetchedSinceTimestamp, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
