@@ -13,7 +13,8 @@ export const useRecordsLimit = () => {
     queryFn: () => ky.get('lists/configuration').json(),
     retry: false,
     refetchInterval: false,
-    select: ({ maxListSize }: RecordsLimit) => maxListSize
+    select: ({ maxListSize }: RecordsLimit) => maxListSize,
+    refetchOnWindowFocus: false
   });
 
   return data;
