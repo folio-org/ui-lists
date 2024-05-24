@@ -1,15 +1,18 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { ListsRequest, ListsResponse, ListsRecord } from '../interfaces';
+import { ListsResponse, ListsRecord } from '../interfaces';
 import { buildListsUrl } from '../utils';
 import { PULLING_STATUS_DELAY } from './useRefresh/constants';
 
-export const useListsIdsToTrack = (request: ListsRequest) => {
+export const useListsIdsToTrack = () => {
+  const [recordIds, setRecordIds] = useState<string[]>([]);
+
   const ky = useOkapiKy();
 
-  const hasIdsToTrack = Boolean(request.idsToTrack?.length);
-  const url = buildListsUrl('lists', request);
+  const hasIdsToTrack = Boolean(recordIds?.length);
+  const url = buildListsUrl('lists', {idsToTrack: recordIds});
 
   const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>(
     {
@@ -26,6 +29,7 @@ export const useListsIdsToTrack = (request: ListsRequest) => {
   );
 
   return ({
+    setRecordIds,
     updatedListsData: data,
     isLoading,
     error

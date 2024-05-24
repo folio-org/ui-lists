@@ -1,15 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { isEqual, noop } from 'lodash';
-import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
-import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
-// @ts-ignore:next-line
-import { PrevNextPagination, usePagination } from '@folio/stripes-acq-components';
+import { Loading, MultiColumnList, Row, } from '@folio/stripes/components';
 
 import { listTableMapping } from './helpers/mappers';
 import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
-import { useLists, useListsIdsToTrack, usePrevious } from '../../hooks';
-import { CURRENT_PAGE_OFFSET_KEY, PAGINATION_AMOUNT } from '../../utils/constants';
+import { useLists, useListsIdsToTrack, usePrevious, useListsPagination } from '../../hooks';
 import { columnWidthsConfig } from './configs';
 
 import css from './ListsTable.module.css';
@@ -23,45 +19,31 @@ export const ListsTable: FC<ListsTableProps> = ({
   activeFilters,
   setTotalRecords = noop
 }) => {
-  const [storedCurrentPageOffset] = useLocalStorage<number>(CURRENT_PAGE_OFFSET_KEY, 0);
-  const [recordIds, setRecordIds] = useState<string[]>([]);
-
-  const { changePage, pagination } = usePagination({
-    limit: PAGINATION_AMOUNT,
-    offset: storedCurrentPageOffset,
-  });
-
-  const goToLastPage = (totalPages: number = 0) => {
-    const lastPageOffset = totalPages > 1
-      ? PAGINATION_AMOUNT * (totalPages - 1)
-      : 0;
-
-    onNeedMoreData({
-      offset: lastPageOffset
-    });
-  };
-
-  const onNeedMoreData = (thePagination: any) => {
-    console.log(thePagination);
-    writeStorage(CURRENT_PAGE_OFFSET_KEY, thePagination.offset);
-    // @ts-ignore:next-line
-    changePage(thePagination);
-    setRecordIds([]);
-  };
+  const {
+    gotToFirstPage,
+    goToLastPage,
+    pagination,
+    checkHasNextPage,
+    hasPreviousPage,
+    onNeedMoreData
+  } = useListsPagination({});
+  const { updatedListsData, setRecordIds } = useListsIdsToTrack();
 
   const prevActiveFilters = usePrevious(activeFilters);
 
   useEffect(() => {
     if (prevActiveFilters && !isEqual(prevActiveFilters, activeFilters)) {
-      writeStorage(CURRENT_PAGE_OFFSET_KEY, 0);
-      // @ts-ignore:next-line
-      changePage({ offset: 0, limit: PAGINATION_AMOUNT });
+      gotToFirstPage();
       setRecordIds([]);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  const { listsData, isLoading } = useLists({ filters: activeFilters, size: pagination?.limit, offset: pagination?.offset });
+  const { listsData, isLoading } = useLists({
+    filters: activeFilters,
+    size: pagination?.limit,
+    offset: pagination?.offset
+  });
 
   useEffect(() => {
     if (isLoading) {
@@ -76,7 +58,11 @@ export const ListsTable: FC<ListsTableProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
 
-  const { updatedListsData } = useListsIdsToTrack({ idsToTrack: recordIds });
+  const onNeedMoreDataHandler = (askAmount: number, limit: number, index?: number, direction: string = '') => {
+    onNeedMoreData(direction)
+
+    setRecordIds([]);
+  }
 
   if (isLoading) {
     return (
@@ -96,7 +82,6 @@ export const ListsTable: FC<ListsTableProps> = ({
   setTotalRecords(totalRecords);
 
   return (
-    <div className={css.tableWrap}>
       <MultiColumnList
         autosize
         interactive
@@ -104,19 +89,16 @@ export const ListsTable: FC<ListsTableProps> = ({
         contentData={content ?? []}
         headerRowClass={css.listTableHeaderSticky}
         columnWidths={columnWidthsConfig}
+        pagingType='prev-next'
         visibleColumns={LISTS_VISIBLE_COLUMNS}
         formatter={listTableResultFormatter}
         pageAmount={totalPages}
         totalCount={totalRecords}
+        pagingOffset={pagination.offset}
+        pagingCanGoPrevious={hasPreviousPage && !isLoading}
+        pagingCanGoNext={checkHasNextPage(totalRecords) && !isLoading}
         columnMapping={listTableMapping}
+        onNeedMoreData={onNeedMoreDataHandler}
       />
-      <div className={css.pagingWrap}>
-        <PrevNextPagination
-          {...pagination}
-          totalCount={totalRecords}
-          onChange={onNeedMoreData}
-        />
-      </div>
-    </div>
   );
 };
