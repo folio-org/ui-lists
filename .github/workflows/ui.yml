@@ -6,7 +6,7 @@ on:
 
 jobs:
   ui:
-    uses: folio-org/.github/.github/workflows/ui.yml@271a3c13366d7e8e8ac26fa3ba3b44516c813ad8
+    uses: folio-org/.github/.github/workflows/ui.yml@v1.1.0
     if: github.ref_name == github.event.repository.default_branch || github.event_name != 'push'
     secrets: inherit
     with:
