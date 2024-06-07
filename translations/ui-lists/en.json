@@ -164,5 +164,7 @@
   "error-component.read-list.not.found": "List not found",
   "error-component.read-list.is.private": "You don't have permission to view this list",
   "error-component.invalid.request": "List not found",
-  "error-component.unknown": "An unknown error ocurred"
+  "error-component.unknown": "An unknown error ocurred",
+
+  "app-menu.keyboard-shortcuts": "Keyboard shortcuts"
 }
