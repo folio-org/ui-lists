@@ -30,7 +30,7 @@ const useURLFilters = () => {
         return item !== filterValue
       })
 
-      setValues([...newFilters])
+      setValues(newFilters)
     },
     resetFilters: () => {
       setValues(DEFAULT_FILTERS)
@@ -59,7 +59,7 @@ export function useFilters() {
   };
 
   const onClearGroup = (groupName: string) => {
-    const filters = [ ...filterParams ].filter((filterName) => {
+    const filters = filterParams.filter((filterName) => {
       return !filterName.startsWith(groupName)
     })
 
