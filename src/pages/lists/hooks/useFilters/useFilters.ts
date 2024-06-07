@@ -10,7 +10,9 @@ const useURLFilters = () => {
   const history = useHistory();
   const { location } = history;
   const searchParams = new URLSearchParams(location.search)
-  const filters = searchParams.get(FILTERS_URL_KEY)?.split(',') || [];
+  const filters = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
+    return !!filter
+  });
 
   const setValues = (filters: string[]) => {
     searchParams.set(FILTERS_URL_KEY, filters.join(','))
