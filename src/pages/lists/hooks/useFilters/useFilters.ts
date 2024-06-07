@@ -1,63 +1,78 @@
-import { ChangeEvent, useState } from 'react';
-import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
+import { ChangeEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import { isEqual } from 'lodash';
-import { APPLIED_FILTERS_KEY } from '../../../../utils/constants';
-import { getFilters } from './helpers';
+import { buildFiltersObject } from './helpers';
 import { DEFAULT_FILTERS } from './configurations';
-import { FilterGroupsConfig, FilterGroupsState } from '@folio/stripes/components';
 
-export function useFilters(filterConfig: FilterGroupsConfig) {
-  const defaultFilterConfig = DEFAULT_FILTERS;
-  const [storedAppliedFilters] = useLocalStorage<FilterGroupsState>(APPLIED_FILTERS_KEY, defaultFilterConfig);
-  const [appliedFilters, setAppliedFilters] = useState<FilterGroupsState>(storedAppliedFilters);
-  const activeFilters = getFilters(appliedFilters);
+const FILTERS_URL_KEY = 'filters';
 
-  const filterCount = activeFilters?.length;
+const useURLFilters = () => {
+  const history = useHistory();
+  const { location } = history;
+  const searchParams = new URLSearchParams(location.search)
+  const filters = searchParams.get(FILTERS_URL_KEY)?.split(',') || [];
 
-  const saveFilters = (filters: FilterGroupsState) => {
-    setAppliedFilters(filters);
-    writeStorage(APPLIED_FILTERS_KEY, filters);
+  const setValues = (filters: string[]) => {
+    searchParams.set(FILTERS_URL_KEY, filters.join(','))
+
+    history.push(`${history.location.pathname}?${searchParams.toString()}`)
   };
+
+  return {
+    filterParams: filters,
+    addValue: (filterValue: string) => {
+      setValues([...filters, filterValue])
+    },
+    removeValue: (filterValue: string) => {
+      const newFilters = filters.filter((item: string) => {
+        return item !== filterValue
+      })
+
+      setValues([...newFilters])
+    },
+    resetFilters: () => {
+      setValues(DEFAULT_FILTERS)
+    },
+    setValues
+  }
+}
+
+export function useFilters() {
+  const {filterParams, addValue, removeValue, resetFilters, setValues} = useURLFilters()
+
+  const filterCount = filterParams?.length;
 
   const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked, name } = e.target;
 
-    const filters = { ...appliedFilters };
-
     if (checked) {
-      filters[name] = true;
+      addValue(name)
     } else {
-      delete filters[name];
+      removeValue(name)
     }
-
-    saveFilters(filters);
   };
 
   const onResetAll = () => {
-    saveFilters(defaultFilterConfig);
+    resetFilters()
   };
 
   const onClearGroup = (groupName: string) => {
-    const filters = { ...appliedFilters };
+    const filters = [ ...filterParams ].filter((filterName) => {
+      return !filterName.startsWith(groupName)
+    })
 
-    for (const name in filters) {
-      if (name.startsWith(groupName)) {
-        delete filters[name];
-      }
-    }
-
-    saveFilters(filters);
+    setValues(filters);
   };
 
-  const isDefaultState = isEqual(defaultFilterConfig, appliedFilters);
+  const isDefaultState = isEqual(DEFAULT_FILTERS, filterParams);
 
   return {
     onChangeFilter,
     onClearGroup,
     onResetAll,
     filterCount,
-    activeFilters,
-    appliedFilters,
+    activeFilters: filterParams,
+    filtersObject: buildFiltersObject(filterParams),
     isDefaultState
   };
 }
