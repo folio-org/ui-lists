@@ -12,6 +12,16 @@ import { startMirage } from '../../../test/mirage';
 import { HOME_PAGE_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory:  jest.fn().mockReturnValue({
+  push: jest.fn(),
+  location: {
+    search: ''
+  }
+})
+}));
+
 jest.mock('../../components/ListsTable', () => ({
   ListsTable: jest.fn(() => (
     <div data-testid="ListTable" />

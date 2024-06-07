@@ -33,10 +33,10 @@ export const ListPage: React.FC = () => {
     onResetAll,
     onClearGroup,
     filterCount,
+    filtersObject,
     activeFilters,
-    appliedFilters,
     isDefaultState
-  } = useFilters(filterConfig);
+  } = useFilters();
 
   useListsFetchedSinceTimestamp();
 
@@ -69,7 +69,7 @@ export const ListPage: React.FC = () => {
           </div>
           <FilterGroups
             config={filterConfig}
-            filters={appliedFilters}
+            filters={filtersObject}
             onChangeFilter={onChangeFilter}
             onClearFilter={onClearGroup}
           />

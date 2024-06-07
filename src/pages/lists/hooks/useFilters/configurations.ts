@@ -1,3 +1,1 @@
-export const DEFAULT_FILTERS = {
-  'status.Active': true
-};
+export const DEFAULT_FILTERS = ['status.Active']
