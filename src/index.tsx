@@ -24,7 +24,6 @@ interface IListsApp {
 
 export const queryClient = new QueryClient();
 
-console.log(defaultKeyboardShortcuts);
 export const ListsApp: FC<IListsApp> = (props) => {
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 

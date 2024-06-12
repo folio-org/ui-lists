@@ -14,6 +14,7 @@ jest.mock('@folio/stripes/core', () => {
     }),
     Pluggable: jest.fn(({ children }) => [children]),
     TitleManager: jest.fn(({ children }) => <>{children}</>),
+    AppContextMenu: jest.fn(({ children }) => (typeof children === 'function' ? children(jest.fn()) : children)),
     AppIcon: jest.fn((props) => (
       <span data-testid="app-icon">
         {JSON.stringify(props)}
