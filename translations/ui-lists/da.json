@@ -130,5 +130,7 @@
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Lists - {listName}",
     "title.editList": "Edit {listName}",
-    "error-component.unknown": "An unknown error ocurred"
+    "error-component.unknown": "An unknown error ocurred",
+    "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
+    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help"
 }
