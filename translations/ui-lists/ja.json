@@ -130,5 +130,7 @@
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Lists - {listName}",
     "title.editList": "編集{listName}",
-    "error-component.unknown": "不明なエラーが発生しました"
+    "error-component.unknown": "不明なエラーが発生しました",
+    "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
+    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help"
 }

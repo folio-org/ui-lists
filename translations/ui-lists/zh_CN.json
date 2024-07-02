@@ -130,5 +130,7 @@
     "title.duplicateList": "重复列表{listName}",
     "title.infoList": "列表 - {listName}",
     "title.editList": "编辑{listName}",
-    "error-component.unknown": "发生未知错误"
+    "error-component.unknown": "发生未知错误",
+    "missing-all-entity-type-permissions.heading": "您没有使用 Lists 应用所需的权限",
+    "missing-all-entity-type-permissions.message": "请联系系统管理员寻求帮助"
 }

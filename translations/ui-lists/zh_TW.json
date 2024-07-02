@@ -130,5 +130,7 @@
     "title.duplicateList": "重複列表 {listName}",
     "title.infoList": "列表 - {listName}",
     "title.editList": "編輯{listName}",
-    "error-component.unknown": "發生未知錯誤"
+    "error-component.unknown": "發生未知錯誤",
+    "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
+    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help"
 }

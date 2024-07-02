@@ -130,5 +130,7 @@
     "title.duplicateList": "Listas – Lista duplicada {listName}",
     "title.infoList": "Listas – {listName}",
     "title.editList": "Listas – Editar {listName}",
-    "error-component.unknown": "Ocorreu um erro desconhecido"
+    "error-component.unknown": "Ocorreu um erro desconhecido",
+    "missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
+    "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda"
 }
