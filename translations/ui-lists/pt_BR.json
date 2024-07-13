@@ -10,7 +10,7 @@
     "lists.columns.list-name": "Nome da lista",
     "lists.columns.record-type": "Tipo de registro",
     "lists.columns.records": "Registros",
-    "lists.columns.status": "Estado",
+    "lists.columns.status": "Status",
     "lists.columns.source": "Fonte",
     "lists.columns.last-updated": "Ultima atualização",
     "lists.columns.visibility": "Visibilidade",
@@ -27,7 +27,7 @@
     "list.info.list-name": "Nome da lista",
     "list.info.description": "Descrição",
     "list.info.visibility": "Visibilidade",
-    "list.info.status": "Estado",
+    "list.info.status": "Status",
     "list.info.source": "Fonte",
     "list.info.source.system": "Sistema",
     "accordion.title.list-information": "Informações da lista",
@@ -56,7 +56,7 @@
     "create-list.main.list-description": "Descrição",
     "create-list.main.list-visibility": "Visibilidade",
     "create-list.main.list-shared": "Compartilhado",
-    "create-list.main.list-status": "Estado",
+    "create-list.main.list-status": "Status",
     "create-list.main.list-private": "Privada",
     "create-list.main.list-active": "Ativo",
     "create-list.main.list-inactive": "Inativo",
@@ -132,5 +132,6 @@
     "title.editList": "Listas – Editar {listName}",
     "error-component.unknown": "Ocorreu um erro desconhecido",
     "missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
-    "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda"
+    "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda",
+    "error-component.read-entity.type.restricted": "Você não tem permissão para visualizar esta lista"
 }
