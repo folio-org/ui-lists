@@ -132,5 +132,6 @@
     "title.editList": "编辑{listName}",
     "error-component.unknown": "发生未知错误",
     "missing-all-entity-type-permissions.heading": "您没有使用 Lists 应用所需的权限",
-    "missing-all-entity-type-permissions.message": "请联系系统管理员寻求帮助"
+    "missing-all-entity-type-permissions.message": "请联系系统管理员寻求帮助",
+    "error-component.read-entity.type.restricted": "You do not have permission to view this list"
 }

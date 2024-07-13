@@ -117,7 +117,7 @@
     "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it",
     "error-component.read-list.not.found": "List not found",
     "error-component.read-list.is.private": "You don't have permission to view this list",
-    "error-component.invalid.request": "List not found",
+    "error-component.invalid.request": "Liste introuvable",
     "callout.list.created": "List <strong>{listName}</strong> was created. Reload to see changes. Note: the list may not appear based on filters.",
     "callout.list.multiple-created": "New lists were created. Reload to see changes. Note: new lists may not appear based on filters.",
     "create-list.main.list-visibility.tooltip": "<strong>Shared</strong> lists can be accessed by all users with permissions to the Lists app in this organization. <strong>Private</strong> lists can only be accessed by the user logged in.",
@@ -132,5 +132,6 @@
     "title.editList": "Edit {listName}",
     "error-component.unknown": "An unknown error ocurred",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
-    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help"
+    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
+    "error-component.read-entity.type.restricted": "Vous n'êtes pas autorisé à accéder à cette liste"
 }
