@@ -35,6 +35,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
     >
       <DropdownMenu
         aria-label="available permissions"
+        open={open}
         onToggle={handleToggle}
       >
         <div className={children ? css.actionMenuGroup : ''}>
