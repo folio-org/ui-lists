@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { isEqual, noop } from 'lodash';
-import { Loading, MultiColumnList, Row, } from '@folio/stripes/components';
+import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
 
 import { listTableMapping } from './helpers/mappers';
 import { listTableResultFormatter } from './helpers/formatters';

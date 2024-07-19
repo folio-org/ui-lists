@@ -1,6 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { IfPermission, AppContextMenu } from '@folio/stripes/core';
+import {
+  IfPermission,
+  coreEvents,
+  AppContextMenu
+} from '@folio/stripes/core';
 import {
   CommandList,
   HasCommand,
@@ -23,13 +27,17 @@ import { useRecordTypes } from './hooks';
 import { t } from "./services";
 import { USER_PERMS } from './utils/constants';
 
-interface IListsApp {
+interface ListsAppProps {
   match: {
     path: string
   };
 }
 
-export const ListsApp: FC<IListsApp> = (props) => {
+type IListsApp = React.FunctionComponent<ListsAppProps> & {
+  eventHandler: (event: string) => void
+}
+
+export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
@@ -129,6 +137,12 @@ export const ListsApp: FC<IListsApp> = (props) => {
     </HasCommand>
 </CommandList>
   );
+};
+
+ListsApp.eventHandler = (event: any) => {
+  if (event === coreEvents.LOGIN) {
+    sessionStorage.clear()
+  }
 };
 
 export default ListsApp;
