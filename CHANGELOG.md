@@ -1,6 +1,6 @@
 # Change history for ui-lists
 
-## [4.0.0](https://github.com/folio-org/ui-lists/tree/v4.0.0) 
+## In progress
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
 
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
