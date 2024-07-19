@@ -8,6 +8,8 @@ import { ListsApp } from '.';
 import { queryClient } from '../test/utils';
 import { HOME_PAGE_URL } from './constants';
 
+import {expect} from "@jest/globals";
+
 const useRecordTypesMock = jest.fn();
 
 jest.mock('./hooks', () => ({
@@ -25,17 +27,20 @@ const renderApp = () => {
 };
 
 describe('Lists app entry point', () => {
-  it('is expected to render shortcuts modal', async () => {
+  it('is expected to close shortcuts modal', async () => {
+    useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
+
     renderApp()
 
     const shortcutsButton = screen.getByTestId('shortcuts')
 
     await user.click(shortcutsButton)
 
+    const closeButton = screen.getByRole('button', { name: /close/i })
 
-    const modal = screen.getByText('KeyboardShortcutsModal')
+    await user.click(closeButton)
 
-    expect(modal).toBeTruthy();
+    expect(closeButton).not.toBeInTheDocument()
   })
 
   it('should render no entity type permissions message if no entity types are available', async () => {
