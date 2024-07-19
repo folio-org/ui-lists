@@ -60,7 +60,7 @@ export const ListsApp: FC<IListsApp> = (props) => {
               <NavList>
                 <NavListSection>
                   <NavListItem
-                    id="shortcuts"
+                    data-testid="shortcuts"
                     onClick={() => { shortcutModalToggle(handleToggle); }}
                   >
                     {t('app-menu.keyboard-shortcuts')}

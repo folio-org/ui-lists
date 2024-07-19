@@ -39,9 +39,9 @@ describe('ListApp component', () => {
     it('is expected to render list app', () => {
       renderLists()
 
-      const modalMenu = screen.getByText('ui-lists.app-menu.keyboard-shortcuts');
+      const shortcuts = screen.getByTestId('shortcuts')
 
-      expect(modalMenu).toBeInTheDocument();
+      expect(shortcuts).toBeTruthy();
     })
   })
 
