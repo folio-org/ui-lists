@@ -88,6 +88,7 @@ export const ListsTable: FC<ListsTableProps> = ({
         data-testid="ItemsList"
         contentData={content ?? []}
         headerRowClass={css.listTableHeaderSticky}
+        // @ts-ignore:next-line
         columnWidths={columnWidthsConfig}
         pagingType='prev-next'
         visibleColumns={LISTS_VISIBLE_COLUMNS}

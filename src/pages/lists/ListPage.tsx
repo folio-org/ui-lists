@@ -12,6 +12,7 @@ import {
   FilterGroups,
   LoadingPane
 } from '@folio/stripes/components';
+
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';

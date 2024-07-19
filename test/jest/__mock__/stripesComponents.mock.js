@@ -125,6 +125,15 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>
   )),
+  HasCommand: jest.fn((props) => {
+    const { commands, children } = props;
+    return <>
+      {commands.map((shortcut, index) => (
+          <button key={index} type="button" onClick={() => shortcut.handler()}>{shortcut.name}</button>
+      ))}{children};
+    </>;
+  }),
+  KeyboardShortcutsModal: jest.fn(({onClose}) => <div><button onClick={onClose}>Close</button>  KeyboardShortcutsModal</div>),
   NavList: jest.fn(({ children, className, ...rest }) => (
     <div className={className} {...rest}>{children}</div>
   )),
@@ -134,6 +143,9 @@ jest.mock('@folio/stripes/components', () => ({
   NavListSection: jest.fn(({ children, className, ...rest }) => (
     <div className={className} {...rest}>{children}</div>
   )),
+  checkScope: jest.fn(),
+  defaultKeyboardShortcuts: {},
+  CommandList: jest.fn(({ children }) => <>{children}</>),
   Pane: jest.fn(({
     children,
     className,

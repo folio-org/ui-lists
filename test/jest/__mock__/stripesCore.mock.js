@@ -12,6 +12,7 @@ jest.mock('@folio/stripes/core', () => {
     IfPermission: jest.fn(({ perm, children }) => {
       return perm === 'permission' ? children : null;
     }),
+    AppContextMenu: jest.fn(({ children }) => (typeof children === 'function' ? children(jest.fn()) : children)),
     coreEvents: {
       LOGIN: 'LOGIN',
       LOGOUT: 'LOGOUT',
