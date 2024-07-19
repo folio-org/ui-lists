@@ -54,4 +54,14 @@ describe('Lists app entry point', () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  it('is expected to clean storage on LOGIN', () => {
+    sessionStorage.setItem('test', '123');
+
+    expect(sessionStorage.getItem('test')).toEqual('123')
+
+    ListsApp.eventHandler('LOGIN')
+
+    expect(sessionStorage.getItem('test')).toBeFalsy();
+  })
 });

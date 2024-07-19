@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { IfPermission } from '@folio/stripes/core';
+import { IfPermission, coreEvents } from '@folio/stripes/core';
 
 import {
   CopyListPage,
@@ -13,13 +13,17 @@ import {
 import { useRecordTypes } from './hooks';
 import { USER_PERMS } from './utils/constants';
 
-interface IListsApp {
+interface ListsAppProps {
   match: {
     path: string
   };
 }
 
-export const ListsApp: FC<IListsApp> = (props) => {
+type IListsApp = React.FunctionComponent<ListsAppProps> & {
+  eventHandler: (event: string) => void
+}
+
+export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
 
   const { recordTypes, isLoading } = useRecordTypes();
@@ -77,6 +81,12 @@ export const ListsApp: FC<IListsApp> = (props) => {
       />
     </Switch>
   );
+};
+
+ListsApp.eventHandler = (event: any) => {
+  if (event === coreEvents.LOGIN) {
+    sessionStorage.clear()
+  }
 };
 
 export default ListsApp;
