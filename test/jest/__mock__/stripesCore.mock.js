@@ -28,6 +28,7 @@ jest.mock('@folio/stripes/core', () => {
     useOkapiKy: () => kyMock,
     useStripes: () => ({
       hasPerm: jest.fn().mockReturnValue(true)
-    })
+    }),
+    useNamespace: (string) => `${string}-test-space`,
   };
 });

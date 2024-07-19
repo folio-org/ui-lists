@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { isEqual, noop } from 'lodash';
-import { Loading, MultiColumnList, Row, } from '@folio/stripes/components';
+import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
 
 import { listTableMapping } from './helpers/mappers';
 import { listTableResultFormatter } from './helpers/formatters';
@@ -88,7 +88,6 @@ export const ListsTable: FC<ListsTableProps> = ({
         data-testid="ItemsList"
         contentData={content ?? []}
         headerRowClass={css.listTableHeaderSticky}
-        // @ts-ignore:next-line
         columnWidths={columnWidthsConfig}
         pagingType='prev-next'
         visibleColumns={LISTS_VISIBLE_COLUMNS}

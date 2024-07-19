@@ -30,6 +30,7 @@ const useURLFilters = () => {
     if (!filtersURL && sessionFilters) {
       history.push(`${history.location.pathname}?${FILTERS_URL_KEY}=${sessionFilters}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const filters = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
