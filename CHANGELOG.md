@@ -2,7 +2,7 @@
 
 ## In progress
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
-
+* 
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
 
 ## [3.0.1](https://github.com/folio-org/ui-lists/tree/v3.0.1) (2024-04-16)
