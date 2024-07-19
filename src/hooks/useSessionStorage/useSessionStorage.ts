@@ -1,7 +1,7 @@
 export const useSessionStorage = <T>(key: string) => {
   const getItem = (): (T | null) => {
     try {
-      return JSON.parse(sessionStorage.getItem(key) || '');
+      return JSON.parse(sessionStorage.getItem(key) ?? '');
     } catch (e) {
       return null;
     }
