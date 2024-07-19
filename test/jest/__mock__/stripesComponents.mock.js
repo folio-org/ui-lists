@@ -133,7 +133,7 @@ jest.mock('@folio/stripes/components', () => ({
       ))}{children};
     </>;
   }),
-  KeyboardShortcutsModal: jest.fn((onClose) => <div><button onClick={onClose}>Close</button>  KeyboardShortcutsModal</div>),
+  KeyboardShortcutsModal: jest.fn(({onClose}) => <div><button onClick={onClose}>Close</button>  KeyboardShortcutsModal</div>),
   NavList: jest.fn(({ children, className, ...rest }) => (
     <div className={className} {...rest}>{children}</div>
   )),

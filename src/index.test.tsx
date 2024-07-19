@@ -8,8 +8,6 @@ import { ListsApp } from '.';
 import { queryClient } from '../test/utils';
 import { HOME_PAGE_URL } from './constants';
 
-import {expect} from "@jest/globals";
-
 const useRecordTypesMock = jest.fn();
 
 jest.mock('./hooks', () => ({
