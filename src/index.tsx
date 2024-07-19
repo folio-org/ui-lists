@@ -1,7 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { IfPermission } from '@folio/stripes/core';
-
+import { IfPermission, AppContextMenu } from '@folio/stripes/core';
+import {
+  CommandList,
+  HasCommand,
+  KeyboardShortcutsModal,
+  NavList,
+  NavListItem,
+  NavListSection,
+  checkScope,
+  defaultKeyboardShortcuts,
+} from '@folio/stripes/components';
 import {
   CopyListPage,
   CreateListPage,
@@ -11,6 +20,7 @@ import {
   MissingAllEntityTypePermissionsPage,
 } from './pages';
 import { useRecordTypes } from './hooks';
+import { t } from "./services";
 import { USER_PERMS } from './utils/constants';
 
 interface IListsApp {
@@ -21,6 +31,19 @@ interface IListsApp {
 
 export const ListsApp: FC<IListsApp> = (props) => {
   const { match: { path } } = props;
+  const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
+
+  const shortcutModalToggle = (handleToggle: () => {}) => {
+    handleToggle();
+    setShowKeyboardShortcutsModal(true);
+  };
+
+  const shortcuts = [
+    {
+      name: 'openShortcutModal',
+      handler: setShowKeyboardShortcutsModal
+    }
+  ];
 
   const { recordTypes, isLoading } = useRecordTypes();
 
@@ -29,6 +52,26 @@ export const ListsApp: FC<IListsApp> = (props) => {
   }
 
   return (
+    <CommandList commands={defaultKeyboardShortcuts}>
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <AppContextMenu>
+          {(handleToggle: () => {}) => (
+            <NavList>
+              <NavListSection>
+                <NavListItem
+                  data-testid="shortcuts"
+                  onClick={() => { shortcutModalToggle(handleToggle); }}
+                >
+                  {t('app-menu.keyboard-shortcuts')}
+                </NavListItem>
+              </NavListSection>
+            </NavList>
+          )}
+        </AppContextMenu>
     <Switch>
       <Route
         path={path}
@@ -76,6 +119,15 @@ export const ListsApp: FC<IListsApp> = (props) => {
         )}
       />
     </Switch>
+        {showKeyboardShortcutsModal && (
+          <KeyboardShortcutsModal
+            allCommands={defaultKeyboardShortcuts}
+            onClose={() => { setShowKeyboardShortcutsModal(false); }}
+            open
+          />
+        )}
+    </HasCommand>
+</CommandList>
   );
 };
 
