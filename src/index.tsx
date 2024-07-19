@@ -34,15 +34,9 @@ export const ListsApp: FC<IListsApp> = (props) => {
 
   const shortcuts = [
     {
-      name: 'search',
-      handler: () => {
-        alert('hi')
-      }
-    },
-    {
       name: 'openShortcutModal',
       handler: setShowKeyboardShortcutsModal
-    },
+    }
   ];
 
   const { match: { path } } = props;

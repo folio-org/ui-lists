@@ -141,7 +141,7 @@ jest.mock('@folio/stripes/components', () => ({
     <div className={className} {...rest}>{children}</div>
   )),
   NavListItem: jest.fn(({ children, className, ...rest }) => (
-    <div className={className} {...rest}>{children}</div>
+    <button className={className} {...rest}>{children}</button>
   )),
   NavListSection: jest.fn(({ children, className, ...rest }) => (
     <div className={className} {...rest}>{children}</div>

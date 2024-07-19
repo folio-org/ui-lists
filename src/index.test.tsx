@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
+import user from '@testing-library/user-event';
 
 import { MemoryRouter } from 'react-router';
 // @ts-ignore
-import {runAxeTest} from "@folio/stripes-testing";
+import { runAxeTest } from "@folio/stripes-testing";
 
 import { QueryClientProvider } from 'react-query';
 
@@ -36,12 +37,17 @@ const renderLists = () => {
 
 describe('ListApp component', () => {
   describe('Render ListApp', () => {
-    it('is expected to render list app', () => {
+    it('is expected to render list app', async () => {
       renderLists()
 
-      const shortcuts = screen.getByTestId('shortcuts')
+      const shortcutsButton = screen.getByTestId('shortcuts')
 
-      expect(shortcuts).toBeTruthy();
+      await user.click(shortcutsButton)
+
+
+      const modal = screen.getByText('KeyboardShortcutsModal')
+
+      expect(modal).toBeTruthy();
     })
   })
 
