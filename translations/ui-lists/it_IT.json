@@ -133,5 +133,6 @@
     "error-component.unknown": "An unknown error ocurred",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
-    "error-component.read-entity.type.restricted": "You do not have permission to view this list"
+    "error-component.read-entity.type.restricted": "You do not have permission to view this list",
+    "app-menu.keyboard-shortcuts": "Scorciatoie da tastiera"
 }

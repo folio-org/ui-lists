@@ -133,5 +133,6 @@
     "error-component.unknown": "不明なエラーが発生しました",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
-    "error-component.read-entity.type.restricted": "You do not have permission to view this list"
+    "error-component.read-entity.type.restricted": "このリストを表示する権限がありません",
+    "app-menu.keyboard-shortcuts": "キーボードショートカット"
 }
