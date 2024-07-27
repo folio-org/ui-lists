@@ -133,5 +133,6 @@
     "error-component.unknown": "Ocorreu um erro desconhecido",
     "missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
     "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda",
-    "error-component.read-entity.type.restricted": "Você não tem permissão para visualizar esta lista"
+    "error-component.read-entity.type.restricted": "Você não tem permissão para visualizar esta lista",
+    "app-menu.keyboard-shortcuts": "Atalhos do teclado"
 }

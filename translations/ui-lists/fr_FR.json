@@ -14,7 +14,7 @@
     "lists.columns.source": "Source",
     "lists.columns.last-updated": "Dernière mise à jour",
     "lists.columns.visibility": "Visibilité",
-    "lists.columns.first-name": "Prénom*",
+    "lists.columns.first-name": "Prénom",
     "lists.columns.last-name": "Nom",
     "lists.columns.barcode": "Code-barres",
     "lists.columns.patron-group": "Groupe de l'usager",
@@ -95,7 +95,7 @@
     "update-export.in.progress": "Error: changes to <strong>{listName}</strong> were not saved. Lists can't be updated while an export is in progress.",
     "update-list.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list was not found. Verify the list location and try again.",
     "update-optimistic.lock.exception": "Error: someone else modified <strong>{listName}</strong>. Reload the page to view the latest version of this list.",
-    "refresh-list.is.inactive": "Error: <strong>{listName}</strong> was not refreshed because it is inactive. Set the list status to active to refresh the list.",
+    "refresh-list.is.inactive": "Erreur : <strong>{listName}</strong> n'a pas été actualisé car elle est inactive. Changez le statut de la liste en actif pour actualiser la liste.",
     "refresh-list.refresh.in.progress": "Error: refresh for <strong>{listName}</strong> failed because a refresh for this list is already in progress.",
     "refresh-export.in.progress": "Error: <strong>{listName}</strong> was not refreshed. Lists can't be refreshed while an export is in progress.",
     "refresh-list.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list was not found. Verify the list location and try again.",
@@ -125,7 +125,7 @@
     "pane.dropdown.copy": "Duplicate list",
     "lists.copy.title": "Duplicate List: {listName}",
     "lists.copy.name-postfix": "copy",
-    "list.info.record-type": "Type d'enregistrement",
+    "list.info.record-type": "Type de notice",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Lists - {listName}",
@@ -133,5 +133,6 @@
     "error-component.unknown": "An unknown error ocurred",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
-    "error-component.read-entity.type.restricted": "Vous n'êtes pas autorisé à accéder à cette liste"
+    "error-component.read-entity.type.restricted": "Vous n'êtes pas autorisé à accéder à cette liste",
+    "app-menu.keyboard-shortcuts": "Raccourcis clavier"
 }
