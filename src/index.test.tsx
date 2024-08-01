@@ -33,7 +33,7 @@ describe('Lists app entry point', () => {
     const shortcutsButton = screen.getByTestId('shortcuts')
 
     await user.click(shortcutsButton)
-    screen.logTestingPlaygroundURL()
+
     const closeButton = screen.getByRole('button', { name: /close/i })
 
     await user.click(closeButton)
