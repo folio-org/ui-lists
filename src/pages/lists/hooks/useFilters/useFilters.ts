@@ -16,12 +16,29 @@ const useURLFilters = () => {
 
   const { getItem, setItem } = useSessionStorage(`${namespace}/filters`)
 
+  const sessionFilters = getItem() as string;
+
+  const setValues = (filters: string[]) => {
+    searchParams.set(FILTERS_URL_KEY, filters.join(','))
+
+    history.push(`${history.location.pathname}?${searchParams.toString()}`)
+
+    setItem(filters.join(','))
+  };
+
   useEffect(() => {
     const filtersURL = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
       return !!filter
     }).join(',');
 
-    const sessionFilters = getItem() as string;
+    if(sessionFilters === filtersURL) {
+      return
+    }
+
+    if(!sessionFilters && !filtersURL) {
+      setValues(DEFAULT_FILTERS)
+      return;
+    }
 
     if (filtersURL) {
       setItem(filtersURL)
@@ -31,20 +48,11 @@ const useURLFilters = () => {
       history.push(`${history.location.pathname}?${FILTERS_URL_KEY}=${sessionFilters}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [sessionFilters])
 
   const filters = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
     return !!filter
   });
-
-
-  const setValues = (filters: string[]) => {
-    searchParams.set(FILTERS_URL_KEY, filters.join(','))
-
-    history.push(`${history.location.pathname}?${searchParams.toString()}`)
-
-    setItem(filters.join(','))
-  };
 
   return {
     filterParams: filters,
