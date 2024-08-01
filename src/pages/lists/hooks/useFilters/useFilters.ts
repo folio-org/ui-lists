@@ -31,12 +31,13 @@ const useURLFilters = () => {
       return !!filter
     }).join(',');
 
-    if(sessionFilters === filtersURL) {
-      return
+    if (sessionFilters === filtersURL) {
+      return;
     }
 
-    if(!sessionFilters && !filtersURL) {
+    if (!sessionFilters && !filtersURL) {
       setValues(DEFAULT_FILTERS)
+
       return;
     }
 
