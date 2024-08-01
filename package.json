@@ -93,8 +93,10 @@
   },
   "stripes": {
     "actsAs": [
+      "handler",
       "app"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-lists.meta.title",
     "route": "/lists",
     "home": "/lists",
