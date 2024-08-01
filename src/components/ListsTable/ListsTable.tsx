@@ -45,6 +45,8 @@ export const ListsTable: FC<ListsTableProps> = ({
     offset: pagination?.offset
   });
 
+  const { totalRecords = 0, totalPages } = listsData ?? {};
+
   useEffect(() => {
     if (isLoading) {
       return;
@@ -55,6 +57,7 @@ export const ListsTable: FC<ListsTableProps> = ({
     } else if (listsData?.totalPages) {
       goToLastPage(listsData?.totalPages);
     }
+    setTotalRecords(totalRecords);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
 
@@ -72,14 +75,12 @@ export const ListsTable: FC<ListsTableProps> = ({
     );
   }
 
-  const { totalRecords = 0, totalPages } = listsData ?? {};
   let { content } = listsData ?? {};
 
   if (updatedListsData?.content) {
     content = updatedListsData.content;
   }
 
-  setTotalRecords(totalRecords);
 
   return (
       <MultiColumnList
