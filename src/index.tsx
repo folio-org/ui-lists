@@ -12,8 +12,7 @@ import {
   NavList,
   NavListItem,
   NavListSection,
-  checkScope,
-  defaultKeyboardShortcuts,
+  checkScope
 } from '@folio/stripes/components';
 import {
   CopyListPage,
@@ -26,6 +25,7 @@ import {
 import { useRecordTypes } from './hooks';
 import { t } from "./services";
 import { USER_PERMS } from './utils/constants';
+import {commandsGeneral} from "./keyboard-shortcuts";
 
 interface ListsAppProps {
   match: {
@@ -60,7 +60,7 @@ export const ListsApp:IListsApp = (props) => {
   }
 
   return (
-    <CommandList commands={defaultKeyboardShortcuts}>
+    <CommandList commands={commandsGeneral}>
       <HasCommand
         commands={shortcuts}
         isWithinScope={checkScope}
@@ -129,7 +129,7 @@ export const ListsApp:IListsApp = (props) => {
     </Switch>
         {showKeyboardShortcutsModal && (
           <KeyboardShortcutsModal
-            allCommands={defaultKeyboardShortcuts}
+            allCommands={commandsGeneral}
             onClose={() => { setShowKeyboardShortcutsModal(false); }}
             open
           />
