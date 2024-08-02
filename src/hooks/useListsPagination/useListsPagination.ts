@@ -34,7 +34,9 @@ export const useListsPagination = ({limit = PAGINATION_AMOUNT}: {limit?: number}
   };
 
   const gotToFirstPage = () => {
-    changePage({ offset: 0 });
+    if (pagination.offset !== 0) {
+      changePage({ offset: 0 });
+    }
   }
 
   const onNeedMoreData = (direction: string) => {

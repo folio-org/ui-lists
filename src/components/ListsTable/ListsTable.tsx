@@ -32,7 +32,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   const prevActiveFilters: string[] = usePrevious(activeFilters) || [];
 
   useEffect(() => {
-    if (!prevActiveFilters?.length && !activeFilters.length && !isEqual(prevActiveFilters, activeFilters)) {
+    if (prevActiveFilters && !isEqual(prevActiveFilters, activeFilters)) {
       gotToFirstPage();
       setRecordIds([]);
     }
