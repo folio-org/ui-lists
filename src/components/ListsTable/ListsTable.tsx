@@ -29,10 +29,10 @@ export const ListsTable: FC<ListsTableProps> = ({
   } = useListsPagination({});
   const { updatedListsData, setRecordIds } = useListsIdsToTrack();
 
-  const prevActiveFilters = usePrevious(activeFilters);
+  const prevActiveFilters: string[] = usePrevious(activeFilters) || [];
 
   useEffect(() => {
-    if (prevActiveFilters && !isEqual(prevActiveFilters, activeFilters)) {
+    if (!prevActiveFilters?.length && !activeFilters.length && !isEqual(prevActiveFilters, activeFilters)) {
       gotToFirstPage();
       setRecordIds([]);
     }
