@@ -181,6 +181,7 @@
   "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
   "commands-label.go-to-filter-pane": "Go to Lists Filter pane",
   "commands-label.close-modal-pop-up": "Close a modal or pop-up",
+  "commands-label.open-shortcuts-modal": "Open keyboard shortcuts modal",
   "commands-label.copy": "Copy",
   "commands-label.cut": "Cut",
   "commands-label.paste": "Paste",

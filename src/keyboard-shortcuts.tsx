@@ -18,4 +18,5 @@ export const commandsGeneral = [
   shortcutItem('commands-label.expand-list-detail-accordions', 'Mod + Alt + b'),
   shortcutItem('commands-label.collapse-list-detail-accordions', 'Mod + Alt + g'),
   shortcutItem('commands-label.go-to-filter-pane', 'Mod + Alt + h'),
+  shortcutItem('commands-label.open-shortcuts-modal', 'Mod + Alt + k'),
 ];
