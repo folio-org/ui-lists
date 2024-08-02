@@ -7,7 +7,6 @@ export const VISIBILITY_SHARED = 'visibility.Shared';
 export const PAGINATION_AMOUNT = 100;
 
 export const FILTER_PANE_VISIBILITY_KEY = '@folio/lists/listsFilterPaneVisibility';
-export const APPLIED_FILTERS_KEY = '@folio/lists/listsAppliedFilters';
 export const CURRENT_PAGE_OFFSET_KEY = '@folio/lists/currentPageOffset';
 
 export const enum USER_PERMS {
