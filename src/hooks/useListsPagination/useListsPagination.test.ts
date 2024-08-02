@@ -101,8 +101,11 @@ describe('useListsPagination', () => {
   });
 
   describe('goToFirstPage', () => {
-    it('it is expected to call changePage with offset 0', () => {
+    it('it is expected to call changePage with offset 0 if offset more then 0', () => {
       const { result } = renderHook(() => useListsPagination({}));
+      act(() => {
+        result.current.goToLastPage()
+      })
 
       act(() => {
         result.current.gotToFirstPage()
