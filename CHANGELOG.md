@@ -2,8 +2,13 @@
 
 ## In progress
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
-* 
+
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
+
+## [3.0.2](https://github.com/folio-org/ui-lists/tree/v3.0.2) (2024-08-07)
+* Fix type issue with `<DropdownMenu>` [UILISTS-168]
+
+[UILISTS-168]: https://folio-org.atlassian.net/browse/UILISTS-168
 
 ## [3.0.1](https://github.com/folio-org/ui-lists/tree/v3.0.1) (2024-04-16)
 * Duplicated lists have all columns selected [UILISTS-118]
