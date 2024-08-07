@@ -1,5 +1,10 @@
 # Change history for ui-lists
 
+## [3.0.2](https://github.com/folio-org/ui-lists/tree/v3.0.2) (2024-08-07)
+* Fix type issue with `<DropdownMenu>` [UILISTS-168]
+
+[UILISTS-168]: https://folio-org.atlassian.net/browse/UILISTS-168
+
 ## [3.0.1](https://github.com/folio-org/ui-lists/tree/v3.0.1) (2024-04-16)
 * Duplicated lists have all columns selected [UILISTS-118]
 * Change the app display name from Lists (beta) to Lists [UILISTS-125]
