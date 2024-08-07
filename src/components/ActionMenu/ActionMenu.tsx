@@ -30,12 +30,13 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
       data-testid="paneDropdownButton"
       label={t('paneHeader.button.actions')}
       buttonProps={{ buttonStyle: 'primary', bottomMargin0: true }}
-      open={open}
       onToggle={handleToggle}
+      open={open}
     >
       <DropdownMenu
         aria-label="available permissions"
         onToggle={handleToggle}
+        open={open}
       >
         <div className={children ? css.actionMenuGroup : ''}>
           <ActionButtonsList buttons={actionButtons} handleClick={handleClick} />
