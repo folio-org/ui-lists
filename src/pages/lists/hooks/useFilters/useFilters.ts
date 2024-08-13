@@ -84,8 +84,6 @@ export function useFilters() {
       return !item.startsWith('record_types')
     })
 
-    console.log('onChangRecordType =====>>>>', a);
-
     setValues([...fil, ...a])
   }
 
