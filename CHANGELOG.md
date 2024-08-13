@@ -2,8 +2,10 @@
 
 ## In progress
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
+* Results List: Update Record type filter display [UILISTS-145]
 
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
+[UILISTS-145] https://folio-org.atlassian.net/browse/UILISTS-145
 
 ## [3.0.2](https://github.com/folio-org/ui-lists/tree/v3.0.2) (2024-08-07)
 * Fix type issue with `<DropdownMenu>` [UILISTS-168]
