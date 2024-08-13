@@ -14,5 +14,6 @@ jest.mock('@folio/stripes/smart-components', () => ({
       ))}
     </div>
   )),
+  MultiSelectionFilter:  jest.fn(() => <div>MultiSelectionFilter</div>),
   CollapseFilterPaneButton: jest.fn(({ onClick }) => <div onClick={onClick} />)
 }));
