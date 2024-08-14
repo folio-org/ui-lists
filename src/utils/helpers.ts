@@ -66,7 +66,7 @@ export const checkIncludes = (target: string, string: string) => {
   return string.includes(target)
 };
 
-export const filterByIncludes = (term: string = '', options: {label: string, value: string}[]) => {
+export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
   return options.filter( option => {
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
