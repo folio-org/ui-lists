@@ -5,7 +5,7 @@ import {
 } from '@folio/stripes/components';
 import { MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { RECORD_TYPES_FILTER_KEY } from '../constants';
-import { filterByIncludes } from '../../../utils';
+import { filterEntityTypes } from './helpers';
 
 type RecordTypesFilterProps = {
   selectedRecordTypes: string[],
@@ -40,7 +40,7 @@ export const RecordTypesFilter: FC<RecordTypesFilterProps> = ({
     >
       <MultiSelectionFilter
         // @ts-ignore
-        filter={filterByIncludes}
+        filter={filterEntityTypes}
         name={RECORD_TYPES_FILTER_KEY}
         dataOptions={recordTypeConfig.values}
         onChange={({values}) => {
