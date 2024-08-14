@@ -1,5 +1,6 @@
-import { buildListsUrl } from './helpers';
+import { buildListsUrl, filterByIncludes } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
+import {expect} from "@jest/globals";
 
 const baseUrl = 'http://www.test.com';
 
@@ -73,4 +74,22 @@ describe('Helpers', () => {
       });
     });
   });
+
+  describe('filterByCinludes', () => {
+    it('is expected to filter items', () => {
+      const items = [{
+        label: 'Loans',
+        value: '1233131'
+      },
+      {
+        label: 'Users',
+        value: '123s1233131'
+      }];
+
+      expect(filterByIncludes('ers', items)).toEqual([{
+        label: 'Users',
+        value: '123s1233131'
+      }])
+    })
+  })
 });

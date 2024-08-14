@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, FocusEvent, useCallback } from 'react';
+import React, { ChangeEvent, useState, FocusEvent } from 'react';
 import { useIntl } from 'react-intl';
 import {
   Layout,
@@ -20,6 +20,7 @@ import {
 import { t, tString } from '../../services';
 
 import css from './MainListInfoForm.module.css';
+import {filterByIncludes} from "../../utils";
 
 type MainListInfoFormProps = {
     onValueChange?: (field: {[key: string]: string}) => void;
@@ -60,9 +61,6 @@ export const MainListInfoForm = (
 
   const showInactiveRadioWarning = showInactiveWarning && isStatusChanged && status === STATUS_VALUES.INACTIVE;
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
-  const filterEntityTypes = useCallback((args: string, options: EntityTypeSelectOption[]) => {
-    return options.filter(option => option.label.toLowerCase().includes(args.toLowerCase()) || '')
-  }, [])
 
   const renderRecordType = () => {
     if(recordTypeLabel) {
@@ -95,7 +93,7 @@ export const MainListInfoForm = (
           <Selection
             required
             value={value}
-            onFilter={filterEntityTypes}
+            onFilter={filterByIncludes}
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
             placeholder={tString(intl, 'create-list.choose-record-type')}
