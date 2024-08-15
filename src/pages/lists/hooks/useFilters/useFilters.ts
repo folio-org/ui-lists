@@ -79,6 +79,14 @@ export function useFilters() {
 
   const filterCount = filterParams?.length;
 
+  const onChangRecordType = (...a: any) => {
+    const fil = filterParams.filter((item: string) => {
+      return !item.startsWith('record_types')
+    })
+
+    setValues([...fil, ...a])
+  }
+
   const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked, name } = e.target;
 
@@ -101,14 +109,20 @@ export function useFilters() {
     setValues(filters);
   };
 
+  const selectedRecordTypes = filterParams.filter(value => {
+    return value.startsWith('record_types')
+  })
+
   const isDefaultState = isEqual(DEFAULT_FILTERS, filterParams);
 
   return {
     onChangeFilter,
+    onChangRecordType,
     onClearGroup,
     onResetAll,
     filterCount,
     activeFilters: filterParams,
+    selectedRecordTypes,
     filtersObject: buildFiltersObject(filterParams),
     isDefaultState
   };

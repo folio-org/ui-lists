@@ -1,36 +1,39 @@
 import { FilterGroupsConfig } from '@folio/stripes/components';
 import { useRecordTypes } from '../../../hooks';
+import { useIntl } from 'react-intl';
+import { tString} from '../../../services';
+import { RECORD_TYPES_FILTER_KEY } from '../constants';
 
 export default function useFilterConfig() {
   const { recordTypes = [], isLoading } = useRecordTypes();
-
+  const intl = useIntl();
   const filterConfig: FilterGroupsConfig = [
     {
-      label: 'Status',
+      label: tString(intl,'filter-label.status'),
       name: 'status',
       cql: 'status',
       values: ['Active', 'Inactive'],
     },
     {
-      label: 'Visibility',
+      label: tString(intl, 'filter-label.visibility'),
       name: 'visibility',
       cql: 'visibility',
       values: ['Shared', 'Private'],
-    },
-    {
-      label: 'Record types',
-      name: 'record_types',
-      cql: 'record.types',
-      values: recordTypes?.map((item) => ({
-        name: item.id ?? item.label,
-        displayName: item.label,
-        cql: item.id,
-      })),
-    },
+    }
   ];
+
+  const recordTypeConfig = {
+    label: tString(intl,'filter-label.record-types'),
+    name: RECORD_TYPES_FILTER_KEY,
+    values: recordTypes?.map((item) => ({
+      value: `record_types.${item.id ?? item.label}`,
+      label: item.label,
+    })),
+};
 
   return {
     filterConfig,
+    recordTypeConfig,
     isLoadingConfigData: isLoading,
   };
 }

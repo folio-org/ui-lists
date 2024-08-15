@@ -12,7 +12,7 @@ import {
   FilterGroups,
   LoadingPane
 } from '@folio/stripes/components';
-
+import { RecordTypesFilter } from './RecordTypesFilter';
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';
@@ -28,9 +28,11 @@ import css from './ListPage.module.css';
 export const ListPage: React.FC = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const [filterPaneIsVisible, toggleFilterPane] = useLocalStorageToggle(FILTER_PANE_VISIBILITY_KEY, true);
-  const { filterConfig, isLoadingConfigData } = useFilterConfig();
+  const { filterConfig, isLoadingConfigData, recordTypeConfig } = useFilterConfig();
   const {
     onChangeFilter,
+    onChangRecordType,
+    selectedRecordTypes,
     onResetAll,
     onClearGroup,
     filterCount,
@@ -42,6 +44,7 @@ export const ListPage: React.FC = () => {
   useListsFetchedSinceTimestamp();
 
   if (isLoadingConfigData) return <LoadingPane />;
+
 
   return (
     <Paneset data-test-root-pane>
@@ -74,6 +77,12 @@ export const ListPage: React.FC = () => {
             onChangeFilter={onChangeFilter}
             onClearFilter={onClearGroup}
           />
+          <RecordTypesFilter
+            recordTypeConfig={recordTypeConfig}
+            onChange={onChangRecordType}
+            onClear={onClearGroup}
+            selectedRecordTypes={selectedRecordTypes}
+            />
         </Pane>
       }
       <Pane

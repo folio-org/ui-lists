@@ -61,3 +61,13 @@ export const createColumnHash = (listColumns: string[]) => {
 }
 
 export const createStorageHashKey = (listID: string): string => `${listID}-hash`
+
+export const checkIncludes = (target: string, string: string) => {
+  return string.includes(target)
+};
+
+export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
+  return options.filter( option => {
+    return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
+  });
+};

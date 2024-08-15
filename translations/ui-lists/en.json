@@ -172,6 +172,10 @@
 
   "app-menu.keyboard-shortcuts": "Keyboard shortcuts",
 
+  "filter-label.record-types": "Record types",
+  "filter-label.status": "Status",
+  "filter-label.visibility": "Visibility",
+
   "commands-label.create": "Create a new list",
   "commands-label.edit": "Edit a list",
   "commands-label.save": "Save a list" ,

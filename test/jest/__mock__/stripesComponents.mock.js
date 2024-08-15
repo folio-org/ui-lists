@@ -274,7 +274,7 @@ jest.mock('@folio/stripes/components', () => ({
     <div aria-label={contentLabel} {...rest}>{isOpen ? children : ''}</div>
   )),
   Accordion: jest.fn(({ children, ...rest }) => (
-    <span {...rest}>{children}</span>
+      <span {...rest}> {rest.displayClearButton && <button onClick={rest.onClearFilter}>Clean</button>} Accordion {children}</span>
   )),
   AccordionSet: jest.fn(({ children, ...rest }) => (
     <span {...rest}>{children}</span>
