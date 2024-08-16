@@ -134,5 +134,22 @@
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
     "error-component.read-entity.type.restricted": "Vous n'êtes pas autorisé à accéder à cette liste",
-    "app-menu.keyboard-shortcuts": "Raccourcis clavier"
+    "app-menu.keyboard-shortcuts": "Raccourcis clavier",
+    "commands-label.create": "Create a new list",
+    "commands-label.edit": "Edit a list",
+    "commands-label.save": "Save a list",
+    "commands-label.duplicate": "Duplicate a list",
+    "commands-label.toggle-lists-detail-accordion": "Expand or collapse a Lists detail accordion",
+    "commands-label.expand-list-detail-accordions": "Expand all List detail accordions",
+    "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
+    "commands-label.go-to-filter-pane": "Go to Lists Filter pane",
+    "commands-label.close-modal-pop-up": "Fermer le module ou pop up",
+    "commands-label.copy": "Copier",
+    "commands-label.cut": "Couper",
+    "commands-label.paste": "Coller",
+    "commands-label.find": "Rechercher",
+    "commands-label.open-shortcuts-modal": "Ouvrir les raccourcis clavier modaux",
+    "filter-label.record-types": "Record types",
+    "filter-label.status": "Statut",
+    "filter-label.visibility": "Visibilité"
 }

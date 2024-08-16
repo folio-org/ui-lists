@@ -134,5 +134,22 @@
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
     "error-component.read-entity.type.restricted": "You do not have permission to view this list",
-    "app-menu.keyboard-shortcuts": "키보드 단축키"
+    "app-menu.keyboard-shortcuts": "키보드 단축키",
+    "commands-label.create": "Create a new list",
+    "commands-label.edit": "Edit a list",
+    "commands-label.save": "Save a list",
+    "commands-label.duplicate": "Duplicate a list",
+    "commands-label.toggle-lists-detail-accordion": "Expand or collapse a Lists detail accordion",
+    "commands-label.expand-list-detail-accordions": "Expand all List detail accordions",
+    "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
+    "commands-label.go-to-filter-pane": "Go to Lists Filter pane",
+    "commands-label.close-modal-pop-up": "모달 또는 팝업 닫기",
+    "commands-label.copy": "복사",
+    "commands-label.cut": "자르기",
+    "commands-label.paste": "붙여넣기",
+    "commands-label.find": "찾기",
+    "commands-label.open-shortcuts-modal": "키보드 단축키 모달 열기",
+    "filter-label.record-types": "Record types",
+    "filter-label.status": "상태",
+    "filter-label.visibility": "출력(Visibility)"
 }
