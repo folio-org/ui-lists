@@ -134,5 +134,22 @@
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
     "error-component.read-entity.type.restricted": "You do not have permission to view this list",
-    "app-menu.keyboard-shortcuts": "Atajos de teclado"
+    "app-menu.keyboard-shortcuts": "Atajos de teclado",
+    "commands-label.create": "Create a new list",
+    "commands-label.edit": "Edit a list",
+    "commands-label.save": "Save a list",
+    "commands-label.duplicate": "Duplicate a list",
+    "commands-label.toggle-lists-detail-accordion": "Expand or collapse a Lists detail accordion",
+    "commands-label.expand-list-detail-accordions": "Expand all List detail accordions",
+    "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
+    "commands-label.go-to-filter-pane": "Go to Lists Filter pane",
+    "commands-label.close-modal-pop-up": "Cerrar una ventana modal o emergente",
+    "commands-label.copy": "Copia",
+    "commands-label.cut": "Cortar",
+    "commands-label.paste": "Pegar",
+    "commands-label.find": "Encuentre",
+    "commands-label.open-shortcuts-modal": "Abrir el modal de atajos de teclado",
+    "filter-label.record-types": "Tipos de registro",
+    "filter-label.status": "Estado",
+    "filter-label.visibility": "Visibilidad"
 }
