@@ -71,3 +71,7 @@ export const filterByIncludes = (term: string, options: {label: string, value: s
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
 };
+
+export const getStatusButtonElem = () => {
+  return document.getElementById('accordion-toggle-button-Status-0');
+}
