@@ -134,5 +134,22 @@
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
     "error-component.read-entity.type.restricted": "You do not have permission to view this list",
-    "app-menu.keyboard-shortcuts": "鍵盤快捷鍵"
+    "app-menu.keyboard-shortcuts": "鍵盤快捷鍵",
+    "commands-label.create": "Create a new list",
+    "commands-label.edit": "Edit a list",
+    "commands-label.save": "Save a list",
+    "commands-label.duplicate": "Duplicate a list",
+    "commands-label.toggle-lists-detail-accordion": "Expand or collapse a Lists detail accordion",
+    "commands-label.expand-list-detail-accordions": "Expand all List detail accordions",
+    "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
+    "commands-label.go-to-filter-pane": "Go to Lists Filter pane",
+    "commands-label.close-modal-pop-up": "關閉模式或彈出視窗",
+    "commands-label.copy": "複製",
+    "commands-label.cut": "剪下",
+    "commands-label.paste": "貼上",
+    "commands-label.find": "檢索",
+    "commands-label.open-shortcuts-modal": "開啟鍵盤快捷鍵",
+    "filter-label.record-types": "記錄類型",
+    "filter-label.status": "狀態",
+    "filter-label.visibility": "能見度"
 }

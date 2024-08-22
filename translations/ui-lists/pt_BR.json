@@ -134,5 +134,22 @@
     "missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
     "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda",
     "error-component.read-entity.type.restricted": "Você não tem permissão para visualizar esta lista",
-    "app-menu.keyboard-shortcuts": "Atalhos do teclado"
+    "app-menu.keyboard-shortcuts": "Atalhos do teclado",
+    "commands-label.create": "Crie uma nova lista",
+    "commands-label.edit": "Editar uma lista",
+    "commands-label.save": "Salvar uma lista",
+    "commands-label.duplicate": "Duplicar uma lista",
+    "commands-label.toggle-lists-detail-accordion": "Expandir ou recolher listas de detalhes de acórdão",
+    "commands-label.expand-list-detail-accordions": "Expandir toda lista de detalhes de acórdãos",
+    "commands-label.collapse-list-detail-accordions": "Recolher toda lista de detalhes de acórdãos",
+    "commands-label.go-to-filter-pane": "Ir para o painel Filtro de listas",
+    "commands-label.close-modal-pop-up": "Fechar uma janela modal ou pop-up",
+    "commands-label.copy": "Cópia",
+    "commands-label.cut": "Cortar",
+    "commands-label.paste": "Colar",
+    "commands-label.find": "Buscar",
+    "commands-label.open-shortcuts-modal": "Abrir janela de atalhos de teclado",
+    "filter-label.record-types": "Tipos de registro",
+    "filter-label.status": "Estado",
+    "filter-label.visibility": "Visibilidade"
 }
