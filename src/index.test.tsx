@@ -81,4 +81,17 @@ describe('Lists app entry point', () => {
 
     expect(sessionStorage.getItem('test')).toBeFalsy();
   })
+
+  it('is expected to call query function', () => {
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
+    renderApp();
+
+    jest.spyOn(document, 'getElementById')
+
+    const home = screen.getByTestId('list-app-home')
+
+    user.click(home)
+
+    expect(document.getElementById).toBeCalled();
+  })
 });
