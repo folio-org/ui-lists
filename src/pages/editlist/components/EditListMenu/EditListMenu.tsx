@@ -31,14 +31,14 @@ export const EditListMenu: React.FC<ListInformationMenuProps> = ({
   const actionButtons:ActionButton[] = [];
 
   const initExportButton = {
-    label: 'export',
+    label: 'export-all',
     icon: ICONS.download,
     onClick: buttonHandlers['export-all'],
     disabled: isExportDisabled(conditions)
   };
 
   const initExportAllButton = {
-    label: 'export',
+    label: 'export-visible',
     icon: ICONS.download,
     onClick: buttonHandlers['export-visible'],
     disabled: isExportDisabled(conditions)

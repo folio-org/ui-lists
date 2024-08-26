@@ -14,7 +14,8 @@ const mockProps: ListInformationMenuProps = {
     'edit': jest.fn(),
     'copy': jest.fn(),
     'delete': jest.fn(),
-    'export': jest.fn(),
+    'export-all': jest.fn(),
+    'export-visible': jest.fn(),
     'cancel-export': jest.fn()
   },
   conditions: { isListCanned: false },
@@ -49,9 +50,16 @@ describe('ListInformationMenu', () => {
       expect(link).toBeInTheDocument();
     });
 
-    it('should render Export list link', () => {
+    it('should render Export all list link', () => {
       render(<ListInformationMenu {...mockProps} />);
-      const link = screen.queryByText('ui-lists.pane.dropdown.export');
+      const link = screen.queryByText('ui-lists.pane.dropdown.export-all');
+
+      expect(link).toBeInTheDocument();
+    });
+
+    it('should render Export all list link', () => {
+      render(<ListInformationMenu {...mockProps} />);
+      const link = screen.queryByText('ui-lists.pane.dropdown.export-visible');
 
       expect(link).toBeInTheDocument();
     });
