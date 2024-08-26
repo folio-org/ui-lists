@@ -49,7 +49,8 @@
   "pane.dropdown.delete": "Delete list",
   "pane.dropdown.edit": "Edit list",
   "pane.dropdown.copy": "Duplicate list",
-  "pane.dropdown.export": "Export list (CSV)",
+  "pane.dropdown.export-all": "Export all columns (CSV)",
+  "pane.dropdown.export-visible": "Export visible columns (CSV)",
   "pane.dropdown.cancel-export": "Cancel export",
 
   "status-toast.success.refresh-complete": "<strong>Refresh complete</strong> with <strong>{count}</strong> records: ",

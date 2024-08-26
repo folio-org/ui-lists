@@ -2,7 +2,7 @@
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import React, { FC } from 'react';
 import { useVisibleColumns } from '../../hooks';
-import { STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
+import {QueryBuilderColumnMetadata, STATUS_VALUES, VISIBILITY_VALUES} from '../../interfaces';
 import { t } from '../../services';
 import { ConfigureQuery } from '../ConfigureQuery';
 
@@ -22,6 +22,7 @@ interface EditListResultViewerProps {
   description: string,
   isDuplicating?: boolean,
   isQueryButtonDisabled?: boolean,
+  setColumns?: (columns: QueryBuilderColumnMetadata[]) => void;
 }
 
 export const EditListResultViewer:FC<EditListResultViewerProps> = (
@@ -37,6 +38,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
     visibility,
     description,
     fields,
+    setColumns,
     isDuplicating = false,
     isQueryButtonDisabled = false
   }
@@ -69,7 +71,7 @@ export const EditListResultViewer:FC<EditListResultViewerProps> = (
       contentDataSource={getAsyncContentData}
       entityTypeDataSource={getAsyncEntityType}
       visibleColumns={visibleColumns}
-      onSetDefaultColumns={() => {}}
+      onSetDefaultColumns={setColumns}
       contentQueryKeys={visibleColumns}
       height={500}
       additionalControls={(
