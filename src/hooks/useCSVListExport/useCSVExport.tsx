@@ -32,7 +32,6 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
 
   const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError, {allColumns?: boolean}>({
     mutationFn: ({allColumns = false}) => {
-      console.log(listDetails);
       const columnsToExport = allColumns ? columns : visibleColumns;
 
       return ky.post(`lists/${listId}/exports`, { json: columnsToExport }).json<ListExport>()

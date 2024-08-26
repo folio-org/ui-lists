@@ -2,7 +2,7 @@
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import React, { FC } from 'react';
 import { useVisibleColumns } from '../../hooks';
-import {QueryBuilderColumnMetadata, STATUS_VALUES, VISIBILITY_VALUES} from '../../interfaces';
+import { QueryBuilderColumnMetadata, STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
 import { t } from '../../services';
 import { ConfigureQuery } from '../ConfigureQuery';
 
