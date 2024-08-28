@@ -3,7 +3,9 @@
 ## In progress
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
 * Results List: Update Record type filter display [UILISTS-145]
+* Move stripes-testing in dev dependencies [UILISTS-138]
 
+[UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
 [UILISTS-145] https://folio-org.atlassian.net/browse/UILISTS-145
 
