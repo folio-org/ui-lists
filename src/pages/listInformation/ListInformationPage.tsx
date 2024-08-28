@@ -50,11 +50,14 @@ export const ListInformationPage: React.FC = () => {
   const { name: listName = '' } = listData ?? {};
   const [refreshTrigger, setRefreshTrigger] = useState(uniqueId());
   const recordTypeLabel = useRecordTypeLabel(listData?.entityTypeId);
+  const [columnControls, setColumnControls] = useState<QueryBuilderColumnMetadata[]>([]);
 
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
-    listName
+    listName,
+    columns: columnControls.map(({value}) => value)
   });
+
   const queryClient = useQueryClient();
   const [showSuccessRefreshMessage, setShowSuccessRefreshMessage] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
@@ -129,7 +132,6 @@ export const ListInformationPage: React.FC = () => {
   const closeSuccessMessage = () => {
     setShowSuccessRefreshMessage(false);
   };
-  const [columnControls, setColumnControls] = useState<QueryBuilderColumnMetadata[]>([]);
 
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
@@ -187,7 +189,9 @@ export const ListInformationPage: React.FC = () => {
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers.export = () => requestExport();
+    buttonHandlers['export-all'] = () => requestExport({allColumns: true});
+    buttonHandlers['export-visible'] = () => requestExport({});
+
     buttonHandlers['cancel-export'] = () => cancelExport();
   }
 

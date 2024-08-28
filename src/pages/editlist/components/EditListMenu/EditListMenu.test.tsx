@@ -13,7 +13,8 @@ describe('EditListMenu', () => {
 
   const mockButtonHandlers = {
     'delete': jest.fn(),
-    'export': jest.fn(),
+    'export-all': jest.fn(),
+    'export-visible': jest.fn(),
     'cancel-export': jest.fn(),
   };
 
@@ -26,10 +27,14 @@ describe('EditListMenu', () => {
     render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
 
     const deleteButton = screen.getByText('ui-lists.pane.dropdown.delete');
-    const exportButton = screen.getByText('ui-lists.pane.dropdown.export');
+    const exportButton = screen.getByText('ui-lists.pane.dropdown.export-all');
+    const exportVisibleButton = screen.getByText('ui-lists.pane.dropdown.export-visible');
 
+      screen.logTestingPlaygroundURL()
     expect(deleteButton).toBeInTheDocument();
     expect(exportButton).toBeInTheDocument();
+    expect(exportVisibleButton).toBeInTheDocument();
+
   });
 
   it('should call delete handler when delete button is clicked', async () => {
@@ -44,10 +49,10 @@ describe('EditListMenu', () => {
   it('should call export handler when export button is clicked', () => {
     render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
 
-    const exportButton = screen.getByText('ui-lists.pane.dropdown.export');
+    const exportButton = screen.getByText('ui-lists.pane.dropdown.export-all');
     fireEvent.click(exportButton);
 
-    expect(mockButtonHandlers.export).toHaveBeenCalled();
+    expect(mockButtonHandlers['export-all']).toHaveBeenCalled();
   });
 
   it('should render cancel export button when export is in progress', () => {
