@@ -3,7 +3,8 @@ import {
   Dropdown,
   DropdownMenu
 } from '@folio/stripes/components';
-import { t, ActionButton } from '../../services';
+import { useIntl } from 'react-intl';
+import { t, ActionButton, tString } from '../../services';
 import { ActionButtonsList } from './components';
 
 import css from './ActionMenu.module.css';
@@ -17,6 +18,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
   actionButtons,
   children
 }) => {
+  const int = useIntl();
   const [open, setOpen] = useState(false);
   const handleToggle = useCallback(() => setOpen(!open), [open]);
   const handleClick = useCallback((onClick: () => void) => {
@@ -34,7 +36,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
       onToggle={handleToggle}
     >
       <DropdownMenu
-        aria-label="available permissions"
+        aria-label={tString(int, 'pane.dropdown.available-permissions')}
         open={open}
         onToggle={handleToggle}
       >

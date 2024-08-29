@@ -24,7 +24,7 @@ import {
 import { EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
 
-import { FIELD_NAMES } from '../../interfaces';
+import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 
 
@@ -33,6 +33,8 @@ export const EditListPage:FC = () => {
   const intl = useIntl();
   const stripes = useStripes();
   const { id }: { id: string } = useParams();
+  const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
+
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
 
   const listName = listDetails?.name ?? '';
@@ -41,7 +43,12 @@ export const EditListPage:FC = () => {
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({ listId: id, listName, listDetails });
+  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({
+    listId: id,
+    listName,
+    listDetails,
+    columns: columns.map(({value}) => value)
+  });
   const { deleteList, isDeleteInProgress } = useDeleteList(({ id,
     onSuccess: () => {
       showSuccessMessage({
@@ -127,7 +134,8 @@ export const EditListPage:FC = () => {
 
   const buttonHandlers = {
     'delete': () => setShowConfirmDeleteModal(true),
-    'export': () => requestExport(),
+    'export-all': () => requestExport({}),
+    'export-visible': () => requestExport({allColumns: true}),
     'cancel-export': () => cancelExport(),
   };
 
@@ -205,6 +213,7 @@ export const EditListPage:FC = () => {
           listName={state[FIELD_NAMES.LIST_NAME]}
           visibility={state[FIELD_NAMES.VISIBILITY]}
           description={state[FIELD_NAMES.DESCRIPTION]}
+          setColumns={setColumns}
         />
         <CancelEditModal
           onCancel={() => {

@@ -226,7 +226,7 @@ describe('ListInformationPage Page', () => {
             jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
 
             const exportButton = screen.getByRole('menuitem', {
-              name: /ui-lists.pane.dropdown.export/i
+              name: /ui-lists.pane.dropdown.export-visible/i
             });
 
             expect(exportButton).toBeEnabled();
@@ -262,7 +262,7 @@ describe('ListInformationPage Page', () => {
             jest.spyOn(acq, 'useShowCallout').mockImplementation(() => showMessageMock);
 
             const exportButton = screen.getByRole('menuitem', {
-              name: /ui-lists.pane.dropdown.export/i
+              name: /ui-lists.pane.dropdown.export-visible/i
             });
 
             expect(exportButton).toBeEnabled();

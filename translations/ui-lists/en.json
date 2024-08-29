@@ -42,6 +42,8 @@
   "accordion.title.list-information": "List information",
   "accordion.title.query": "Query: {query}",
 
+  "pane.dropdown.available-permissions": "Available permissions",
+
   "pane.dropdown.show-columns": "Show columns",
   "pane.dropdown.refresh": "Refresh list",
   "pane.dropdown.cancel-refresh": "Cancel refresh",
@@ -49,7 +51,8 @@
   "pane.dropdown.delete": "Delete list",
   "pane.dropdown.edit": "Edit list",
   "pane.dropdown.copy": "Duplicate list",
-  "pane.dropdown.export": "Export list (CSV)",
+  "pane.dropdown.export-all": "Export all columns (CSV)",
+  "pane.dropdown.export-visible": "Export visible columns (CSV)",
   "pane.dropdown.cancel-export": "Cancel export",
 
   "status-toast.success.refresh-complete": "<strong>Refresh complete</strong> with <strong>{count}</strong> records: ",

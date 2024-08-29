@@ -25,7 +25,8 @@ export interface ListInformationMenuProps {
     'refresh': () => void,
     'edit': () => void,
     'delete':() => void,
-    'export': () => void,
+    'export-all': () => void,
+    'export-visible': () => void,
     'cancel-export': () => void,
     'copy': () => void
   },
@@ -57,9 +58,16 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   };
 
   const initExportButton = {
-    label: 'export',
+    label: 'export-visible',
     icon: ICONS.download,
-    onClick: buttonHandlers.export,
+    onClick: buttonHandlers['export-visible'],
+    disabled: isExportDisabled(conditions)
+  };
+
+  const initExportAllButton = {
+    label: 'export-all',
+    icon: ICONS.download,
+    onClick: buttonHandlers['export-all'],
     disabled: isExportDisabled(conditions)
   };
 
@@ -76,7 +84,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     refreshButton
   );
 
-  const exportSlot = isExportInProgress ? cancelExportButton : initExportButton;
+  const exportSlot = isExportInProgress ? [cancelExportButton] : [initExportButton, initExportAllButton];
 
   const actionButtons:ActionButton[] = [];
 
@@ -116,7 +124,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   }
 
   if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    actionButtons.push(exportSlot);
+    actionButtons.push(...exportSlot);
   }
 
   return (

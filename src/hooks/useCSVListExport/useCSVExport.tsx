@@ -9,7 +9,7 @@ import { useCSVExportCancel } from './useCSVExportCancel';
 import { useCSVExportPolling } from './useCSVExportPolling';
 import { useVisibleColumns } from '../useVisibleColumns';
 
-export const useCSVExport = ({ listId, listName, listDetails }: { listId: string; listName: string, listDetails?: ListsRecordDetails }) => {
+export const useCSVExport = ({ listId, listName, listDetails, columns }: { listId: string; listName: string, listDetails?: ListsRecordDetails, columns?: string[] }) => {
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const ky = useOkapiKy();
   const [values] = useLocalStorage<{ [key: string]: string }>('listIdsToExport', {});
@@ -28,10 +28,14 @@ export const useCSVExport = ({ listId, listName, listDetails }: { listId: string
     removeListFromStorage();
   });
 
-  const columnsToExport = useVisibleColumns(listId).visibleColumns ?? listDetails?.fields ?? [];
+  const visibleColumns = useVisibleColumns(listId).visibleColumns ?? listDetails?.fields ?? [];
 
-  const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError>({
-    mutationFn: () => ky.post(`lists/${listId}/exports`, { json: columnsToExport }).json<ListExport>(),
+  const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError, {allColumns?: boolean}>({
+    mutationFn: ({allColumns = false}) => {
+      const columnsToExport = allColumns ? columns : visibleColumns;
+
+      return ky.post(`lists/${listId}/exports`, { json: columnsToExport }).json<ListExport>()
+    },
     onSuccess: async ({ exportId }) => {
       showSuccessMessage({
         message: t('callout.list.csv-export.begin', {

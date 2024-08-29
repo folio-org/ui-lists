@@ -4,7 +4,7 @@ import { screen } from '@testing-library/dom';
 
 import { ListAppIcon } from './ListAppIcon';
 // @ts-ignore
-import {runAxeTest} from "@folio/stripes-testing";
+import { runAxeTest } from "@folio/stripes-testing";
 
 describe('ListAppIcon', () => {
   beforeEach(() => {
