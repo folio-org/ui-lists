@@ -101,31 +101,43 @@ describe('Lists app entry point', () => {
   })
 
   it('is expected to call query function', () => {
-    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
-    renderApp();
+    jest.useFakeTimers();
 
-    jest.spyOn(document, 'getElementById')
+    const element = document.createElement('DIV');
+
+    jest.spyOn(element, 'focus');
+
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null).mockReturnValueOnce(element)
+
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
+
+    renderApp();
 
     const home = screen.getByTestId('list-app-home')
 
     user.click(home)
 
+    jest.runAllTimers();
+
     expect(historyPushMock).toBeCalledWith('/lists');
+    expect(element.focus).toHaveBeenCalled();
   })
 
   it('is expected to not query function if element exist', () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
 
-    jest.spyOn(document, 'getElementById').mockReturnValue(document.createElement('DIV'))
+    const element = document.createElement('DIV');
+
+    jest.spyOn(element, 'focus');
+
+    jest.spyOn(document, 'getElementById').mockReturnValue(element)
 
     renderApp();
-
-    jest.spyOn(document, 'getElementById')
 
     const home = screen.getByTestId('list-app-home')
 
     user.click(home)
 
-    expect(historyPushMock).not.toBeCalled();
+    expect(element.focus).toBeCalled();
   })
 });
