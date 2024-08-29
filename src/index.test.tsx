@@ -40,6 +40,9 @@ const renderApp = () => {
 };
 
 describe('Lists app entry point', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   it('is expected to close shortcuts modal', async () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
 
