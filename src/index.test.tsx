@@ -10,21 +10,39 @@ import { HOME_PAGE_URL } from './constants';
 
 const useRecordTypesMock = jest.fn();
 
+
+
 jest.mock('./hooks', () => ({
   useRecordTypes: jest.fn(() => useRecordTypesMock()),
 }));
+
+
+const historyPushMock = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({
+    id: 'id',
+  }),
+  useHistory: jest.fn(() => ({ push: historyPushMock })),
+}));
+
+
 
 const renderApp = () => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[HOME_PAGE_URL]}>
-        <ListsApp match={{ path: '' }} />
+        <ListsApp match={{ path: '/new' }} />
       </MemoryRouter>
     </QueryClientProvider>,
   );
 };
 
 describe('Lists app entry point', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   it('is expected to close shortcuts modal', async () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
 
@@ -80,5 +98,46 @@ describe('Lists app entry point', () => {
     ListsApp.eventHandler('LOGIN')
 
     expect(sessionStorage.getItem('test')).toBeFalsy();
+  })
+
+  it('is expected to call query function', () => {
+    jest.useFakeTimers();
+
+    const element = document.createElement('DIV');
+
+    jest.spyOn(element, 'focus');
+
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null).mockReturnValueOnce(element)
+
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
+
+    renderApp();
+
+    const home = screen.getByTestId('list-app-home')
+
+    user.click(home)
+
+    jest.runAllTimers();
+
+    expect(historyPushMock).toBeCalledWith('/lists');
+    expect(element.focus).toHaveBeenCalled();
+  })
+
+  it('is expected to not query function if element exist', () => {
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
+
+    const element = document.createElement('DIV');
+
+    jest.spyOn(element, 'focus');
+
+    jest.spyOn(document, 'getElementById').mockReturnValue(element)
+
+    renderApp();
+
+    const home = screen.getByTestId('list-app-home')
+
+    user.click(home)
+
+    expect(element.focus).toBeCalled();
   })
 });

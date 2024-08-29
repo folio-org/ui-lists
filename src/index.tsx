@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import {
   IfPermission,
   coreEvents,
@@ -22,9 +22,11 @@ import {
   ListPage,
   MissingAllEntityTypePermissionsPage,
 } from './pages';
+import { delay } from 'lodash';
 import { useRecordTypes } from './hooks';
 import { t } from "./services";
-import { USER_PERMS } from './utils/constants';
+import { USER_PERMS, getStatusButtonElem } from './utils';
+
 import {commandsGeneral} from "./keyboard-shortcuts";
 
 interface ListsAppProps {
@@ -39,6 +41,7 @@ type IListsApp = React.FunctionComponent<ListsAppProps> & {
 
 export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
+  const history = useHistory();
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
   const shortcutModalToggle = (handleToggle: () => {}) => {
@@ -46,7 +49,28 @@ export const ListsApp:IListsApp = (props) => {
     setShowKeyboardShortcutsModal(true);
   };
 
+  const focusStatusFilter = (handleToggle?: () => {}) => {
+    const el = getStatusButtonElem();
+
+    if (el) {
+      el.focus();
+    } else {
+      history.push('/lists');
+
+      // this is temporary fix until we introduce search field where we be able to use native autofocus
+      delay(() => {
+        getStatusButtonElem()?.focus()
+      }, 500)
+    }
+
+    handleToggle?.();
+  };
+
   const shortcuts = [
+    {
+      name: 'search',
+      handler: focusStatusFilter
+    },
     {
       name: 'openShortcutModal',
       handler: setShowKeyboardShortcutsModal
@@ -70,6 +94,12 @@ export const ListsApp:IListsApp = (props) => {
           {(handleToggle: () => {}) => (
             <NavList>
               <NavListSection>
+                <NavListItem
+                  data-testid="list-app-home"
+                  onClick={() => { focusStatusFilter(handleToggle); }}
+                >
+                  {t('app-menu.list-app-home')}
+                </NavListItem>
                 <NavListItem
                   data-testid="shortcuts"
                   onClick={() => { shortcutModalToggle(handleToggle); }}

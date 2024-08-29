@@ -174,6 +174,7 @@
   "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
 
   "app-menu.keyboard-shortcuts": "Keyboard shortcuts",
+  "app-menu.list-app-home": "Lists app home",
 
   "filter-label.record-types": "Record types",
   "filter-label.status": "Status",
