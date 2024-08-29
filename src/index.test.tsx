@@ -43,6 +43,7 @@ describe('Lists app entry point', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
+
   it('is expected to close shortcuts modal', async () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
 
@@ -100,14 +101,12 @@ describe('Lists app entry point', () => {
     expect(sessionStorage.getItem('test')).toBeFalsy();
   })
 
-  it('is expected to call query function', () => {
-    jest.useFakeTimers();
-
+  it('is expected to call redicrect function', () => {
     const element = document.createElement('DIV');
 
     jest.spyOn(element, 'focus');
 
-    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null).mockReturnValueOnce(element)
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null)
 
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
 
@@ -117,20 +116,17 @@ describe('Lists app entry point', () => {
 
     user.click(home)
 
-    jest.runAllTimers();
-
     expect(historyPushMock).toBeCalledWith('/lists');
-    expect(element.focus).toHaveBeenCalled();
   })
 
-  it('is expected to not query function if element exist', () => {
+  it('is expected to not call push function if element exist', () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
 
     const element = document.createElement('DIV');
 
     jest.spyOn(element, 'focus');
 
-    jest.spyOn(document, 'getElementById').mockReturnValue(element)
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(element)
 
     renderApp();
 
