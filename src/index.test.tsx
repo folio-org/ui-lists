@@ -10,15 +10,30 @@ import { HOME_PAGE_URL } from './constants';
 
 const useRecordTypesMock = jest.fn();
 
+
+
 jest.mock('./hooks', () => ({
   useRecordTypes: jest.fn(() => useRecordTypesMock()),
 }));
+
+
+const historyPushMock = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({
+    id: 'id',
+  }),
+  useHistory: jest.fn(() => ({ push: historyPushMock })),
+}));
+
+
 
 const renderApp = () => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[HOME_PAGE_URL]}>
-        <ListsApp match={{ path: '' }} />
+        <ListsApp match={{ path: '/new' }} />
       </MemoryRouter>
     </QueryClientProvider>,
   );
@@ -92,6 +107,22 @@ describe('Lists app entry point', () => {
 
     user.click(home)
 
-    expect(document.getElementById).toBeCalled();
+    expect(historyPushMock).toBeCalledWith('/lists');
+  })
+
+  it('is expected to not query function if element exist', () => {
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
+
+    jest.spyOn(document, 'getElementById').mockReturnValue(document.createElement('DIV'))
+
+    renderApp();
+
+    jest.spyOn(document, 'getElementById')
+
+    const home = screen.getByTestId('list-app-home')
+
+    user.click(home)
+
+    expect(historyPushMock).not.toBeCalled();
   })
 });
