@@ -43,7 +43,7 @@ export const startMirage = ({
 
       this.get('entity-types', () => ({
         entityTypes,
-        _version: 3
+        _version: '3'
       }));
 
       this.delete('lists/:listId/refresh', () => new Response(200));
