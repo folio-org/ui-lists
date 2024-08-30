@@ -1,6 +1,5 @@
 import React, {useState, FC, ChangeEvent} from "react";
-import { getStatusButtonElem } from "../../../utils";
-import {FilterGroups, FilterGroupsConfig} from "@folio/stripes/components";
+import { FilterGroups, FilterGroupsConfig } from "@folio/stripes/components";
 
 type FiltersProps = {
   config: FilterGroupsConfig,
@@ -20,16 +19,13 @@ export const Filters:FC<FiltersProps> = ({
   const [focused, setFocused] = useState(false)
 
   return (
-    <div ref={() => {
+    <div id='mainFiltersWrapper' ref={(e) => {
       if (focused) return;
 
-      const el = getStatusButtonElem();
-
-      if(el) {
-        el.focus()
-        setFocused(true)
-      }
-
+        if(e) {
+          e.getElementsByTagName('button')[0]?.focus();
+          setFocused(true)
+        }
     }}>
       <FilterGroups
         config={config}
