@@ -9,10 +9,10 @@ import {
   Paneset,
   Button,
   // @ts-ignore:next-line
-  FilterGroups,
   LoadingPane
 } from '@folio/stripes/components';
 import { RecordTypesFilter } from './RecordTypesFilter';
+import { Filters } from './Filters';
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';
@@ -43,9 +43,6 @@ export const ListPage: React.FC = () => {
 
   useListsFetchedSinceTimestamp();
 
-  if (isLoadingConfigData) return <LoadingPane />;
-
-
   return (
     <Paneset data-test-root-pane>
       {filterPaneIsVisible &&
@@ -71,18 +68,23 @@ export const ListPage: React.FC = () => {
               </Icon>
             </Button>
           </div>
-          <FilterGroups
-            config={filterConfig}
-            filters={filtersObject}
-            onChangeFilter={onChangeFilter}
-            onClearFilter={onClearGroup}
+          <Filters
+              config={filterConfig}
+              filters={filtersObject}
+              onChangeFilter={onChangeFilter}
+              onClearFilter={onClearGroup}
           />
-          <RecordTypesFilter
-            recordTypeConfig={recordTypeConfig}
-            onChange={onChangRecordType}
-            onClear={onClearGroup}
-            selectedRecordTypes={selectedRecordTypes}
-            />
+          {
+            isLoadingConfigData ? (<LoadingPane />) : (
+              <RecordTypesFilter
+                recordTypeConfig={recordTypeConfig}
+                onChange={onChangRecordType}
+                onClear={onClearGroup}
+                selectedRecordTypes={selectedRecordTypes}
+              />
+            )
+          }
+
         </Pane>
       }
       <Pane
