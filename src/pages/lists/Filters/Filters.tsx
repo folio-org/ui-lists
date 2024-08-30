@@ -1,6 +1,6 @@
-import React, {useState, FC, ChangeEvent} from "react";
-import { getStatusButtonElem } from "../../../utils";
-import {FilterGroups, FilterGroupsConfig} from "@folio/stripes/components";
+import React, {useState, FC, ChangeEvent, useEffect} from "react";
+import { FilterGroups, FilterGroupsConfig } from "@folio/stripes/components";
+import { getStatusButtonElem } from '../../../utils'
 
 type FiltersProps = {
   config: FilterGroupsConfig,
@@ -19,18 +19,21 @@ export const Filters:FC<FiltersProps> = ({
 }) => {
   const [focused, setFocused] = useState(false)
 
+  useEffect(() => {
+    if (focused) {
+      return
+    }
+
+    const firstFilterButton = getStatusButtonElem()
+
+    if (firstFilterButton) {
+      firstFilterButton.focus();
+      setFocused(true)
+    }
+  })
+
   return (
-    <div ref={() => {
-      if (focused) return;
-
-      const el = getStatusButtonElem();
-
-      if(el) {
-        el.focus()
-        setFocused(true)
-      }
-
-    }}>
+    <div id='mainFiltersWrapper'>
       <FilterGroups
         config={config}
         filters={filters}
