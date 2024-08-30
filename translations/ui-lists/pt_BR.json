@@ -37,7 +37,6 @@
     "pane.dropdown.cancel-refresh": "Cancelar atualização",
     "pane.dropdown.delete": "Excluir lista",
     "pane.dropdown.edit": "Editar lista",
-    "pane.dropdown.export": "Exportar lista (CSV)",
     "pane.dropdown.cancel-export": "Cancelar exportação",
     "status-toast.success.refresh-complete": "<strong>Atualização completa</strong> com <strong>{count}</strong> registros: ",
     "status-toast.success.link": "Ver lista atualizada",
@@ -151,5 +150,9 @@
     "commands-label.open-shortcuts-modal": "Abrir janela de atalhos de teclado",
     "filter-label.record-types": "Tipos de registro",
     "filter-label.status": "Estado",
-    "filter-label.visibility": "Visibilidade"
+    "filter-label.visibility": "Visibilidade",
+    "pane.dropdown.available-permissions": "Permissões disponíveis",
+    "pane.dropdown.export-all": "Exportar todas as colunas (CSV)",
+    "pane.dropdown.export-visible": "Exportar colunas visíveis (CSV)",
+    "app-menu.list-app-home": "Página inicial do aplicativo Listas"
 }

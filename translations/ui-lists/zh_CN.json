@@ -37,7 +37,6 @@
     "pane.dropdown.cancel-refresh": "取消刷新",
     "pane.dropdown.delete": "删除列表",
     "pane.dropdown.edit": "编辑列表",
-    "pane.dropdown.export": "导出列表 (CSV)",
     "pane.dropdown.cancel-export": "取消导出",
     "status-toast.success.refresh-complete": "<strong>刷新完成</strong>包含<strong> {count} </strong>条记录：",
     "status-toast.success.link": "查看已更新列表",
@@ -151,5 +150,9 @@
     "commands-label.open-shortcuts-modal": "打开键盘快捷方式",
     "filter-label.record-types": "记录类型",
     "filter-label.status": "状态",
-    "filter-label.visibility": "可见性"
+    "filter-label.visibility": "可见性",
+    "pane.dropdown.available-permissions": "Available permissions",
+    "pane.dropdown.export-all": "Export all columns (CSV)",
+    "pane.dropdown.export-visible": "Export visible columns (CSV)",
+    "app-menu.list-app-home": "Lists app home"
 }
