@@ -1,3 +1,5 @@
+import {EntityType} from "./entity";
+
 export interface Sort {
   empty: boolean;
   sorted: boolean;
@@ -11,6 +13,11 @@ export interface Pagination {
   pageSize: number;
   paged: boolean;
   unpaged: boolean;
+}
+
+export interface EntityTypesResponse {
+  entityTypes: EntityType[],
+  _version: string
 }
 
 export interface InitRefreshResponse {

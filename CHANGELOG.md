@@ -6,7 +6,9 @@
 * Lists app: Implement App context menu [UILISTS-138]
 * Move stripes-testing in dev dependencies [UILISTS-138]
 * Support export of visible columns and export of all columns [UILISTS-157]
+* Handle updated entity-types API response format [UILISTS-170]
 
+[UILISTS-170] https://folio-org.atlassian.net/browse/UILISTS-170
 [UILISTS-157] https://folio-org.atlassian.net/browse/UILISTS-157
 [UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
 [UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
