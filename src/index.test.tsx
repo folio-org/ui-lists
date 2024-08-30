@@ -121,10 +121,12 @@ describe('Lists app entry point', () => {
 
   it('is expected to not call push function if element exist', () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
-
+    const button = document.createElement('BUTTON');
     const element = document.createElement('DIV');
 
-    jest.spyOn(element, 'focus');
+    element.appendChild(button)
+
+    jest.spyOn(button, 'focus');
 
     jest.spyOn(document, 'getElementById').mockReturnValueOnce(element)
 
@@ -134,6 +136,6 @@ describe('Lists app entry point', () => {
 
     user.click(home)
 
-    expect(element.focus).toBeCalled();
+    expect(button.focus).toBeCalled();
   })
 });

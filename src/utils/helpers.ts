@@ -73,5 +73,5 @@ export const filterByIncludes = (term: string, options: {label: string, value: s
 };
 
 export const getStatusButtonElem = () => {
-  return document.getElementById('accordion-toggle-button-Status-0');
+  return document.getElementById('mainFiltersWrapper')?.getElementsByTagName('button')[0];
 }
