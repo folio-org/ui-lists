@@ -1,0 +1,1 @@
+export { useRecordTypes } from './useRecordTypes';
