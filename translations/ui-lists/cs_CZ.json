@@ -37,7 +37,6 @@
     "pane.dropdown.cancel-refresh": "Zrušit obnovení",
     "pane.dropdown.delete": "Smazat seznam",
     "pane.dropdown.edit": "Upravit seznam",
-    "pane.dropdown.export": "Export seznamu (CSV)",
     "pane.dropdown.cancel-export": "Zrušit export",
     "status-toast.success.refresh-complete": "<strong>Obnovení dokončeno</strong> s <strong>{count}</strong> záznamů:",
     "status-toast.success.link": "Zobrazit aktualizovaný seznam",
@@ -151,5 +150,9 @@
     "commands-label.open-shortcuts-modal": "Otevřete modální klávesové zkratky",
     "filter-label.record-types": "Typy záznamů",
     "filter-label.status": "Stav",
-    "filter-label.visibility": "Viditelnost"
+    "filter-label.visibility": "Viditelnost",
+    "pane.dropdown.available-permissions": "Dostupná oprávnění",
+    "pane.dropdown.export-all": "Export all columns (CSV)",
+    "pane.dropdown.export-visible": "Export visible columns (CSV)",
+    "app-menu.list-app-home": "Lists app home"
 }

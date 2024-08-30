@@ -37,7 +37,6 @@
     "pane.dropdown.cancel-refresh": "Cancel refresh",
     "pane.dropdown.delete": "Delete list",
     "pane.dropdown.edit": "Edit list",
-    "pane.dropdown.export": "Export list (CSV)",
     "pane.dropdown.cancel-export": "Cancel export",
     "status-toast.success.refresh-complete": "<strong>Refresh complete</strong> with <strong>{count}</strong> records: ",
     "status-toast.success.link": "View updated list",
@@ -151,5 +150,9 @@
     "commands-label.open-shortcuts-modal": "Open keyboard shortcuts modal",
     "filter-label.record-types": "Record types",
     "filter-label.status": "Állapot",
-    "filter-label.visibility": "Visibility"
+    "filter-label.visibility": "Visibility",
+    "pane.dropdown.available-permissions": "Available permissions",
+    "pane.dropdown.export-all": "Export all columns (CSV)",
+    "pane.dropdown.export-visible": "Export visible columns (CSV)",
+    "app-menu.list-app-home": "Lists app home"
 }
