@@ -7,6 +7,8 @@ import {
   Pane,
   PaneMenu,
   Paneset,
+  HasCommand,
+  checkScope,
   Button,
   // @ts-ignore:next-line
   LoadingPane
@@ -22,6 +24,8 @@ import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
+import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
+import { getStatusButtonElem } from "../../utils";
 
 import css from './ListPage.module.css';
 
@@ -43,7 +47,24 @@ export const ListPage: React.FC = () => {
 
   useListsFetchedSinceTimestamp();
 
+  const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.GO_TO_FILTER,
+      handler: (e: KeyboardEvent) => {
+        e.preventDefault();
+
+        getStatusButtonElem()?.focus();
+      }
+    }
+  ]
+
+
   return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
     <Paneset data-test-root-pane>
       {filterPaneIsVisible &&
         <Pane
@@ -123,5 +144,6 @@ export const ListPage: React.FC = () => {
         />
       </Pane>
     </Paneset>
+    </HasCommand>
   );
 };
