@@ -159,6 +159,7 @@ jest.mock('@folio/stripes/components', () => ({
   NavListSection: jest.fn(({ children, className, ...rest }) => (
     <div className={className} {...rest}>{children}</div>
   )),
+  AccordionStatus: jest.fn(({ children }) => <div>{children}</div>),
   checkScope: jest.fn(),
   defaultKeyboardShortcuts: {},
   CommandList: jest.fn(({ children }) => <>{children}</>),
