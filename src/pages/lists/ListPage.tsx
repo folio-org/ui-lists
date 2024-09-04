@@ -7,8 +7,6 @@ import {
   Pane,
   PaneMenu,
   Paneset,
-  HasCommand,
-  checkScope,
   Button,
   LoadingPane
 } from '@folio/stripes/components';
@@ -17,7 +15,7 @@ import { Filters } from './Filters';
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';
-import { ListsTable, ListAppIcon } from '../../components';
+import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import { useListsFetchedSinceTimestamp, useLocalStorageToggle } from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
@@ -57,10 +55,8 @@ export const ListPage: React.FC = () => {
 
 
   return (
-    <HasCommand
+    <HasCommandWrapper
       commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
     >
     <Paneset data-test-root-pane>
       {filterPaneIsVisible &&
@@ -141,6 +137,6 @@ export const ListPage: React.FC = () => {
         />
       </Pane>
     </Paneset>
-    </HasCommand>
+    </HasCommandWrapper>
   );
 };

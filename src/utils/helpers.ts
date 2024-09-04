@@ -82,10 +82,12 @@ export const getStatusButtonElem = () => {
   return document.getElementById('mainFiltersWrapper')?.getElementsByTagName('button')[0];
 }
 
-export const handleKeyEvent = (callBack: (event?: KeyboardEvent) => void) => {
+export const handleKeyEvent = (callBack: (event?: KeyboardEvent) => void, condition: boolean = true) => {
   return (event: KeyboardEvent) => {
     event.preventDefault()
 
-    callBack();
+    if (condition) {
+      callBack();
+    }
   }
 }

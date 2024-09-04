@@ -107,5 +107,19 @@ describe('Helpers', () => {
       expect(callback).toBeCalled();
       expect(preventDefault).toBeCalled();
     })
+
+    it('is expected to call preventDefault but not callback if condition false', () => {
+      const preventDefault = jest.fn();
+      const keyboardEvent = new KeyboardEvent('keydown')
+
+      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault)
+
+      const callback = jest.fn();
+
+      handleKeyEvent(callback, false)(keyboardEvent);
+
+      expect(callback).not.toBeCalled();
+      expect(preventDefault).toBeCalled();
+    })
   })
 });

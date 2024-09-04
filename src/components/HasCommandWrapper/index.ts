@@ -1,0 +1,1 @@
+export { HasCommandWrapper } from './HasCommandWrapper';

@@ -98,11 +98,7 @@ export const CopyListPage:FC = () => {
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => {
-        if (!isSaveDisabled) {
-          onSave()
-        }
-      })
+      handler: handleKeyEvent(() => onSave(), !isSaveDisabled)
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,

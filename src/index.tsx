@@ -6,9 +6,7 @@ import {
   IfPermission
 } from '@folio/stripes/core';
 import {
-  checkScope,
   CommandList,
-  HasCommand,
   KeyboardShortcutsModal,
   NavList,
   NavListItem,
@@ -20,8 +18,9 @@ import {
   EditListPage,
   ListInformationPage,
   ListPage,
-  MissingAllEntityTypePermissionsPage,
+  MissingAllEntityTypePermissionsPage
 } from './pages';
+import { HasCommandWrapper } from './components';
 
 import { useRecordTypes } from './hooks';
 import { t } from "./services";
@@ -76,7 +75,9 @@ export const ListsApp:IListsApp = (props) => {
     },
     {
       name: SHORTCUTS_NAMES.OPEN_MODAL,
-      handler: setShowKeyboardShortcutsModal
+      handler: handleKeyEvent(() => {
+        setShowKeyboardShortcutsModal(true);
+      })
     },
     {
       name: SHORTCUTS_NAMES.NEW,
@@ -94,10 +95,8 @@ export const ListsApp:IListsApp = (props) => {
 
   return (
     <CommandList commands={commandsGeneral}>
-      <HasCommand
+      <HasCommandWrapper
         commands={shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
       >
         <AppContextMenu>
           {(handleToggle: () => {}) => (
@@ -173,7 +172,7 @@ export const ListsApp:IListsApp = (props) => {
             open
           />
         )}
-    </HasCommand>
+    </HasCommandWrapper>
 </CommandList>
   );
 };

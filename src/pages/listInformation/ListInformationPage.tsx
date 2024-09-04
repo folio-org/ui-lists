@@ -8,8 +8,6 @@ import {
   LoadingPane,
   Pane,
   Paneset,
-  HasCommand,
-  checkScope,
   expandAllSections,
   collapseAllSections
 } from '@folio/stripes/components';
@@ -45,7 +43,12 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { QueryBuilderColumnMetadata } from '../../interfaces';
 
-import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
+import {
+  ConfirmDeleteModal,
+  CompilingLoader,
+  ErrorComponent,
+  HasCommandWrapper
+} from '../../components';
 import { USER_PERMS, handleKeyEvent } from '../../utils';
 import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
 
@@ -233,10 +236,8 @@ export const ListInformationPage: React.FC = () => {
     {
       name: SHORTCUTS_NAMES.EDIT,
       handler: handleKeyEvent(() => {
-        if(!isEditDisabled(conditions)) {
           history.push(`${id}/edit`)
-        }
-      })
+      }, !isEditDisabled(conditions))
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
@@ -250,10 +251,8 @@ export const ListInformationPage: React.FC = () => {
 
 
   return (
-    <HasCommand
+    <HasCommandWrapper
       commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
     >
       <AccordionStatus ref={accordionStatusRef} >
         <TitleManager
@@ -316,6 +315,6 @@ export const ListInformationPage: React.FC = () => {
           </Paneset>
         </TitleManager>
       </AccordionStatus>
-    </HasCommand>
+    </HasCommandWrapper>
   );
 };

@@ -2,12 +2,13 @@ import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
-import { LoadingPane, HasCommand, checkScope } from '@folio/stripes/components';
+import { LoadingPane} from '@folio/stripes/components';
 import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
+import { HasCommandWrapper } from '../../components';
 import { computeRecordTypeOptions } from './helpers';
 import { handleKeyEvent } from '../../utils'
 import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
@@ -62,19 +63,13 @@ export const CreateListPage:FC = () => {
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => {
-        if(!isSaveDisabled) {
-          saveList()
-        }
-      })
+      handler: handleKeyEvent(() => saveList(), !isSaveDisabled)
     }
   ]
 
   return (
-    <HasCommand
+    <HasCommandWrapper
       commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
     >
     <TitleManager
       record={intl.formatMessage({ id:'ui-lists.title.createList' })}
@@ -99,6 +94,6 @@ export const CreateListPage:FC = () => {
         />
       </CreateListLayout>
     </TitleManager>
-    </HasCommand>
+    </HasCommandWrapper>
   );
 };
