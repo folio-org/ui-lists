@@ -181,7 +181,6 @@ export const EditListPage:FC = () => {
     <HasCommandWrapper
       commands={shortcuts}
     >
-      <AccordionStatus ref={accordionStatusRef}>
         <TitleManager
           record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
         >
@@ -201,47 +200,49 @@ export const EditListPage:FC = () => {
             title={t('lists.edit.title', { listName })}
             isSaveButtonDisabled={isSaveDisabled}
           >
-            <AccordionSet>
-              <Accordion
-                data-testid="metaSectionAccordion"
-                label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
-              >
-                <Layout>
-                  <MetaSection
-                    contentId="userInfoRecordMetaContent"
-                    createdDate={listDetails?.createdDate}
-                    createdBy={listDetails?.createdByUsername}
-                    id="userInfoRecordMeta"
-                    lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
-                    lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
-                  />
-                  <MainListInfoForm
-                    onValueChange={onValueChange}
-                    status={state[FIELD_NAMES.STATUS]}
-                    listName={state[FIELD_NAMES.LIST_NAME]}
-                    visibility={state[FIELD_NAMES.VISIBILITY]}
-                    description={state[FIELD_NAMES.DESCRIPTION]}
-                    isLoading={loadingListDetails}
-                    recordTypeLabel={recordTypeLabel}
-                    showInactiveWarning
-                  />
-                </Layout>
-              </Accordion>
-            </AccordionSet>
-            <EditListResultViewer
-              id={id}
-              version={version}
-              fields={listDetails?.fields || []}
-              fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
-              contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
-              entityTypeId={listDetails?.entityTypeId ?? ''}
-              status={state[FIELD_NAMES.STATUS]}
-              listName={state[FIELD_NAMES.LIST_NAME]}
-              visibility={state[FIELD_NAMES.VISIBILITY]}
-              description={state[FIELD_NAMES.DESCRIPTION]}
-              setColumns={setColumns}
-            />
+            <AccordionStatus ref={accordionStatusRef}>
+              <AccordionSet>
+                <Accordion
+                  data-testid="metaSectionAccordion"
+                  label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+                >
+                  <Layout>
+                    <MetaSection
+                      contentId="userInfoRecordMetaContent"
+                      createdDate={listDetails?.createdDate}
+                      createdBy={listDetails?.createdByUsername}
+                      id="userInfoRecordMeta"
+                      lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
+                      lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+                    />
+                    <MainListInfoForm
+                      onValueChange={onValueChange}
+                      status={state[FIELD_NAMES.STATUS]}
+                      listName={state[FIELD_NAMES.LIST_NAME]}
+                      visibility={state[FIELD_NAMES.VISIBILITY]}
+                      description={state[FIELD_NAMES.DESCRIPTION]}
+                      isLoading={loadingListDetails}
+                      recordTypeLabel={recordTypeLabel}
+                      showInactiveWarning
+                    />
+                  </Layout>
+                </Accordion>
+              </AccordionSet>
+              <EditListResultViewer
+                id={id}
+                version={version}
+                fields={listDetails?.fields || []}
+                fqlQuery={listDetails?.fqlQuery ?? ''}
+                userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+                contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+                entityTypeId={listDetails?.entityTypeId ?? ''}
+                status={state[FIELD_NAMES.STATUS]}
+                listName={state[FIELD_NAMES.LIST_NAME]}
+                visibility={state[FIELD_NAMES.VISIBILITY]}
+                description={state[FIELD_NAMES.DESCRIPTION]}
+                setColumns={setColumns}
+              />
+            </AccordionStatus>
             <CancelEditModal
               onCancel={() => {
                 setShowConfirmCancelEditModal(false);
@@ -260,7 +261,6 @@ export const EditListPage:FC = () => {
             />
           </EditListLayout>
         </TitleManager>
-      </AccordionStatus>
     </HasCommandWrapper>
   );
 };

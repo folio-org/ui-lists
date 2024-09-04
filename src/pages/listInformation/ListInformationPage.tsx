@@ -255,43 +255,42 @@ export const ListInformationPage: React.FC = () => {
     }
   ];
 
-
   return (
     <HasCommandWrapper
       commands={shortcuts}
     >
-      <AccordionStatus ref={accordionStatusRef} >
-        <TitleManager
-          page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
-        >
-          <Paneset data-testid="listInformation">
-            <Layer isOpen contentLabel={listName}>
-              <Paneset isRoot>
-                <Pane
-                  dismissible
-                  defaultWidth="fill"
-                  appIcon={<ListAppIcon />}
-                  paneTitle={listName}
-                  paneSub={!isRefreshInProgress ?
-                    t('mainPane.subTitle',
-                      { count: formatNumber(recordCount) })
-                    :
-                    <CompilingLoader />}
-                  lastMenu={<ListInformationMenu
-                    stripes={stripes}
-                    visibleColumns={visibleColumns}
-                    columns={columnControls}
-                    onColumnsChange={handleColumnsChange}
-                    buttonHandlers={buttonHandlers}
-                    conditions={conditions}
-                  />}
-                  onClose={() => history.push(HOME_PAGE_URL)}
-                  subheader={<SuccessRefreshSection
-                    shouldShow={showSuccessRefreshMessage}
-                    recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-                    onViewListClick={onVewListClickHandler}
-                  />}
-                >
+      <TitleManager
+        page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
+      >
+        <Paneset data-testid="listInformation">
+          <Layer isOpen contentLabel={listName}>
+            <Paneset isRoot>
+              <Pane
+                dismissible
+                defaultWidth="fill"
+                appIcon={<ListAppIcon />}
+                paneTitle={listName}
+                paneSub={!isRefreshInProgress ?
+                  t('mainPane.subTitle',
+                    { count: formatNumber(recordCount) })
+                  :
+                  <CompilingLoader />}
+                lastMenu={<ListInformationMenu
+                  stripes={stripes}
+                  visibleColumns={visibleColumns}
+                  columns={columnControls}
+                  onColumnsChange={handleColumnsChange}
+                  buttonHandlers={buttonHandlers}
+                  conditions={conditions}
+                />}
+                onClose={() => history.push(HOME_PAGE_URL)}
+                subheader={<SuccessRefreshSection
+                  shouldShow={showSuccessRefreshMessage}
+                  recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                  onViewListClick={onVewListClickHandler}
+                />}
+              >
+                <AccordionStatus ref={accordionStatusRef} >
                   <AccordionSet>
                     <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
                   </AccordionSet>
@@ -307,20 +306,20 @@ export const ListInformationPage: React.FC = () => {
                       visibleColumns={visibleColumns}
                     />
                   </AccordionSet>
-                </Pane>
-              </Paneset>
-            </Layer>
-            <ConfirmDeleteModal
-              listName={listName}
-              onCancel={() => setShowConfirmDeleteModal(false)}
-              onConfirm={() => {
-                deleteListHandler();
-              }}
-              open={showConfirmDeleteModal}
-            />
-          </Paneset>
-        </TitleManager>
-      </AccordionStatus>
+                </AccordionStatus>
+              </Pane>
+            </Paneset>
+          </Layer>
+          <ConfirmDeleteModal
+            listName={listName}
+            onCancel={() => setShowConfirmDeleteModal(false)}
+            onConfirm={() => {
+              deleteListHandler();
+            }}
+            open={showConfirmDeleteModal}
+          />
+        </Paneset>
+      </TitleManager>
     </HasCommandWrapper>
   );
 };
