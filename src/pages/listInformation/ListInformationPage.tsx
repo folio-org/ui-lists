@@ -234,10 +234,16 @@ export const ListInformationPage: React.FC = () => {
 
   const shortcuts = [
     {
+      name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
+      handler: handleKeyEvent(() => {
+        history.push(`${id}/copy`);
+      }, stripes.hasPerm(USER_PERMS.UpdateList))
+    },
+    {
       name: SHORTCUTS_NAMES.EDIT,
       handler: handleKeyEvent(() => {
           history.push(`${id}/edit`)
-      }, !isEditDisabled(conditions))
+      }, !isEditDisabled(conditions) || stripes.hasPerm(USER_PERMS.UpdateList))
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
