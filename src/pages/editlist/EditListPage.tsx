@@ -32,6 +32,7 @@ import { useEditListFormState, useEditList } from './hooks';
 import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import {SHORTCUTS_NAMES} from "../../keyboard-shortcuts";
+import {handleKeyEvent} from "../../utils";
 
 
 export const EditListPage:FC = () => {
@@ -160,17 +161,17 @@ export const EditListPage:FC = () => {
     return <Loading />;
   }
 
+  const isSaveDisabled = !hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading;
+
+
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.SAVE,
-      handler: (e: KeyboardEvent) => {
-        e.preventDefault()
-        const isDisabled = !hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading;
-
-        if (!isDisabled) {
+      handler: handleKeyEvent(() => {
+        if (!isSaveDisabled) {
           onSave()
         }
-      }
+      })
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
@@ -206,7 +207,7 @@ export const EditListPage:FC = () => {
             onSave={onSave}
             name={listName}
             title={t('lists.edit.title', { listName })}
-            isSaveButtonDisabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
+            isSaveButtonDisabled={isSaveDisabled}
           >
             <AccordionSet>
               <Accordion

@@ -21,6 +21,7 @@ import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
+import {handleKeyEvent} from "../../utils";
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
@@ -92,16 +93,16 @@ export const CopyListPage:FC = () => {
     return <Loading />;
   }
 
+  const isSaveDisabled = hasName || isLoading;
+
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.SAVE,
-      handler: (e: KeyboardEvent) => {
-        e.preventDefault()
-
-        if (!hasName && !isLoading) {
+      handler: handleKeyEvent(() => {
+        if (!isSaveDisabled) {
           onSave()
         }
-      },
+      })
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
@@ -129,7 +130,7 @@ export const CopyListPage:FC = () => {
             onCancel={closeHandler}
             title={t('lists.copy.title', { listName })}
             isLoading={loadingListDetails}
-            isSaveButtonDisabled={hasName || isLoading}
+            isSaveButtonDisabled={isSaveDisabled}
           >
             <AccordionSet>
               <Accordion

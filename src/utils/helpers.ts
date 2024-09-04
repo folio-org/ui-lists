@@ -1,5 +1,11 @@
 import { ListsRequest } from '../interfaces';
-import { RECORD_TYPES_PREFIX, STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
+import {
+  RECORD_TYPES_PREFIX,
+  STATUS_ACTIVE,
+  STATUS_INACTIVE,
+  VISIBILITY_PRIVATE,
+  VISIBILITY_SHARED
+} from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
 
@@ -74,4 +80,12 @@ export const filterByIncludes = (term: string, options: {label: string, value: s
 
 export const getStatusButtonElem = () => {
   return document.getElementById('mainFiltersWrapper')?.getElementsByTagName('button')[0];
+}
+
+export const handleKeyEvent = (callBack: (event?: KeyboardEvent) => void) => {
+  return (event: KeyboardEvent) => {
+    event.preventDefault()
+
+    callBack();
+  }
 }

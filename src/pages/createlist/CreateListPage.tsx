@@ -9,6 +9,7 @@ import { useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { computeRecordTypeOptions } from './helpers';
+import { handleKeyEvent } from '../../utils'
 import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
 import { HOME_PAGE_URL } from '../../constants';
 
@@ -61,13 +62,11 @@ export const CreateListPage:FC = () => {
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.SAVE,
-      handler: (e: KeyboardEvent) => {
-        e.preventDefault();
-
+      handler: handleKeyEvent(() => {
         if(!isSaveDisabled) {
           saveList()
         }
-      }
+      })
     }
   ]
 

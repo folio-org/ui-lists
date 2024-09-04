@@ -26,7 +26,15 @@ import {
   isEmptyList,
   isEditDisabled
 } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns, useRecordTypeLabel } from '../../hooks';
+import {
+  useListDetails,
+  useRefresh,
+  useDeleteList,
+  useCSVExport,
+  useMessages,
+  useVisibleColumns,
+  useRecordTypeLabel
+} from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
@@ -35,11 +43,11 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
+import { QueryBuilderColumnMetadata } from '../../interfaces';
 
 import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
-import { USER_PERMS } from '../../utils';
-import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
+import { USER_PERMS, handleKeyEvent } from '../../utils';
+import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
@@ -224,13 +232,11 @@ export const ListInformationPage: React.FC = () => {
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.EDIT,
-      handler: (e: KeyboardEvent) => {
-        e.preventDefault()
-
+      handler: handleKeyEvent(() => {
         if(!isEditDisabled(conditions)) {
           history.push(`${id}/edit`)
         }
-      }
+      })
     },
     {
       name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,

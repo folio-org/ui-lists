@@ -1,6 +1,10 @@
-import React, {useState} from 'react';
-import {Route, Switch, useHistory} from 'react-router-dom';
-import {AppContextMenu, coreEvents, IfPermission} from '@folio/stripes/core';
+import React, { useState } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import {
+  AppContextMenu,
+  coreEvents,
+  IfPermission
+} from '@folio/stripes/core';
 import {
   checkScope,
   CommandList,
@@ -19,11 +23,15 @@ import {
   MissingAllEntityTypePermissionsPage,
 } from './pages';
 
-import {useRecordTypes} from './hooks';
-import {t} from "./services";
-import {getStatusButtonElem, USER_PERMS} from './utils';
+import { useRecordTypes } from './hooks';
+import { t } from "./services";
+import {
+  getStatusButtonElem,
+  USER_PERMS,
+  handleKeyEvent
+} from './utils';
 
-import {commandsGeneral, SHORTCUTS_NAMES} from "./keyboard-shortcuts";
+import { commandsGeneral, SHORTCUTS_NAMES } from './keyboard-shortcuts';
 
 interface ListsAppProps {
   match: {
@@ -64,11 +72,7 @@ export const ListsApp:IListsApp = (props) => {
   const shortcuts = [
     {
       name: SHORTCUTS_NAMES.GO_TO_FILTER,
-      handler: (e: KeyboardEvent) => {
-        e.preventDefault();
-
-        focusStatus()
-      }
+      handler: handleKeyEvent(focusStatus)
     },
     {
       name: SHORTCUTS_NAMES.OPEN_MODAL,
@@ -76,11 +80,10 @@ export const ListsApp:IListsApp = (props) => {
     },
     {
       name: SHORTCUTS_NAMES.NEW,
-      handler: () => {
-        history.push('/lists/new')
-      }
-    },
-
+      handler: handleKeyEvent(() => {
+        history.push('/lists/new');
+      })
+    }
   ];
 
   const { recordTypes, isLoading } = useRecordTypes();

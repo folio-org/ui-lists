@@ -1,4 +1,4 @@
-import { buildListsUrl, filterByIncludes } from './helpers';
+import { buildListsUrl, filterByIncludes, handleKeyEvent } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
 import {expect} from "@jest/globals";
 
@@ -75,7 +75,7 @@ describe('Helpers', () => {
     });
   });
 
-  describe('filterByCinludes', () => {
+  describe('filterByIncludes', () => {
     it('is expected to filter items', () => {
       const items = [{
         label: 'Loans',
@@ -90,6 +90,22 @@ describe('Helpers', () => {
         label: 'Users',
         value: '123s1233131'
       }])
+    })
+  })
+
+  describe('handleKeyEvent', () => {
+    it('is expected to call preventDefault with callback', () => {
+      const preventDefault = jest.fn();
+      const keyboardEvent = new KeyboardEvent('keydown')
+
+      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault)
+
+      const callback = jest.fn();
+
+      handleKeyEvent(callback)(keyboardEvent);
+
+      expect(callback).toBeCalled();
+      expect(preventDefault).toBeCalled();
     })
   })
 });
