@@ -2,13 +2,14 @@ import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes/components';
+import { LoadingPane, HasCommand, checkScope } from '@folio/stripes/components';
 import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
 import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { computeRecordTypeOptions } from './helpers';
+import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
 import { HOME_PAGE_URL } from '../../constants';
 
 import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
@@ -55,13 +56,33 @@ export const CreateListPage:FC = () => {
     return <LoadingPane />;
   }
 
+  const isSaveDisabled = isRequiredMissing || isLoading;
+
+  const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.SAVE,
+      handler: (e: KeyboardEvent) => {
+        e.preventDefault();
+
+        if(!isSaveDisabled) {
+          saveList()
+        }
+      }
+    }
+  ]
+
   return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
     <TitleManager
       record={intl.formatMessage({ id:'ui-lists.title.createList' })}
     >
       <CreateListLayout
         isSavingInProgress={isLoading}
-        isSaveButtonDisabled={isRequiredMissing || isLoading}
+        isSaveButtonDisabled={isSaveDisabled}
         onSave={saveList}
         onClose={closeViewHandler}
         onCancel={closeViewHandler}
@@ -79,5 +100,6 @@ export const CreateListPage:FC = () => {
         />
       </CreateListLayout>
     </TitleManager>
+    </HasCommand>
   );
 };
