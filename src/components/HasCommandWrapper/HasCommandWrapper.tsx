@@ -9,13 +9,14 @@ type HasCommandWrapperProps = {
   }[]
 }
 
-export const HasCommandWrapper: FC<HasCommandWrapperProps> = ({children, commands}) => {
+export const HasCommandWrapper: FC<HasCommandWrapperProps> = ({ children, commands }) => {
   return (
     <HasCommand
       commands={commands}
       isWithinScope={checkScope}
-      scope={document.body}>
-      {children}
+      scope={document.body}
+    >
+        {children}
     </HasCommand>
-  )
-}
+  );
+};
