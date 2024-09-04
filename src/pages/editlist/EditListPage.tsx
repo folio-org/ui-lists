@@ -6,8 +6,6 @@ import {
   Layout,
   Loading,
   MetaSection,
-  HasCommand,
-  checkScope,
   expandAllSections,
   collapseAllSections
 } from '@folio/stripes/components';
@@ -23,7 +21,7 @@ import {
   ConfirmDeleteModal,
   ErrorComponent,
   EditListResultViewer,
-  EditListLayout
+  EditListLayout, HasCommandWrapper
 } from '../../components';
 
 import { EditListMenu } from './components';
@@ -180,10 +178,8 @@ export const EditListPage:FC = () => {
   ];
 
   return (
-    <HasCommand
+    <HasCommandWrapper
       commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
     >
       <AccordionStatus ref={accordionStatusRef}>
         <TitleManager
@@ -265,6 +261,6 @@ export const EditListPage:FC = () => {
           </EditListLayout>
         </TitleManager>
       </AccordionStatus>
-    </HasCommand>
+    </HasCommandWrapper>
   );
 };

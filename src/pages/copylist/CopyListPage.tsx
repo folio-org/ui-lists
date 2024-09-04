@@ -4,10 +4,8 @@ import {
   Accordion,
   AccordionSet,
   AccordionStatus,
-  checkScope,
   collapseAllSections,
   expandAllSections,
-  HasCommand,
   Layout,
   Loading
 } from '@folio/stripes/components';
@@ -16,7 +14,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
 import { useCreateList, useInitRefresh, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
-import { EditListLayout, EditListResultViewer, ErrorComponent, MainListInfoForm } from '../../components';
+import {
+  EditListLayout,
+  EditListResultViewer,
+  ErrorComponent,
+  HasCommandWrapper,
+  MainListInfoForm
+} from '../../components';
 import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
@@ -111,10 +115,8 @@ export const CopyListPage:FC = () => {
   ];
 
   return (
-    <HasCommand
+    <HasCommandWrapper
       commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
     >
       <AccordionStatus ref={accordionStatusRef}>
         <TitleManager
@@ -165,6 +167,6 @@ export const CopyListPage:FC = () => {
           </EditListLayout>
         </TitleManager>
       </AccordionStatus>
-    </HasCommand>
+    </HasCommandWrapper>
   );
 };
