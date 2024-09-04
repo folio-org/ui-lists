@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import {
-  IfPermission,
+  AppContextMenu,
   coreEvents,
-  AppContextMenu
+  IfPermission
 } from '@folio/stripes/core';
 import {
   CommandList,
-  HasCommand,
   KeyboardShortcutsModal,
   NavList,
   NavListItem,
-  NavListSection,
-  checkScope
+  NavListSection
 } from '@folio/stripes/components';
 import {
   CopyListPage,
@@ -20,14 +18,19 @@ import {
   EditListPage,
   ListInformationPage,
   ListPage,
-  MissingAllEntityTypePermissionsPage,
+  MissingAllEntityTypePermissionsPage
 } from './pages';
+import { HasCommandWrapper } from './components';
 
 import { useRecordTypes } from './hooks';
 import { t } from "./services";
-import { USER_PERMS, getStatusButtonElem } from './utils';
+import {
+  getStatusButtonElem,
+  USER_PERMS,
+  handleKeyEvent
+} from './utils';
 
-import {commandsGeneral} from "./keyboard-shortcuts";
+import { commandsGeneral, SHORTCUTS_NAMES } from './keyboard-shortcuts';
 
 interface ListsAppProps {
   match: {
@@ -49,7 +52,7 @@ export const ListsApp:IListsApp = (props) => {
     setShowKeyboardShortcutsModal(true);
   };
 
-  const focusStatusFilter = (handleToggle?: () => {}) => {
+  const focusStatus = () => {
     const el = getStatusButtonElem();
 
     if (el) {
@@ -57,18 +60,30 @@ export const ListsApp:IListsApp = (props) => {
     } else {
       history.push('/lists');
     }
+  }
+
+  const focusStatusDropdown = (handleToggle?: () => {}) => {
+    focusStatus();
 
     handleToggle?.();
   };
 
   const shortcuts = [
     {
-      name: 'search',
-      handler: focusStatusFilter
+      name: SHORTCUTS_NAMES.GO_TO_FILTER,
+      handler: handleKeyEvent(focusStatus)
     },
     {
-      name: 'openShortcutModal',
-      handler: setShowKeyboardShortcutsModal
+      name: SHORTCUTS_NAMES.OPEN_MODAL,
+      handler: handleKeyEvent(() => {
+        setShowKeyboardShortcutsModal(true);
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.NEW,
+      handler: handleKeyEvent(() => {
+        history.push('/lists/new');
+      })
     }
   ];
 
@@ -80,10 +95,8 @@ export const ListsApp:IListsApp = (props) => {
 
   return (
     <CommandList commands={commandsGeneral}>
-      <HasCommand
+      <HasCommandWrapper
         commands={shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
       >
         <AppContextMenu>
           {(handleToggle: () => {}) => (
@@ -91,7 +104,7 @@ export const ListsApp:IListsApp = (props) => {
               <NavListSection>
                 <NavListItem
                   data-testid="list-app-home"
-                  onClick={() => { focusStatusFilter(handleToggle); }}
+                  onClick={() => { focusStatusDropdown(handleToggle); }}
                 >
                   {t('app-menu.list-app-home')}
                 </NavListItem>
@@ -159,7 +172,7 @@ export const ListsApp:IListsApp = (props) => {
             open
           />
         )}
-    </HasCommand>
+    </HasCommandWrapper>
 </CommandList>
   );
 };

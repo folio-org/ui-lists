@@ -1,10 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import {
   Accordion,
   AccordionSet,
+  AccordionStatus,
   Layout,
   Loading,
   MetaSection,
+  expandAllSections,
+  collapseAllSections
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
@@ -18,7 +21,7 @@ import {
   ConfirmDeleteModal,
   ErrorComponent,
   EditListResultViewer,
-  EditListLayout
+  EditListLayout, HasCommandWrapper
 } from '../../components';
 
 import { EditListMenu } from './components';
@@ -26,11 +29,14 @@ import { useEditListFormState, useEditList } from './hooks';
 
 import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
+import {SHORTCUTS_NAMES} from "../../keyboard-shortcuts";
+import {handleKeyEvent} from "../../utils";
 
 
 export const EditListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
+  const accordionStatusRef = useRef(null);
   const stripes = useStripes();
   const { id }: { id: string } = useParams();
   const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
@@ -153,85 +159,108 @@ export const EditListPage:FC = () => {
     return <Loading />;
   }
 
+  const isSaveDisabled = !hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading;
+
+
+  const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.SAVE,
+      handler: handleKeyEvent(() => onSave(), !isSaveDisabled)
+    },
+    {
+      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
+      handler: (e: KeyboardEvent) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
+      handler: (e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef)
+    }
+  ];
 
   return (
-    <TitleManager
-      record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
+    <HasCommandWrapper
+      commands={shortcuts}
     >
-      <EditListLayout
-        lastMenu={
-          <EditListMenu
-            conditions={conditions}
-            buttonHandlers={buttonHandlers}
-            stripes={stripes}
-          />
-    }
-        isLoading={loadingListDetails}
-        recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-        onCancel={closeHandler}
-        onSave={onSave}
-        name={listName}
-        title={t('lists.edit.title', { listName })}
-        isSaveButtonDisabled={!hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading}
-      >
-        <AccordionSet>
-          <Accordion
-            data-testid="metaSectionAccordion"
-            label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
-          >
-            <Layout>
-              <MetaSection
-                contentId="userInfoRecordMetaContent"
-                createdDate={listDetails?.createdDate}
-                createdBy={listDetails?.createdByUsername}
-                id="userInfoRecordMeta"
-                lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
-                lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+        <TitleManager
+          record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
+        >
+          <EditListLayout
+            lastMenu={
+              <EditListMenu
+                conditions={conditions}
+                buttonHandlers={buttonHandlers}
+                stripes={stripes}
               />
-              <MainListInfoForm
-                onValueChange={onValueChange}
+        }
+            isLoading={loadingListDetails}
+            recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
+            onCancel={closeHandler}
+            onSave={onSave}
+            name={listName}
+            title={t('lists.edit.title', { listName })}
+            isSaveButtonDisabled={isSaveDisabled}
+          >
+            <AccordionStatus ref={accordionStatusRef}>
+              <AccordionSet>
+                <Accordion
+                  data-testid="metaSectionAccordion"
+                  label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+                >
+                  <Layout>
+                    <MetaSection
+                      contentId="userInfoRecordMetaContent"
+                      createdDate={listDetails?.createdDate}
+                      createdBy={listDetails?.createdByUsername}
+                      id="userInfoRecordMeta"
+                      lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
+                      lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+                    />
+                    <MainListInfoForm
+                      onValueChange={onValueChange}
+                      status={state[FIELD_NAMES.STATUS]}
+                      listName={state[FIELD_NAMES.LIST_NAME]}
+                      visibility={state[FIELD_NAMES.VISIBILITY]}
+                      description={state[FIELD_NAMES.DESCRIPTION]}
+                      isLoading={loadingListDetails}
+                      recordTypeLabel={recordTypeLabel}
+                      showInactiveWarning
+                    />
+                  </Layout>
+                </Accordion>
+              </AccordionSet>
+              <EditListResultViewer
+                id={id}
+                version={version}
+                fields={listDetails?.fields || []}
+                fqlQuery={listDetails?.fqlQuery ?? ''}
+                userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+                contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+                entityTypeId={listDetails?.entityTypeId ?? ''}
                 status={state[FIELD_NAMES.STATUS]}
                 listName={state[FIELD_NAMES.LIST_NAME]}
                 visibility={state[FIELD_NAMES.VISIBILITY]}
                 description={state[FIELD_NAMES.DESCRIPTION]}
-                isLoading={loadingListDetails}
-                recordTypeLabel={recordTypeLabel}
-                showInactiveWarning
+                setColumns={setColumns}
               />
-            </Layout>
-          </Accordion>
-        </AccordionSet>
-        <EditListResultViewer
-          id={id}
-          version={version}
-          fields={listDetails?.fields || []}
-          fqlQuery={listDetails?.fqlQuery ?? ''}
-          userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
-          contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
-          entityTypeId={listDetails?.entityTypeId ?? ''}
-          status={state[FIELD_NAMES.STATUS]}
-          listName={state[FIELD_NAMES.LIST_NAME]}
-          visibility={state[FIELD_NAMES.VISIBILITY]}
-          description={state[FIELD_NAMES.DESCRIPTION]}
-          setColumns={setColumns}
-        />
-        <CancelEditModal
-          onCancel={() => {
-            setShowConfirmCancelEditModal(false);
-            backToList();
-          }}
-          onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-          open={showConfirmCancelEditModal}
-        />
-        <ConfirmDeleteModal
-          listName={listName}
-          onCancel={() => setShowConfirmDeleteModal(false)}
-          onConfirm={() => {
-            deleteListHandler();
-          }}
-          open={showConfirmDeleteModal}
-        />
-      </EditListLayout>
-    </TitleManager>
+            </AccordionStatus>
+            <CancelEditModal
+              onCancel={() => {
+                setShowConfirmCancelEditModal(false);
+                backToList();
+              }}
+              onKeepEdit={() => setShowConfirmCancelEditModal(false)}
+              open={showConfirmCancelEditModal}
+            />
+            <ConfirmDeleteModal
+              listName={listName}
+              onCancel={() => setShowConfirmDeleteModal(false)}
+              onConfirm={() => {
+                deleteListHandler();
+              }}
+              open={showConfirmDeleteModal}
+            />
+          </EditListLayout>
+        </TitleManager>
+    </HasCommandWrapper>
   );
 };

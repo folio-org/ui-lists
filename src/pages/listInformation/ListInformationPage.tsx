@@ -1,19 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { uniqueId } from 'lodash';
 import {
+  AccordionStatus,
   AccordionSet,
   Layer,
   LoadingPane,
   Pane,
   Paneset,
+  expandAllSections,
+  collapseAllSections
 } from '@folio/stripes/components';
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
 import { TitleManager, useStripes } from '@folio/stripes/core';
-import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns, useRecordTypeLabel } from '../../hooks';
+import {
+  t,
+  isInactive,
+  isInDraft,
+  isCanned,
+  computeErrorMessage,
+  isEmptyList,
+  isEditDisabled
+} from '../../services';
+import {
+  useListDetails,
+  useRefresh,
+  useDeleteList,
+  useCSVExport,
+  useMessages,
+  useVisibleColumns,
+  useRecordTypeLabel
+} from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
@@ -24,8 +43,14 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { QueryBuilderColumnMetadata } from '../../interfaces';
 
-import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
-import { USER_PERMS } from '../../utils/constants';
+import {
+  ConfirmDeleteModal,
+  CompilingLoader,
+  ErrorComponent,
+  HasCommandWrapper
+} from '../../components';
+import { USER_PERMS, handleKeyEvent } from '../../utils';
+import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
@@ -33,7 +58,7 @@ export const ListInformationPage: React.FC = () => {
   const stripes = useStripes();
   const { formatNumber } = useIntl();
   const { id }: {id: string} = useParams();
-
+  const accordionStatusRef = useRef(null);
 
   const {
     handleColumnsChange,
@@ -207,65 +232,94 @@ export const ListInformationPage: React.FC = () => {
     isListEmpty: isEmptyList(listData)
   };
 
-  return (
-    <TitleManager
-      page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
-    >
-      <Paneset data-testid="listInformation">
-        <Layer isOpen contentLabel={listName}>
-          <Paneset isRoot>
-            <Pane
-              dismissible
-              defaultWidth="fill"
-              appIcon={<ListAppIcon />}
-              paneTitle={listName}
-              paneSub={!isRefreshInProgress ?
-                t('mainPane.subTitle',
-                  { count: formatNumber(recordCount) })
-                :
-                <CompilingLoader />}
-              lastMenu={<ListInformationMenu
-                stripes={stripes}
-                visibleColumns={visibleColumns}
-                columns={columnControls}
-                onColumnsChange={handleColumnsChange}
-                buttonHandlers={buttonHandlers}
-                conditions={conditions}
-              />}
-              onClose={() => history.push(HOME_PAGE_URL)}
-              subheader={<SuccessRefreshSection
-                shouldShow={showSuccessRefreshMessage}
-                recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-                onViewListClick={onVewListClickHandler}
-              />}
-            >
-              <AccordionSet>
-                <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
-              </AccordionSet>
+  const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
+      handler: handleKeyEvent(() => {
+        history.push(`${id}/copy`);
+      }, stripes.hasPerm(USER_PERMS.UpdateList))
+    },
+    {
+      name: SHORTCUTS_NAMES.EDIT,
+      handler: handleKeyEvent(() => {
+          history.push(`${id}/edit`)
+      }, !isEditDisabled(conditions) || stripes.hasPerm(USER_PERMS.UpdateList))
+    },
+    {
+      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
+      handler: (e: KeyboardEvent) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
+      handler: (e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef)
+    }
+  ];
 
-              <AccordionSet>
-                <ListInformationResultViewer
-                  refreshInProgress={isRefreshInProgress}
-                  listID={listData?.id}
-                  userFriendlyQuery={listData?.userFriendlyQuery}
-                  entityTypeId={listData?.entityTypeId}
-                  refreshTrigger={Number(refreshTrigger)}
-                  setColumnControlList={setColumnControls}
+  return (
+    <HasCommandWrapper
+      commands={shortcuts}
+    >
+      <TitleManager
+        page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
+      >
+        <Paneset data-testid="listInformation">
+          <Layer isOpen contentLabel={listName}>
+            <Paneset isRoot>
+              <Pane
+                dismissible
+                defaultWidth="fill"
+                appIcon={<ListAppIcon />}
+                paneTitle={listName}
+                paneSub={!isRefreshInProgress ?
+                  t('mainPane.subTitle',
+                    { count: formatNumber(recordCount) })
+                  :
+                  <CompilingLoader />}
+                lastMenu={<ListInformationMenu
+                  stripes={stripes}
                   visibleColumns={visibleColumns}
-                />
-              </AccordionSet>
-            </Pane>
-          </Paneset>
-        </Layer>
-        <ConfirmDeleteModal
-          listName={listName}
-          onCancel={() => setShowConfirmDeleteModal(false)}
-          onConfirm={() => {
-            deleteListHandler();
-          }}
-          open={showConfirmDeleteModal}
-        />
-      </Paneset>
-    </TitleManager>
+                  columns={columnControls}
+                  onColumnsChange={handleColumnsChange}
+                  buttonHandlers={buttonHandlers}
+                  conditions={conditions}
+                />}
+                onClose={() => history.push(HOME_PAGE_URL)}
+                subheader={<SuccessRefreshSection
+                  shouldShow={showSuccessRefreshMessage}
+                  recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                  onViewListClick={onVewListClickHandler}
+                />}
+              >
+                <AccordionStatus ref={accordionStatusRef} >
+                  <AccordionSet>
+                    <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
+                  </AccordionSet>
+
+                  <AccordionSet>
+                    <ListInformationResultViewer
+                      refreshInProgress={isRefreshInProgress}
+                      listID={listData?.id}
+                      userFriendlyQuery={listData?.userFriendlyQuery}
+                      entityTypeId={listData?.entityTypeId}
+                      refreshTrigger={Number(refreshTrigger)}
+                      setColumnControlList={setColumnControls}
+                      visibleColumns={visibleColumns}
+                    />
+                  </AccordionSet>
+                </AccordionStatus>
+              </Pane>
+            </Paneset>
+          </Layer>
+          <ConfirmDeleteModal
+            listName={listName}
+            onCancel={() => setShowConfirmDeleteModal(false)}
+            onConfirm={() => {
+              deleteListHandler();
+            }}
+            open={showConfirmDeleteModal}
+          />
+        </Paneset>
+      </TitleManager>
+    </HasCommandWrapper>
   );
 };

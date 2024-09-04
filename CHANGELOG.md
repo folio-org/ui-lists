@@ -7,6 +7,7 @@
 * Move stripes-testing in dev dependencies [UILISTS-138]
 * Support export of visible columns and export of all columns [UILISTS-157]
 * Handle updated entity-types API response format [UILISTS-170]
+* Lists app - Implement Shortcut Keys [UILISTS-158]
 
 [UILISTS-170] https://folio-org.atlassian.net/browse/UILISTS-170
 [UILISTS-157] https://folio-org.atlassian.net/browse/UILISTS-157
@@ -14,6 +15,7 @@
 [UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
 [UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
 [UILISTS-145] https://folio-org.atlassian.net/browse/UILISTS-145
+[UILISTS-158] https://folio-org.atlassian.net/browse/UILISTS-158
 
 ## [3.0.2](https://github.com/folio-org/ui-lists/tree/v3.0.2) (2024-08-07)
 * Fix type issue with `<DropdownMenu>` [UILISTS-168]
