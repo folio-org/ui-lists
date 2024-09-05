@@ -92,13 +92,16 @@ describe('Lists app entry point', () => {
   });
 
   it('is expected to clean storage on LOGIN', () => {
-    sessionStorage.setItem('test', '123');
+    sessionStorage.setItem('@folio/lists/test', '123');
+    sessionStorage.setItem('not-lists/test', '123');
 
-    expect(sessionStorage.getItem('test')).toEqual('123')
+    expect(sessionStorage.getItem('@folio/lists/test')).toEqual('123')
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
 
     ListsApp.eventHandler('LOGIN')
 
-    expect(sessionStorage.getItem('test')).toBeFalsy();
+    expect(sessionStorage.getItem('@folio/lists/test')).toBeFalsy();
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
   })
 
   it('is expected to call redicrect function', () => {
