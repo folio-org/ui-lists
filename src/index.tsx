@@ -179,7 +179,11 @@ export const ListsApp:IListsApp = (props) => {
 
 ListsApp.eventHandler = (event: any) => {
   if (event === coreEvents.LOGIN) {
-    sessionStorage.clear()
+    Object.keys(sessionStorage).forEach(key => {
+      if (key.startsWith('@folio/lists')) {
+        sessionStorage.removeItem(key);
+      }
+    });
   }
 };
 
