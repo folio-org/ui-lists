@@ -1,3 +1,4 @@
+import { matchPath } from 'react-router-dom';
 import { ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
@@ -90,4 +91,32 @@ export const handleKeyEvent = (callBack: (event?: KeyboardEvent) => void, condit
       callBack();
     }
   }
+}
+
+export const checkPageUrl = (target: string, current: string, ) => {
+  const match = matchPath(current, {
+    path: target,
+    exact: true,
+    strict: false
+  })
+
+  return !!match
+}
+
+
+
+export const isEditPage = (path: string, pathname: string) => {
+  return checkPageUrl(`${path}/list/:id/edit`, pathname)
+}
+
+export const isCreatePage = (path: string, pathname: string) => {
+  return checkPageUrl(`${path}/list/new`, pathname)
+}
+
+export const isDetailsPage = (path: string, pathname: string) => {
+  return checkPageUrl(`${path}/list/:id`, pathname)
+}
+
+export const isListsPage = (path: string, pathname: string) => {
+  return checkPageUrl(`${path}`, pathname)
 }

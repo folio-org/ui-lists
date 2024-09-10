@@ -5,7 +5,11 @@ export {
   createStorageHashKey,
   filterByIncludes,
   getStatusButtonElem,
-  handleKeyEvent
+  handleKeyEvent,
+  isEditPage,
+  isCreatePage,
+  isDetailsPage,
+  isListsPage
 } from './helpers';
 
 export { USER_PERMS } from './constants';

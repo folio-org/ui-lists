@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Route, Switch, useHistory, matchPath } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import {
   AppContextMenu,
   coreEvents,
@@ -23,12 +23,16 @@ import {
 } from './pages';
 import { HasCommandWrapper } from './components';
 
-import {useMessages, useRecordTypes} from './hooks';
+import { useMessages, useRecordTypes } from './hooks';
 import { t } from "./services";
 import {
   getStatusButtonElem,
   USER_PERMS,
-  handleKeyEvent
+  handleKeyEvent,
+  isEditPage,
+  isCreatePage,
+  isDetailsPage,
+  isListsPage,
 } from './utils';
 
 import { commandsGeneral, AddCommand } from './keyboard-shortcuts';
@@ -73,62 +77,35 @@ export const ListsApp:IListsApp = (props) => {
     handleToggle?.();
   };
 
-  const checkPageUrl = (target: string, current: string, ) => {
-    const match = matchPath(current, {
-      path: target,
-      exact: true,
-      strict: false
-    })
-
-    return !!match
-  }
-
-
-  const isEditPage = (pathname: string) => {
-    return checkPageUrl(`${path}/list/:id/edit`, pathname)
-  }
-
-  const isCreatePage = (pathname: string) => {
-    return checkPageUrl(`${path}/list/new`, pathname)
-  }
-
-  const isDetailsPage = (pathname: string) => {
-    return checkPageUrl(`${path}/list/:id`, pathname)
-  }
-
-  const isListsPage = (pathname: string) => {
-    return checkPageUrl(`${path}`, pathname)
-  }
-
 
   const shortcuts = [
     AddCommand.duplicate(handleKeyEvent(() => {
-      if(!isDetailsPage(currentPathname)) {
+      if(!isDetailsPage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
     AddCommand.save(handleKeyEvent(() => {
-      if(!isEditPage(currentPathname) || !isCreatePage(currentPathname)) {
+      if(!isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
     AddCommand.create(handleKeyEvent(() => {
-      if(!isListsPage(currentPathname)) {
+      if(!isListsPage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
     AddCommand.edit(handleKeyEvent(() => {
-      if(!isDetailsPage(currentPathname)) {
+      if(!isDetailsPage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
     AddCommand.collapseSections(handleKeyEvent(() => {
-      if(isListsPage(currentPathname)) {
+      if(isListsPage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
     AddCommand.expandSections(handleKeyEvent(() => {
-      if(isListsPage(currentPathname)) {
+      if(isListsPage(path, currentPathname)) {
         showErrorMessage({ message: t('commands-error.unavailable') })
       }
     })),
