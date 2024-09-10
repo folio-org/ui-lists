@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+
+import { Route, Switch, useHistory, matchPath } from 'react-router-dom';
 import {
   AppContextMenu,
   coreEvents,
@@ -22,7 +23,7 @@ import {
 } from './pages';
 import { HasCommandWrapper } from './components';
 
-import { useRecordTypes } from './hooks';
+import {useMessages, useRecordTypes} from './hooks';
 import { t } from "./services";
 import {
   getStatusButtonElem,
@@ -44,7 +45,11 @@ type IListsApp = React.FunctionComponent<ListsAppProps> & {
 
 export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
+  const { showErrorMessage } = useMessages();
+
   const history = useHistory();
+  const currentPathname = history.location.pathname;
+
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
   const shortcutModalToggle = (handleToggle: () => {}) => {
@@ -68,7 +73,83 @@ export const ListsApp:IListsApp = (props) => {
     handleToggle?.();
   };
 
+  const checkPageUrl = (target: string, current: string, ) => {
+    const match = matchPath(current, {
+      path: target,
+      exact: true,
+      strict: false
+    })
+
+    return !!match
+  }
+
+
+  const isEditPage = (pathname: string) => {
+    return checkPageUrl(`${path}/list/:id/edit`, pathname)
+  }
+
+  const isCreatePage = (pathname: string) => {
+    return checkPageUrl(`${path}/list/new`, pathname)
+  }
+
+  const isDetailsPage = (pathname: string) => {
+    return checkPageUrl(`${path}/list/:id`, pathname)
+  }
+
+  const isListsPage = (pathname: string) => {
+    return checkPageUrl(`${path}`, pathname)
+  }
+
+
   const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
+      handler: handleKeyEvent(() => {
+        if(!isDetailsPage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.SAVE,
+      handler: handleKeyEvent(() => {
+        if(!isEditPage(currentPathname) || !isCreatePage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.NEW,
+      handler: handleKeyEvent(() => {
+        if(!isListsPage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.EDIT,
+      handler: handleKeyEvent(() => {
+        if(!isDetailsPage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS,
+      handler: handleKeyEvent(() => {
+        if(isListsPage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
+    {
+      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS,
+      handler: handleKeyEvent(() => {
+        if(isListsPage(currentPathname)) {
+          showErrorMessage({ message: t('commands-error.unavailable') })
+        }
+      })
+    },
     {
       name: SHORTCUTS_NAMES.GO_TO_FILTER,
       handler: handleKeyEvent(focusStatus)
@@ -77,12 +158,6 @@ export const ListsApp:IListsApp = (props) => {
       name: SHORTCUTS_NAMES.OPEN_MODAL,
       handler: handleKeyEvent(() => {
         setShowKeyboardShortcutsModal(true);
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.NEW,
-      handler: handleKeyEvent(() => {
-        history.push('/lists/new');
       })
     }
   ];

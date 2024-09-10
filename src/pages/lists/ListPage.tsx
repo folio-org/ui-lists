@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { noop } from 'lodash';
 import {
   Icon,
@@ -27,6 +27,7 @@ import { getStatusButtonElem, handleKeyEvent } from "../../utils";
 import css from './ListPage.module.css';
 
 export const ListPage: React.FC = () => {
+  const history = useHistory();
   const [totalRecords, setTotalRecords] = useState(0);
   const [filterPaneIsVisible, toggleFilterPane] = useLocalStorageToggle(FILTER_PANE_VISIBILITY_KEY, true);
   const { filterConfig, isLoadingConfigData, recordTypeConfig } = useFilterConfig();
@@ -45,6 +46,12 @@ export const ListPage: React.FC = () => {
   useListsFetchedSinceTimestamp();
 
   const shortcuts = [
+    {
+      name: SHORTCUTS_NAMES.NEW,
+      handler: handleKeyEvent(() => {
+        history.push('/lists/new');
+      })
+    },
     {
       name: SHORTCUTS_NAMES.GO_TO_FILTER,
       handler: handleKeyEvent(() => {

@@ -193,5 +193,8 @@
   "commands-label.copy": "Copy",
   "commands-label.cut": "Cut",
   "commands-label.paste": "Paste",
-  "commands-label.find": "Find"
+  "commands-label.find": "Find",
+
+  "commands-error.unavailable": "This action is unavailable",
+  "commands-error.permission": "User does not have permission to take this action"
 }
