@@ -1,6 +1,6 @@
 const path = require('path');
 
-const esModules = ['@folio'].join('|');
+const esModules = ['@folio', 'ky'].join('|');
 
 module.exports = {
   testEnvironment: 'jsdom',
