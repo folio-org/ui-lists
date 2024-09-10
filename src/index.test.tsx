@@ -14,8 +14,14 @@ const useRecordTypesMock = jest.fn();
 
 jest.mock('./hooks', () => ({
   useRecordTypes: jest.fn(() => useRecordTypesMock()),
+  useMessages: jest.fn(() => ({
+    showSuccessMessage: jest.fn(),
+    showErrorMessage: jest.fn(),
+    showInfoMessage: jest.fn(),
+    showWarningMessage: jest.fn(),
+    showMessage: jest.fn()
+  }))
 }));
-
 
 const historyPushMock = jest.fn();
 
@@ -24,10 +30,19 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
+    location: {
+      pathname: 'test'
+    }
+  })),
 }));
 
+const mockShowCallout = jest.fn();
 
+jest.mock('@folio/stripes-acq-components', () => ({
+  useShowCallout: () => mockShowCallout,
+}));
 
 const renderApp = () => {
   return render(
