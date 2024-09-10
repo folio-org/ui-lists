@@ -49,12 +49,16 @@ type IListsApp = React.FunctionComponent<ListsAppProps> & {
 
 export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
-  const { showErrorMessage } = useMessages();
 
   const history = useHistory();
-  const currentPathname = history.location.pathname;
+
+  const { showErrorMessage } = useMessages();
+  const { recordTypes, isLoading } = useRecordTypes();
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
+
+  const currentPathname = history.location.pathname;
+
 
   const shortcutModalToggle = (handleToggle: () => {}) => {
     handleToggle();
@@ -108,8 +112,6 @@ export const ListsApp:IListsApp = (props) => {
       setShowKeyboardShortcutsModal(true);
     }))
   ];
-
-  const { recordTypes, isLoading } = useRecordTypes();
 
   if (!isLoading && recordTypes?.length === 0) {
     return <MissingAllEntityTypePermissionsPage />;
