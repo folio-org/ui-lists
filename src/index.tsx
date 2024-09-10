@@ -77,37 +77,31 @@ export const ListsApp:IListsApp = (props) => {
     handleToggle?.();
   };
 
+  const showCommandErrorConditionally = (condition: boolean) => {
+    if (condition) {
+      showErrorMessage({ message: t('commands-error.unavailable') })
+    }
+  }
 
   const shortcuts = [
     AddCommand.duplicate(handleKeyEvent(() => {
-      if(!isDetailsPage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
     })),
     AddCommand.save(handleKeyEvent(() => {
-      if(!isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      const saveUnavailable = !isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname);
+      showCommandErrorConditionally(saveUnavailable)
     })),
     AddCommand.create(handleKeyEvent(() => {
-      if(!isListsPage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      showCommandErrorConditionally(!isListsPage(path, currentPathname))
     })),
     AddCommand.edit(handleKeyEvent(() => {
-      if(!isDetailsPage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
     })),
     AddCommand.collapseSections(handleKeyEvent(() => {
-      if(isListsPage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      showCommandErrorConditionally(isListsPage(path, currentPathname))
     })),
     AddCommand.expandSections(handleKeyEvent(() => {
-      if(isListsPage(path, currentPathname)) {
-        showErrorMessage({ message: t('commands-error.unavailable') })
-      }
+      showCommandErrorConditionally(isListsPage(path, currentPathname))
     })),
     AddCommand.goToFilter(handleKeyEvent(focusStatus)),
     AddCommand.openModal(handleKeyEvent(() => {
