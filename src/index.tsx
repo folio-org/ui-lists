@@ -31,7 +31,7 @@ import {
   handleKeyEvent
 } from './utils';
 
-import { commandsGeneral, SHORTCUTS_NAMES } from './keyboard-shortcuts';
+import { commandsGeneral, AddCommand } from './keyboard-shortcuts';
 
 interface ListsAppProps {
   match: {
@@ -102,64 +102,40 @@ export const ListsApp:IListsApp = (props) => {
 
 
   const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
-      handler: handleKeyEvent(() => {
-        if(!isDetailsPage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => {
-        if(!isEditPage(currentPathname) || !isCreatePage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.NEW,
-      handler: handleKeyEvent(() => {
-        if(!isListsPage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.EDIT,
-      handler: handleKeyEvent(() => {
-        if(!isDetailsPage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS,
-      handler: handleKeyEvent(() => {
-        if(isListsPage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS,
-      handler: handleKeyEvent(() => {
-        if(isListsPage(currentPathname)) {
-          showErrorMessage({ message: t('commands-error.unavailable') })
-        }
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.GO_TO_FILTER,
-      handler: handleKeyEvent(focusStatus)
-    },
-    {
-      name: SHORTCUTS_NAMES.OPEN_MODAL,
-      handler: handleKeyEvent(() => {
-        setShowKeyboardShortcutsModal(true);
-      })
-    }
+    AddCommand.duplicate(handleKeyEvent(() => {
+      if(!isDetailsPage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.save(handleKeyEvent(() => {
+      if(!isEditPage(currentPathname) || !isCreatePage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.create(handleKeyEvent(() => {
+      if(!isListsPage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.edit(handleKeyEvent(() => {
+      if(!isDetailsPage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.collapseSections(handleKeyEvent(() => {
+      if(isListsPage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.expandSections(handleKeyEvent(() => {
+      if(isListsPage(currentPathname)) {
+        showErrorMessage({ message: t('commands-error.unavailable') })
+      }
+    })),
+    AddCommand.goToFilter(handleKeyEvent(focusStatus)),
+    AddCommand.openModal(handleKeyEvent(() => {
+      setShowKeyboardShortcutsModal(true);
+    }))
   ];
 
   const { recordTypes, isLoading } = useRecordTypes();

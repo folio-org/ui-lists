@@ -50,7 +50,7 @@ import {
   HasCommandWrapper
 } from '../../components';
 import { USER_PERMS, handleKeyEvent } from '../../utils';
-import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
+import { AddCommand } from '../../keyboard-shortcuts';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
@@ -233,26 +233,14 @@ export const ListInformationPage: React.FC = () => {
   };
 
   const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
-      handler: handleKeyEvent(() => {
-        history.push(`${id}/copy`);
-      }, stripes.hasPerm(USER_PERMS.UpdateList))
-    },
-    {
-      name: SHORTCUTS_NAMES.EDIT,
-      handler: handleKeyEvent(() => {
-          history.push(`${id}/edit`)
-      }, !isEditDisabled(conditions) || stripes.hasPerm(USER_PERMS.UpdateList))
-    },
-    {
-      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
-      handler: (e: KeyboardEvent) => expandAllSections(e, accordionStatusRef),
-    },
-    {
-      name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
-      handler: (e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef)
-    }
+    AddCommand.duplicate(handleKeyEvent(() => {
+      history.push(`${id}/copy`);
+    }, stripes.hasPerm(USER_PERMS.UpdateList))),
+    AddCommand.edit(handleKeyEvent(() => {
+      history.push(`${id}/edit`)
+    }, !isEditDisabled(conditions) || stripes.hasPerm(USER_PERMS.UpdateList))),
+    AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
+    AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];
 
   return (

@@ -35,7 +35,7 @@ export const commandsGeneral = [
   shortcutItem('commands-label.open-shortcuts-modal', SHORTCUTS_NAMES.OPEN_MODAL , 'mod + alt + k'),
 ];
 
-export const ADD_KEY_COMMANDS = {
+export const AddCommand = {
   create: (handler: (event: KeyboardEvent) => void) => ({
     name: SHORTCUTS_NAMES.NEW,
     handler

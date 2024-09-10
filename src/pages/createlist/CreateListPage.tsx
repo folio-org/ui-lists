@@ -11,7 +11,7 @@ import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
 import { computeRecordTypeOptions } from './helpers';
 import { handleKeyEvent } from '../../utils'
-import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
+import { AddCommand } from '../../keyboard-shortcuts';
 import { HOME_PAGE_URL } from '../../constants';
 
 import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
@@ -61,10 +61,7 @@ export const CreateListPage:FC = () => {
   const isSaveDisabled = isRequiredMissing || isLoading;
 
   const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => saveList(), !isSaveDisabled)
-    }
+    AddCommand.save(handleKeyEvent(() => saveList(), !isSaveDisabled))
   ]
 
   return (

@@ -29,8 +29,8 @@ import { useEditListFormState, useEditList } from './hooks';
 
 import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
-import {SHORTCUTS_NAMES} from "../../keyboard-shortcuts";
-import {handleKeyEvent} from "../../utils";
+import { AddCommand } from '../../keyboard-shortcuts';
+import { handleKeyEvent } from '../../utils';
 
 
 export const EditListPage:FC = () => {
@@ -163,18 +163,9 @@ export const EditListPage:FC = () => {
 
 
   const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => onSave(), !isSaveDisabled)
-    },
-    {
-      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
-      handler: (e: KeyboardEvent) => expandAllSections(e, accordionStatusRef),
-    },
-    {
-      name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
-      handler: (e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef)
-    }
+    AddCommand.save(handleKeyEvent(() => onSave(), !isSaveDisabled)),
+    AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
+    AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];
 
   return (
