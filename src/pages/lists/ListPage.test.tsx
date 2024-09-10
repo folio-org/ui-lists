@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 // @ts-ignore
-import { runAxeTest } from "@folio/stripes-testing";
+import { runAxeTest } from '@folio/stripes-testing';
 import { waitFor, screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { IfPermission } from '@folio/stripes/core';
