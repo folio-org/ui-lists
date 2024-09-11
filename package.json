@@ -177,5 +177,8 @@
         "title": "Lists"
       }
     ]
+  },
+  "resolutions": {
+    "typescript": "5.5.4"
   }
 }
