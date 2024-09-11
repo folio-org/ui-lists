@@ -8,7 +8,9 @@
 * Support export of visible columns and export of all columns [UILISTS-157]
 * Handle updated entity-types API response format [UILISTS-170]
 * Lists app - Implement Shortcut Keys [UILISTS-158]
+* Add resolution entry in to package.json to pin TS version [UILISTS-179]
 
+[UILISTS-179] https://folio-org.atlassian.net/browse/UILISTS-179
 [UILISTS-170] https://folio-org.atlassian.net/browse/UILISTS-170
 [UILISTS-157] https://folio-org.atlassian.net/browse/UILISTS-157
 [UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
