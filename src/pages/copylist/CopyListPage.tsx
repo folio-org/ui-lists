@@ -12,7 +12,14 @@ import {
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
-import { useCreateList, useInitRefresh, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
+import {
+  useCreateList,
+  useInitRefresh,
+  useKeyCommandsMessages,
+  useListDetails,
+  useMessages,
+  useRecordTypeLabel
+} from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import {
   EditListLayout,
@@ -25,12 +32,13 @@ import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyEvent } from '../../utils';
+import { handleKeyCommand } from '../../utils';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
   const { id }: {id: string} = useParams();
+  const { showCommandError } = useKeyCommandsMessages();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
   const recordTypeLabel = useRecordTypeLabel(listDetails?.entityTypeId);
   const accordionStatusRef = useRef(null);
@@ -100,7 +108,11 @@ export const CopyListPage:FC = () => {
   const isSaveDisabled = hasName || isLoading;
 
   const shortcuts = [
-    AddCommand.save(handleKeyEvent(() => onSave(), !isSaveDisabled)),
+    AddCommand.save(handleKeyCommand(
+      () => onSave(),
+      !isSaveDisabled,
+      () => showCommandError()
+    )),
     AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
     AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];

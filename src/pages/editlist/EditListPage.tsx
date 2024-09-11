@@ -9,11 +9,18 @@ import {
   expandAllSections,
   collapseAllSections
 } from '@folio/stripes/components';
-import { TitleManager, useStripes } from '@folio/stripes/core';
+import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
-import { useCSVExport, useDeleteList, useListDetails, useMessages, useRecordTypeLabel } from '../../hooks';
+import {
+  useCSVExport,
+  useDeleteList,
+  useKeyCommandsMessages,
+  useListDetails,
+  useMessages,
+  useRecordTypeLabel
+} from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
 import {
   MainListInfoForm,
@@ -27,21 +34,21 @@ import {
 import { EditListMenu } from './components';
 import { useEditListFormState, useEditList } from './hooks';
 
-import {FIELD_NAMES, QueryBuilderColumnMetadata} from '../../interfaces';
+import { FIELD_NAMES, QueryBuilderColumnMetadata } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyEvent } from '../../utils';
+import { handleKeyCommand } from '../../utils';
 
 
 export const EditListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
   const accordionStatusRef = useRef(null);
-  const stripes = useStripes();
   const { id }: { id: string } = useParams();
   const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
 
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
+  const { showCommandError } = useKeyCommandsMessages();
 
   const listName = listDetails?.name ?? '';
 
@@ -163,7 +170,11 @@ export const EditListPage:FC = () => {
 
 
   const shortcuts = [
-    AddCommand.save(handleKeyEvent(() => onSave(), !isSaveDisabled)),
+    AddCommand.save(handleKeyCommand(
+      () => onSave(),
+      isSaveDisabled,
+      () => showCommandError()
+      )),
     AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
     AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];
@@ -180,7 +191,6 @@ export const EditListPage:FC = () => {
               <EditListMenu
                 conditions={conditions}
                 buttonHandlers={buttonHandlers}
-                stripes={stripes}
               />
         }
             isLoading={loadingListDetails}

@@ -6,11 +6,11 @@ import { LoadingPane} from '@folio/stripes/components';
 import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
-import { useMessages, useRecordTypes, useCreateList } from '../../hooks';
+import {useMessages, useRecordTypes, useCreateList, useKeyCommandsMessages} from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
 import { computeRecordTypeOptions } from './helpers';
-import { handleKeyEvent } from '../../utils'
+import { handleKeyCommand } from '../../utils'
 import { AddCommand } from '../../keyboard-shortcuts';
 import { HOME_PAGE_URL } from '../../constants';
 
@@ -22,6 +22,8 @@ export const CreateListPage:FC = () => {
   const { state, onValueChange, hasChanges } = useCreateListFormState();
   const { isLoading: isLoadingRecords, recordTypes = [] } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
+  const { showCommandError } = useKeyCommandsMessages();
+
   const { saveList, isLoading } = useCreateList({
     listObject: state,
     onError: (error) => {
@@ -61,7 +63,11 @@ export const CreateListPage:FC = () => {
   const isSaveDisabled = isRequiredMissing || isLoading;
 
   const shortcuts = [
-    AddCommand.save(handleKeyEvent(() => saveList(), !isSaveDisabled))
+    AddCommand.save(handleKeyCommand(
+      () => saveList(),
+      !isSaveDisabled,
+      () => showCommandError()
+    ))
   ]
 
   return (

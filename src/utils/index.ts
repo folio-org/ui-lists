@@ -5,7 +5,7 @@ export {
   createStorageHashKey,
   filterByIncludes,
   getStatusButtonElem,
-  handleKeyEvent,
+  handleKeyCommand,
   isEditPage,
   isCreatePage,
   isDetailsPage,

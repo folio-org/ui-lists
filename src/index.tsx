@@ -23,12 +23,15 @@ import {
 } from './pages';
 import { HasCommandWrapper } from './components';
 
-import { useMessages, useRecordTypes } from './hooks';
+import {
+  useRecordTypes,
+  useKeyCommandsMessages
+} from './hooks';
 import { t } from "./services";
 import {
   getStatusButtonElem,
   USER_PERMS,
-  handleKeyEvent,
+  handleKeyCommand,
   isEditPage,
   isCreatePage,
   isDetailsPage,
@@ -51,8 +54,7 @@ export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
 
   const history = useHistory();
-
-  const { showErrorMessage } = useMessages();
+  const { actionUnavailableError } = useKeyCommandsMessages();
   const { recordTypes, isLoading } = useRecordTypes();
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
@@ -83,32 +85,32 @@ export const ListsApp:IListsApp = (props) => {
 
   const showCommandErrorConditionally = (condition: boolean) => {
     if (condition) {
-      showErrorMessage({ message: t('commands-error.unavailable') })
+      actionUnavailableError();
     }
   }
 
   const shortcuts = [
-    AddCommand.duplicate(handleKeyEvent(() => {
+    AddCommand.duplicate(handleKeyCommand(() => {
       showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
     })),
-    AddCommand.save(handleKeyEvent(() => {
+    AddCommand.save(handleKeyCommand(() => {
       const saveUnavailable = !isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname);
       showCommandErrorConditionally(saveUnavailable)
     })),
-    AddCommand.create(handleKeyEvent(() => {
+    AddCommand.create(handleKeyCommand(() => {
       showCommandErrorConditionally(!isListsPage(path, currentPathname))
     })),
-    AddCommand.edit(handleKeyEvent(() => {
+    AddCommand.edit(handleKeyCommand(() => {
       showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
     })),
-    AddCommand.collapseSections(handleKeyEvent(() => {
+    AddCommand.collapseSections(handleKeyCommand(() => {
       showCommandErrorConditionally(isListsPage(path, currentPathname))
     })),
-    AddCommand.expandSections(handleKeyEvent(() => {
+    AddCommand.expandSections(handleKeyCommand(() => {
       showCommandErrorConditionally(isListsPage(path, currentPathname))
     })),
-    AddCommand.goToFilter(handleKeyEvent(focusStatus)),
-    AddCommand.openModal(handleKeyEvent(() => {
+    AddCommand.goToFilter(handleKeyCommand(focusStatus)),
+    AddCommand.openModal(handleKeyCommand(() => {
       setShowKeyboardShortcutsModal(true);
     }))
   ];

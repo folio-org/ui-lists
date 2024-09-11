@@ -1,4 +1,4 @@
-import { buildListsUrl, filterByIncludes, handleKeyEvent } from './helpers';
+import { buildListsUrl, filterByIncludes, handleKeyCommand } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
 import {expect} from "@jest/globals";
 
@@ -102,7 +102,7 @@ describe('Helpers', () => {
 
       const callback = jest.fn();
 
-      handleKeyEvent(callback)(keyboardEvent);
+      handleKeyCommand(callback)(keyboardEvent);
 
       expect(callback).toBeCalled();
       expect(preventDefault).toBeCalled();
@@ -116,7 +116,7 @@ describe('Helpers', () => {
 
       const callback = jest.fn();
 
-      handleKeyEvent(callback, false)(keyboardEvent);
+      handleKeyCommand(callback, false)(keyboardEvent);
 
       expect(callback).not.toBeCalled();
       expect(preventDefault).toBeCalled();
