@@ -79,7 +79,7 @@
     "@folio/plugin-query-builder": "^1.1.2",
     "@folio/stripes-acq-components": "~5.1.0",
     "date-fns": "^2.29.3",
-    "ky": "0.33.3",
+    "ky": "^0.33.2",
     "lodash": "^4.17.21",
     "prop-types": "^15.6.0"
   },
