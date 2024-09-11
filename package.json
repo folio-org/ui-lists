@@ -78,7 +78,6 @@
   "dependencies": {
     "@folio/plugin-query-builder": "^1.1.2",
     "@folio/stripes-acq-components": "~5.1.0",
-    "@folio/stripes-components": "^12.1.2",
     "date-fns": "^2.29.3",
     "ky": "0.33.3",
     "lodash": "^4.17.21",
