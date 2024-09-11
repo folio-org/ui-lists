@@ -1,9 +1,9 @@
-import { KyInstance } from 'ky/distribution/types/ky';
+import ky from 'ky';
 // @ts-ignore:next-line
 import { downloadBase64 } from '@folio/stripes-acq-components';
 
 type downloadCSVArguments = {
-  ky: KyInstance,
+  ky: typeof ky,
   listId: string,
   exportId: string,
   listName: string

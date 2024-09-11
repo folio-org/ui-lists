@@ -1,5 +1,5 @@
 import { useOkapiKy } from '@folio/stripes/core';
-import { KyInstance } from 'ky/distribution/types/ky';
+import Ky from 'ky';
 import { ListExport } from '../../interfaces';
 import { useMessages } from '../useMessages';
 import { t } from '../../services';
@@ -8,8 +8,7 @@ import { POLLING_DELAY } from './constants';
 import { isSuccess, isFailed, isCancelled } from './helpers';
 
 export const useCSVExportPolling = (listName: string, clearStorage: () => void) => {
-  // @ts-ignore:next-line
-  const ky = useOkapiKy() as KyInstance;
+  const ky = useOkapiKy() as typeof Ky;
   const { showSuccessMessage, showErrorMessage } = useMessages();
 
   const poll = (listID: string, exportId: string) => {
