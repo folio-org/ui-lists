@@ -112,7 +112,8 @@ export const ListPage: React.FC = () => {
         </Pane>
       }
       <Pane
-        defaultWidth="fill"
+        key={String(filterPaneIsVisible)}
+        defaultWidth={filterPaneIsVisible ? '80%' : 'fill'}
         paneTitle={t('mainPane.title')}
         paneSub={t('mainPane.subTitle', { count: totalRecords })}
         appIcon={<ListAppIcon />}
