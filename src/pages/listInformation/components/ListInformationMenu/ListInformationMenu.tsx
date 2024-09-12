@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
@@ -53,8 +53,6 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const filteredColumns = columns.filter(item => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
   const allDisabled = columns.every(item => item.disabled);
-
-  if (!columns.length) return null;
 
   const cancelRefreshButton = {
     label: 'cancel-refresh',
@@ -142,22 +140,28 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   return (
     <ActionMenu actionButtons={actionButtons}>
-      <TextField
-        value={columnSearch}
-        onChange={e => setColumnSearch(e.target.value)}
-        aria-label={intl.formatMessage({ id:'ui-list.pane.dropdown.ariaLabel.columnFilter' })}
-        disabled={allDisabled}
-        placeholder={intl.formatMessage({ id: 'ui-list.pane.dropdown.search.placeholder' })}
-      />
-      <Headline size="medium" margin="none" tag="p" faded>
-        {t('pane.dropdown.show-columns')}
-      </Headline>
-      <CheckboxFilter
-        dataOptions={filteredColumns}
-        name="ui-lists-columns-filter"
-        onChange={onColumnsChange}
-        selectedValues={visibleColumns ?? []}
-      />
+      {
+        isEmpty(columns) && (
+          <>
+            <TextField
+              value={columnSearch}
+              onChange={e => setColumnSearch(e.target.value)}
+              aria-label={intl.formatMessage({ id:'ui-list.pane.dropdown.ariaLabel.columnFilter' })}
+              disabled={allDisabled}
+              placeholder={intl.formatMessage({ id: 'ui-list.pane.dropdown.search.placeholder' })}
+            />
+            <Headline size="medium" margin="none" tag="p" faded>
+              {t('pane.dropdown.show-columns')}
+            </Headline>
+            <CheckboxFilter
+              dataOptions={filteredColumns}
+              name="ui-lists-columns-filter"
+              onChange={onColumnsChange}
+              selectedValues={visibleColumns ?? []}
+            />
+          </>
+        )
+      }
     </ActionMenu>
   );
 };
