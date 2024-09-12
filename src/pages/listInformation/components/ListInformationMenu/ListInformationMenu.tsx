@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { useIntl } from 'react-intl';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
-  Headline
+  Headline,
+  TextField
 } from '@folio/stripes/components';
-import { t,
+import {
+  t,
   ActionButton,
   isEditDisabled,
   isRefreshDisabled,
@@ -11,10 +15,11 @@ import { t,
   isCancelRefreshDisabled,
   isCancelExportDisabled,
   isExportDisabled,
-  DisablingConditions } from '../../../../services';
+  DisablingConditions
+} from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
-import {useListAppPermissions} from "../../../../hooks";
+import { useListAppPermissions } from "../../../../hooks";
 
 export interface ListInformationMenuProps {
   columns: QueryBuilderColumnMetadata[]
@@ -42,6 +47,15 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 }) => {
   const permissions = useListAppPermissions();
   const { isExportInProgress, isRefreshInProgress } = conditions;
+
+  const intl = useIntl();
+  const [columnSearch, setColumnSearch] = useState('');
+
+  const filteredColumns = columns.filter(item => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
+  const allDisabled = columns.every(item => item.disabled);
+
+  if (!columns.length) return null;
+
   const cancelRefreshButton = {
     label: 'cancel-refresh',
     icon: ICONS.refresh,
@@ -128,11 +142,18 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   return (
     <ActionMenu actionButtons={actionButtons}>
+      <TextField
+        value={columnSearch}
+        onChange={e => setColumnSearch(e.target.value)}
+        aria-label={intl.formatMessage({ id:'ui-list.pane.dropdown.ariaLabel.columnFilter' })}
+        disabled={allDisabled}
+        placeholder={intl.formatMessage({ id: 'ui-list.pane.dropdown.search.placeholder' })}
+      />
       <Headline size="medium" margin="none" tag="p" faded>
         {t('pane.dropdown.show-columns')}
       </Headline>
       <CheckboxFilter
-        dataOptions={columns}
+        dataOptions={filteredColumns}
         name="ui-lists-columns-filter"
         onChange={onColumnsChange}
         selectedValues={visibleColumns ?? []}
