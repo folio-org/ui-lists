@@ -7,21 +7,11 @@ import { MemoryRouter } from 'react-router';
 import { ListsApp } from '.';
 import { queryClient } from '../test/utils';
 import { HOME_PAGE_URL } from './constants';
+import * as hooks from './hooks';
 
 const useRecordTypesMock = jest.fn();
 
-
-
-jest.mock('./hooks', () => ({
-  useRecordTypes: jest.fn(() => useRecordTypesMock()),
-  useMessages: jest.fn(() => ({
-    showSuccessMessage: jest.fn(),
-    showErrorMessage: jest.fn(),
-    showInfoMessage: jest.fn(),
-    showWarningMessage: jest.fn(),
-    showMessage: jest.fn()
-  }))
-}));
+jest.spyOn(hooks, 'useRecordTypes').mockImplementation(jest.fn(() => useRecordTypesMock()));
 
 const historyPushMock = jest.fn();
 
