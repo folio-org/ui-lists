@@ -8,6 +8,7 @@ import {
 } from '@folio/stripes/components';
 import {
   t,
+  tString,
   ActionButton,
   isEditDisabled,
   isRefreshDisabled,
@@ -141,14 +142,14 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   return (
     <ActionMenu actionButtons={actionButtons}>
       {
-        isEmpty(columns) && (
+        !isEmpty(columns) && (
           <>
             <TextField
               value={columnSearch}
               onChange={e => setColumnSearch(e.target.value)}
-              aria-label={intl.formatMessage({ id:'ui-list.pane.dropdown.ariaLabel.columnFilter' })}
+              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter' )}
               disabled={allDisabled}
-              placeholder={intl.formatMessage({ id: 'ui-list.pane.dropdown.search.placeholder' })}
+              placeholder={tString(intl, 'pane.dropdown.search.placeholder' )}
             />
             <Headline size="medium" margin="none" tag="p" faded>
               {t('pane.dropdown.show-columns')}
