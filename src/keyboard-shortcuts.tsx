@@ -34,3 +34,38 @@ export const commandsGeneral = [
   shortcutItem('commands-label.go-to-filter-pane', SHORTCUTS_NAMES.GO_TO_FILTER , 'mod + alt + h'),
   shortcutItem('commands-label.open-shortcuts-modal', SHORTCUTS_NAMES.OPEN_MODAL , 'mod + alt + k'),
 ];
+
+export const AddCommand = {
+  create: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.NEW,
+    handler
+  }),
+  edit: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.EDIT,
+    handler
+  }),
+  save: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.SAVE,
+    handler
+  }),
+  duplicate: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.DUPLICATE_RECORD,
+    handler
+  }),
+  expandSections: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS,
+    handler
+  }),
+  collapseSections: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
+    handler
+  }),
+  goToFilter: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.GO_TO_FILTER,
+    handler
+  }),
+  openModal: (handler: (event: KeyboardEvent) => void) => ({
+    name: SHORTCUTS_NAMES.OPEN_MODAL,
+    handler
+  })
+}

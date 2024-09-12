@@ -7,15 +7,11 @@ import { MemoryRouter } from 'react-router';
 import { ListsApp } from '.';
 import { queryClient } from '../test/utils';
 import { HOME_PAGE_URL } from './constants';
+import * as hooks from './hooks';
 
 const useRecordTypesMock = jest.fn();
 
-
-
-jest.mock('./hooks', () => ({
-  useRecordTypes: jest.fn(() => useRecordTypesMock()),
-}));
-
+jest.spyOn(hooks, 'useRecordTypes').mockImplementation(jest.fn(() => useRecordTypesMock()));
 
 const historyPushMock = jest.fn();
 
@@ -24,10 +20,19 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
+    location: {
+      pathname: 'test'
+    }
+  })),
 }));
 
+const mockShowCallout = jest.fn();
 
+jest.mock('@folio/stripes-acq-components', () => ({
+  useShowCallout: () => mockShowCallout,
+}));
 
 const renderApp = () => {
   return render(

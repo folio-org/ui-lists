@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Pluggable } from '@folio/stripes/core';
 // @ts-ignore
 import { runAxeTest } from '@folio/stripes-testing';
@@ -6,7 +8,6 @@ import { QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { queryClient } from '../../../test/utils';
 import { ConfigureQuery, ConfigureQueryProps } from './ConfigureQuery';
-import React from "react";
 
 const PluggableMock = Pluggable as unknown as jest.Mock;
 

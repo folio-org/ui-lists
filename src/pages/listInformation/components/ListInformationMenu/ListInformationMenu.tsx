@@ -14,10 +14,9 @@ import { t,
   DisablingConditions } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
-import { USER_PERMS } from '../../../../utils/constants';
+import {useListAppPermissions} from "../../../../hooks";
 
 export interface ListInformationMenuProps {
-  stripes: any,
   columns: QueryBuilderColumnMetadata[]
   visibleColumns?: string[] | null,
   buttonHandlers: {
@@ -35,13 +34,13 @@ export interface ListInformationMenuProps {
 }
 
 export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
-  stripes,
   columns,
   visibleColumns,
   conditions,
   buttonHandlers,
   onColumnsChange,
 }) => {
+  const permissions = useListAppPermissions();
   const { isExportInProgress, isRefreshInProgress } = conditions;
   const cancelRefreshButton = {
     label: 'cancel-refresh',
@@ -88,11 +87,11 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const actionButtons:ActionButton[] = [];
 
-  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+  if (permissions.canRefresh) {
     actionButtons.push(refreshSlot);
   }
 
-  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+  if (permissions.canUpdate) {
     actionButtons.push(
       {
         label: 'edit',
@@ -103,7 +102,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     );
   }
 
-  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+  if (permissions.canUpdate) {
     actionButtons.push(
       {
         label: 'copy',
@@ -114,7 +113,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     );
   }
 
-  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+  if (permissions.canDelete) {
     actionButtons.push({
       label: 'delete',
       icon: ICONS.trash,
@@ -123,7 +122,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     });
   }
 
-  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+  if (permissions.canExport) {
     actionButtons.push(...exportSlot);
   }
 

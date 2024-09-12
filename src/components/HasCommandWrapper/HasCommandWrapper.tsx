@@ -16,7 +16,7 @@ export const HasCommandWrapper: FC<HasCommandWrapperProps> = ({ children, comman
       isWithinScope={checkScope}
       scope={document.body}
     >
-        {children}
+      {children}
     </HasCommand>
   );
 };

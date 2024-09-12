@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { Route, Switch, useHistory } from 'react-router-dom';
 import {
   AppContextMenu,
@@ -22,15 +23,22 @@ import {
 } from './pages';
 import { HasCommandWrapper } from './components';
 
-import { useRecordTypes } from './hooks';
+import {
+  useRecordTypes,
+  useKeyCommandsMessages
+} from './hooks';
 import { t } from "./services";
 import {
   getStatusButtonElem,
   USER_PERMS,
-  handleKeyEvent
+  handleKeyCommand,
+  isEditPage,
+  isCreatePage,
+  isDetailsPage,
+  isListsPage,
 } from './utils';
 
-import { commandsGeneral, SHORTCUTS_NAMES } from './keyboard-shortcuts';
+import { commandsGeneral, AddCommand } from './keyboard-shortcuts';
 
 interface ListsAppProps {
   match: {
@@ -44,8 +52,15 @@ type IListsApp = React.FunctionComponent<ListsAppProps> & {
 
 export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
+
   const history = useHistory();
+  const { actionUnavailableError } = useKeyCommandsMessages();
+  const { recordTypes, isLoading } = useRecordTypes();
+
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
+
+  const currentPathname = history.location.pathname;
+
 
   const shortcutModalToggle = (handleToggle: () => {}) => {
     handleToggle();
@@ -68,26 +83,37 @@ export const ListsApp:IListsApp = (props) => {
     handleToggle?.();
   };
 
-  const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.GO_TO_FILTER,
-      handler: handleKeyEvent(focusStatus)
-    },
-    {
-      name: SHORTCUTS_NAMES.OPEN_MODAL,
-      handler: handleKeyEvent(() => {
-        setShowKeyboardShortcutsModal(true);
-      })
-    },
-    {
-      name: SHORTCUTS_NAMES.NEW,
-      handler: handleKeyEvent(() => {
-        history.push('/lists/new');
-      })
+  const showCommandErrorConditionally = (condition: boolean) => {
+    if (condition) {
+      actionUnavailableError();
     }
-  ];
+  }
 
-  const { recordTypes, isLoading } = useRecordTypes();
+  const shortcuts = [
+    AddCommand.duplicate(handleKeyCommand(() => {
+      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
+    })),
+    AddCommand.save(handleKeyCommand(() => {
+      const saveUnavailable = !isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname);
+      showCommandErrorConditionally(saveUnavailable)
+    })),
+    AddCommand.create(handleKeyCommand(() => {
+      showCommandErrorConditionally(!isListsPage(path, currentPathname))
+    })),
+    AddCommand.edit(handleKeyCommand(() => {
+      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
+    })),
+    AddCommand.collapseSections(handleKeyCommand(() => {
+      showCommandErrorConditionally(isListsPage(path, currentPathname))
+    })),
+    AddCommand.expandSections(handleKeyCommand(() => {
+      showCommandErrorConditionally(isListsPage(path, currentPathname))
+    })),
+    AddCommand.goToFilter(handleKeyCommand(focusStatus)),
+    AddCommand.openModal(handleKeyCommand(() => {
+      setShowKeyboardShortcutsModal(true);
+    }))
+  ];
 
   if (!isLoading && recordTypes?.length === 0) {
     return <MissingAllEntityTypePermissionsPage />;

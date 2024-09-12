@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
+// @ts-ignore
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { ListAppIcon } from './ListAppIcon';
-// @ts-ignore
-import { runAxeTest } from "@folio/stripes-testing";
 
 describe('ListAppIcon', () => {
   beforeEach(() => {

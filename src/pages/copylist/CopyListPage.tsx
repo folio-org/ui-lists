@@ -12,7 +12,14 @@ import {
 import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
-import { useCreateList, useInitRefresh, useListDetails, useMessages, useRecordTypeLabel} from '../../hooks';
+import {
+  useCreateList,
+  useInitRefresh,
+  useKeyCommandsMessages,
+  useListDetails,
+  useMessages,
+  useRecordTypeLabel
+} from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import {
   EditListLayout,
@@ -24,13 +31,14 @@ import {
 import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
-import { SHORTCUTS_NAMES } from "../../keyboard-shortcuts";
-import {handleKeyEvent} from "../../utils";
+import { AddCommand } from '../../keyboard-shortcuts';
+import { handleKeyCommand } from '../../utils';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
   const { id }: {id: string} = useParams();
+  const { showCommandError } = useKeyCommandsMessages();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
   const recordTypeLabel = useRecordTypeLabel(listDetails?.entityTypeId);
   const accordionStatusRef = useRef(null);
@@ -100,18 +108,13 @@ export const CopyListPage:FC = () => {
   const isSaveDisabled = hasName || isLoading;
 
   const shortcuts = [
-    {
-      name: SHORTCUTS_NAMES.SAVE,
-      handler: handleKeyEvent(() => onSave(), !isSaveDisabled)
-    },
-    {
-      name: SHORTCUTS_NAMES.EXPAND_ALL_SECTIONS ,
-      handler: (e: KeyboardEvent) => expandAllSections(e, accordionStatusRef),
-    },
-    {
-      name: SHORTCUTS_NAMES.COLLAPSE_ALL_SECTIONS,
-      handler: (e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef)
-    }
+    AddCommand.save(handleKeyCommand(
+      () => onSave(),
+      !isSaveDisabled,
+      () => showCommandError()
+    )),
+    AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
+    AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];
 
   return (
