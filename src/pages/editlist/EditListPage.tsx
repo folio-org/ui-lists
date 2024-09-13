@@ -60,7 +60,7 @@ export const EditListPage:FC = () => {
     listId: id,
     listName,
     listDetails,
-    columns: columns.map(({value}) => value)
+    columns: columns.map(({ value }) => value)
   });
   const { deleteList, isDeleteInProgress } = useDeleteList(({ id,
     onSuccess: () => {
@@ -148,7 +148,7 @@ export const EditListPage:FC = () => {
   const buttonHandlers = {
     'delete': () => setShowConfirmDeleteModal(true),
     'export-all': () => requestExport({}),
-    'export-visible': () => requestExport({allColumns: true}),
+    'export-visible': () => requestExport({ allColumns: true }),
     'cancel-export': () => cancelExport(),
   };
 
@@ -172,9 +172,9 @@ export const EditListPage:FC = () => {
   const shortcuts = [
     AddCommand.save(handleKeyCommand(
       () => onSave(),
-      isSaveDisabled,
+      !isSaveDisabled,
       () => showCommandError()
-      )),
+    )),
     AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
     AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
   ];
@@ -183,85 +183,85 @@ export const EditListPage:FC = () => {
     <HasCommandWrapper
       commands={shortcuts}
     >
-        <TitleManager
-          record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
-        >
-          <EditListLayout
-            lastMenu={
-              <EditListMenu
-                conditions={conditions}
-                buttonHandlers={buttonHandlers}
-              />
+      <TitleManager
+        record={intl.formatMessage({ id:'ui-lists.title.editList' }, { listName })}
+      >
+        <EditListLayout
+          lastMenu={
+            <EditListMenu
+              conditions={conditions}
+              buttonHandlers={buttonHandlers}
+            />
         }
-            isLoading={loadingListDetails}
-            recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-            onCancel={closeHandler}
-            onSave={onSave}
-            name={listName}
-            title={t('lists.edit.title', { listName })}
-            isSaveButtonDisabled={isSaveDisabled}
-          >
-            <AccordionStatus ref={accordionStatusRef}>
-              <AccordionSet>
-                <Accordion
-                  data-testid="metaSectionAccordion"
-                  label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
-                >
-                  <Layout>
-                    <MetaSection
-                      contentId="userInfoRecordMetaContent"
-                      createdDate={listDetails?.createdDate}
-                      createdBy={listDetails?.createdByUsername}
-                      id="userInfoRecordMeta"
-                      lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
-                      lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
-                    />
-                    <MainListInfoForm
-                      onValueChange={onValueChange}
-                      status={state[FIELD_NAMES.STATUS]}
-                      listName={state[FIELD_NAMES.LIST_NAME]}
-                      visibility={state[FIELD_NAMES.VISIBILITY]}
-                      description={state[FIELD_NAMES.DESCRIPTION]}
-                      isLoading={loadingListDetails}
-                      recordTypeLabel={recordTypeLabel}
-                      showInactiveWarning
-                    />
-                  </Layout>
-                </Accordion>
-              </AccordionSet>
-              <EditListResultViewer
-                id={id}
-                version={version}
-                fields={listDetails?.fields || []}
-                fqlQuery={listDetails?.fqlQuery ?? ''}
-                userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
-                contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
-                entityTypeId={listDetails?.entityTypeId ?? ''}
-                status={state[FIELD_NAMES.STATUS]}
-                listName={state[FIELD_NAMES.LIST_NAME]}
-                visibility={state[FIELD_NAMES.VISIBILITY]}
-                description={state[FIELD_NAMES.DESCRIPTION]}
-                setColumns={setColumns}
-              />
-            </AccordionStatus>
-            <CancelEditModal
-              onCancel={() => {
-                setShowConfirmCancelEditModal(false);
-                backToList();
-              }}
-              onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-              open={showConfirmCancelEditModal}
+          isLoading={loadingListDetails}
+          recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
+          onCancel={closeHandler}
+          onSave={onSave}
+          name={listName}
+          title={t('lists.edit.title', { listName })}
+          isSaveButtonDisabled={isSaveDisabled}
+        >
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              <Accordion
+                data-testid="metaSectionAccordion"
+                label={<FormattedMessage id="ui-lists.accordion.title.list-information" />}
+              >
+                <Layout>
+                  <MetaSection
+                    contentId="userInfoRecordMetaContent"
+                    createdDate={listDetails?.createdDate}
+                    createdBy={listDetails?.createdByUsername}
+                    id="userInfoRecordMeta"
+                    lastUpdatedDate={listDetails?.successRefresh?.refreshEndDate}
+                    lastUpdatedBy={listDetails?.successRefresh?.refreshedByUsername}
+                  />
+                  <MainListInfoForm
+                    onValueChange={onValueChange}
+                    status={state[FIELD_NAMES.STATUS]}
+                    listName={state[FIELD_NAMES.LIST_NAME]}
+                    visibility={state[FIELD_NAMES.VISIBILITY]}
+                    description={state[FIELD_NAMES.DESCRIPTION]}
+                    isLoading={loadingListDetails}
+                    recordTypeLabel={recordTypeLabel}
+                    showInactiveWarning
+                  />
+                </Layout>
+              </Accordion>
+            </AccordionSet>
+            <EditListResultViewer
+              id={id}
+              version={version}
+              fields={listDetails?.fields || []}
+              fqlQuery={listDetails?.fqlQuery ?? ''}
+              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+              contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
+              entityTypeId={listDetails?.entityTypeId ?? ''}
+              status={state[FIELD_NAMES.STATUS]}
+              listName={state[FIELD_NAMES.LIST_NAME]}
+              visibility={state[FIELD_NAMES.VISIBILITY]}
+              description={state[FIELD_NAMES.DESCRIPTION]}
+              setColumns={setColumns}
             />
-            <ConfirmDeleteModal
-              listName={listName}
-              onCancel={() => setShowConfirmDeleteModal(false)}
-              onConfirm={() => {
-                deleteListHandler();
-              }}
-              open={showConfirmDeleteModal}
-            />
-          </EditListLayout>
-        </TitleManager>
+          </AccordionStatus>
+          <CancelEditModal
+            onCancel={() => {
+              setShowConfirmCancelEditModal(false);
+              backToList();
+            }}
+            onKeepEdit={() => setShowConfirmCancelEditModal(false)}
+            open={showConfirmCancelEditModal}
+          />
+          <ConfirmDeleteModal
+            listName={listName}
+            onCancel={() => setShowConfirmDeleteModal(false)}
+            onConfirm={() => {
+              deleteListHandler();
+            }}
+            open={showConfirmDeleteModal}
+          />
+        </EditListLayout>
+      </TitleManager>
     </HasCommandWrapper>
   );
 };

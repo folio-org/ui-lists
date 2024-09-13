@@ -11,7 +11,9 @@ import {
   KeyboardShortcutsModal,
   NavList,
   NavListItem,
-  NavListSection
+  NavListSection,
+  HasCommand,
+  checkScope
 } from '@folio/stripes/components';
 import {
   CopyListPage,
@@ -21,21 +23,12 @@ import {
   ListPage,
   MissingAllEntityTypePermissionsPage
 } from './pages';
-import { HasCommandWrapper } from './components';
-
-import {
-  useRecordTypes,
-  useKeyCommandsMessages
-} from './hooks';
-import { t } from "./services";
+import { useRecordTypes } from './hooks';
+import { t } from './services';
 import {
   getStatusButtonElem,
   USER_PERMS,
-  handleKeyCommand,
-  isEditPage,
-  isCreatePage,
-  isDetailsPage,
-  isListsPage,
+  handleKeyCommand
 } from './utils';
 
 import { commandsGeneral, AddCommand } from './keyboard-shortcuts';
@@ -54,15 +47,13 @@ export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
 
   const history = useHistory();
-  const { actionUnavailableError } = useKeyCommandsMessages();
   const { recordTypes, isLoading } = useRecordTypes();
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
-  const currentPathname = history.location.pathname;
 
 
-  const shortcutModalToggle = (handleToggle: () => {}) => {
+  const shortcutModalToggle = (handleToggle: () => void) => {
     handleToggle();
     setShowKeyboardShortcutsModal(true);
   };
@@ -75,40 +66,15 @@ export const ListsApp:IListsApp = (props) => {
     } else {
       history.push('/lists');
     }
-  }
+  };
 
-  const focusStatusDropdown = (handleToggle?: () => {}) => {
+  const focusStatusDropdown = (handleToggle?: () => void) => {
     focusStatus();
 
     handleToggle?.();
   };
 
-  const showCommandErrorConditionally = (condition: boolean) => {
-    if (condition) {
-      actionUnavailableError();
-    }
-  }
-
   const shortcuts = [
-    AddCommand.duplicate(handleKeyCommand(() => {
-      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
-    })),
-    AddCommand.save(handleKeyCommand(() => {
-      const saveUnavailable = !isEditPage(path, currentPathname) || !isCreatePage(path, currentPathname);
-      showCommandErrorConditionally(saveUnavailable)
-    })),
-    AddCommand.create(handleKeyCommand(() => {
-      showCommandErrorConditionally(!isListsPage(path, currentPathname))
-    })),
-    AddCommand.edit(handleKeyCommand(() => {
-      showCommandErrorConditionally(!isDetailsPage(path, currentPathname))
-    })),
-    AddCommand.collapseSections(handleKeyCommand(() => {
-      showCommandErrorConditionally(isListsPage(path, currentPathname))
-    })),
-    AddCommand.expandSections(handleKeyCommand(() => {
-      showCommandErrorConditionally(isListsPage(path, currentPathname))
-    })),
     AddCommand.goToFilter(handleKeyCommand(focusStatus)),
     AddCommand.openModal(handleKeyCommand(() => {
       setShowKeyboardShortcutsModal(true);
@@ -121,11 +87,13 @@ export const ListsApp:IListsApp = (props) => {
 
   return (
     <CommandList commands={commandsGeneral}>
-      <HasCommandWrapper
+      <HasCommand
         commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
         <AppContextMenu>
-          {(handleToggle: () => {}) => (
+          {(handleToggle: () => void) => (
             <NavList>
               <NavListSection>
                 <NavListItem
@@ -144,53 +112,53 @@ export const ListsApp:IListsApp = (props) => {
             </NavList>
           )}
         </AppContextMenu>
-    <Switch>
-      <Route
-        path={path}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.ReadList}>
-            <ListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.ReadList}>
-            <ListInformationPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id/edit`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.UpdateList}>
-            <EditListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id/copy`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.UpdateList}>
-            <CopyListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/new`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.CreateList}>
-            <CreateListPage />
-          </IfPermission>
-        )}
-      />
-    </Switch>
+        <Switch>
+          <Route
+            path={path}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.ReadList}>
+                <ListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.ReadList}>
+                <ListInformationPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id/edit`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.UpdateList}>
+                <EditListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id/copy`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.UpdateList}>
+                <CopyListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/new`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.CreateList}>
+                <CreateListPage />
+              </IfPermission>
+            )}
+          />
+        </Switch>
         {showKeyboardShortcutsModal && (
           <KeyboardShortcutsModal
             allCommands={commandsGeneral}
@@ -198,8 +166,8 @@ export const ListsApp:IListsApp = (props) => {
             open
           />
         )}
-    </HasCommandWrapper>
-</CommandList>
+      </HasCommand>
+    </CommandList>
   );
 };
 

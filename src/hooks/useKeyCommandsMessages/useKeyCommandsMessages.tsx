@@ -7,14 +7,14 @@ export const useKeyCommandsMessages = () => {
 
 
   const noPermissionError = () => {
-    showErrorMessage({message: t('commands-error.permission')});
+    showErrorMessage({ message: t('commands-error.permission') });
   };
 
   const actionUnavailableError = () => {
-    showErrorMessage({message: t('commands-error.unavailable')});
+    showErrorMessage({ message: t('commands-error.unavailable') });
   };
 
-  const showCommandError = (permissionError: boolean = false) => {
+  const showCommandError = (permissionError = false) => {
     if (permissionError) {
       noPermissionError();
     } else {
@@ -26,5 +26,5 @@ export const useKeyCommandsMessages = () => {
     showCommandError,
     noPermissionError,
     actionUnavailableError
-  }
-}
+  };
+};
