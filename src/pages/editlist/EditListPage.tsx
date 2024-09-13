@@ -181,7 +181,6 @@ export const EditListPage:FC = () => {
 
   return (
     <HasCommandWrapper
-      key={String(isSaveDisabled)}
       commands={shortcuts}
     >
       <TitleManager
