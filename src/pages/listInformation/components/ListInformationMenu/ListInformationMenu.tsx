@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useIntl } from 'react-intl';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
-  Headline
+  Headline,
+  TextField
 } from '@folio/stripes/components';
-import { t,
+import {
+  t,
+  tString,
   ActionButton,
   isEditDisabled,
   isRefreshDisabled,
@@ -11,10 +16,11 @@ import { t,
   isCancelRefreshDisabled,
   isCancelExportDisabled,
   isExportDisabled,
-  DisablingConditions } from '../../../../services';
+  DisablingConditions
+} from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
-import {useListAppPermissions} from "../../../../hooks";
+import { useListAppPermissions } from "../../../../hooks";
 
 export interface ListInformationMenuProps {
   columns: QueryBuilderColumnMetadata[]
@@ -42,6 +48,13 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 }) => {
   const permissions = useListAppPermissions();
   const { isExportInProgress, isRefreshInProgress } = conditions;
+
+  const intl = useIntl();
+  const [columnSearch, setColumnSearch] = useState('');
+
+  const filteredColumns = columns.filter(item => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
+  const allDisabled = columns.every(item => item.disabled);
+
   const cancelRefreshButton = {
     label: 'cancel-refresh',
     icon: ICONS.refresh,
@@ -128,15 +141,28 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   return (
     <ActionMenu actionButtons={actionButtons}>
-      <Headline size="medium" margin="none" tag="p" faded>
-        {t('pane.dropdown.show-columns')}
-      </Headline>
-      <CheckboxFilter
-        dataOptions={columns}
-        name="ui-lists-columns-filter"
-        onChange={onColumnsChange}
-        selectedValues={visibleColumns ?? []}
-      />
+      {
+        !isEmpty(columns) && (
+          <>
+            <TextField
+              value={columnSearch}
+              onChange={e => setColumnSearch(e.target.value)}
+              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter' )}
+              disabled={allDisabled}
+              placeholder={tString(intl, 'pane.dropdown.search.placeholder' )}
+            />
+            <Headline size="medium" margin="none" tag="p" faded>
+              {t('pane.dropdown.show-columns')}
+            </Headline>
+            <CheckboxFilter
+              dataOptions={filteredColumns}
+              name="ui-lists-columns-filter"
+              onChange={onColumnsChange}
+              selectedValues={visibleColumns ?? []}
+            />
+          </>
+        )
+      }
     </ActionMenu>
   );
 };
