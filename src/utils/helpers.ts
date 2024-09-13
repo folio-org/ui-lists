@@ -1,4 +1,3 @@
-import { matchPath } from 'react-router-dom';
 import { ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
@@ -62,65 +61,39 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
 export const createColumnHash = (listColumns: string[]) => {
   const sortedColumns = [...listColumns].sort((a, b) => {
     return a.localeCompare(b, 'en', { sensitivity: 'base' });
-  })
+  });
 
-  return `${sortedColumns.join()}`
-}
+  return `${sortedColumns.join()}`;
+};
 
-export const createStorageHashKey = (listID: string): string => `${listID}-hash`
+export const createStorageHashKey = (listID: string): string => `${listID}-hash`;
 
 export const checkIncludes = (target: string, string: string) => {
-  return string.includes(target)
+  return string.includes(target);
 };
 
 export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
-  return options.filter( option => {
+  return options.filter(option => {
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
 };
 
 export const getStatusButtonElem = () => {
   return document.getElementById('mainFiltersWrapper')?.getElementsByTagName('button')[0];
-}
+};
 
 export const handleKeyCommand = (
   callback: (event?: KeyboardEvent) => void,
-  condition: boolean = true,
+  condition = true,
   onFalseConditions = () => {}
 ) => {
   return (event: KeyboardEvent) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (condition) {
       callback();
     } else {
-      onFalseConditions()
+      onFalseConditions();
     }
-  }
-}
-
-export const checkPageUrl = (target: string, current: string, ) => {
-  const match = matchPath(current, {
-    path: target,
-    exact: true,
-    strict: false
-  })
-
-  return !!match
+  };
 };
-
-export const isEditPage = (path: string, pathname: string) => {
-  return checkPageUrl(`${path}/list/:id/edit`, pathname)
-};
-
-export const isCreatePage = (path: string, pathname: string) => {
-  return checkPageUrl(`${path}/list/new`, pathname)
-};
-
-export const isDetailsPage = (path: string, pathname: string) => {
-  return checkPageUrl(`${path}/list/:id`, pathname)
-};
-
-export const isListsPage = (path: string, pathname: string) => {
-  return checkPageUrl(`${path}`, pathname)
-}

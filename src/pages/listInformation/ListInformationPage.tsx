@@ -82,7 +82,7 @@ export const ListInformationPage: React.FC = () => {
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
     listName,
-    columns: columnControls.map(({value}) => value)
+    columns: columnControls.map(({ value }) => value)
   });
 
   const queryClient = useQueryClient();
@@ -216,7 +216,7 @@ export const ListInformationPage: React.FC = () => {
   }
 
   if (canExport) {
-    buttonHandlers['export-all'] = () => requestExport({allColumns: true});
+    buttonHandlers['export-all'] = () => requestExport({ allColumns: true });
     buttonHandlers['export-visible'] = () => requestExport({});
 
     buttonHandlers['cancel-export'] = () => cancelExport();
@@ -237,7 +237,7 @@ export const ListInformationPage: React.FC = () => {
   const shortcuts = [
     AddCommand.duplicate(handleKeyCommand(
       () => history.push(`${id}/copy`),
-        canUpdate,
+      canUpdate,
       () => showCommandError(!canUpdate)
     )),
     AddCommand.edit(handleKeyCommand(
@@ -283,7 +283,7 @@ export const ListInformationPage: React.FC = () => {
                   onViewListClick={onVewListClickHandler}
                 />}
               >
-                <AccordionStatus ref={accordionStatusRef} >
+                <AccordionStatus ref={accordionStatusRef}>
                   <AccordionSet>
                     <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
                   </AccordionSet>
