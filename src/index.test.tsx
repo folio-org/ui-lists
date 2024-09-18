@@ -50,6 +50,7 @@ describe('Lists app entry point', () => {
   })
 
   it('is expected to close shortcuts modal', async () => {
+    expect(false).toBe(true)
     useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
 
     renderApp()
