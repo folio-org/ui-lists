@@ -1,15 +1,14 @@
-import { KyInstance } from 'ky/distribution/types/ky';
-// @ts-ignore:next-line
 import { downloadBase64 } from '@folio/stripes-acq-components';
+import { useOkapiKy } from '@folio/stripes/core';
 
-type downloadCSVArguments = {
-  ky: KyInstance,
-  listId: string,
-  exportId: string,
-  listName: string
-  onSuccess?: () => void,
-  onError?: () => void,
-};
+interface DownloadCSVArguments {
+  ky: ReturnType<typeof useOkapiKy>;
+  listId: string;
+  exportId: string;
+  listName: string;
+  onSuccess?: () => void;
+  onError?: () => void;
+}
 
 export const downloadCSV = async ({
   listId,
@@ -18,7 +17,7 @@ export const downloadCSV = async ({
   listName,
   onSuccess = () => {},
   onError = () => {}
-}: downloadCSVArguments) => {
+}: DownloadCSVArguments) => {
   await ky.get(`lists/${listId}/exports/${exportId}/download`, {
     headers: { accept: 'application/octet-stream' },
   })
