@@ -1,7 +1,7 @@
 import React from 'react';
+import { useStripes } from '@folio/stripes/core';
 import { render, screen } from '@testing-library/react';
 import { ListInformationMenu, ListInformationMenuProps } from './ListInformationMenu';
-import { useStripes } from '@folio/stripes/core';
 
 const mockProps: ListInformationMenuProps = {
   buttonHandlers: {
