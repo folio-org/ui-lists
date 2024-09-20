@@ -7,7 +7,7 @@ import { ConfigureQuery } from '../ConfigureQuery';
 
 import css from './EditListResultViewer.module.css';
 
-interface EditListResultViewerProps {
+export interface EditListResultViewerProps {
   id: string;
   version?: number;
   entityTypeId?: string;
