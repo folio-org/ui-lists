@@ -1,3 +1,4 @@
+import React from 'react';
 import { screen, waitFor } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
