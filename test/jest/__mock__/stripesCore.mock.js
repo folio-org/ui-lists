@@ -1,4 +1,5 @@
 import ky from 'ky';
+import React from 'react';
 
 const kyMock = ky.create({
   prefixUrl: 'https://test.c',
