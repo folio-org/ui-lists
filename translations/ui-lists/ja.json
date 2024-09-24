@@ -154,5 +154,9 @@
     "pane.dropdown.available-permissions": "Available permissions",
     "pane.dropdown.export-all": "全てのカラムのエクスポート（CSV）",
     "pane.dropdown.export-visible": "可視カラムのエクスポート（CSV）",
-    "app-menu.list-app-home": "Lists app home"
+    "app-menu.list-app-home": "Lists app home",
+    "commands-error.unavailable": "This action is unavailable",
+    "commands-error.permission": "User does not have permission to take this action",
+    "pane.dropdown.ariaLabel.columnFilter": "Column filter input",
+    "pane.dropdown.search.placeholder": "Search column name"
 }
