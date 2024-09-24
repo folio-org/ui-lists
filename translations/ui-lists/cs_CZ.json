@@ -121,7 +121,7 @@
     "callout.list.multiple-created": "Byly vytvořeny nové seznamy. Chcete-li vidět změny, znovu je načtěte. Poznámka: nové seznamy se nemusí zobrazit na základě filtrů.",
     "create-list.main.list-visibility.tooltip": "Ke <strong>sdíleným</strong> seznamům mají přístup všichni uživatelé s oprávněním k aplikaci Seznamy v této organizaci. K <strong>soukromým</strong> seznamům má přístup pouze přihlášený uživatel.",
     "create-list.main.list-status.tooltip": "<strong>Aktivní</strong> seznamy se skládají z dotazu a výsledného souboru záznamů. <strong>Neaktivní</strong> seznamy mohou obsahovat dotaz, ale žádnou sadu záznamů.",
-    "pane.dropdown.copy": "Duplicitní seznam",
+    "pane.dropdown.copy": "Duplikovat seznam",
     "lists.copy.title": "Duplicitní seznam: {listName}",
     "lists.copy.name-postfix": "kopírovat",
     "list.info.record-type": "Typ záznamu",
@@ -154,5 +154,9 @@
     "pane.dropdown.available-permissions": "Dostupná oprávnění",
     "pane.dropdown.export-all": "Export všech sloupců (CSV)",
     "pane.dropdown.export-visible": "Export viditelných sloupců (CSV)",
-    "app-menu.list-app-home": "Zobrazí domovskou stránku aplikace"
+    "app-menu.list-app-home": "Zobrazí domovskou stránku aplikace",
+    "commands-error.unavailable": "Tato akce není k dispozici",
+    "commands-error.permission": "Uživatel nemá oprávnění k provedení této akce",
+    "pane.dropdown.ariaLabel.columnFilter": "Vstup filtru sloupců",
+    "pane.dropdown.search.placeholder": "Název vyhledávacího sloupce"
 }
