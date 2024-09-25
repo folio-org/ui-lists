@@ -15,3 +15,5 @@ export { useCreateList } from './useCreateList';
 export { useRecordTypeLabel } from './useRecordTypeLabel';
 export { useListsPagination } from './useListsPagination';
 export { useSessionStorage } from './useSessionStorage';
+export { useKeyCommandsMessages } from './useKeyCommandsMessages';
+export { useListAppPermissions } from './useListAppPermissions';

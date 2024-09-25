@@ -45,6 +45,8 @@
   "pane.dropdown.available-permissions": "Available permissions",
 
   "pane.dropdown.show-columns": "Show columns",
+  "pane.dropdown.ariaLabel.columnFilter": "Column filter input",
+  "pane.dropdown.search.placeholder": "Search column name",
   "pane.dropdown.refresh": "Refresh list",
   "pane.dropdown.cancel-refresh": "Cancel refresh",
 
@@ -193,5 +195,8 @@
   "commands-label.copy": "Copy",
   "commands-label.cut": "Cut",
   "commands-label.paste": "Paste",
-  "commands-label.find": "Find"
+  "commands-label.find": "Find",
+
+  "commands-error.unavailable": "This action is unavailable",
+  "commands-error.permission": "User does not have permission to take this action"
 }

@@ -1,10 +1,8 @@
 import React from 'react';
-import { RecordTypesFilter } from './RecordTypesFilter';
 import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
-
-
+import { RecordTypesFilter } from './RecordTypesFilter';
 
 const onChange = jest.fn();
 const onClear = jest.fn();

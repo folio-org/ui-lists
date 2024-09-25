@@ -1,13 +1,9 @@
 import React from 'react';
+import { useStripes } from '@folio/stripes/core';
 import { render, screen } from '@testing-library/react';
 import { ListInformationMenu, ListInformationMenuProps } from './ListInformationMenu';
 
-const stripes = {
-  hasPerm: jest.fn().mockReturnValue(true)
-};
-
 const mockProps: ListInformationMenuProps = {
-  stripes,
   buttonHandlers: {
     'cancel-refresh': jest.fn(),
     'refresh': jest.fn(),
@@ -22,10 +18,6 @@ const mockProps: ListInformationMenuProps = {
   onColumnsChange: jest.fn(),
   columns: [],
 };
-
-beforeEach(() => {
-  mockProps.stripes.hasPerm = jest.fn().mockReturnValue(true);
-});
 
 describe('ListInformationMenu', () => {
   describe('All Permissions Enabled', () => {
@@ -67,8 +59,14 @@ describe('ListInformationMenu', () => {
 
 
   describe('All Permissions Disabled', () => {
+    beforeEach(() => {
+      // @ts-ignore
+      useStripes.mockImplementation(() => ({
+        hasPerm: () => false
+      }))
+    });
+
     it('should not render Refresh list link', () => {
-      mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.refresh');
 
@@ -76,7 +74,6 @@ describe('ListInformationMenu', () => {
     });
 
     it('should not render Edit list link', () => {
-      mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.edit');
 
@@ -84,7 +81,6 @@ describe('ListInformationMenu', () => {
     });
 
     it('should not render Delete list link', () => {
-      mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.delete');
 
@@ -92,7 +88,6 @@ describe('ListInformationMenu', () => {
     });
 
     it('should not render Export list link', () => {
-      mockProps.stripes.hasPerm = jest.fn().mockReturnValue(false);
       render(<ListInformationMenu {...mockProps} />);
       const link = screen.queryByText('ui-lists.pane.dropdown.export');
 

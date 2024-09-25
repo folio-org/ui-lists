@@ -1,3 +1,4 @@
+import React from 'react';
 import { screen, waitFor } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
@@ -7,15 +8,11 @@ import { MemoryRouter } from 'react-router';
 import { ListsApp } from '.';
 import { queryClient } from '../test/utils';
 import { HOME_PAGE_URL } from './constants';
+import * as hooks from './hooks';
 
 const useRecordTypesMock = jest.fn();
 
-
-
-jest.mock('./hooks', () => ({
-  useRecordTypes: jest.fn(() => useRecordTypesMock()),
-}));
-
+jest.spyOn(hooks, 'useRecordTypes').mockImplementation(jest.fn(() => useRecordTypesMock()));
 
 const historyPushMock = jest.fn();
 
@@ -24,10 +21,19 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
+    location: {
+      pathname: 'test'
+    }
+  })),
 }));
 
+const mockShowCallout = jest.fn();
 
+jest.mock('@folio/stripes-acq-components', () => ({
+  useShowCallout: () => mockShowCallout,
+}));
 
 const renderApp = () => {
   return render(
@@ -92,13 +98,16 @@ describe('Lists app entry point', () => {
   });
 
   it('is expected to clean storage on LOGIN', () => {
-    sessionStorage.setItem('test', '123');
+    sessionStorage.setItem('@folio/lists/test', '123');
+    sessionStorage.setItem('not-lists/test', '123');
 
-    expect(sessionStorage.getItem('test')).toEqual('123')
+    expect(sessionStorage.getItem('@folio/lists/test')).toEqual('123')
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
 
     ListsApp.eventHandler('LOGIN')
 
-    expect(sessionStorage.getItem('test')).toBeFalsy();
+    expect(sessionStorage.getItem('@folio/lists/test')).toBeFalsy();
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
   })
 
   it('is expected to call redicrect function', () => {

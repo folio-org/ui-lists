@@ -1,19 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { uniqueId } from 'lodash';
 import {
+  AccordionStatus,
   AccordionSet,
   Layer,
   LoadingPane,
   Pane,
   Paneset,
+  expandAllSections,
+  collapseAllSections
 } from '@folio/stripes/components';
 import { HTTPError } from 'ky';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from 'react-query';
-import { TitleManager, useStripes } from '@folio/stripes/core';
-import { t, isInactive, isInDraft, isCanned, computeErrorMessage, isEmptyList } from '../../services';
-import { useListDetails, useRefresh, useDeleteList, useCSVExport, useMessages, useVisibleColumns, useRecordTypeLabel } from '../../hooks';
+import { TitleManager } from '@folio/stripes/core';
+import {
+  t,
+  isInactive,
+  isInDraft,
+  isCanned,
+  computeErrorMessage,
+  isEmptyList,
+  isEditDisabled
+} from '../../services';
+import {
+  useListDetails,
+  useRefresh,
+  useDeleteList,
+  useCSVExport,
+  useMessages,
+  useVisibleColumns,
+  useRecordTypeLabel,
+  useKeyCommandsMessages,
+  useListAppPermissions
+} from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
@@ -24,16 +45,22 @@ import {
 import { HOME_PAGE_URL } from '../../constants';
 import { QueryBuilderColumnMetadata } from '../../interfaces';
 
-import { ConfirmDeleteModal, CompilingLoader, ErrorComponent } from '../../components';
-import { USER_PERMS } from '../../utils/constants';
+import {
+  ConfirmDeleteModal,
+  CompilingLoader,
+  ErrorComponent,
+  HasCommandWrapper
+} from '../../components';
+import { handleKeyCommand } from '../../utils';
+import { AddCommand } from '../../keyboard-shortcuts';
 
 export const ListInformationPage: React.FC = () => {
   const history = useHistory();
   const intl = useIntl();
-  const stripes = useStripes();
-  const { formatNumber } = useIntl();
+  const { canDelete, canUpdate, canExport, canRefresh } = useListAppPermissions();
+  const { showCommandError } = useKeyCommandsMessages();
   const { id }: {id: string} = useParams();
-
+  const accordionStatusRef = useRef(null);
 
   const {
     handleColumnsChange,
@@ -55,7 +82,7 @@ export const ListInformationPage: React.FC = () => {
   const { requestExport, isExportInProgress, isCancelExportInProgress, cancelExport } = useCSVExport({
     listId: id,
     listName,
-    columns: columnControls.map(({value}) => value)
+    columns: columnControls.map(({ value }) => value)
   });
 
   const queryClient = useQueryClient();
@@ -164,7 +191,7 @@ export const ListInformationPage: React.FC = () => {
 
   const buttonHandlers : any = {};
 
-  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+  if (canRefresh) {
     buttonHandlers['cancel-refresh'] = () => {
       cancelRefresh();
     };
@@ -173,7 +200,7 @@ export const ListInformationPage: React.FC = () => {
     };
   }
 
-  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+  if (canUpdate) {
     buttonHandlers.edit = () => {
       history.push(`${id}/edit`);
     };
@@ -182,14 +209,14 @@ export const ListInformationPage: React.FC = () => {
     };
   }
 
-  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+  if (canDelete) {
     buttonHandlers.delete = () => {
       setShowConfirmDeleteModal(true);
     };
   }
 
-  if (stripes.hasPerm(USER_PERMS.ExportList)) {
-    buttonHandlers['export-all'] = () => requestExport({allColumns: true});
+  if (canExport) {
+    buttonHandlers['export-all'] = () => requestExport({ allColumns: true });
     buttonHandlers['export-visible'] = () => requestExport({});
 
     buttonHandlers['cancel-export'] = () => cancelExport();
@@ -207,65 +234,85 @@ export const ListInformationPage: React.FC = () => {
     isListEmpty: isEmptyList(listData)
   };
 
-  return (
-    <TitleManager
-      page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
-    >
-      <Paneset data-testid="listInformation">
-        <Layer isOpen contentLabel={listName}>
-          <Paneset isRoot>
-            <Pane
-              dismissible
-              defaultWidth="fill"
-              appIcon={<ListAppIcon />}
-              paneTitle={listName}
-              paneSub={!isRefreshInProgress ?
-                t('mainPane.subTitle',
-                  { count: formatNumber(recordCount) })
-                :
-                <CompilingLoader />}
-              lastMenu={<ListInformationMenu
-                stripes={stripes}
-                visibleColumns={visibleColumns}
-                columns={columnControls}
-                onColumnsChange={handleColumnsChange}
-                buttonHandlers={buttonHandlers}
-                conditions={conditions}
-              />}
-              onClose={() => history.push(HOME_PAGE_URL)}
-              subheader={<SuccessRefreshSection
-                shouldShow={showSuccessRefreshMessage}
-                recordsCount={formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-                onViewListClick={onVewListClickHandler}
-              />}
-            >
-              <AccordionSet>
-                <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
-              </AccordionSet>
+  const shortcuts = [
+    AddCommand.duplicate(handleKeyCommand(
+      () => history.push(`${id}/copy`),
+      canUpdate,
+      () => showCommandError(!canUpdate)
+    )),
+    AddCommand.edit(handleKeyCommand(
+      () => history.push(`${id}/edit`),
+      canUpdate && !isEditDisabled(conditions),
+      () => showCommandError(!canUpdate)
+    )),
+    AddCommand.expandSections((e: KeyboardEvent) => expandAllSections(e, accordionStatusRef)),
+    AddCommand.collapseSections((e: KeyboardEvent) => collapseAllSections(e, accordionStatusRef))
+  ];
 
-              <AccordionSet>
-                <ListInformationResultViewer
-                  refreshInProgress={isRefreshInProgress}
-                  listID={listData?.id}
-                  userFriendlyQuery={listData?.userFriendlyQuery}
-                  entityTypeId={listData?.entityTypeId}
-                  refreshTrigger={Number(refreshTrigger)}
-                  setColumnControlList={setColumnControls}
+  return (
+    <HasCommandWrapper
+      commands={shortcuts}
+    >
+      <TitleManager
+        page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
+      >
+        <Paneset data-testid="listInformation">
+          <Layer isOpen contentLabel={listName}>
+            <Paneset isRoot>
+              <Pane
+                dismissible
+                defaultWidth="fill"
+                appIcon={<ListAppIcon />}
+                paneTitle={listName}
+                paneSub={!isRefreshInProgress ?
+                  t('mainPane.subTitle',
+                    { count: intl.formatNumber(recordCount) })
+                  :
+                  <CompilingLoader />}
+                lastMenu={<ListInformationMenu
                   visibleColumns={visibleColumns}
-                />
-              </AccordionSet>
-            </Pane>
-          </Paneset>
-        </Layer>
-        <ConfirmDeleteModal
-          listName={listName}
-          onCancel={() => setShowConfirmDeleteModal(false)}
-          onConfirm={() => {
-            deleteListHandler();
-          }}
-          open={showConfirmDeleteModal}
-        />
-      </Paneset>
-    </TitleManager>
+                  columns={columnControls}
+                  onColumnsChange={handleColumnsChange}
+                  buttonHandlers={buttonHandlers}
+                  conditions={conditions}
+                />}
+                onClose={() => history.push(HOME_PAGE_URL)}
+                subheader={<SuccessRefreshSection
+                  shouldShow={showSuccessRefreshMessage}
+                  recordsCount={intl.formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                  onViewListClick={onVewListClickHandler}
+                />}
+              >
+                <AccordionStatus ref={accordionStatusRef}>
+                  <AccordionSet>
+                    <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
+                  </AccordionSet>
+
+                  <AccordionSet>
+                    <ListInformationResultViewer
+                      refreshInProgress={isRefreshInProgress}
+                      listID={listData?.id}
+                      userFriendlyQuery={listData?.userFriendlyQuery}
+                      entityTypeId={listData?.entityTypeId}
+                      refreshTrigger={Number(refreshTrigger)}
+                      setColumnControlList={setColumnControls}
+                      visibleColumns={visibleColumns}
+                    />
+                  </AccordionSet>
+                </AccordionStatus>
+              </Pane>
+            </Paneset>
+          </Layer>
+          <ConfirmDeleteModal
+            listName={listName}
+            onCancel={() => setShowConfirmDeleteModal(false)}
+            onConfirm={() => {
+              deleteListHandler();
+            }}
+            open={showConfirmDeleteModal}
+          />
+        </Paneset>
+      </TitleManager>
+    </HasCommandWrapper>
   );
 };

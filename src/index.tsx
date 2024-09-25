@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+
+import { Route, Switch, useHistory } from 'react-router-dom';
 import {
-  IfPermission,
+  AppContextMenu,
   coreEvents,
-  AppContextMenu
+  IfPermission
 } from '@folio/stripes/core';
 import {
   CommandList,
-  HasCommand,
   KeyboardShortcutsModal,
   NavList,
   NavListItem,
   NavListSection,
+  HasCommand,
   checkScope
 } from '@folio/stripes/components';
 import {
@@ -20,14 +21,17 @@ import {
   EditListPage,
   ListInformationPage,
   ListPage,
-  MissingAllEntityTypePermissionsPage,
+  MissingAllEntityTypePermissionsPage
 } from './pages';
-
 import { useRecordTypes } from './hooks';
-import { t } from "./services";
-import { USER_PERMS, getStatusButtonElem } from './utils';
+import { t } from './services';
+import {
+  getStatusButtonElem,
+  USER_PERMS,
+  handleKeyCommand
+} from './utils';
 
-import {commandsGeneral} from "./keyboard-shortcuts";
+import { commandsGeneral, AddCommand } from './keyboard-shortcuts';
 
 interface ListsAppProps {
   match: {
@@ -41,15 +45,20 @@ type IListsApp = React.FunctionComponent<ListsAppProps> & {
 
 export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
+
   const history = useHistory();
+  const { recordTypes, isLoading } = useRecordTypes();
+
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
-  const shortcutModalToggle = (handleToggle: () => {}) => {
+
+
+  const shortcutModalToggle = (handleToggle: () => void) => {
     handleToggle();
     setShowKeyboardShortcutsModal(true);
   };
 
-  const focusStatusFilter = (handleToggle?: () => {}) => {
+  const focusStatus = () => {
     const el = getStatusButtonElem();
 
     if (el) {
@@ -57,22 +66,20 @@ export const ListsApp:IListsApp = (props) => {
     } else {
       history.push('/lists');
     }
+  };
+
+  const focusStatusDropdown = (handleToggle?: () => void) => {
+    focusStatus();
 
     handleToggle?.();
   };
 
   const shortcuts = [
-    {
-      name: 'search',
-      handler: focusStatusFilter
-    },
-    {
-      name: 'openShortcutModal',
-      handler: setShowKeyboardShortcutsModal
-    }
+    AddCommand.goToFilter(handleKeyCommand(focusStatus)),
+    AddCommand.openModal(handleKeyCommand(() => {
+      setShowKeyboardShortcutsModal(true);
+    }))
   ];
-
-  const { recordTypes, isLoading } = useRecordTypes();
 
   if (!isLoading && recordTypes?.length === 0) {
     return <MissingAllEntityTypePermissionsPage />;
@@ -86,12 +93,12 @@ export const ListsApp:IListsApp = (props) => {
         scope={document.body}
       >
         <AppContextMenu>
-          {(handleToggle: () => {}) => (
+          {(handleToggle: () => void) => (
             <NavList>
               <NavListSection>
                 <NavListItem
                   data-testid="list-app-home"
-                  onClick={() => { focusStatusFilter(handleToggle); }}
+                  onClick={() => { focusStatusDropdown(handleToggle); }}
                 >
                   {t('app-menu.list-app-home')}
                 </NavListItem>
@@ -105,53 +112,53 @@ export const ListsApp:IListsApp = (props) => {
             </NavList>
           )}
         </AppContextMenu>
-    <Switch>
-      <Route
-        path={path}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.ReadList}>
-            <ListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.ReadList}>
-            <ListInformationPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id/edit`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.UpdateList}>
-            <EditListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/list/:id/copy`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.UpdateList}>
-            <CopyListPage />
-          </IfPermission>
-        )}
-      />
-      <Route
-        path={`${path}/new`}
-        exact
-        render={() => (
-          <IfPermission perm={USER_PERMS.CreateList}>
-            <CreateListPage />
-          </IfPermission>
-        )}
-      />
-    </Switch>
+        <Switch>
+          <Route
+            path={path}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.ReadList}>
+                <ListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.ReadList}>
+                <ListInformationPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id/edit`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.UpdateList}>
+                <EditListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/list/:id/copy`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.UpdateList}>
+                <CopyListPage />
+              </IfPermission>
+            )}
+          />
+          <Route
+            path={`${path}/new`}
+            exact
+            render={() => (
+              <IfPermission perm={USER_PERMS.CreateList}>
+                <CreateListPage />
+              </IfPermission>
+            )}
+          />
+        </Switch>
         {showKeyboardShortcutsModal && (
           <KeyboardShortcutsModal
             allCommands={commandsGeneral}
@@ -159,14 +166,18 @@ export const ListsApp:IListsApp = (props) => {
             open
           />
         )}
-    </HasCommand>
-</CommandList>
+      </HasCommand>
+    </CommandList>
   );
 };
 
 ListsApp.eventHandler = (event: any) => {
   if (event === coreEvents.LOGIN) {
-    sessionStorage.clear()
+    Object.keys(sessionStorage).forEach(key => {
+      if (key.startsWith('@folio/lists')) {
+        sessionStorage.removeItem(key);
+      }
+    });
   }
 };
 

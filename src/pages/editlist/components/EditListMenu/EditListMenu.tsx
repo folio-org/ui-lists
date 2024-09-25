@@ -8,7 +8,7 @@ import {
 } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS } from '../../../../interfaces';
-import { USER_PERMS } from '../../../../utils/constants';
+import {useListAppPermissions} from "../../../../hooks";
 
 interface ListInformationMenuProps {
   buttonHandlers: {
@@ -17,15 +17,14 @@ interface ListInformationMenuProps {
     'export-visible': () => void,
     'cancel-export': () => void
   },
-  conditions: DisablingConditions,
-  stripes: any
+  conditions: DisablingConditions
 }
 
 export const EditListMenu: React.FC<ListInformationMenuProps> = ({
   conditions,
-  buttonHandlers,
-  stripes
+  buttonHandlers
 }) => {
+  const permissions = useListAppPermissions();
   const { isExportInProgress } = conditions;
 
   const actionButtons:ActionButton[] = [];
@@ -60,11 +59,11 @@ export const EditListMenu: React.FC<ListInformationMenuProps> = ({
     disabled: isDeleteDisabled(conditions)
   };
 
-  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+  if (permissions.canExport) {
     actionButtons.push(...exportSlot);
   }
 
-  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+  if (permissions.canDelete) {
     actionButtons.push(deleteSlot);
   }
 

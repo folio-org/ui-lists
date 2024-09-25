@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { noop } from 'lodash';
 import {
   Icon,
@@ -8,7 +8,6 @@ import {
   PaneMenu,
   Paneset,
   Button,
-  // @ts-ignore:next-line
   LoadingPane
 } from '@folio/stripes/components';
 import { RecordTypesFilter } from './RecordTypesFilter';
@@ -16,16 +15,26 @@ import { Filters } from './Filters';
 // @ts-ignore:next-line
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
 import { IfPermission } from '@folio/stripes/core';
-import { ListsTable, ListAppIcon } from '../../components';
-import { useListsFetchedSinceTimestamp, useLocalStorageToggle } from '../../hooks';
+import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
+import {
+  useKeyCommandsMessages,
+  useListAppPermissions,
+  useListsFetchedSinceTimestamp,
+  useLocalStorageToggle
+} from '../../hooks';
 import { t } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
+import { AddCommand } from '../../keyboard-shortcuts';
+import { getStatusButtonElem, handleKeyCommand } from "../../utils";
 
 import css from './ListPage.module.css';
 
 export const ListPage: React.FC = () => {
+  const history = useHistory();
+  const { canCreate } = useListAppPermissions();
+  const { showCommandError } = useKeyCommandsMessages();
   const [totalRecords, setTotalRecords] = useState(0);
   const [filterPaneIsVisible, toggleFilterPane] = useLocalStorageToggle(FILTER_PANE_VISIBILITY_KEY, true);
   const { filterConfig, isLoadingConfigData, recordTypeConfig } = useFilterConfig();
@@ -43,7 +52,22 @@ export const ListPage: React.FC = () => {
 
   useListsFetchedSinceTimestamp();
 
+  const shortcuts = [
+    AddCommand.create(handleKeyCommand(
+      () => history.push('/lists/new'),
+      canCreate,
+      () => showCommandError(!canCreate)
+    )),
+    AddCommand.goToFilter(handleKeyCommand(() => {
+      getStatusButtonElem()?.focus();
+    }))
+  ]
+
+
   return (
+    <HasCommandWrapper
+      commands={shortcuts}
+    >
     <Paneset data-test-root-pane>
       {filterPaneIsVisible &&
         <Pane
@@ -88,7 +112,8 @@ export const ListPage: React.FC = () => {
         </Pane>
       }
       <Pane
-        defaultWidth="fill"
+        key={String(filterPaneIsVisible)}
+        defaultWidth={filterPaneIsVisible ? '80%' : 'fill'}
         paneTitle={t('mainPane.title')}
         paneSub={t('mainPane.subTitle', { count: totalRecords })}
         appIcon={<ListAppIcon />}
@@ -123,5 +148,6 @@ export const ListPage: React.FC = () => {
         />
       </Pane>
     </Paneset>
+    </HasCommandWrapper>
   );
 };

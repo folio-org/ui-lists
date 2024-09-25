@@ -1,16 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EditListMenu } from './EditListMenu';
+import { useStripes } from '@folio/stripes/core';
 
 describe('EditListMenu', () => {
-  const stripes = {
-    hasPerm: jest.fn().mockReturnValue(true)
-  };
-
-  const stripesNoPerm = {
-    hasPerm: jest.fn().mockReturnValue(false)
-  };
-
   const mockButtonHandlers = {
     'delete': jest.fn(),
     'export-all': jest.fn(),
@@ -24,7 +17,7 @@ describe('EditListMenu', () => {
   };
 
   it('should render delete and initial export buttons', () => {
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
 
     const deleteButton = screen.getByText('ui-lists.pane.dropdown.delete');
     const exportButton = screen.getByText('ui-lists.pane.dropdown.export-all');
@@ -38,7 +31,7 @@ describe('EditListMenu', () => {
   });
 
   it('should call delete handler when delete button is clicked', async () => {
-    await render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
+    await render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
 
     const deleteButton = screen.getByText('ui-lists.pane.dropdown.delete');
     fireEvent.click(deleteButton);
@@ -47,7 +40,7 @@ describe('EditListMenu', () => {
   });
 
   it('should call export handler when export button is clicked', () => {
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripes} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
 
     const exportButton = screen.getByText('ui-lists.pane.dropdown.export-all');
     fireEvent.click(exportButton);
@@ -61,7 +54,7 @@ describe('EditListMenu', () => {
       isExportInProgress: true,
     };
 
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} stripes={stripes} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} />);
 
     const cancelExportButton = screen.getByText('ui-lists.pane.dropdown.cancel-export');
 
@@ -73,7 +66,7 @@ describe('EditListMenu', () => {
       ...mockConditions,
       isExportInProgress: true,
     };
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} stripes={stripes} />);
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={conditionsWithExportInProgress} />);
 
     const cancelExportButton = screen.getByText('ui-lists.pane.dropdown.cancel-export');
     fireEvent.click(cancelExportButton);
@@ -82,7 +75,12 @@ describe('EditListMenu', () => {
   });
 
   it('should not render buttons when user doesn\'t have permission', () => {
-    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} stripes={stripesNoPerm} />);
+    // @ts-ignore
+    useStripes.mockImplementation(() => ({
+      hasPerm: () => false
+    }));
+
+    render(<EditListMenu buttonHandlers={mockButtonHandlers} conditions={mockConditions} />);
 
     const deleteButton = screen.queryByText('ui-lists.pane.dropdown.delete');
     const exportButton = screen.queryByText('ui-lists.pane.dropdown.export');

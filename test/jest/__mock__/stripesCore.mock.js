@@ -1,4 +1,5 @@
 import ky from 'ky';
+import React from 'react';
 
 const kyMock = ky.create({
   prefixUrl: 'https://test.c',
@@ -27,9 +28,9 @@ jest.mock('@folio/stripes/core', () => {
         {JSON.stringify(props)}
       </span>)),
     useOkapiKy: () => kyMock,
-    useStripes: () => ({
+    useStripes: jest.fn(() => ({
       hasPerm: jest.fn().mockReturnValue(true)
-    }),
+    })),
     useNamespace: (string) => `${string}-test-space`,
   };
 });

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useIntl } from 'react-intl';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
-  Headline
+  Headline,
+  TextField
 } from '@folio/stripes/components';
-import { t,
+import {
+  t,
+  tString,
   ActionButton,
   isEditDisabled,
   isRefreshDisabled,
@@ -11,13 +16,13 @@ import { t,
   isCancelRefreshDisabled,
   isCancelExportDisabled,
   isExportDisabled,
-  DisablingConditions } from '../../../../services';
+  DisablingConditions
+} from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
-import { USER_PERMS } from '../../../../utils/constants';
+import { useListAppPermissions } from "../../../../hooks";
 
 export interface ListInformationMenuProps {
-  stripes: any,
   columns: QueryBuilderColumnMetadata[]
   visibleColumns?: string[] | null,
   buttonHandlers: {
@@ -35,14 +40,21 @@ export interface ListInformationMenuProps {
 }
 
 export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
-  stripes,
   columns,
   visibleColumns,
   conditions,
   buttonHandlers,
   onColumnsChange,
 }) => {
+  const permissions = useListAppPermissions();
   const { isExportInProgress, isRefreshInProgress } = conditions;
+
+  const intl = useIntl();
+  const [columnSearch, setColumnSearch] = useState('');
+
+  const filteredColumns = columns.filter(item => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
+  const allDisabled = columns.every(item => item.disabled);
+
   const cancelRefreshButton = {
     label: 'cancel-refresh',
     icon: ICONS.refresh,
@@ -88,11 +100,11 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   const actionButtons:ActionButton[] = [];
 
-  if (stripes.hasPerm(USER_PERMS.RefreshList)) {
+  if (permissions.canRefresh) {
     actionButtons.push(refreshSlot);
   }
 
-  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+  if (permissions.canUpdate) {
     actionButtons.push(
       {
         label: 'edit',
@@ -103,7 +115,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     );
   }
 
-  if (stripes.hasPerm(USER_PERMS.UpdateList)) {
+  if (permissions.canUpdate) {
     actionButtons.push(
       {
         label: 'copy',
@@ -114,7 +126,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     );
   }
 
-  if (stripes.hasPerm(USER_PERMS.DeleteList)) {
+  if (permissions.canDelete) {
     actionButtons.push({
       label: 'delete',
       icon: ICONS.trash,
@@ -123,21 +135,34 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
     });
   }
 
-  if (stripes.hasPerm(USER_PERMS.ExportList)) {
+  if (permissions.canExport) {
     actionButtons.push(...exportSlot);
   }
 
   return (
     <ActionMenu actionButtons={actionButtons}>
-      <Headline size="medium" margin="none" tag="p" faded>
-        {t('pane.dropdown.show-columns')}
-      </Headline>
-      <CheckboxFilter
-        dataOptions={columns}
-        name="ui-lists-columns-filter"
-        onChange={onColumnsChange}
-        selectedValues={visibleColumns ?? []}
-      />
+      {
+        !isEmpty(columns) && (
+          <>
+            <TextField
+              value={columnSearch}
+              onChange={e => setColumnSearch(e.target.value)}
+              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter' )}
+              disabled={allDisabled}
+              placeholder={tString(intl, 'pane.dropdown.search.placeholder' )}
+            />
+            <Headline size="medium" margin="none" tag="p" faded>
+              {t('pane.dropdown.show-columns')}
+            </Headline>
+            <CheckboxFilter
+              dataOptions={filteredColumns}
+              name="ui-lists-columns-filter"
+              onChange={onColumnsChange}
+              selectedValues={visibleColumns ?? []}
+            />
+          </>
+        )
+      }
     </ActionMenu>
   );
 };
