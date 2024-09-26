@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 import { useIntl } from 'react-intl';
-import {
-  Layout,
+import { Layout,
   RadioButton,
   RadioButtonGroup,
   TextArea,
@@ -20,7 +19,7 @@ import {
 import { t, tString } from '../../services';
 
 import css from './MainListInfoForm.module.css';
-import {filterByIncludes} from "../../utils";
+import { filterByIncludes } from '../../utils';
 
 type MainListInfoFormProps = {
     onValueChange?: (field: {[key: string]: string}) => void;
@@ -43,7 +42,7 @@ export const MainListInfoForm = (
     status,
     isLoading,
     recordTypeOptions,
-    recordTypeLabel}: MainListInfoFormProps
+    recordTypeLabel }: MainListInfoFormProps
 ) => {
   const intl = useIntl();
 
@@ -63,19 +62,19 @@ export const MainListInfoForm = (
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
 
   const renderRecordType = () => {
-    if(recordTypeLabel) {
+    if (recordTypeLabel) {
       return (
         <Row>
           <Col xs={2}>
             <KeyValue
-              label={t("list.info.record-type")}
+              label={t('list.info.record-type')}
               value={recordTypeLabel}
             />
           </Col>
         </Row>
-      )
+      );
     }
-  }
+  };
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
       /**
@@ -98,7 +97,7 @@ export const MainListInfoForm = (
             dataOptions={recordTypeOptions}
             placeholder={tString(intl, 'create-list.choose-record-type')}
             onChange={(selection: string) => {
-              onValueChange({[FIELD_NAMES.RECORD_TYPE]: selection})
+              onValueChange({ [FIELD_NAMES.RECORD_TYPE]: selection });
             }}
             label={t('create-list.aside.record-types')}
           />
