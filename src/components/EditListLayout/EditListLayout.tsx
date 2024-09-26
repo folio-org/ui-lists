@@ -1,7 +1,8 @@
 import React, { FC, ReactElement, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
-import { isNumber } from 'lodash';
-import { Button, Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
+import { isNumber, noop } from 'lodash';
+import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
+import { Buttons } from '../Buttons';
 import { t } from '../../services';
 import { ListAppIcon } from '../ListAppIcon';
 
@@ -23,9 +24,9 @@ export const EditListLayout: FC<EditListLayoutProps> = ({
   title,
   isLoading,
   recordsCount,
-  onCancel,
+  onCancel = noop,
   isSaveButtonDisabled,
-  onSave,
+  onSave = noop,
   lastMenu
 }) => {
   const { formatNumber } = useIntl();
@@ -44,6 +45,7 @@ export const EditListLayout: FC<EditListLayoutProps> = ({
     return <Loading />;
   }
 
+  // @ts-ignore
   return (
     <Paneset>
       <Layer isOpen contentLabel={name}>
@@ -58,19 +60,15 @@ export const EditListLayout: FC<EditListLayoutProps> = ({
             lastMenu={lastMenu}
             footer={<PaneFooter
               renderStart={
-                <Button
-                  onClick={onCancel}
-                >
-                  {t('button.cancel')}
-                </Button>}
+                <Buttons.Cancel
+                  onCancel={onCancel}
+                />
+              }
               renderEnd={
-                <Button
-                  buttonStyle="primary"
-                  disabled={isSaveButtonDisabled}
-                  onClick={onSave}
-                >
-                  {t('button.save')}
-                </Button>}
+                <Buttons.Save
+                  disabled={!!isSaveButtonDisabled}
+                  onSave={onSave}
+                />}
             />}
           >
             {children}
