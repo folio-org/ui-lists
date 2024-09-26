@@ -8,8 +8,6 @@ import { LISTS_VISIBLE_COLUMNS } from '../../constants';
 import { useLists, useListsIdsToTrack, usePrevious, useListsPagination } from '../../hooks';
 import { columnWidthsConfig } from './configs';
 
-import css from './ListsTable.module.css';
-
 export interface ListsTableProps {
   activeFilters: string[],
   setTotalRecords: (totalRecords: number) => void
@@ -61,11 +59,11 @@ export const ListsTable: FC<ListsTableProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listsData]);
 
-  const onNeedMoreDataHandler = (askAmount: number, limit: number, index?: number, direction: string = '') => {
-    onNeedMoreData(direction)
+  const onNeedMoreDataHandler = (askAmount: number, limit: number, index?: number, direction = '') => {
+    onNeedMoreData(direction);
 
     setRecordIds([]);
-  }
+  };
 
   if (isLoading) {
     return (
@@ -83,25 +81,23 @@ export const ListsTable: FC<ListsTableProps> = ({
 
 
   return (
-      <MultiColumnList
-        autosize
-        interactive
-        data-testid="ItemsList"
-        contentData={content ?? []}
-        headerRowClass={css.listTableHeaderSticky}
+    <MultiColumnList
+      autosize
+      interactive
+      data-testid="ItemsList"
+      contentData={content ?? []}
+      columnWidths={columnWidthsConfig}
+      pagingType="prev-next"
+      visibleColumns={LISTS_VISIBLE_COLUMNS}
+      formatter={listTableResultFormatter}
+      pageAmount={totalPages}
+      totalCount={totalRecords}
         // @ts-ignore:next-line
-        columnWidths={columnWidthsConfig}
-        pagingType='prev-next'
-        visibleColumns={LISTS_VISIBLE_COLUMNS}
-        formatter={listTableResultFormatter}
-        pageAmount={totalPages}
-        totalCount={totalRecords}
-        // @ts-ignore:next-line
-        pagingOffset={pagination.offset}
-        pagingCanGoPrevious={hasPreviousPage && !isLoading}
-        pagingCanGoNext={checkHasNextPage(totalRecords) && !isLoading}
-        columnMapping={listTableMapping}
-        onNeedMoreData={onNeedMoreDataHandler}
-      />
+      pagingOffset={pagination.offset}
+      pagingCanGoPrevious={hasPreviousPage && !isLoading}
+      pagingCanGoNext={checkHasNextPage(totalRecords) && !isLoading}
+      columnMapping={listTableMapping}
+      onNeedMoreData={onNeedMoreDataHandler}
+    />
   );
 };
