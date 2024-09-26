@@ -97,8 +97,8 @@ export const MainListInfoForm = (
             name={FIELD_NAMES.RECORD_TYPE}
             dataOptions={recordTypeOptions}
             placeholder={tString(intl, 'create-list.choose-record-type')}
-            onChange={(value: string) => {
-              onValueChange({[FIELD_NAMES.RECORD_TYPE]: value})
+            onChange={(selection: string) => {
+              onValueChange({[FIELD_NAMES.RECORD_TYPE]: selection})
             }}
             label={t('create-list.aside.record-types')}
           />
@@ -112,6 +112,7 @@ export const MainListInfoForm = (
     <>
       <TextField
         required
+        autoFocus
         error={listNameError}
         value={listName}
         onChange={onChangeHandler}
