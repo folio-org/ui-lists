@@ -15,11 +15,11 @@ import { queryClient } from '../../../test/utils';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory:  jest.fn().mockReturnValue({
-  push: jest.fn(),
-  location: {
-    search: ''
-  }
-})
+    push: jest.fn(),
+    location: {
+      search: ''
+    }
+  })
 }));
 
 jest.mock('../../components/ListsTable', () => ({
