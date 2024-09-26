@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useState } from 'react';
-import { Pane, PaneFooter, Button, Loading } from '@folio/stripes/components';
-import { CancelEditModal, ListAppIcon } from '../../../../components';
+import { Pane, PaneFooter, Loading } from '@folio/stripes/components';
+import { CancelEditModal, ListAppIcon, Buttons } from '../../../../components';
 import { t } from '../../../../services';
 
 import css from './CreateListLayout.module.css';
@@ -51,19 +51,16 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
           <div className={css.createListFooterWrap}>
             <PaneFooter
               renderStart={
-                <Button
-                  onClick={cancelHandler}
-                >
-                  {t('button.cancel')}
-                </Button>}
+                <Buttons.Cancel
+                  onCancel={cancelHandler}
+                />
+              }
               renderEnd={
-                <Button
-                  buttonStyle="primary"
+                <Buttons.Save
                   disabled={isSaveButtonDisabled || isSavingInProgress}
-                  onClick={onSave}
-                >
-                  {t('button.save')}
-                </Button>}
+                  onSave={onSave}
+                />
+              }
             />
           </div>
       }
