@@ -10,8 +10,10 @@
 * Lists app - Implement Shortcut Keys [UILISTS-158]
 * Add resolution entry in to package.json to pin TS version [UILISTS-179]
 * Add autofocus for edit and create mode [UILISTS-182]
+* Fix issue with absent blue bar [UILISTS-172]
 
-[UILISTS-182] https://folio-org.atlassian.net/browse/UILISTS-182
+
+[UILISTS-172] https://folio-org.atlassian.net/browse/UILISTS-172
 [UILISTS-179] https://folio-org.atlassian.net/browse/UILISTS-179
 [UILISTS-170] https://folio-org.atlassian.net/browse/UILISTS-170
 [UILISTS-157] https://folio-org.atlassian.net/browse/UILISTS-157
