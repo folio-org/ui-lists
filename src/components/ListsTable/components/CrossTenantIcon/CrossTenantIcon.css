@@ -1,0 +1,5 @@
+@import '@folio/stripes-components/lib/variables';
+
+.crossTenantIcon {
+    color: var(--error);
+}

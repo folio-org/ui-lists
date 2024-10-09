@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon, Tooltip } from '@folio/stripes/components';
+import { IconButton, Tooltip } from '@folio/stripes/components';
 import { t } from '../../../../services';
+import css from './CrossTenantIcon.css';
 
 export const CrossTenantIcon = () => {
   return (
@@ -9,9 +10,9 @@ export const CrossTenantIcon = () => {
     >
       {  // @ts-ignore
         ({ ref, ariaIds }) => (
-          <span style={{ cursor: 'pointer' }}>
-            <Icon
-              status="error"
+          <span>
+            <IconButton
+              iconClassName={css.crossTenantIcon}
               ref={ref}
               size="small"
               icon="exclamation-circle"

@@ -7,14 +7,13 @@ import { ListsRecord } from '../../../../interfaces';
 
 export const VisibilityCell: FC<{record: ListsRecord}> = ({ record }) => {
   const { isCrossTenant } = useCrossTenantCheck();
+  const visibilityLabel = t(record.isPrivate
+    ? 'lists.item.private'
+    : 'lists.item.shared');
 
   return (
     <>
-      {
-        t(record.isPrivate
-          ? 'lists.item.private'
-          : 'lists.item.shared')
-      }
+      {visibilityLabel}
       {
         isCrossTenant(record.id) && <CrossTenantIcon />
       }
