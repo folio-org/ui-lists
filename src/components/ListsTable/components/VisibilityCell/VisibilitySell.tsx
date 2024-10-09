@@ -16,7 +16,7 @@ export const VisibilitySell: FC<{record: ListsRecord}> = ({ record }) => {
           : 'lists.item.shared')
       }
       {
-        !isCrossTenant(record.id) && <CrossTenantIcon />
+        isCrossTenant(record.id) && <CrossTenantIcon />
       }
     </>
   );
