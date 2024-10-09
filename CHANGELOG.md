@@ -12,7 +12,9 @@
 * Add autofocus for edit and create mode [UILISTS-182]
 * Change save/cancel buttons styles [UILISTS-183]
 * Fix issue with absent blue bar [UILISTS-172]
+* Add cross-tenant logic for list-table [UILISTS-185]
 
+[UILISTS-185] https://folio-org.atlassian.net/browse/UILISTS-185
 [UILISTS-182] https://folio-org.atlassian.net/browse/UILISTS-182
 [UILISTS-183] https://folio-org.atlassian.net/browse/UILISTS-183
 [UILISTS-172] https://folio-org.atlassian.net/browse/UILISTS-172
