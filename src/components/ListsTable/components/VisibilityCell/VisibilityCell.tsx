@@ -5,7 +5,7 @@ import { CrossTenantIcon } from '../CrossTenantIcon';
 import { ListsRecord } from '../../../../interfaces';
 
 
-export const VisibilitySell: FC<{record: ListsRecord}> = ({ record }) => {
+export const VisibilityCell: FC<{record: ListsRecord}> = ({ record }) => {
   const { isCrossTenant } = useCrossTenantCheck();
 
   return (

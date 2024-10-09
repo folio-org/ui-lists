@@ -1,1 +1,1 @@
-export { VisibilitySell } from './VisibilitySell';
+export { VisibilityCell } from './VisibilityCell';
