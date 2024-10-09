@@ -1,4 +1,4 @@
-import {COLUMNS_NAME} from "../../constants";
+import { COLUMNS_NAME } from '../../constants';
 
 export const columnWidthsConfig = {
   [COLUMNS_NAME.LIST_NAME]: '250px',

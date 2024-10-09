@@ -3,6 +3,7 @@ import React from 'react';
 import { Loading, TextLink } from '@folio/stripes/components';
 import { t, formatNumber, formatTime, formatDate } from '../../../services/translation';
 
+import { VisibilitySell } from '../components/VisibilityCell';
 import { HOME_PAGE_URL, COLUMNS_NAME } from '../../../constants';
 import { ListsRecord } from '../../../interfaces';
 
@@ -16,9 +17,7 @@ export const listTableResultFormatter: Record<string, (item: ListsRecord) => Rea
       : 'lists.item.inactive')
   ),
   [COLUMNS_NAME.VISIBILITY]: (item) => (
-    t(item.isPrivate
-      ? 'lists.item.private'
-      : 'lists.item.shared')
+    <VisibilitySell record={item} />
   ),
   [COLUMNS_NAME.SOURCE]: (item) => (item.isCanned ? (t('list.info.source.system')) : (<>{item.createdByUsername}</>)),
   [COLUMNS_NAME.RECORDS]: (item) => (
