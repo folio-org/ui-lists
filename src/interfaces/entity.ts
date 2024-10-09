@@ -30,6 +30,7 @@ export interface EntityType {
     name: string;
     labelAlias: string;
     label: string;
+    crossTenantQueriesEnabled: boolean,
     columns: EntityTypeColumn[];
 }
 

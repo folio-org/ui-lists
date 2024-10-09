@@ -1,0 +1,1 @@
+export { CrossTenantIcon } from './CrossTenantIcon';

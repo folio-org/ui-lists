@@ -1,0 +1,1 @@
+export { useCrossTenantCheck } from './useCrossTenantCheck';
