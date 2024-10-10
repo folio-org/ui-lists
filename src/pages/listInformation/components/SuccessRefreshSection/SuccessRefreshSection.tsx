@@ -15,24 +15,16 @@ export const SuccessRefreshSection :FC<RefreshStatusToastProps> = (
     recordsCount = 0,
     onViewListClick = () => {} }
 ) => {
-  const wrapperIndent = {
-    marginTop: shouldShow ? '15px' : 0,
-    paddingRight: '15px',
-    paddingLeft: '15px'
-  };
-
   return (
-    <div style={wrapperIndent}>
-      <MessageBanner show={shouldShow} type="success">
-        <span style={{ color: 'black' }}>
-          {(t('status-toast.success.refresh-complete', { count: recordsCount }))}
-        </span>
-        <TextLink style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={onViewListClick}>
-          <strong>
-            {t('status-toast.success.link')}
-          </strong>
-        </TextLink>
-      </MessageBanner>
-    </div>
+    <MessageBanner show={shouldShow} type="success">
+      <span style={{ color: 'black' }}>
+        {(t('status-toast.success.refresh-complete', { count: recordsCount }))}
+      </span>
+      <TextLink style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={onViewListClick}>
+        <strong>
+          {t('status-toast.success.link')}
+        </strong>
+      </TextLink>
+    </MessageBanner>
   );
 };
