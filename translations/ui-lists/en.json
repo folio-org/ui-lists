@@ -200,5 +200,6 @@
   "commands-error.unavailable": "This action is unavailable",
   "commands-error.permission": "User does not have permission to take this action",
 
-  "cross-tenant-message": "This list may contain records from multiple tenants."
+  "cross-tenant-message": "This list may contain records from multiple tenants.",
+  "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
 }
