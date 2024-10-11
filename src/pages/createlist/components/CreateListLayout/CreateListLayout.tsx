@@ -33,50 +33,48 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
   };
 
   return (
-    <>
-      <Paneset>
-        <Layer isOpen>
-          <Paneset isRoot>
-            <Pane
-              dismissible
-              defaultWidth="fill"
-              onClose={onClose}
-              appIcon={<ListAppIcon />}
-              paneTitle={t('create-list.title')}
-              paneSub={!isSavingInProgress ?
-                t('create-list.subtitle') :
-                <>
-                  {t('create-list.saving')} <Loading />
-                </>}
-              footer={
-                <PaneFooter
-                  renderStart={
-                    <Buttons.Cancel
-                      onCancel={cancelHandler}
-                    />
+    <Paneset>
+      <Layer isOpen>
+        <Paneset isRoot>
+          <Pane
+            dismissible
+            defaultWidth="fill"
+            onClose={onClose}
+            appIcon={<ListAppIcon />}
+            paneTitle={t('create-list.title')}
+            paneSub={!isSavingInProgress ?
+              t('create-list.subtitle') :
+              <>
+                {t('create-list.saving')} <Loading />
+              </>}
+            footer={
+              <PaneFooter
+                renderStart={
+                  <Buttons.Cancel
+                    onCancel={cancelHandler}
+                  />
               }
-                  renderEnd={
-                    <Buttons.Save
-                      disabled={isSaveButtonDisabled || isSavingInProgress}
-                      onSave={onSave}
-                    />
+                renderEnd={
+                  <Buttons.Save
+                    disabled={isSaveButtonDisabled || isSavingInProgress}
+                    onSave={onSave}
+                  />
               }
-                />
-              }
-            >
-              {children}
-              <CancelEditModal
-                onCancel={() => {
-                  setShowConfirmCancelEditModal(false);
-                  onClose();
-                }}
-                onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-                open={showModalOnCancel && showConfirmCancelEditModal}
               />
-            </Pane>
-          </Paneset>
-        </Layer>
-      </Paneset>
-    </>
+              }
+          >
+            {children}
+            <CancelEditModal
+              onCancel={() => {
+                setShowConfirmCancelEditModal(false);
+                onClose();
+              }}
+              onKeepEdit={() => setShowConfirmCancelEditModal(false)}
+              open={showModalOnCancel && showConfirmCancelEditModal}
+            />
+          </Pane>
+        </Paneset>
+      </Layer>
+    </Paneset>
   );
 };
