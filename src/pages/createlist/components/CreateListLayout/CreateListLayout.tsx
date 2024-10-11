@@ -1,9 +1,7 @@
 import React, { FC, ReactElement, useState } from 'react';
-import { Pane, PaneFooter, Loading } from '@folio/stripes/components';
+import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
 import { CancelEditModal, ListAppIcon, Buttons } from '../../../../components';
 import { t } from '../../../../services';
-
-import css from './CreateListLayout.module.css';
 
 type CreateListLayoutProps = {
     isSaveButtonDisabled?: boolean;
@@ -25,6 +23,7 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
   children
 }) => {
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
+
   const cancelHandler = () => {
     if (showModalOnCancel) {
       setShowConfirmCancelEditModal(true);
@@ -35,53 +34,49 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
 
   return (
     <>
-      <Pane
-        dismissible
-        onClose={onClose}
-        padContent={false}
-        defaultWidth="fill"
-        appIcon={<ListAppIcon />}
-        paneTitle={t('create-list.title')}
-        paneSub={!isSavingInProgress ?
-          t('create-list.subtitle') :
-          <>
-            {t('create-list.saving')} <Loading />
-          </>}
-        footer={
-          <div className={css.createListFooterWrap}>
-            <PaneFooter
-              renderStart={
-                <Buttons.Cancel
-                  onCancel={cancelHandler}
+      <Paneset>
+        <Layer isOpen>
+          <Paneset isRoot>
+            <Pane
+              dismissible
+              defaultWidth="fill"
+              onClose={onClose}
+              appIcon={<ListAppIcon />}
+              paneTitle={t('create-list.title')}
+              paneSub={!isSavingInProgress ?
+                t('create-list.subtitle') :
+                <>
+                  {t('create-list.saving')} <Loading />
+                </>}
+              footer={
+                <PaneFooter
+                  renderStart={
+                    <Buttons.Cancel
+                      onCancel={cancelHandler}
+                    />
+              }
+                  renderEnd={
+                    <Buttons.Save
+                      disabled={isSaveButtonDisabled || isSavingInProgress}
+                      onSave={onSave}
+                    />
+              }
                 />
               }
-              renderEnd={
-                <Buttons.Save
-                  disabled={isSaveButtonDisabled || isSavingInProgress}
-                  onSave={onSave}
-                />
-              }
-            />
-          </div>
-      }
-      >
-        <div className={css.createListForm}>
-          <Pane
-            renderHeader={() => <span />}
-            defaultWidth="fill"
-          >
-            {children}
-          </Pane>
-        </div>
-      </Pane>
-      <CancelEditModal
-        onCancel={() => {
-          setShowConfirmCancelEditModal(false);
-          onClose();
-        }}
-        onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-        open={showModalOnCancel && showConfirmCancelEditModal}
-      />
+            >
+              {children}
+              <CancelEditModal
+                onCancel={() => {
+                  setShowConfirmCancelEditModal(false);
+                  onClose();
+                }}
+                onKeepEdit={() => setShowConfirmCancelEditModal(false)}
+                open={showModalOnCancel && showConfirmCancelEditModal}
+              />
+            </Pane>
+          </Paneset>
+        </Layer>
+      </Paneset>
     </>
   );
 };
