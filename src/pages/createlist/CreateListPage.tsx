@@ -2,15 +2,15 @@ import React, { FC, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore:next-line
 import { TitleManager } from '@folio/stripes/core';
-import { LoadingPane} from '@folio/stripes/components';
+import { LoadingPane } from '@folio/stripes/components';
 import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
-import {useMessages, useRecordTypes, useCreateList, useKeyCommandsMessages} from '../../hooks';
+import { useMessages, useRecordTypes, useCreateList, useKeyCommandsMessages } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
 import { computeRecordTypeOptions } from './helpers';
-import { handleKeyCommand } from '../../utils'
+import { handleKeyCommand } from '../../utils';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { HOME_PAGE_URL } from '../../constants';
 
@@ -68,35 +68,35 @@ export const CreateListPage:FC = () => {
       !isSaveDisabled,
       () => showCommandError()
     ))
-  ]
+  ];
 
   return (
     <HasCommandWrapper
       commands={shortcuts}
     >
-    <TitleManager
-      record={intl.formatMessage({ id:'ui-lists.title.createList' })}
-    >
-      <CreateListLayout
-        isSavingInProgress={isLoading}
-        isSaveButtonDisabled={isSaveDisabled}
-        onSave={saveList}
-        onClose={closeViewHandler}
-        onCancel={closeViewHandler}
-        showModalOnCancel={hasChanges}
+      <TitleManager
+        record={intl.formatMessage({ id:'ui-lists.title.createList' })}
       >
-        <MainCreateListForm
-          selectedType={recordType}
-          descriptionField={description}
-          listNameField={listName}
-          visibilityField={visibility}
-          statusField={status}
-          onValueChange={onValueChange}
-          recordTypesOptions={recordTypesOptions}
-          isQueryButtonDisabled={isRequiredMissing || isLoading}
-        />
-      </CreateListLayout>
-    </TitleManager>
+        <CreateListLayout
+          isSavingInProgress={isLoading}
+          isSaveButtonDisabled={isSaveDisabled}
+          onSave={saveList}
+          onClose={closeViewHandler}
+          onCancel={closeViewHandler}
+          showModalOnCancel={hasChanges}
+        >
+          <MainCreateListForm
+            selectedType={recordType}
+            descriptionField={description}
+            listNameField={listName}
+            visibilityField={visibility}
+            statusField={status}
+            onValueChange={onValueChange}
+            recordTypesOptions={recordTypesOptions}
+            isQueryButtonDisabled={isRequiredMissing || isLoading}
+          />
+        </CreateListLayout>
+      </TitleManager>
     </HasCommandWrapper>
   );
 };
