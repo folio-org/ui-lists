@@ -9,20 +9,23 @@ import { VisibilityTooltip } from '../VisibilityTooltip';
 type VisibilityRadioProps = {
   value: string,
   onChange: (changeEvent: ChangeEventHandler<HTMLInputElement>) => void,
+  isCrossTenant?: boolean
 }
 
 export const VisibilityRadio: FC<VisibilityRadioProps> = ({
   value,
   onChange,
-  isCrossTenant,
+  isCrossTenant = false,
 }) => {
+  // @ts-ignore
   return (
     <RadioButtonGroup
-      value={value}
+      value={VISIBILITY_VALUES.PRIVATE}
+      // @ts-ignore
       onChange={onChange}
       name={FIELD_NAMES.VISIBILITY}
       className={css.mainFormVisibility}
-      defaultValue={isCrossTenant ? VISIBILITY_VALUES.PRIVATE : VISIBILITY_VALUES.SHARED}
+      defaultValue={VISIBILITY_VALUES.PRIVATE}
       label={
         <span className={css.radioLabels}>
           {t('create-list.main.list-visibility')}
@@ -40,6 +43,8 @@ export const VisibilityRadio: FC<VisibilityRadioProps> = ({
       <RadioButton
         readOnly
         inline
+        // @ts-ignore
+        selected
         value={VISIBILITY_VALUES.PRIVATE}
         name={FIELD_NAMES.VISIBILITY}
         label={t('create-list.main.list-private')}

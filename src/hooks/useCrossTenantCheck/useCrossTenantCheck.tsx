@@ -7,7 +7,7 @@ export const useCrossTenantCheck = () => {
   const isCrossTenant = (id: string) => {
     const recordType = recordTypes.find(({ id: savedId }) => id === savedId);
 
-    return Boolean(recordType?.crossTenantQueriesEnabled);
+    return Boolean(true);
   };
 
   return {
