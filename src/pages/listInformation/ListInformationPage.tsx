@@ -33,13 +33,16 @@ import {
   useVisibleColumns,
   useRecordTypeLabel,
   useKeyCommandsMessages,
-  useListAppPermissions
+  useListAppPermissions,
+  useCrossTenantCheck
 } from '../../hooks';
 import {
   ListAppIcon, ListInformationMenu,
   MetaSectionAccordion,
   SuccessRefreshSection,
-  ListInformationResultViewer
+  ListInformationResultViewer,
+  CrossTenantListWarning,
+  SubHeaderBannersLayout
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
@@ -61,7 +64,7 @@ export const ListInformationPage: React.FC = () => {
   const { showCommandError } = useKeyCommandsMessages();
   const { id }: {id: string} = useParams();
   const accordionStatusRef = useRef(null);
-
+  const { isCrossTenant } = useCrossTenantCheck();
   const {
     handleColumnsChange,
     visibleColumns,
@@ -189,6 +192,8 @@ export const ListInformationPage: React.FC = () => {
 
   const recordCount = listData?.successRefresh?.recordsCount ?? 0;
 
+  const shouldShowCrossTenantWarning = isCrossTenant(listData?.entityTypeId || '');
+
   const buttonHandlers : any = {};
 
   if (canRefresh) {
@@ -277,11 +282,16 @@ export const ListInformationPage: React.FC = () => {
                   conditions={conditions}
                 />}
                 onClose={() => history.push(HOME_PAGE_URL)}
-                subheader={<SuccessRefreshSection
-                  shouldShow={showSuccessRefreshMessage}
-                  recordsCount={intl.formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-                  onViewListClick={onVewListClickHandler}
-                />}
+                subheader={
+                  <SubHeaderBannersLayout hasBannersToDisplay={shouldShowCrossTenantWarning || showSuccessRefreshMessage}>
+                    <CrossTenantListWarning shouldShow={shouldShowCrossTenantWarning} />
+                    <SuccessRefreshSection
+                      shouldShow={showSuccessRefreshMessage}
+                      recordsCount={intl.formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                      onViewListClick={onVewListClickHandler}
+                    />
+                  </SubHeaderBannersLayout>
+              }
               >
                 <AccordionStatus ref={accordionStatusRef}>
                   <AccordionSet>
