@@ -15,16 +15,22 @@ export const SuccessRefreshSection :FC<RefreshStatusToastProps> = (
     recordsCount = 0,
     onViewListClick = () => {} }
 ) => {
+  if (!shouldShow) {
+    return <div />;
+  }
+
   return (
-    <MessageBanner show={shouldShow} type="success">
-      <span style={{ color: 'black' }}>
-        {(t('status-toast.success.refresh-complete', { count: recordsCount }))}
-      </span>
-      <TextLink style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={onViewListClick}>
-        <strong>
-          {t('status-toast.success.link')}
-        </strong>
-      </TextLink>
-    </MessageBanner>
+    <div style={{ marginBottom: '15px' }}>
+      <MessageBanner show={shouldShow} type="success">
+        <span style={{ color: 'black' }}>
+          {(t('status-toast.success.refresh-complete', { count: recordsCount }))}
+        </span>
+        <TextLink style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={onViewListClick}>
+          <strong>
+            {t('status-toast.success.link')}
+          </strong>
+        </TextLink>
+      </MessageBanner>
+    </div>
   );
 };
