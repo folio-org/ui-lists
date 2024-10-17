@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState, FocusEvent } from 'react';
 import { useIntl } from 'react-intl';
-import {
-  Layout,
+import { Layout,
   RadioButton,
   RadioButtonGroup,
   TextArea,
@@ -18,9 +17,11 @@ import {
   MAX_SUPPORTED_NAME_LENGTH
 } from './constants';
 import { t, tString } from '../../services';
+import { VisibilityTooltip } from './VisibilityTooltip';
+import { filterByIncludes } from '../../utils';
+
 
 import css from './MainListInfoForm.module.css';
-import {filterByIncludes} from "../../utils";
 
 type MainListInfoFormProps = {
     onValueChange?: (field: {[key: string]: string}) => void;
@@ -32,19 +33,21 @@ type MainListInfoFormProps = {
     showInactiveWarning?: boolean,
     recordTypeOptions?: EntityTypeSelectOption[],
     recordTypeLabel?: string;
+    isCrossTenant?: boolean;
 }
 
-export const MainListInfoForm = (
-  { showInactiveWarning = false,
-    onValueChange = () => {},
-    listName,
-    description,
-    visibility,
-    status,
-    isLoading,
-    recordTypeOptions,
-    recordTypeLabel}: MainListInfoFormProps
-) => {
+export const MainListInfoForm = ({
+  showInactiveWarning = false,
+  onValueChange = () => {},
+  listName,
+  description,
+  visibility,
+  status,
+  isLoading,
+  recordTypeOptions,
+  recordTypeLabel,
+  isCrossTenant = true
+}: MainListInfoFormProps) => {
   const intl = useIntl();
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -63,19 +66,19 @@ export const MainListInfoForm = (
   const activeRadioWarning = showInactiveRadioWarning ? t('warning.inactive-status') : '';
 
   const renderRecordType = () => {
-    if(recordTypeLabel) {
+    if (recordTypeLabel) {
       return (
         <Row>
           <Col xs={2}>
             <KeyValue
-              label={t("list.info.record-type")}
+              label={t('list.info.record-type')}
               value={recordTypeLabel}
             />
           </Col>
         </Row>
-      )
+      );
     }
-  }
+  };
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
       /**
@@ -98,7 +101,7 @@ export const MainListInfoForm = (
             dataOptions={recordTypeOptions}
             placeholder={tString(intl, 'create-list.choose-record-type')}
             onChange={(selection: string) => {
-              onValueChange({[FIELD_NAMES.RECORD_TYPE]: selection})
+              onValueChange({ [FIELD_NAMES.RECORD_TYPE]: selection });
             }}
             label={t('create-list.aside.record-types')}
           />
@@ -136,27 +139,28 @@ export const MainListInfoForm = (
       {renderRecordType()}
       <Layout className="display-flex flex-align-items-start">
         <RadioButtonGroup
+          readOnly
           value={visibility}
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
           className={css.mainFormVisibility}
+          defaultValue={isCrossTenant ? VISIBILITY_VALUES.PRIVATE : VISIBILITY_VALUES.SHARED}
           label={
-            <span className={css.radioLabels}>{t('create-list.main.list-visibility')}
-              <InfoPopover
-                iconSize="medium"
-                contentClass={css.tooltipContent}
-                content={t('create-list.main.list-visibility.tooltip')}
-              />
+            <span className={css.radioLabels}>
+              {t('create-list.main.list-visibility')}
+              <VisibilityTooltip />
             </span>
             }
         >
           <RadioButton
             inline
             value={VISIBILITY_VALUES.SHARED}
+            disabled={isCrossTenant}
             name={FIELD_NAMES.VISIBILITY}
             label={t('create-list.main.list-shared')}
           />
           <RadioButton
+            readOnly
             inline
             value={VISIBILITY_VALUES.PRIVATE}
             name={FIELD_NAMES.VISIBILITY}
@@ -176,7 +180,6 @@ export const MainListInfoForm = (
               {t('create-list.main.list-status')}
               <InfoPopover
                 iconSize="medium"
-                contentClass={css.tooltipContent}
                 content={t('create-list.main.list-status.tooltip')}
               />
             </span>
