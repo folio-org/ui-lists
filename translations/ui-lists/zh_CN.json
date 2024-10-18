@@ -158,5 +158,6 @@
     "commands-error.unavailable": "此操作不可用",
     "commands-error.permission": "用户无权执行此操作",
     "pane.dropdown.ariaLabel.columnFilter": "列筛选输入",
-    "pane.dropdown.search.placeholder": "搜索栏名称"
+    "pane.dropdown.search.placeholder": "搜索栏名称",
+    "cross-tenant-message": "This list may contain records from multiple tenants."
 }

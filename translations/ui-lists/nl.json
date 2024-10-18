@@ -158,5 +158,6 @@
     "commands-error.unavailable": "This action is unavailable",
     "commands-error.permission": "User does not have permission to take this action",
     "pane.dropdown.ariaLabel.columnFilter": "Invoer kolomfilter",
-    "pane.dropdown.search.placeholder": "Kolomnaam zoeken"
+    "pane.dropdown.search.placeholder": "Kolomnaam zoeken",
+    "cross-tenant-message": "This list may contain records from multiple tenants."
 }
