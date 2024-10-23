@@ -13,7 +13,8 @@ import { TitleManager } from '@folio/stripes/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
 import {
-  useCreateList, useCrossTenantCheck,
+  useCreateList,
+  useCrossTenantCheck,
   useInitRefresh,
   useKeyCommandsMessages,
   useListDetails,
