@@ -16,7 +16,8 @@ type MainCreateListFormProps = {
   statusField: STATUS,
   isQueryButtonDisabled?: boolean,
   recordTypesOptions: EntityTypeSelectOption[],
-  selectedType?: string
+  selectedType?: string,
+  isCrossTenant?: boolean
 }
 
 export const MainCreateListForm:FC<MainCreateListFormProps> = (
@@ -27,7 +28,8 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
     statusField,
     selectedType = '',
     recordTypesOptions,
-    isQueryButtonDisabled }
+    isQueryButtonDisabled,
+    isCrossTenant = false }
 ) => {
   const [isOpened, setIsOpened] = useState(true);
   const onToggleHandler = () => {
@@ -61,6 +63,7 @@ export const MainCreateListForm:FC<MainCreateListFormProps> = (
           onToggle={onToggleHandler}
         >
           <MainListInfoForm
+            isCrossTenant={isCrossTenant}
             onValueChange={onValueChange}
             recordTypeOptions={recordTypesOptions}
             listName={listNameField}

@@ -1,5 +1,5 @@
-import React, {FC, useRef} from 'react';
-import {useIntl} from 'react-intl';
+import React, { FC, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import {
   Accordion,
   AccordionSet,
@@ -14,6 +14,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { HTTPError } from 'ky';
 import {
   useCreateList,
+  useCrossTenantCheck,
   useInitRefresh,
   useKeyCommandsMessages,
   useListDetails,
@@ -37,6 +38,7 @@ import { handleKeyCommand } from '../../utils';
 export const CopyListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
+  const { isCrossTenant } = useCrossTenantCheck();
   const { id }: {id: string} = useParams();
   const { showCommandError } = useKeyCommandsMessages();
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
@@ -147,6 +149,7 @@ export const CopyListPage:FC = () => {
                     description={state[FIELD_NAMES.DESCRIPTION]}
                     recordTypeLabel={recordTypeLabel}
                     isLoading={loadingListDetails}
+                    isCrossTenant={isCrossTenant(listDetails?.entityTypeId || '')}
                   />
                 </Layout>
               </Accordion>

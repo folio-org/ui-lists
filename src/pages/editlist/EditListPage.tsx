@@ -14,6 +14,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { HTTPError } from 'ky';
 import {
+  useCrossTenantCheck,
   useCSVExport,
   useDeleteList,
   useKeyCommandsMessages,
@@ -43,6 +44,7 @@ import { handleKeyCommand } from '../../utils';
 export const EditListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
+  const { isCrossTenant } = useCrossTenantCheck();
   const accordionStatusRef = useRef(null);
   const { id }: { id: string } = useParams();
   const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
@@ -223,6 +225,7 @@ export const EditListPage:FC = () => {
                     visibility={state[FIELD_NAMES.VISIBILITY]}
                     description={state[FIELD_NAMES.DESCRIPTION]}
                     isLoading={loadingListDetails}
+                    isCrossTenant={isCrossTenant(listDetails?.entityTypeId || '')}
                     recordTypeLabel={recordTypeLabel}
                     showInactiveWarning
                   />

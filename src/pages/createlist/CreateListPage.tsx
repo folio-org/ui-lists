@@ -6,7 +6,12 @@ import { LoadingPane } from '@folio/stripes/components';
 import { useIntl } from 'react-intl';
 import { computeErrorMessage, t } from '../../services';
 import { useCreateListFormState } from './hooks';
-import { useMessages, useRecordTypes, useCreateList, useKeyCommandsMessages } from '../../hooks';
+import {
+  useMessages,
+  useRecordTypes,
+  useCreateList,
+  useKeyCommandsMessages
+} from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
 import { computeRecordTypeOptions } from './helpers';
@@ -19,7 +24,7 @@ import { ListsRecordBase, FIELD_NAMES } from '../../interfaces';
 export const CreateListPage:FC = () => {
   const history = useHistory();
   const intl = useIntl();
-  const { state, onValueChange, hasChanges } = useCreateListFormState();
+  const { state, onValueChange, hasChanges, crossTenantType } = useCreateListFormState();
   const { isLoading: isLoadingRecords, recordTypes = [] } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { showCommandError } = useKeyCommandsMessages();
@@ -94,6 +99,7 @@ export const CreateListPage:FC = () => {
             onValueChange={onValueChange}
             recordTypesOptions={recordTypesOptions}
             isQueryButtonDisabled={isRequiredMissing || isLoading}
+            isCrossTenant={crossTenantType}
           />
         </CreateListLayout>
       </TitleManager>
