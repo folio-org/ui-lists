@@ -81,9 +81,9 @@ export const ListsApp:IListsApp = (props) => {
     }))
   ];
 
-  // if (!isLoading && recordTypes?.length === 0) {
-  //   return <MissingAllEntityTypePermissionsPage />;
-  // }
+  if (!isLoading && recordTypes?.length === 0) {
+    return <MissingAllEntityTypePermissionsPage />;
+  }
 
   return (
     <CommandList commands={commandsGeneral}>
