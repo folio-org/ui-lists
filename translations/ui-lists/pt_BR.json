@@ -158,5 +158,6 @@
     "commands-error.unavailable": "Essa ação não está disponível",
     "commands-error.permission": "O usuário não tem permissão para executar esta ação",
     "pane.dropdown.ariaLabel.columnFilter": "Entrada de filtro de coluna",
-    "pane.dropdown.search.placeholder": "Nome da coluna de busca"
+    "pane.dropdown.search.placeholder": "Nome da coluna de busca",
+    "cross-tenant-message": "Essa lista pode conter registros de vários locatários."
 }

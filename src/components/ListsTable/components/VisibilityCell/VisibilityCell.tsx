@@ -15,7 +15,7 @@ export const VisibilityCell: FC<{record: ListsRecord}> = ({ record }) => {
     <>
       {visibilityLabel}
       {
-        isCrossTenant(record.id) && <CrossTenantIcon />
+        isCrossTenant(record.entityTypeId) && <CrossTenantIcon />
       }
     </>
   );
