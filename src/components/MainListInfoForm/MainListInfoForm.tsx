@@ -46,7 +46,7 @@ export const MainListInfoForm = ({
   isLoading,
   recordTypeOptions,
   recordTypeLabel,
-  isCrossTenant = true
+  isCrossTenant = false
 }: MainListInfoFormProps) => {
   const intl = useIntl();
 
@@ -79,6 +79,7 @@ export const MainListInfoForm = ({
       );
     }
   };
+
   const renderSelect = () => {
     if (recordTypeOptions?.length) {
       /**
@@ -139,7 +140,7 @@ export const MainListInfoForm = ({
       {renderRecordType()}
       <Layout className="display-flex flex-align-items-start">
         <RadioButtonGroup
-          readOnly
+          readOnly={isCrossTenant}
           value={visibility}
           onChange={onChangeHandler}
           name={FIELD_NAMES.VISIBILITY}
@@ -160,7 +161,7 @@ export const MainListInfoForm = ({
             label={t('create-list.main.list-shared')}
           />
           <RadioButton
-            readOnly
+            readOnly={isCrossTenant}
             inline
             value={VISIBILITY_VALUES.PRIVATE}
             name={FIELD_NAMES.VISIBILITY}
