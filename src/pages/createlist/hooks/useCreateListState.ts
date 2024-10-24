@@ -26,6 +26,8 @@ export const useCreateListFormState = () => {
 
     if (isCrossTenant(value[FIELD_NAMES.RECORD_TYPE])) {
       value = { ...value, [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES.PRIVATE };
+    } else {
+      value = { ...value, [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES.SHARED };
     }
 
     setState((prevState) => {
