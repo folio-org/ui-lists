@@ -19,6 +19,7 @@ import {
 import { t, tString } from '../../services';
 import { VisibilityTooltip } from './VisibilityTooltip';
 import { filterByIncludes } from '../../utils';
+import { useIsEscEnvCheck } from '../../hooks';
 
 
 import css from './MainListInfoForm.module.css';
@@ -49,6 +50,8 @@ export const MainListInfoForm = ({
   isCrossTenant = false
 }: MainListInfoFormProps) => {
   const intl = useIntl();
+
+  const { isESC } = useIsEscEnvCheck();
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onValueChange({ [event.target.name]: event.target.value });
@@ -149,7 +152,7 @@ export const MainListInfoForm = ({
           label={
             <span className={css.radioLabels}>
               {t('create-list.main.list-visibility')}
-              <VisibilityTooltip />
+              <VisibilityTooltip isECS={isESC} />
             </span>
             }
         >
