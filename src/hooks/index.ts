@@ -18,3 +18,4 @@ export { useSessionStorage } from './useSessionStorage';
 export { useKeyCommandsMessages } from './useKeyCommandsMessages';
 export { useListAppPermissions } from './useListAppPermissions';
 export { useCrossTenantCheck } from './useCrossTenantCheck';
+export { useIsEscEnvCheck } from './useIsEscEnvCheck';
