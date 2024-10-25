@@ -11,7 +11,7 @@ export const CURRENT_PAGE_OFFSET_KEY = '@folio/lists/currentPageOffset';
 
 export const enum USER_PERMS {
   ReadList = 'lists.item.get',
-  RefreshList = 'lists.item.refresh',
+  RefreshList = 'lists.item.post',
   CreateList = 'lists.collection.post',
   UpdateList = 'lists.item.update',
   DeleteList = 'lists.item.delete',
