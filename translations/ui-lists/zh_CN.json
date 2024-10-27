@@ -159,5 +159,6 @@
     "commands-error.permission": "用户无权执行此操作",
     "pane.dropdown.ariaLabel.columnFilter": "列筛选输入",
     "pane.dropdown.search.placeholder": "搜索栏名称",
-    "cross-tenant-message": "This list may contain records from multiple tenants."
+    "cross-tenant-message": "This list may contain records from multiple tenants.",
+    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
 }
