@@ -159,5 +159,6 @@
     "commands-error.permission": "Uživatel nemá oprávnění k provedení této akce",
     "pane.dropdown.ariaLabel.columnFilter": "Vstup filtru sloupců",
     "pane.dropdown.search.placeholder": "Název vyhledávacího sloupce",
-    "cross-tenant-message": "This list may contain records from multiple tenants."
+    "cross-tenant-message": "This list may contain records from multiple tenants.",
+    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
 }

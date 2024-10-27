@@ -159,5 +159,6 @@
     "commands-error.permission": "User does not have permission to take this action",
     "pane.dropdown.ariaLabel.columnFilter": "Column filter input",
     "pane.dropdown.search.placeholder": "Nome da coluna de pesquisa",
-    "cross-tenant-message": "This list may contain records from multiple tenants."
+    "cross-tenant-message": "This list may contain records from multiple tenants.",
+    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
 }
