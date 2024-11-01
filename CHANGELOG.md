@@ -1,6 +1,6 @@
 # Change history for ui-lists
 
-## In progress
+## [3.1.0](https://github.com/folio-org/ui-lists/tree/v3.1.0) (2024-11-01)
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
 * Results List: Update Record type filter display [UILISTS-145]
 * Lists app: Implement App context menu [UILISTS-138]
@@ -19,21 +19,21 @@
 * Supply necessary a11y props to `<Layer>` [UILISTS-195]
 
 
-[UILISTS-175] https://folio-org.atlassian.net/browse/UILISTS-175
-[UILISTS-173] https://folio-org.atlassian.net/browse/UILISTS-173
-[UILISTS-185] https://folio-org.atlassian.net/browse/UILISTS-185
-[UILISTS-182] https://folio-org.atlassian.net/browse/UILISTS-182
-[UILISTS-183] https://folio-org.atlassian.net/browse/UILISTS-183
-[UILISTS-172] https://folio-org.atlassian.net/browse/UILISTS-172
-[UILISTS-179] https://folio-org.atlassian.net/browse/UILISTS-179
-[UILISTS-170] https://folio-org.atlassian.net/browse/UILISTS-170
-[UILISTS-157] https://folio-org.atlassian.net/browse/UILISTS-157
-[UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
-[UILISTS-138] https://folio-org.atlassian.net/browse/UILISTS-138
-[UILISTS-137] https://folio-org.atlassian.net/browse/UILISTS-137
-[UILISTS-145] https://folio-org.atlassian.net/browse/UILISTS-145
-[UILISTS-158] https://folio-org.atlassian.net/browse/UILISTS-158
-[FOLIO-4086] https://folio-org.atlassian.net/browse/FOLIO-4086
+[UILISTS-175]: https://folio-org.atlassian.net/browse/UILISTS-175
+[UILISTS-173]: https://folio-org.atlassian.net/browse/UILISTS-173
+[UILISTS-185]: https://folio-org.atlassian.net/browse/UILISTS-185
+[UILISTS-182]: https://folio-org.atlassian.net/browse/UILISTS-182
+[UILISTS-183]: https://folio-org.atlassian.net/browse/UILISTS-183
+[UILISTS-172]: https://folio-org.atlassian.net/browse/UILISTS-172
+[UILISTS-179]: https://folio-org.atlassian.net/browse/UILISTS-179
+[UILISTS-170]: https://folio-org.atlassian.net/browse/UILISTS-170
+[UILISTS-157]: https://folio-org.atlassian.net/browse/UILISTS-157
+[UILISTS-138]: https://folio-org.atlassian.net/browse/UILISTS-138
+[UILISTS-138]: https://folio-org.atlassian.net/browse/UILISTS-138
+[UILISTS-137]: https://folio-org.atlassian.net/browse/UILISTS-137
+[UILISTS-145]: https://folio-org.atlassian.net/browse/UILISTS-145
+[UILISTS-158]: https://folio-org.atlassian.net/browse/UILISTS-158
+[FOLIO-4086]: https://folio-org.atlassian.net/browse/FOLIO-4086
 
 ## [3.0.2](https://github.com/folio-org/ui-lists/tree/v3.0.2) (2024-08-07)
 * Fix type issue with `<DropdownMenu>` [UILISTS-168]
