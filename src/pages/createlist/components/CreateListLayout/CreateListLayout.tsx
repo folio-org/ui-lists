@@ -1,7 +1,8 @@
 import React, { FC, ReactElement, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
 import { CancelEditModal, ListAppIcon, Buttons } from '../../../../components';
-import { t } from '../../../../services';
+import { t, tString } from '../../../../services';
 
 type CreateListLayoutProps = {
     isSaveButtonDisabled?: boolean;
@@ -23,6 +24,7 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
   children
 }) => {
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
+  const intl = useIntl();
 
   const cancelHandler = () => {
     if (showModalOnCancel) {
@@ -34,7 +36,7 @@ export const CreateListLayout:FC<CreateListLayoutProps> = ({
 
   return (
     <Paneset>
-      <Layer isOpen>
+      <Layer isOpen contentLabel={tString(intl, 'create-list.title')}>
         <Paneset isRoot>
           <Pane
             dismissible

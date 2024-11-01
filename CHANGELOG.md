@@ -16,6 +16,7 @@
 * Cross-tenant indicator for list detail page [UILISTS-173]
 * Fix GitHub Actions workflow not running for tags [FOLIO-4086]
 * Add Cross-tenant default state for edit/duplicate/create modes [UILISTS-175]
+* Supply necessary a11y props to `<Layer>` [UILISTS-195]
 
 
 [UILISTS-175] https://folio-org.atlassian.net/browse/UILISTS-175
