@@ -20,7 +20,7 @@ import {
 } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
-import { useListAppPermissions } from "../../../../hooks";
+import { useListAppPermissions } from '../../../../hooks';
 
 export interface ListInformationMenuProps {
   columns: QueryBuilderColumnMetadata[]
@@ -147,9 +147,9 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
             <TextField
               value={columnSearch}
               onChange={e => setColumnSearch(e.target.value)}
-              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter' )}
+              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter')}
               disabled={allDisabled}
-              placeholder={tString(intl, 'pane.dropdown.search.placeholder' )}
+              placeholder={tString(intl, 'pane.dropdown.search.placeholder')}
             />
             <Headline size="medium" margin="none" tag="p" faded>
               {t('pane.dropdown.show-columns')}

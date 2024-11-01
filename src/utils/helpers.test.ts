@@ -1,6 +1,6 @@
+import { expect } from '@jest/globals';
 import { buildListsUrl, filterByIncludes, handleKeyCommand } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
-import {expect} from "@jest/globals";
 
 const baseUrl = 'http://www.test.com';
 
@@ -89,16 +89,16 @@ describe('Helpers', () => {
       expect(filterByIncludes('ers', items)).toEqual([{
         label: 'Users',
         value: '123s1233131'
-      }])
-    })
-  })
+      }]);
+    });
+  });
 
   describe('handleKeyEvent', () => {
     it('is expected to call preventDefault with callback', () => {
       const preventDefault = jest.fn();
-      const keyboardEvent = new KeyboardEvent('keydown')
+      const keyboardEvent = new KeyboardEvent('keydown');
 
-      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault)
+      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault);
 
       const callback = jest.fn();
 
@@ -106,13 +106,13 @@ describe('Helpers', () => {
 
       expect(callback).toBeCalled();
       expect(preventDefault).toBeCalled();
-    })
+    });
 
     it('is expected to call preventDefault but not callback if condition false', () => {
       const preventDefault = jest.fn();
-      const keyboardEvent = new KeyboardEvent('keydown')
+      const keyboardEvent = new KeyboardEvent('keydown');
 
-      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault)
+      jest.spyOn(keyboardEvent, 'preventDefault').mockImplementation(preventDefault);
 
       const callback = jest.fn();
 
@@ -120,6 +120,6 @@ describe('Helpers', () => {
 
       expect(callback).not.toBeCalled();
       expect(preventDefault).toBeCalled();
-    })
-  })
+    });
+  });
 });

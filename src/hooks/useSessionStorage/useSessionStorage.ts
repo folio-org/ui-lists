@@ -11,7 +11,7 @@ export const useSessionStorage = <T>(key: string) => {
     try {
       return sessionStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      return null
+      return null;
     }
   };
 
@@ -19,7 +19,7 @@ export const useSessionStorage = <T>(key: string) => {
     try {
       return sessionStorage.removeItem(key);
     } catch (e) {
-      return null
+      return null;
     }
   };
 
@@ -27,5 +27,5 @@ export const useSessionStorage = <T>(key: string) => {
     getItem,
     setItem,
     removeItem
-  }
-}
+  };
+};

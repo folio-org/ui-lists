@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { EditListMenu } from './EditListMenu';
 import { useStripes } from '@folio/stripes/core';
+import { EditListMenu } from './EditListMenu';
 
 describe('EditListMenu', () => {
   const mockButtonHandlers = {
@@ -23,11 +23,10 @@ describe('EditListMenu', () => {
     const exportButton = screen.getByText('ui-lists.pane.dropdown.export-all');
     const exportVisibleButton = screen.getByText('ui-lists.pane.dropdown.export-visible');
 
-      screen.logTestingPlaygroundURL()
+    screen.logTestingPlaygroundURL();
     expect(deleteButton).toBeInTheDocument();
     expect(exportButton).toBeInTheDocument();
     expect(exportVisibleButton).toBeInTheDocument();
-
   });
 
   it('should call delete handler when delete button is clicked', async () => {

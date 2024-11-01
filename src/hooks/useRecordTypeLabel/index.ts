@@ -1,1 +1,1 @@
-export { useRecordTypeLabel } from "./useRecordTypeLabel";
+export { useRecordTypeLabel } from './useRecordTypeLabel';

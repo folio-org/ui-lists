@@ -1,34 +1,34 @@
 import { ChangeEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { isEqual } from 'lodash';
-import { buildFiltersObject } from './helpers';
-import { useSessionStorage } from '../../../../hooks'
-import { DEFAULT_FILTERS } from './configurations';
 import { useNamespace } from '@folio/stripes/core';
+import { buildFiltersObject } from './helpers';
+import { useSessionStorage } from '../../../../hooks';
+import { DEFAULT_FILTERS } from './configurations';
 
 const FILTERS_URL_KEY = 'filters';
 
 const useURLFilters = () => {
   const history = useHistory();
   const { location } = history;
-  const searchParams = new URLSearchParams(location.search)
+  const searchParams = new URLSearchParams(location.search);
   const [namespace] = useNamespace();
 
-  const { getItem, setItem } = useSessionStorage(`${namespace}/filters`)
+  const { getItem, setItem } = useSessionStorage(`${namespace}/filters`);
 
   const sessionFilters = getItem() as string;
 
   const setValues = (filters: string[]) => {
-    searchParams.set(FILTERS_URL_KEY, filters.join(','))
+    searchParams.set(FILTERS_URL_KEY, filters.join(','));
 
-    history.push(`${history.location.pathname}?${searchParams.toString()}`)
+    history.push(`${history.location.pathname}?${searchParams.toString()}`);
 
-    setItem(filters.join(','))
+    setItem(filters.join(','));
   };
 
   useEffect(() => {
     const filtersURL = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
-      return !!filter
+      return !!filter;
     }).join(',');
 
     if (sessionFilters === filtersURL) {
@@ -36,82 +36,82 @@ const useURLFilters = () => {
     }
 
     if (!sessionFilters && !filtersURL) {
-      setValues(DEFAULT_FILTERS)
+      setValues(DEFAULT_FILTERS);
 
       return;
     }
 
     if (filtersURL) {
-      setItem(filtersURL)
+      setItem(filtersURL);
     }
 
     if (!filtersURL && sessionFilters) {
-      history.push(`${history.location.pathname}?${FILTERS_URL_KEY}=${sessionFilters}`)
+      history.push(`${history.location.pathname}?${FILTERS_URL_KEY}=${sessionFilters}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionFilters])
+  }, [sessionFilters]);
 
   const filters = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
-    return !!filter
+    return !!filter;
   });
 
   return {
     filterParams: filters,
     addValue: (filterValue: string) => {
-      setValues([...filters, filterValue])
+      setValues([...filters, filterValue]);
     },
     removeValue: (filterValue: string) => {
       const newFilters = filters.filter((item: string) => {
-        return item !== filterValue
-      })
+        return item !== filterValue;
+      });
 
-      setValues(newFilters)
+      setValues(newFilters);
     },
     resetFilters: () => {
-      setValues(DEFAULT_FILTERS)
+      setValues(DEFAULT_FILTERS);
     },
     setValues
-  }
-}
+  };
+};
 
 export function useFilters() {
-  const {filterParams, addValue, removeValue, resetFilters, setValues} = useURLFilters()
+  const { filterParams, addValue, removeValue, resetFilters, setValues } = useURLFilters();
 
   const filterCount = filterParams?.length;
 
   const onChangRecordType = (...a: any) => {
     const fil = filterParams.filter((item: string) => {
-      return !item.startsWith('record_types')
-    })
+      return !item.startsWith('record_types');
+    });
 
-    setValues([...fil, ...a])
-  }
+    setValues([...fil, ...a]);
+  };
 
   const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked, name } = e.target;
 
     if (checked) {
-      addValue(name)
+      addValue(name);
     } else {
-      removeValue(name)
+      removeValue(name);
     }
   };
 
   const onResetAll = () => {
-    resetFilters()
+    resetFilters();
   };
 
   const onClearGroup = (groupName: string) => {
     const filters = filterParams.filter((filterName) => {
-      return !filterName.startsWith(groupName)
-    })
+      return !filterName.startsWith(groupName);
+    });
 
     setValues(filters);
   };
 
   const selectedRecordTypes = filterParams.filter(value => {
-    return value.startsWith('record_types')
-  })
+    return value.startsWith('record_types');
+  });
 
   const isDefaultState = isEqual(DEFAULT_FILTERS, filterParams);
 

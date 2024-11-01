@@ -47,24 +47,24 @@ const renderApp = () => {
 
 describe('Lists app entry point', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   it('is expected to close shortcuts modal', async () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [{}], isLoading: false });
 
-    renderApp()
+    renderApp();
 
-    const shortcutsButton = screen.getByTestId('shortcuts')
+    const shortcutsButton = screen.getByTestId('shortcuts');
 
-    await user.click(shortcutsButton)
+    await user.click(shortcutsButton);
 
-    const closeButton = screen.getByRole('button', { name: /close/i })
+    const closeButton = screen.getByRole('button', { name: /close/i });
 
-    await user.click(closeButton)
+    await user.click(closeButton);
 
-    expect(closeButton).not.toBeInTheDocument()
-  })
+    expect(closeButton).not.toBeInTheDocument();
+  });
 
   it('should render no entity type permissions message if no entity types are available', async () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: false });
@@ -101,50 +101,50 @@ describe('Lists app entry point', () => {
     sessionStorage.setItem('@folio/lists/test', '123');
     sessionStorage.setItem('not-lists/test', '123');
 
-    expect(sessionStorage.getItem('@folio/lists/test')).toEqual('123')
-    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
+    expect(sessionStorage.getItem('@folio/lists/test')).toEqual('123');
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123');
 
-    ListsApp.eventHandler('LOGIN')
+    ListsApp.eventHandler('LOGIN');
 
     expect(sessionStorage.getItem('@folio/lists/test')).toBeFalsy();
-    expect(sessionStorage.getItem('not-lists/test')).toEqual('123')
-  })
+    expect(sessionStorage.getItem('not-lists/test')).toEqual('123');
+  });
 
   it('is expected to call redicrect function', () => {
     const element = document.createElement('DIV');
 
     jest.spyOn(element, 'focus');
 
-    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null)
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(null);
 
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
 
     renderApp();
 
-    const home = screen.getByTestId('list-app-home')
+    const home = screen.getByTestId('list-app-home');
 
-    user.click(home)
+    user.click(home);
 
     expect(historyPushMock).toBeCalledWith('/lists');
-  })
+  });
 
   it('is expected to not call push function if element exist', () => {
     useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: true });
     const button = document.createElement('BUTTON');
     const element = document.createElement('DIV');
 
-    element.appendChild(button)
+    element.appendChild(button);
 
     jest.spyOn(button, 'focus');
 
-    jest.spyOn(document, 'getElementById').mockReturnValueOnce(element)
+    jest.spyOn(document, 'getElementById').mockReturnValueOnce(element);
 
     renderApp();
 
-    const home = screen.getByTestId('list-app-home')
+    const home = screen.getByTestId('list-app-home');
 
-    user.click(home)
+    user.click(home);
 
     expect(button.focus).toBeCalled();
-  })
+  });
 });

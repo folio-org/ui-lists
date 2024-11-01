@@ -1,4 +1,4 @@
-import {EntityType} from "./entity";
+import { EntityType } from './entity';
 
 export interface Sort {
   empty: boolean;

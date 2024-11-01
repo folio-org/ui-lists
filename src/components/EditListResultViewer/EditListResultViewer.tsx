@@ -45,12 +45,11 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
   const { visibleColumns } = useVisibleColumns(id);
 
   const getAsyncContentData = useCallback(
-    ({ limit, offset }: { limit: number; offset: number }) =>
-      ky
-        .get(
-          `lists/${id}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`,
-        )
-        .json(),
+    ({ limit, offset }: { limit: number; offset: number }) => ky
+      .get(
+        `lists/${id}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`,
+      )
+      .json(),
     [ky, id, visibleColumns],
   );
 

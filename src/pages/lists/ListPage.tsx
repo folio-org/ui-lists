@@ -10,11 +10,11 @@ import {
   Button,
   LoadingPane
 } from '@folio/stripes/components';
+import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
+import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
 // @ts-ignore:next-line
-import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
-import { IfPermission } from '@folio/stripes/core';
 import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import {
   useKeyCommandsMessages,
@@ -27,7 +27,7 @@ import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { getStatusButtonElem, handleKeyCommand } from "../../utils";
+import { getStatusButtonElem, handleKeyCommand } from '../../utils';
 
 import css from './ListPage.module.css';
 
@@ -61,15 +61,15 @@ export const ListPage: React.FC = () => {
     AddCommand.goToFilter(handleKeyCommand(() => {
       getStatusButtonElem()?.focus();
     }))
-  ]
+  ];
 
 
   return (
     <HasCommandWrapper
       commands={shortcuts}
     >
-    <Paneset data-test-root-pane>
-      {filterPaneIsVisible &&
+      <Paneset data-test-root-pane>
+        {filterPaneIsVisible &&
         <Pane
           defaultWidth="20%"
           paneTitle={t('filterPane.title')}
@@ -93,10 +93,10 @@ export const ListPage: React.FC = () => {
             </Button>
           </div>
           <Filters
-              config={filterConfig}
-              filters={filtersObject}
-              onChangeFilter={onChangeFilter}
-              onClearFilter={onClearGroup}
+            config={filterConfig}
+            filters={filtersObject}
+            onChangeFilter={onChangeFilter}
+            onClearFilter={onClearGroup}
           />
           {
             isLoadingConfigData ? (<LoadingPane />) : (
@@ -111,13 +111,13 @@ export const ListPage: React.FC = () => {
 
         </Pane>
       }
-      <Pane
-        key={String(filterPaneIsVisible)}
-        defaultWidth={filterPaneIsVisible ? '80%' : 'fill'}
-        paneTitle={t('mainPane.title')}
-        paneSub={t('mainPane.subTitle', { count: totalRecords })}
-        appIcon={<ListAppIcon />}
-        firstMenu={
+        <Pane
+          key={String(filterPaneIsVisible)}
+          defaultWidth={filterPaneIsVisible ? '80%' : 'fill'}
+          paneTitle={t('mainPane.title')}
+          paneSub={t('mainPane.subTitle', { count: totalRecords })}
+          appIcon={<ListAppIcon />}
+          firstMenu={
           !filterPaneIsVisible ?
             (
               <PaneMenu>
@@ -128,26 +128,26 @@ export const ListPage: React.FC = () => {
               </PaneMenu>
             ) : null
         }
-        lastMenu={
-          <IfPermission perm={USER_PERMS.CreateList}>
-            <Link to={CREATE_LIST_URL}>
-              <Button
-                bottomMargin0
-                buttonStyle="primary"
-                onClick={noop}
-              >
-                {t('paneHeader.button.new')}
-              </Button>
-            </Link>
-          </IfPermission>
+          lastMenu={
+            <IfPermission perm={USER_PERMS.CreateList}>
+              <Link to={CREATE_LIST_URL}>
+                <Button
+                  bottomMargin0
+                  buttonStyle="primary"
+                  onClick={noop}
+                >
+                  {t('paneHeader.button.new')}
+                </Button>
+              </Link>
+            </IfPermission>
         }
-      >
-        <ListsTable
-          activeFilters={activeFilters}
-          setTotalRecords={setTotalRecords}
-        />
-      </Pane>
-    </Paneset>
+        >
+          <ListsTable
+            activeFilters={activeFilters}
+            setTotalRecords={setTotalRecords}
+          />
+        </Pane>
+      </Paneset>
     </HasCommandWrapper>
   );
 };

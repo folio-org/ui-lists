@@ -20,9 +20,9 @@ const defaultConfig = {
       value: 'record_types.12asdsa3213123'
     }
   ]
-}
+};
 
-const renderRecordTypesFilter = ({config = defaultConfig, selected = []}: any) => {
+const renderRecordTypesFilter = ({ config = defaultConfig, selected = [] }: any) => {
   return render(
     <RecordTypesFilter
       recordTypeConfig={config}
@@ -35,29 +35,29 @@ const renderRecordTypesFilter = ({config = defaultConfig, selected = []}: any) =
 
 beforeEach(() => {
   jest.clearAllMocks();
-})
+});
 
 describe('RecordTypesFilter', () => {
   describe('Clean', () => {
     it('is expected to render clean button', async () => {
-      renderRecordTypesFilter({selected:['Loans']})
+      renderRecordTypesFilter({ selected:['Loans'] });
 
-      const button = screen.getByRole('button', { name: /clean/i })
+      const button = screen.getByRole('button', { name: /clean/i });
 
-      await user.click(button)
+      await user.click(button);
 
-      expect(onClear).toBeCalledWith("record_types")
+      expect(onClear).toBeCalledWith('record_types');
     });
   });
   describe('onChange', () => {
     it('is expected to render clean button', async () => {
-      renderRecordTypesFilter({selected:['Loans']})
+      renderRecordTypesFilter({ selected:['Loans'] });
 
-      const button = screen.getByRole('button', { name: /change/i })
+      const button = screen.getByRole('button', { name: /change/i });
 
-      await user.click(button)
+      await user.click(button);
 
-      expect(onChange).toBeCalled()
+      expect(onChange).toBeCalled();
     });
-  })
-})
+  });
+});

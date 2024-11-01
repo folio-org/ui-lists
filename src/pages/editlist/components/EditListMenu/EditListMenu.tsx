@@ -8,7 +8,7 @@ import {
 } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS } from '../../../../interfaces';
-import {useListAppPermissions} from "../../../../hooks";
+import { useListAppPermissions } from '../../../../hooks';
 
 interface ListInformationMenuProps {
   buttonHandlers: {
