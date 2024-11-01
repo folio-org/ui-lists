@@ -22,13 +22,11 @@ type RecordTypesFilterProps = {
 }
 
 export const RecordTypesFilter: FC<RecordTypesFilterProps> = ({
-    selectedRecordTypes,
-    recordTypeConfig,
-    onChange,
-    onClear
-  }) => {
-
-
+  selectedRecordTypes,
+  recordTypeConfig,
+  onChange,
+  onClear
+}) => {
   return (
     <Accordion
       label={recordTypeConfig.label}
@@ -43,11 +41,11 @@ export const RecordTypesFilter: FC<RecordTypesFilterProps> = ({
         filter={filterEntityTypes}
         name={RECORD_TYPES_FILTER_KEY}
         dataOptions={recordTypeConfig.values}
-        onChange={({values}) => {
-          onChange(values)
+        onChange={({ values }) => {
+          onChange(values);
         }}
         selectedValues={selectedRecordTypes}
       />
     </Accordion>
-  )
+  );
 };

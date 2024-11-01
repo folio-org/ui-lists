@@ -26,7 +26,7 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
   return (
     <Accordion
       data-testid="metaSectionAccordion"
-      label={t("accordion.title.list-information")}
+      label={t('accordion.title.list-information')}
     >
       <MetaSection
         contentId="userInfoRecordMetaContent"
@@ -43,39 +43,37 @@ export const MetaSectionAccordion: React.FC<MetaSectionAccordionProps> = ({ list
         value={listInfo?.name}
       />
       <KeyValue
-        label={t("list.info.description")}
+        label={t('list.info.description')}
         value={listInfo?.description}
       />
 
       <Row>
         <Col xs={2}>
           <KeyValue
-            label={t("list.info.record-type")}
+            label={t('list.info.record-type')}
             value={recordType}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={t("list.info.visibility")}
+            label={t('list.info.visibility')}
             value={
               t(listInfo?.isPrivate
-                ? "lists.item.private"
-                : "lists.item.shared"
-
-            )}
+                ? 'lists.item.private'
+                : 'lists.item.shared')}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={t("list.info.status")}
+            label={t('list.info.status')}
             value={t(listInfo?.isActive
-                ? "lists.item.active"
-                : "lists.item.inactive")}
+              ? 'lists.item.active'
+              : 'lists.item.inactive')}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={t("list.info.source")}
+            label={t('list.info.source')}
             value={listSource}
           />
         </Col>

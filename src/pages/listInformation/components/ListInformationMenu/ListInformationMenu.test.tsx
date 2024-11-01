@@ -63,7 +63,7 @@ describe('ListInformationMenu', () => {
       // @ts-ignore
       useStripes.mockImplementation(() => ({
         hasPerm: () => false
-      }))
+      }));
     });
 
     it('should not render Refresh list link', () => {

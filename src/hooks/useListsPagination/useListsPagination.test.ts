@@ -1,9 +1,9 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import {beforeEach, jest} from '@jest/globals';
+import { beforeEach, jest } from '@jest/globals';
 import { useListsPagination } from './useListsPagination';
 
 
-const defaultPagination = {limit: 100, offset: 0};
+const defaultPagination = { limit: 100, offset: 0 };
 
 const mockChangePage = jest.fn();
 
@@ -23,7 +23,6 @@ describe('useListsPagination', () => {
 
   describe('initialization', () => {
     it('Should be initialized with default pagination', () => {
-
       const { result } = renderHook(() => useListsPagination({}));
 
       expect(result.current.pagination).toEqual(defaultPagination);
@@ -46,8 +45,8 @@ describe('useListsPagination', () => {
         const { result } = renderHook(() => useListsPagination({}));
 
         act(() => {
-          result.current.onNeedMoreData('next')
-        })
+          result.current.onNeedMoreData('next');
+        });
 
         expect(mockChangePage).toBeCalledWith({
           offset: 100
@@ -60,8 +59,8 @@ describe('useListsPagination', () => {
         const { result } = renderHook(() => useListsPagination({}));
 
         act(() => {
-          result.current.onNeedMoreData('prev')
-        })
+          result.current.onNeedMoreData('prev');
+        });
 
         expect(mockChangePage).toBeCalledWith({
           offset: -100
@@ -76,8 +75,8 @@ describe('useListsPagination', () => {
         const { result } = renderHook(() => useListsPagination({}));
 
         act(() => {
-          result.current.goToLastPage(5)
-        })
+          result.current.goToLastPage(5);
+        });
 
         expect(mockChangePage).toBeCalledWith({
           offset: 400
@@ -90,8 +89,8 @@ describe('useListsPagination', () => {
         const { result } = renderHook(() => useListsPagination({}));
 
         act(() => {
-          result.current.goToLastPage(0)
-        })
+          result.current.goToLastPage(0);
+        });
 
         expect(mockChangePage).toBeCalledWith({
           offset: 0
@@ -104,12 +103,12 @@ describe('useListsPagination', () => {
     it('it is expected to call changePage with offset 0 if offset more then 0', () => {
       const { result } = renderHook(() => useListsPagination({}));
       act(() => {
-        result.current.goToLastPage()
-      })
+        result.current.goToLastPage();
+      });
 
       act(() => {
-        result.current.gotToFirstPage()
-      })
+        result.current.gotToFirstPage();
+      });
 
       expect(mockChangePage).toBeCalledWith({
         offset: 0

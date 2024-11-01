@@ -127,7 +127,6 @@ describe('useVisibleColumns', () => {
         });
 
         expect(result.current.visibleColumns).toStrictEqual(newDefault);
-
       });
     });
   });

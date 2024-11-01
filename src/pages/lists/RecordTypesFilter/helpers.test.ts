@@ -1,5 +1,5 @@
-import {expect} from "@jest/globals";
-import {filterEntityTypes} from "./helpers";
+import { expect } from '@jest/globals';
+import { filterEntityTypes } from './helpers';
 
 
 describe('filterEntitytypes', () => {
@@ -8,12 +8,12 @@ describe('filterEntitytypes', () => {
       label: 'Loans',
       value: '1233131',
       selected: false
-      },
-      {
-        label: 'Users',
-        value: '123s1233131',
-        selected: false
-      }];
+    },
+    {
+      label: 'Users',
+      value: '123s1233131',
+      selected: false
+    }];
 
 
     expect(filterEntityTypes('sers', items)).toEqual({
@@ -22,6 +22,6 @@ describe('filterEntitytypes', () => {
         value: '123s1233131',
         selected: false
       }]
-    })
-  })
-})
+    });
+  });
+});

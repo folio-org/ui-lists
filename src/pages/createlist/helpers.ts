@@ -4,7 +4,7 @@ export const computeRecordTypeOptions = (
   entityTypes: EntityTypeOption[],
   selected = '',
 ): EntityTypeSelectOption[] => {
-  let options = entityTypes
+  const options = entityTypes
     .map(({ id, label }) => ({
       label,
       value: id,

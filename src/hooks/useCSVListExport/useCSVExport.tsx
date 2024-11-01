@@ -31,10 +31,10 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
   const visibleColumns = useVisibleColumns(listId).visibleColumns ?? listDetails?.fields ?? [];
 
   const { isLoading, mutateAsync, data } = useMutation<ListExport, HTTPError, {allColumns?: boolean}>({
-    mutationFn: ({allColumns = false}) => {
+    mutationFn: ({ allColumns = false }) => {
       const columnsToExport = allColumns ? columns : visibleColumns;
 
-      return ky.post(`lists/${listId}/exports`, { json: columnsToExport }).json<ListExport>()
+      return ky.post(`lists/${listId}/exports`, { json: columnsToExport }).json<ListExport>();
     },
     onSuccess: async ({ exportId }) => {
       showSuccessMessage({

@@ -6,8 +6,8 @@ export const getFilters = (appliedFilters: FilterGroupsState) => {
 
 export const buildFiltersObject = (filters: string[]) => {
   return filters.reduce((res, filter) => {
-    res[filter] = true
+    res[filter] = true;
 
-    return res
-  }, {} as {[key: string]: boolean})
+    return res;
+  }, {} as {[key: string]: boolean});
 };

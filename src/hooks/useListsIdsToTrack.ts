@@ -12,7 +12,7 @@ export const useListsIdsToTrack = () => {
   const ky = useOkapiKy();
 
   const hasIdsToTrack = Boolean(recordIds?.length);
-  const url = buildListsUrl('lists', {idsToTrack: recordIds});
+  const url = buildListsUrl('lists', { idsToTrack: recordIds });
 
   const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>(
     {
