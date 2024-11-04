@@ -55,4 +55,24 @@ describe('useCreateListFormState', () => {
 
     expect(result.current.hasChanges).toBe(true);
   });
+
+  it('should set visibility to PRIVATE when specified', () => {
+    const { result } = renderHook(() => useCreateListFormState(), { wrapper });
+
+    act(() => {
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.PRIVATE });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.PRIVATE);
+  });
+
+  it('should set visibility to SHARED when specified', () => {
+    const { result } = renderHook(() => useCreateListFormState(), { wrapper });
+
+    act(() => {
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.SHARED });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
+  });
 });
