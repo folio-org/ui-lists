@@ -1,5 +1,7 @@
 # Change history for ui-lists
 
+* Remove backslashes from user-friendly query string [UILISTS-196]
+
 ## [3.1.0](https://github.com/folio-org/ui-lists/tree/v3.1.0) (2024-11-01)
 * Lists app - Modal: Shortcut Keys List [UILISTS-137]
 * Results List: Update Record type filter display [UILISTS-145]
