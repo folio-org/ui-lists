@@ -38,7 +38,7 @@ import { useEditListFormState, useEditList } from './hooks';
 import { FIELD_NAMES, QueryBuilderColumnMetadata } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyCommand } from '../../utils';
+import { handleKeyCommand, removeBackslashes } from '../../utils';
 
 
 export const EditListPage:FC = () => {
@@ -237,7 +237,7 @@ export const EditListPage:FC = () => {
               version={version}
               fields={listDetails?.fields || []}
               fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+              userFriendlyQuery={removeBackslashes(listDetails?.userFriendlyQuery)}
               contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
               entityTypeId={listDetails?.entityTypeId ?? ''}
               status={state[FIELD_NAMES.STATUS]}

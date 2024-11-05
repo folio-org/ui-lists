@@ -97,3 +97,7 @@ export const handleKeyCommand = (
     }
   };
 };
+
+export const removeBackslashes = (str = '') => {
+  return str.replace(/\\/g, '');
+};
