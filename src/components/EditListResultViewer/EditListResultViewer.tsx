@@ -4,6 +4,7 @@ import { useVisibleColumns } from '../../hooks';
 import { QueryBuilderColumnMetadata, STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
 import { t } from '../../services';
 import { ConfigureQuery } from '../ConfigureQuery';
+import { removeBackslashes } from '../../utils';
 
 import css from './EditListResultViewer.module.css';
 
@@ -62,7 +63,7 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
     <Pluggable
       type="query-builder"
       componentType="viewer"
-      accordionHeadline={t('accordion.title.query', { query: userFriendlyQuery })}
+      accordionHeadline={t('accordion.title.query', { query: removeBackslashes(userFriendlyQuery) })}
       headline={({ totalRecords }: any) => t('mainPane.subTitle', { count: totalRecords })}
       refreshTrigger={contentVersion}
       contentDataSource={getAsyncContentData}

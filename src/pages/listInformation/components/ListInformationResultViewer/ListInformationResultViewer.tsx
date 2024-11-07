@@ -3,6 +3,7 @@ import React from 'react';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { t } from '../../../../services';
 import { QueryBuilderColumnMetadata } from '../../../../interfaces';
+import { removeBackslashes } from '../../../../utils';
 
 type ListInformationResultViewerType = {
   userFriendlyQuery?: string;
@@ -42,7 +43,7 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       componentType="viewer"
       accordionHeadline={
         t('accordion.title.query',
-          { query: userFriendlyQuery || '' })}
+          { query: removeBackslashes(userFriendlyQuery) })}
       headline={({ totalRecords }: any) => t('mainPane.subTitle',
         { count: totalRecords === 'NaN' ? 0 : totalRecords })}
       refreshInProgress={refreshInProgress}

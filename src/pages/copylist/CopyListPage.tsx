@@ -33,7 +33,7 @@ import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyCommand } from '../../utils';
+import { handleKeyCommand, removeBackslashes } from '../../utils';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
@@ -161,7 +161,7 @@ export const CopyListPage:FC = () => {
               version={listDetails?.version}
               fields={listDetails?.fields}
               fqlQuery={listDetails?.fqlQuery ?? ''}
-              userFriendlyQuery={listDetails?.userFriendlyQuery ?? ''}
+              userFriendlyQuery={removeBackslashes(listDetails?.userFriendlyQuery)}
               contentVersion={listDetails?.successRefresh?.contentVersion ?? 0}
               entityTypeId={listDetails?.entityTypeId}
               status={state[FIELD_NAMES.STATUS]}

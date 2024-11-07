@@ -1,5 +1,7 @@
 # Change history for ui-lists
 
+* Remove backslashes from user-friendly query string [UILISTS-196]
+
 ## [3.1.1](https://github.com/folio-org/ui-lists/tree/v3.1.1) (2024-11-05)
 * Update `stripes-acq-components` to 6.0.0 [UILISTS-197]
 
