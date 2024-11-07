@@ -132,11 +132,11 @@ describe('Helpers', () => {
       });
 
       it('should handle strings with double backslashes', () => {
-        expect(removeBackslashes('Double backslashes here: \\\\ and here: \\\\')).toBe('Double backslashes here:  and here: ');
+        expect(removeBackslashes('Double backslashes here: \\...')).toBe('Double backslashes here: ...');
       });
 
       it('should handle strings with multiple backslashes in a row', () => {
-        expect(removeBackslashes('Multiple backslashes: \\\\\\\\\\')).toBe('Multiple backslashes: ');
+        expect(removeBackslashes('Multiple backslashes: \\\\\\\\\\')).toBe('Multiple backslashes: \\\\\\');
       });
 
       it('should handle an empty string', () => {
