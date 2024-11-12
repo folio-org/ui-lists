@@ -1,11 +1,14 @@
 # Change history for ui-lists
 
 ## IN PROGRESS
+
+## [3.1.2](https://github.com/folio-org/ui-lists/tree/v3.1.2) (2024-11-12)
 * Remove backslashes from user-friendly query string [UILISTS-196]
 * Use tenant timezone for building queries (adds use of permission `configuration.entries.collection.get`) [UIPQB-126]
 * Remove module declaration for `@folio/stripes-acq-components` in the `global.d.ts` file [UILISTS-199]
 
 [UILISTS-196]: https://folio-org.atlassian.net/browse/UILISTS-196
+[UILISTS-199]: https://folio-org.atlassian.net/browse/UILISTS-199
 [UIPQB-126]: https://folio-org.atlassian.net/browse/UIPQB-126
 
 ## [3.1.1](https://github.com/folio-org/ui-lists/tree/v3.1.1) (2024-11-05)
