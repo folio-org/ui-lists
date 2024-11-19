@@ -127,7 +127,7 @@
     "list.info.record-type": "Typ rekordu",
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
-    "title.infoList": "Lists - {listName}",
+    "title.infoList": "Listy - {listName}",
     "title.editList": "Edit {listName}",
     "error-component.unknown": "An unknown error ocurred",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
