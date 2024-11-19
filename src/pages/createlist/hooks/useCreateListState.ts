@@ -21,23 +21,38 @@ export const useCreateListFormState = () => {
 
   const [state, setState] = useState(initialState);
 
-  const onValueChange = useCallback((rawValue : ChangedFieldType) => {
-    let value = { ...rawValue };
-
-    if (isCrossTenant(value[FIELD_NAMES.RECORD_TYPE])) {
-      value = { ...value, [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES.PRIVATE };
-    } else if (value[FIELD_NAMES.VISIBILITY] === VISIBILITY_VALUES.PRIVATE) {
-      value = { ...value, [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES.PRIVATE };
-    }  else {
-      value = { ...value, [FIELD_NAMES.VISIBILITY]: VISIBILITY_VALUES.SHARED };
+  const getUpdatedVisibility = (
+      recordType: string,
+      currentVisibility: VISIBILITY_VALUES,
+      incomingVisibility?: VISIBILITY_VALUES
+  ): VISIBILITY_VALUES => {
+    if (isCrossTenant(recordType)) {
+      return VISIBILITY_VALUES.PRIVATE;
     }
-    
+
+    if (
+        currentVisibility === VISIBILITY_VALUES.PRIVATE &&
+        incomingVisibility !== VISIBILITY_VALUES.PRIVATE
+    ) {
+      return VISIBILITY_VALUES.SHARED;
+    }
+
+    return incomingVisibility || currentVisibility;
+  }
+
+  const onValueChange = useCallback((rawValue: ChangedFieldType) => {
     setState((prevState) => {
-      return { ...prevState,
-        ...value };
+      const updatedState = { ...prevState, ...rawValue };
+
+      const recordType = updatedState[FIELD_NAMES.RECORD_TYPE] as string;
+      const currentVisibility = prevState[FIELD_NAMES.VISIBILITY] as VISIBILITY_VALUES;
+      const incomingVisibility = rawValue[FIELD_NAMES.VISIBILITY] as VISIBILITY_VALUES | undefined;
+
+      updatedState[FIELD_NAMES.VISIBILITY] = getUpdatedVisibility(recordType, currentVisibility, incomingVisibility);
+
+      return updatedState;
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, []);
 
   const hasDirtyFields = Boolean(JSON.stringify(initialState) !== JSON.stringify(state));
 

@@ -2,6 +2,8 @@
 
 ## IN PROGRESS
 
+* [ECS] The visibility for cross tenant record types changes to "Shared" when the user makes any changes after selecting the entity type [UILISTS-198]
+
 ## [3.1.2](https://github.com/folio-org/ui-lists/tree/v3.1.2) (2024-11-12)
 * Remove backslashes from user-friendly query string [UILISTS-196]
 * Use tenant timezone for building queries (adds use of permission `configuration.entries.collection.get`) [UIPQB-126]
