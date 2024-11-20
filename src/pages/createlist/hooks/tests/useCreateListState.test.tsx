@@ -75,4 +75,35 @@ describe('useCreateListFormState', () => {
 
     expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
   });
+
+  it('should update visibility to SHARED if record is non-cross-tenant', () => {
+    const mockIsCrossTenant = jest.fn().mockReturnValue(true);
+    jest.mock('../../../../hooks', () => ({
+      useCrossTenantCheck: () => ({ isCrossTenant: mockIsCrossTenant }),
+    }));
+
+    const { result } = renderHook(() => useCreateListFormState(), { wrapper });
+
+    act(() => {
+      result.current.onValueChange({ recordType: 'some type' });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
+  });
+
+  it('should stay PRIVATE if record type is cross-tenant', () => {
+    const mockIsCrossTenant = jest.fn().mockReturnValue(false);
+    jest.mock('../../../../hooks', () => ({
+      useCrossTenantCheck: () => ({ isCrossTenant: mockIsCrossTenant }),
+    }));
+
+    const { result } = renderHook(() => useCreateListFormState(), { wrapper });
+
+    act(() => {
+      result.current.onValueChange({ recordType: 'cross-tenant' });
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.PRIVATE });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.PRIVATE);
+  });
 });

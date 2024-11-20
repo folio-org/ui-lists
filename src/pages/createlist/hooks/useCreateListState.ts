@@ -21,26 +21,25 @@ export const useCreateListFormState = () => {
 
   const [state, setState] = useState(initialState);
 
-  const getUpdatedVisibility = (
-    recordType: string,
-    currentVisibility: VISIBILITY_VALUES,
-    incomingVisibility?: VISIBILITY_VALUES
-  ): VISIBILITY_VALUES => {
-    if (isCrossTenant(recordType)) {
-      return VISIBILITY_VALUES.PRIVATE;
-    }
-
-    if (
-      currentVisibility === VISIBILITY_VALUES.PRIVATE &&
-        incomingVisibility !== VISIBILITY_VALUES.PRIVATE
-    ) {
-      return VISIBILITY_VALUES.SHARED;
-    }
-
-    return incomingVisibility || currentVisibility;
-  };
-
   const onValueChange = useCallback((rawValue: ChangedFieldType) => {
+    const getUpdatedVisibility = (
+      recordType: string,
+      currentVisibility: VISIBILITY_VALUES,
+      incomingVisibility?: VISIBILITY_VALUES
+    ): VISIBILITY_VALUES => {
+      if (isCrossTenant(recordType)) {
+        return VISIBILITY_VALUES.PRIVATE;
+      }
+
+      if (
+        currentVisibility === VISIBILITY_VALUES.PRIVATE &&
+          incomingVisibility !== VISIBILITY_VALUES.PRIVATE
+      ) {
+        return VISIBILITY_VALUES.SHARED;
+      }
+
+      return incomingVisibility || currentVisibility;
+    };
     setState((prevState) => {
       const updatedState = { ...prevState, ...rawValue };
 
@@ -52,9 +51,7 @@ export const useCreateListFormState = () => {
 
       return updatedState;
     });
-    // // We don't add `getUpdatedVisibility` to dependencies because it's defined within the same closure and does not change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isCrossTenant]);
 
   const hasDirtyFields = Boolean(JSON.stringify(initialState) !== JSON.stringify(state));
 
