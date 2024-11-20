@@ -52,8 +52,9 @@ export const useCreateListFormState = () => {
 
       return updatedState;
     });
-
-  }, [getUpdatedVisibility]);
+    // // We don't add `getUpdatedVisibility` to dependencies because it's defined within the same closure and does not change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const hasDirtyFields = Boolean(JSON.stringify(initialState) !== JSON.stringify(state));
 
