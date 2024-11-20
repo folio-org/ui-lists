@@ -76,7 +76,7 @@ describe('useCreateListFormState', () => {
     expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
   });
 
-  it('should update visibility to SHARED if record is non-cross-tenant', () => {
+  it('should set visibility to Shared if recordType is non-cross-tenant', () => {
     const mockIsCrossTenant = jest.fn().mockReturnValue(true);
     jest.mock('../../../../hooks', () => ({
       useCrossTenantCheck: () => ({ isCrossTenant: mockIsCrossTenant }),
@@ -85,13 +85,13 @@ describe('useCreateListFormState', () => {
     const { result } = renderHook(() => useCreateListFormState(), { wrapper });
 
     act(() => {
-      result.current.onValueChange({ recordType: 'some type' });
+      result.current.onValueChange({ recordType: 'cross-tenant' });
     });
 
     expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
   });
 
-  it('should stay PRIVATE if record type is cross-tenant', () => {
+  it('should set visibility to SHARED if current visibility is PRIVATE and incoming visibility is not PRIVATE', () => {
     const mockIsCrossTenant = jest.fn().mockReturnValue(false);
     jest.mock('../../../../hooks', () => ({
       useCrossTenantCheck: () => ({ isCrossTenant: mockIsCrossTenant }),
@@ -100,7 +100,33 @@ describe('useCreateListFormState', () => {
     const { result } = renderHook(() => useCreateListFormState(), { wrapper });
 
     act(() => {
-      result.current.onValueChange({ recordType: 'cross-tenant' });
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.PRIVATE });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.PRIVATE);
+
+    act(() => {
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.SHARED });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.SHARED);
+  });
+
+  it('should not change visibility if current visibility is PRIVATE and incoming visibility is also PRIVATE', () => {
+    const mockIsCrossTenant = jest.fn().mockReturnValue(false);
+    jest.mock('../../../../hooks', () => ({
+      useCrossTenantCheck: () => ({ isCrossTenant: mockIsCrossTenant }),
+    }));
+
+    const { result } = renderHook(() => useCreateListFormState(), { wrapper });
+
+    act(() => {
+      result.current.onValueChange({ visibility: VISIBILITY_VALUES.PRIVATE });
+    });
+
+    expect(result.current.state.visibility).toBe(VISIBILITY_VALUES.PRIVATE);
+
+    act(() => {
       result.current.onValueChange({ visibility: VISIBILITY_VALUES.PRIVATE });
     });
 
