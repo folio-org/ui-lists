@@ -52,8 +52,8 @@ export const useCreateListFormState = () => {
 
       return updatedState;
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+  }, [getUpdatedVisibility]);
 
   const hasDirtyFields = Boolean(JSON.stringify(initialState) !== JSON.stringify(state));
 
