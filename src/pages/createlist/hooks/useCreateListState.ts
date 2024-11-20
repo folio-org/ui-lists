@@ -38,7 +38,7 @@ export const useCreateListFormState = () => {
         return VISIBILITY_VALUES.SHARED;
       }
 
-      return incomingVisibility || currentVisibility;
+      return incomingVisibility ?? currentVisibility;
     };
     setState((prevState) => {
       const updatedState = { ...prevState, ...rawValue };
