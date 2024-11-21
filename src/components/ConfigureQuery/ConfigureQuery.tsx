@@ -71,7 +71,11 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       limit,
     };
 
-    return ky.get(`query/${queryId}`, { searchParams }).json();
+    try {
+      return await ky.get(`query/${queryId}`, { searchParams }).json();
+    } catch (error) {
+      throw error;
+    }
   };
 
   const testQueryDataSource = async ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
