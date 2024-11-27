@@ -2,15 +2,21 @@
 
 ## IN PROGRESS
 
-* Stop polling after X attempts result in 500 errors [UILISTS-161].
-* [ECS] The visibility for cross tenant record types changes to "Shared" when the user makes any changes after selecting the entity type [UILISTS-198]
+## [3.1.3](https://github.com/folio-org/ui-lists/tree/v3.1.3) (2024-11-27)
+* Stop polling after X attempts result in 500 errors [UILISTS-161]
+* Update language used for export actions [UILISTS-201]
+
+[UILISTS-161]: https://folio-org.atlassian.net/browse/UILISTS-161
+[UILISTS-201]: https://folio-org.atlassian.net/browse/UILISTS-201
 
 ## [3.1.2](https://github.com/folio-org/ui-lists/tree/v3.1.2) (2024-11-12)
 * Remove backslashes from user-friendly query string [UILISTS-196]
 * Use tenant timezone for building queries (adds use of permission `configuration.entries.collection.get`) [UIPQB-126]
+* [ECS] The visibility for cross tenant record types changes to "Shared" when the user makes any changes after selecting the entity type [UILISTS-198]
 * Remove module declaration for `@folio/stripes-acq-components` in the `global.d.ts` file [UILISTS-199]
 
 [UILISTS-196]: https://folio-org.atlassian.net/browse/UILISTS-196
+[UILISTS-199]: https://folio-org.atlassian.net/browse/UILISTS-198
 [UILISTS-199]: https://folio-org.atlassian.net/browse/UILISTS-199
 [UIPQB-126]: https://folio-org.atlassian.net/browse/UIPQB-126
 
