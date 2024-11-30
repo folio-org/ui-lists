@@ -153,7 +153,7 @@
     "filter-label.visibility": "Visibility",
     "pane.dropdown.available-permissions": "Available permissions",
     "pane.dropdown.export-all": "Export all columns (CSV)",
-    "pane.dropdown.export-visible": "Export visible columns (CSV)",
+    "pane.dropdown.export-visible": "Export selected columns (CSV)",
     "app-menu.list-app-home": "Lists app home",
     "commands-error.unavailable": "This action is unavailable",
     "commands-error.permission": "User does not have permission to take this action",
