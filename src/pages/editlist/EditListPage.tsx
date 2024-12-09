@@ -19,7 +19,7 @@ import {
   useDeleteList,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages,
+  useMessages, useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
@@ -81,7 +81,12 @@ export const EditListPage:FC = () => {
       showErrorMessage({ message: errorMessage });
     } }));
 
-  const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
   const deleteListHandler = () => {
@@ -90,6 +95,7 @@ export const EditListPage:FC = () => {
   };
 
   const backToList = () => {
+    continueNavigation();
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
 
@@ -134,14 +140,6 @@ export const EditListPage:FC = () => {
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
   }
-
-  const closeHandler = () => {
-    if (hasChanges) {
-      setShowConfirmCancelEditModal(true);
-    } else {
-      backToList();
-    }
-  };
 
   const onSave = () => {
     saveList();
@@ -197,7 +195,7 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={closeHandler}
+          onCancel={backToList}
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}
@@ -252,8 +250,8 @@ export const EditListPage:FC = () => {
               setShowConfirmCancelEditModal(false);
               backToList();
             }}
-            onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-            open={showConfirmCancelEditModal}
+            onKeepEdit={keepEditHandler}
+            open={showConfirmCancelEditModal && hasChanges}
           />
           <ConfirmDeleteModal
             listName={listName}
