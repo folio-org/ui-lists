@@ -19,7 +19,7 @@ import {
   useDeleteList,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages,
+  useMessages, useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
@@ -81,16 +81,11 @@ export const EditListPage:FC = () => {
       showErrorMessage({ message: errorMessage });
     } }));
 
-  const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
   const deleteListHandler = () => {
     setShowConfirmDeleteModal(false);
     deleteList();
-  };
-
-  const backToList = () => {
-    history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
 
   const version = listDetails?.version ?? 0;
@@ -112,6 +107,7 @@ export const EditListPage:FC = () => {
           // Auto-removing does not work if messages appears in same time and has same timout
           timeout: 5999 });
         }
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         backToList();
       },
       onError: (error: HTTPError) => {
@@ -131,17 +127,21 @@ export const EditListPage:FC = () => {
     }
   );
 
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges, isLoading);
+
+  const backToList = () => {
+    continueNavigation();
+    history.push(`${HOME_PAGE_URL}/list/${id}`);
+  };
+
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
   }
-
-  const closeHandler = () => {
-    if (hasChanges) {
-      setShowConfirmCancelEditModal(true);
-    } else {
-      backToList();
-    }
-  };
 
   const onSave = () => {
     saveList();
@@ -197,7 +197,10 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={closeHandler}
+          onCancel={() => {
+            setShowConfirmCancelEditModal(true);
+            backToList();
+          }}
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}
@@ -252,8 +255,8 @@ export const EditListPage:FC = () => {
               setShowConfirmCancelEditModal(false);
               backToList();
             }}
-            onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-            open={showConfirmCancelEditModal}
+            onKeepEdit={keepEditHandler}
+            open={showConfirmCancelEditModal && hasChanges}
           />
           <ConfirmDeleteModal
             listName={listName}

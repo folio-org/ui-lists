@@ -17,7 +17,10 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
+    block: jest.fn()
+  })),
 }));
 
 const renderCreateListPage = () => {
