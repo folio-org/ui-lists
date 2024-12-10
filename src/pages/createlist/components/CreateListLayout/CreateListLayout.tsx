@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
 import { CancelEditModal, ListAppIcon, Buttons } from '../../../../components';
 import { t, tString } from '../../../../services';
-import { useNavigationBlock } from "../../../../hooks";
+import { useNavigationBlock } from '../../../../hooks';
 
 type CreateListLayoutProps = {
     isSaveButtonDisabled?: boolean;
@@ -16,75 +16,75 @@ type CreateListLayoutProps = {
 };
 
 export const CreateListLayout: FC<CreateListLayoutProps> = ({
-                                                                isSaveButtonDisabled = false,
-                                                                isSavingInProgress = false,
-                                                                onCancel = () => {},
-                                                                onSave = () => {},
-                                                                onClose = () => {},
-                                                                showModalOnCancel = false,
-                                                                children
-                                                            }) => {
-    const intl = useIntl();
+  isSaveButtonDisabled = false,
+  isSavingInProgress = false,
+  onCancel = () => {},
+  onSave = () => {},
+  onClose = () => {},
+  showModalOnCancel = false,
+  children
+}) => {
+  const intl = useIntl();
 
-    const {
-        showConfirmCancelEditModal,
-        continueNavigation,
-        keepEditHandler,
-        setShowConfirmCancelEditModal
-    } = useNavigationBlock(showModalOnCancel);
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(showModalOnCancel);
 
-    const cancelHandler = () => {
-        if (showModalOnCancel) {
-            setShowConfirmCancelEditModal(true);
-        } else {
-            onCancel();
-        }
-    };
+  const cancelHandler = () => {
+    if (showModalOnCancel) {
+      setShowConfirmCancelEditModal(true);
+    } else {
+      onCancel();
+    }
+  };
 
-    return (
-        <Paneset>
-            <Layer isOpen contentLabel={tString(intl, 'create-list.title')}>
-                <Paneset isRoot>
-                    <Pane
-                        dismissible
-                        defaultWidth="fill"
-                        onClose={onClose}
-                        appIcon={<ListAppIcon />}
-                        paneTitle={t('create-list.title')}
-                        paneSub={!isSavingInProgress ? (
-                            t('create-list.subtitle')
-                        ) : (
-                            <>
-                                {t('create-list.saving')} <Loading />
-                            </>
-                        )}
-                        footer={
-                            <PaneFooter
-                                renderStart={
-                                    <Buttons.Cancel onCancel={cancelHandler} />
+  return (
+    <Paneset>
+      <Layer isOpen contentLabel={tString(intl, 'create-list.title')}>
+        <Paneset isRoot>
+          <Pane
+            dismissible
+            defaultWidth="fill"
+            onClose={onClose}
+            appIcon={<ListAppIcon />}
+            paneTitle={t('create-list.title')}
+            paneSub={!isSavingInProgress ? (
+              t('create-list.subtitle')
+            ) : (
+              <>
+                {t('create-list.saving')} <Loading />
+              </>
+            )}
+            footer={
+              <PaneFooter
+                renderStart={
+                  <Buttons.Cancel onCancel={cancelHandler} />
                                 }
-                                renderEnd={
-                                    <Buttons.Save
-                                        disabled={isSaveButtonDisabled || isSavingInProgress}
-                                        onSave={onSave}
-                                    />
+                renderEnd={
+                  <Buttons.Save
+                    disabled={isSaveButtonDisabled || isSavingInProgress}
+                    onSave={onSave}
+                  />
                                 }
-                            />
+              />
                         }
-                    >
-                        {children}
-                        <CancelEditModal
-                            onCancel={() => {
-                                setShowConfirmCancelEditModal(false);
-                                onClose();
-                                continueNavigation();
-                            }}
-                            onKeepEdit={keepEditHandler}
-                            open={showModalOnCancel && showConfirmCancelEditModal}
-                        />
-                    </Pane>
-                </Paneset>
-            </Layer>
+          >
+            {children}
+            <CancelEditModal
+              onCancel={() => {
+                setShowConfirmCancelEditModal(false);
+                onClose();
+                continueNavigation();
+              }}
+              onKeepEdit={keepEditHandler}
+              open={showModalOnCancel && showConfirmCancelEditModal}
+            />
+          </Pane>
         </Paneset>
-    );
+      </Layer>
+    </Paneset>
+  );
 };
