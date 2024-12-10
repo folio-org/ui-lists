@@ -81,12 +81,6 @@ export const EditListPage:FC = () => {
       showErrorMessage({ message: errorMessage });
     } }));
 
-  const {
-    showConfirmCancelEditModal,
-    continueNavigation,
-    keepEditHandler,
-    setShowConfirmCancelEditModal
-  } = useNavigationBlock(hasChanges);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
   const deleteListHandler = () => {
@@ -94,9 +88,10 @@ export const EditListPage:FC = () => {
     deleteList();
   };
 
+
   const backToList = () => {
-    continueNavigation();
     history.push(`${HOME_PAGE_URL}/list/${id}`);
+    continueNavigation();
   };
 
   const version = listDetails?.version ?? 0;
@@ -136,6 +131,13 @@ export const EditListPage:FC = () => {
       }
     }
   );
+
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges, isLoading);
 
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
