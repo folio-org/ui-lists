@@ -12,6 +12,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "paths": {
+      "react": [ "./node_modules/@types/react" ]
+    },
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react"

@@ -87,6 +87,7 @@ export const EditListPage:FC = () => {
     keepEditHandler,
     setShowConfirmCancelEditModal
   } = useNavigationBlock(hasChanges);
+
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
   const deleteListHandler = () => {
@@ -168,7 +169,6 @@ export const EditListPage:FC = () => {
 
   const isSaveDisabled = !hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading;
 
-
   const shortcuts = [
     AddCommand.save(handleKeyCommand(
       () => onSave(),
@@ -195,7 +195,11 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={backToList}
+          onCancel={() => {
+            backToList();
+            setShowConfirmCancelEditModal(true);
+          }
+          }
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}

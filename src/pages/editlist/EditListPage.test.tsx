@@ -18,7 +18,10 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
+    block: jest.fn()
+  })),
 }));
 
 const renderEditListPage = () => {
@@ -131,7 +134,7 @@ describe('EditList Page', () => {
       describe('Cancel edit with changes', () => {
         describe('Confirm cancel', () => {
           it('is expected to call history push', async () => {
-            await renderEditListPage();
+            renderEditListPage();
 
             await awaitLoading();
 
@@ -143,9 +146,9 @@ describe('EditList Page', () => {
               selector: 'input'
             });
 
-            await user.type(nameField, ' some text');
+            user.type(nameField, ' some text');
 
-            await user.click(cancelButton);
+            user.click(cancelButton);
 
             const conformationModal = screen.getByTestId('ConfirmationModal');
 
@@ -165,7 +168,7 @@ describe('EditList Page', () => {
           });
 
           describe('Cancel cancel', () => {
-            it('is expected to not history push', async () => {
+            it('is expected to history push after conforming cancel', async () => {
               await renderEditListPage();
 
               await awaitLoading();
@@ -196,7 +199,7 @@ describe('EditList Page', () => {
 
               expect(conformationModal).not.toBeInTheDocument();
 
-              expect(historyPushMock).not.toBeCalled();
+              expect(historyPushMock).toBeCalled();
             });
           });
         });
