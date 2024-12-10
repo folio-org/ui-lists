@@ -88,11 +88,6 @@ export const EditListPage:FC = () => {
     deleteList();
   };
 
-  const backToList = () => {
-    continueNavigation();
-    history.push(`${HOME_PAGE_URL}/list/${id}`);
-  };
-
   const version = listDetails?.version ?? 0;
 
   const { saveList, isLoading } = useEditList(
@@ -112,6 +107,7 @@ export const EditListPage:FC = () => {
           // Auto-removing does not work if messages appears in same time and has same timout
           timeout: 5999 });
         }
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         backToList();
       },
       onError: (error: HTTPError) => {
@@ -137,6 +133,11 @@ export const EditListPage:FC = () => {
     keepEditHandler,
     setShowConfirmCancelEditModal
   } = useNavigationBlock(hasChanges, isLoading);
+
+  const backToList = () => {
+    continueNavigation();
+    history.push(`${HOME_PAGE_URL}/list/${id}`);
+  };
 
   if (detailsError) {
     return <ErrorComponent error={detailsError} />;
@@ -196,7 +197,10 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={backToList}
+          onCancel={() => {
+            setShowConfirmCancelEditModal(true);
+            backToList();
+          }}
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}
