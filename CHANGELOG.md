@@ -2,6 +2,8 @@
 
 ## IN PROGRESS
 
+* Lists > Errors when query includes a deleted custom field [UILISTS-205]
+
 ## [3.1.3](https://github.com/folio-org/ui-lists/tree/v3.1.3) (2024-11-27)
 * Stop polling after X attempts result in 500 errors [UILISTS-161]
 * Update language used for export actions [UILISTS-201]
