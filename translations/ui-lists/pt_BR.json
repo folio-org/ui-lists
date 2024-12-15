@@ -153,7 +153,7 @@
     "filter-label.visibility": "Visibilidade",
     "pane.dropdown.available-permissions": "Permissões disponíveis",
     "pane.dropdown.export-all": "Exportar todas as colunas (CSV)",
-    "pane.dropdown.export-visible": "Exportar colunas visíveis (CSV)",
+    "pane.dropdown.export-visible": "Exportar colunas selecionadas (CSV)",
     "app-menu.list-app-home": "Página inicial do aplicativo Listas",
     "commands-error.unavailable": "Essa ação não está disponível",
     "commands-error.permission": "O usuário não tem permissão para executar esta ação",
