@@ -19,7 +19,7 @@ import {
   useDeleteList,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages,
+  useMessages, useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
@@ -48,6 +48,7 @@ export const EditListPage:FC = () => {
   const accordionStatusRef = useRef(null);
   const { id }: { id: string } = useParams();
   const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
   const { showCommandError } = useKeyCommandsMessages();
@@ -81,7 +82,6 @@ export const EditListPage:FC = () => {
       showErrorMessage({ message: errorMessage });
     } }));
 
-  const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
   const deleteListHandler = () => {
@@ -89,11 +89,20 @@ export const EditListPage:FC = () => {
     deleteList();
   };
 
-  const backToList = () => {
-    history.push(`${HOME_PAGE_URL}/list/${id}`);
-  };
-
   const version = listDetails?.version ?? 0;
+
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges, isSaving);
+
+  const backToList = () => {
+    continueNavigation();
+    history.push(`${HOME_PAGE_URL}/list/${id}`);
+    setIsSaving(false);
+  };
 
   const { saveList, isLoading } = useEditList(
     {
@@ -112,6 +121,7 @@ export const EditListPage:FC = () => {
           // Auto-removing does not work if messages appears in same time and has same timout
           timeout: 5999 });
         }
+
         backToList();
       },
       onError: (error: HTTPError) => {
@@ -135,15 +145,8 @@ export const EditListPage:FC = () => {
     return <ErrorComponent error={detailsError} />;
   }
 
-  const closeHandler = () => {
-    if (hasChanges) {
-      setShowConfirmCancelEditModal(true);
-    } else {
-      backToList();
-    }
-  };
-
   const onSave = () => {
+    setIsSaving(true);
     saveList();
   };
 
@@ -197,7 +200,10 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={closeHandler}
+          onCancel={() => {
+            setShowConfirmCancelEditModal(true);
+            backToList();
+          }}
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}
@@ -252,8 +258,8 @@ export const EditListPage:FC = () => {
               setShowConfirmCancelEditModal(false);
               backToList();
             }}
-            onKeepEdit={() => setShowConfirmCancelEditModal(false)}
-            open={showConfirmCancelEditModal}
+            onKeepEdit={keepEditHandler}
+            open={showConfirmCancelEditModal && hasChanges}
           />
           <ConfirmDeleteModal
             listName={listName}

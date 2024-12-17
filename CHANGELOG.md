@@ -3,6 +3,10 @@
 ## IN PROGRESS
 
 * Lists > Errors when query includes a deleted custom field [UILISTS-205]
+* Prompt for unsaved changes when clicking on the Lists app home from the app context menu [UILISTS-177]
+
+[UILISTS-177]: https://folio-org.atlassian.net/browse/UILISTS-177
+[UILISTS-205]: https://folio-org.atlassian.net/browse/UILISTS-205
 
 ## [3.1.3](https://github.com/folio-org/ui-lists/tree/v3.1.3) (2024-11-27)
 * Stop polling after X attempts result in 500 errors [UILISTS-161]
