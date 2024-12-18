@@ -34,8 +34,11 @@ export const CreateListLayout: FC<CreateListLayoutProps> = ({
   } = useNavigationBlock(showModalOnCancel);
 
   const cancelHandler = () => {
-      continueNavigation();
-      onCancel();
+    if (!showConfirmCancelEditModal) {
+      setShowConfirmCancelEditModal(true);
+    }
+    continueNavigation();
+    onCancel();
   };
 
   return (
