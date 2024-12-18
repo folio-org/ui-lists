@@ -33,12 +33,12 @@ export const useNavigationBlock = (showModalOnCancel: boolean, isSaving = false)
     }
 
     if (showModalOnCancel && !isBlocked) {
+      // @ts-ignore
       unblock = history.block((next) => {
-
         const isListPath = /^\/lists\/list\/[0-9a-fA-F-]+$/.test(next.pathname);
 
         if (isListPath) {
-          return;
+          return true;
         }
 
         setShowConfirmCancelEditModal(true);
@@ -49,6 +49,8 @@ export const useNavigationBlock = (showModalOnCancel: boolean, isSaving = false)
       });
     }
 
+    // here we need a clean-up function for useEffect
+    // eslint-disable-next-line consistent-return
     return () => {
       if (unblock) unblock();
     };
