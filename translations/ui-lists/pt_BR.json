@@ -153,12 +153,14 @@
     "filter-label.visibility": "Visibilidade",
     "pane.dropdown.available-permissions": "Permissões disponíveis",
     "pane.dropdown.export-all": "Exportar todas as colunas (CSV)",
-    "pane.dropdown.export-visible": "Exportar colunas visíveis (CSV)",
+    "pane.dropdown.export-visible": "Exportar colunas selecionadas (CSV)",
     "app-menu.list-app-home": "Página inicial do aplicativo Listas",
     "commands-error.unavailable": "Essa ação não está disponível",
     "commands-error.permission": "O usuário não tem permissão para executar esta ação",
     "pane.dropdown.ariaLabel.columnFilter": "Entrada de filtro de coluna",
     "pane.dropdown.search.placeholder": "Nome da coluna de busca",
     "cross-tenant-message": "Essa lista pode conter registros de vários locatários.",
-    "create-list.cross-tenant-tip": "<strong>As listas com consulta entre locatários só podem ser definidas como Privadas.</strong>"
+    "create-list.cross-tenant-tip": "<strong>As listas com consulta entre locatários só podem ser definidas como Privadas.</strong>",
+    "unexpected.error": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
+    "update-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista."
 }
