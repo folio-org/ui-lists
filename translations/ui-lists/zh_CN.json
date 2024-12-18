@@ -153,12 +153,14 @@
     "filter-label.visibility": "可见性",
     "pane.dropdown.available-permissions": "可用权限",
     "pane.dropdown.export-all": "导出所有列（CSV）",
-    "pane.dropdown.export-visible": "导出可见列（CSV）",
+    "pane.dropdown.export-visible": "导出选定的列（CSV）",
     "app-menu.list-app-home": "列表应用程序主页",
     "commands-error.unavailable": "此操作不可用",
     "commands-error.permission": "用户无权执行此操作",
     "pane.dropdown.ariaLabel.columnFilter": "列筛选输入",
     "pane.dropdown.search.placeholder": "搜索栏名称",
-    "cross-tenant-message": "This list may contain records from multiple tenants.",
-    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
+    "cross-tenant-message": "该列表可能包含来自多个租户的记录。",
+    "create-list.cross-tenant-tip": "<strong>跨租户查询的列表只能设置为私有。 </strong>",
+    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
 }

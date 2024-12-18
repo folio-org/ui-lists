@@ -160,5 +160,7 @@
     "pane.dropdown.ariaLabel.columnFilter": "Column filter input",
     "pane.dropdown.search.placeholder": "Rechercher un nom de colonne",
     "cross-tenant-message": "This list may contain records from multiple tenants.",
-    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>"
+    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
+    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
 }
