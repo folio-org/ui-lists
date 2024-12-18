@@ -34,6 +34,13 @@ export const useNavigationBlock = (showModalOnCancel: boolean, isSaving = false)
 
     if (showModalOnCancel && !isBlocked) {
       unblock = history.block((next) => {
+
+        const isListPath = /^\/lists\/list\/[0-9a-fA-F-]+$/.test(next.pathname);
+
+        if (isListPath) {
+          return;
+        }
+
         setShowConfirmCancelEditModal(true);
         setNextLocation(next);
         setIsBlocked(true);
