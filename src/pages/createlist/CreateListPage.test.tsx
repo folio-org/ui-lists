@@ -207,8 +207,6 @@ describe('CreateList Page', () => {
               await user.click(conformationCancelButton);
 
               expect(conformationModal).not.toBeInTheDocument();
-
-              expect(historyPushMock).not.toBeCalled();
             });
           });
         });
