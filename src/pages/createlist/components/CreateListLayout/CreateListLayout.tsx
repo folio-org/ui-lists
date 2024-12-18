@@ -34,11 +34,11 @@ export const CreateListLayout: FC<CreateListLayoutProps> = ({
   } = useNavigationBlock(showModalOnCancel);
 
   const cancelHandler = () => {
-    if (showModalOnCancel) {
+    if (!showConfirmCancelEditModal) {
       setShowConfirmCancelEditModal(true);
-    } else {
-      onCancel();
     }
+    continueNavigation();
+    onCancel();
   };
 
   return (
@@ -75,9 +75,8 @@ export const CreateListLayout: FC<CreateListLayoutProps> = ({
             {children}
             <CancelEditModal
               onCancel={() => {
+                cancelHandler();
                 setShowConfirmCancelEditModal(false);
-                onClose();
-                continueNavigation();
               }}
               onKeepEdit={keepEditHandler}
               open={showModalOnCancel && showConfirmCancelEditModal}
