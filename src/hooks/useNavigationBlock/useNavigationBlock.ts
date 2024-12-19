@@ -5,7 +5,11 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export const useNavigationBlock = (showModalOnCancel: boolean, isSaving = false) => {
+export const useNavigationBlock = (
+    showModalOnCancel: boolean,
+    isSaving = false,
+    blockListPath = false,
+    ) => {
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
   const [nextLocation, setNextLocation] = useState<any>(null);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -37,7 +41,7 @@ export const useNavigationBlock = (showModalOnCancel: boolean, isSaving = false)
       unblock = history.block((next) => {
         const isListPath = /^\/lists\/list\/[0-9a-fA-F-]+$/.test(next.pathname);
 
-        if (isListPath) {
+        if (isListPath && !blockListPath) {
           return true;
         }
 

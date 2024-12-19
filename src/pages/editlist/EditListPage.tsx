@@ -96,7 +96,7 @@ export const EditListPage:FC = () => {
     continueNavigation,
     keepEditHandler,
     setShowConfirmCancelEditModal
-  } = useNavigationBlock(hasChanges, isSaving);
+  } = useNavigationBlock(hasChanges, isSaving, true);
 
   const backToList = () => {
     continueNavigation();
