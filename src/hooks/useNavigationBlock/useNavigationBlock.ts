@@ -6,10 +6,10 @@ import {
 import { useHistory } from 'react-router-dom';
 
 export const useNavigationBlock = (
-    showModalOnCancel: boolean,
-    isSaving = false,
-    blockListPath = false,
-    ) => {
+  showModalOnCancel: boolean,
+  isSaving = false,
+  blockListPath = false,
+) => {
   const [showConfirmCancelEditModal, setShowConfirmCancelEditModal] = useState(false);
   const [nextLocation, setNextLocation] = useState<any>(null);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -58,7 +58,7 @@ export const useNavigationBlock = (
     return () => {
       if (unblock) unblock();
     };
-  }, [showModalOnCancel, history, isBlocked, isSaving]);
+  }, [showModalOnCancel, history, isBlocked, isSaving, blockListPath]);
 
   return {
     showConfirmCancelEditModal,
