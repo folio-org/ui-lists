@@ -31,13 +31,6 @@ export const useCreateListFormState = () => {
         return VISIBILITY_VALUES.PRIVATE;
       }
 
-      if (
-        currentVisibility === VISIBILITY_VALUES.PRIVATE &&
-          incomingVisibility !== VISIBILITY_VALUES.PRIVATE
-      ) {
-        return VISIBILITY_VALUES.SHARED;
-      }
-
       return incomingVisibility ?? currentVisibility;
     };
     setState((prevState) => {
