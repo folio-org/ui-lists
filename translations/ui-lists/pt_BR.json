@@ -162,5 +162,6 @@
     "cross-tenant-message": "Essa lista pode conter registros de vários locatários.",
     "create-list.cross-tenant-tip": "<strong>As listas com consulta entre locatários só podem ser definidas como Privadas.</strong>",
     "unexpected.error": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
-    "update-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista."
+    "update-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
+    "create-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista."
 }

@@ -148,7 +148,7 @@
     "commands-label.paste": "貼上",
     "commands-label.find": "檢索",
     "commands-label.open-shortcuts-modal": "開啟鍵盤快捷鍵",
-    "filter-label.record-types": "記錄類型",
+    "filter-label.record-types": "紀錄類型",
     "filter-label.status": "狀態",
     "filter-label.visibility": "能見度",
     "pane.dropdown.available-permissions": "Available permissions",
@@ -162,5 +162,6 @@
     "cross-tenant-message": "This list may contain records from multiple tenants.",
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
 }
