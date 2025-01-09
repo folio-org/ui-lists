@@ -1,6 +1,6 @@
 # Change history for ui-lists
 
-## IN PROGRESS
+## [3.1.4](https://github.com/folio-org/ui-lists/tree/v3.1.4) (2025-01-09)
 
 * Lists > Errors when query includes a deleted custom field [UILISTS-205]
 * Prompt for unsaved changes when clicking on the Lists app home from the app context menu [UILISTS-177]
