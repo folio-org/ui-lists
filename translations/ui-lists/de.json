@@ -16,7 +16,7 @@
     "lists.columns.visibility": "Sichtbarkeit",
     "lists.columns.first-name": "Vorname",
     "lists.columns.last-name": "Nachname",
-    "lists.columns.barcode": "Strichcode",
+    "lists.columns.barcode": "Barcode",
     "lists.columns.patron-group": "Personengruppe",
     "lists.item.active": "Aktiv",
     "lists.item.inactive": "Inaktiv",
