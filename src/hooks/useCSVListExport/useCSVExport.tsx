@@ -41,6 +41,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
         message: t('callout.list.csv-export.begin', {
           listName,
         }),
+        timeout: 10000,
       });
 
       writeStorage('listIdsToExport', { ...values, [listId]: exportId });
@@ -50,7 +51,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.error', { listName });
 
-      showErrorMessage({ message: errorMessage });
+      showErrorMessage({ message: errorMessage, timeout: 10000 });
 
       removeListFromStorage();
     },

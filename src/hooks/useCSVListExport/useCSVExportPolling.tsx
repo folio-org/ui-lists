@@ -17,6 +17,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
 
         if (isFailed(status)) {
           showErrorMessage({
+            timeout: 10000,
             message: t('callout.list.csv-export.error', {
               listName
             })
@@ -29,6 +30,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
             listName,
             onSuccess: () => {
               showSuccessMessage({
+                timeout: 10000,
                 message: t('callout.list.csv-export.success', {
                   listName
                 })
@@ -38,6 +40,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
             },
             onError: () => {
               showErrorMessage({
+                timeout: 10000,
                 message: t('callout.list.csv-export.error', {
                   listName
                 })

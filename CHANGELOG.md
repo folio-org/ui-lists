@@ -1,5 +1,11 @@
 # Change history for ui-lists
 
+## In progress
+
+* Toast messages should appear for a longer time during exports [UILISTS-210]
+
+[UILISTS-210]: https://folio-org.atlassian.net/browse/UILISTS-210
+
 ## [3.1.4](https://github.com/folio-org/ui-lists/tree/v3.1.4) (2025-01-09)
 
 * Lists > Errors when query includes a deleted custom field [UILISTS-205]
