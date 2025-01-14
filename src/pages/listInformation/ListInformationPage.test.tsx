@@ -12,13 +12,14 @@ import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
+const historyGoBack = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({ push: historyPushMock, goBack: historyGoBack })),
 }));
 
 const renderListInformation = () => {
@@ -63,7 +64,7 @@ describe('ListInformationPage Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyPushMock).toBeCalled();
+        expect(historyGoBack).toBeCalled();
       });
     });
 

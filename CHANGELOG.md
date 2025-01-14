@@ -1,5 +1,11 @@
 # Change history for ui-lists
 
+## In progress
+
+* The filters reset after closing list on nth pages. [UILISTS-211]
+
+[UILISTS-211]: https://folio-org.atlassian.net/browse/UILISTS-211
+
 ## [3.1.4](https://github.com/folio-org/ui-lists/tree/v3.1.4) (2025-01-09)
 
 * Lists > Errors when query includes a deleted custom field [UILISTS-205]

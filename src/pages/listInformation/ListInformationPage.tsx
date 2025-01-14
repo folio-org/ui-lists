@@ -281,7 +281,7 @@ export const ListInformationPage: React.FC = () => {
                   buttonHandlers={buttonHandlers}
                   conditions={conditions}
                 />}
-                onClose={() => history.push(HOME_PAGE_URL)}
+                onClose={() => history.goBack()}
                 subheader={
                   <SubHeaderBannersLayout hasBannersToDisplay={shouldShowCrossTenantWarning || showSuccessRefreshMessage}>
                     <CrossTenantListWarning shouldShow={shouldShowCrossTenantWarning} />
