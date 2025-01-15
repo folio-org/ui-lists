@@ -9,9 +9,8 @@ import { ListsRecord } from '../../../interfaces';
 
 export const listTableResultFormatter: Record<string, (item: ListsRecord) => React.JSX.Element> = {
   [COLUMNS_NAME.LIST_NAME]: (item) => {
-    // Используем window.location для получения параметров URL
-    const searchParams = window.location.search;  // Получаем строку запроса из URL
-    const linkTo = `${HOME_PAGE_URL}/list/${item.id}${searchParams}`;  // Формируем новый URL с параметрами
+    const searchParams = window.location.search;
+    const linkTo = `${HOME_PAGE_URL}/list/${item.id}${searchParams}`;
     return (
       <TextLink to={linkTo}>{item.name}</TextLink>
     );
