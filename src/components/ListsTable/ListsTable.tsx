@@ -27,7 +27,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   } = useListsPagination({});
   const { updatedListsData, setRecordIds } = useListsIdsToTrack();
 
-  const prevActiveFilters: string[] = usePrevious(activeFilters);
+  const prevActiveFilters: string[] | undefined = usePrevious(activeFilters);
 
   useEffect(() => {
     if (prevActiveFilters === undefined) return;
