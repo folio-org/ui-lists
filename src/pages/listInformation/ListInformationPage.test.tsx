@@ -64,7 +64,7 @@ describe('ListInformationPage Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyGoBack).toBeCalled();
+        expect(historyPushMock).toBeCalled();
       });
     });
 
@@ -118,7 +118,7 @@ describe('ListInformationPage Page', () => {
 
             await user.click(conformationDeleteButton);
 
-            await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists'));
+            await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists', search: '' }));
 
             const successMessage = JSON.stringify(showSuccessMessageMock.mock.lastCall);
             expect(successMessage).toContain('ui-lists.callout.list.delete.success');
@@ -207,7 +207,7 @@ describe('ListInformationPage Page', () => {
 
           await user.click(editList);
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('id/edit'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: 'id/edit', search: '' }));
         });
       });
     });

@@ -65,6 +65,14 @@ export const ListInformationPage: React.FC = () => {
   const { id }: {id: string} = useParams();
   const accordionStatusRef = useRef(null);
   const { isCrossTenant } = useCrossTenantCheck();
+  const handleUpdateLocation = (location : string) => {
+    const searchParams = new URLSearchParams(window.location.search).toString();
+    history.push({
+      pathname: location,
+      search: searchParams,
+    });
+  };
+
   const {
     handleColumnsChange,
     visibleColumns,
@@ -140,7 +148,7 @@ export const ListInformationPage: React.FC = () => {
           listName
         })
       });
-      history.push(HOME_PAGE_URL);
+      handleUpdateLocation(HOME_PAGE_URL);
     },
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.delete.error', {
@@ -207,10 +215,10 @@ export const ListInformationPage: React.FC = () => {
 
   if (canUpdate) {
     buttonHandlers.edit = () => {
-      history.push(`${id}/edit`);
+      handleUpdateLocation(`${id}/edit`);
     };
     buttonHandlers.copy = () => {
-      history.push(`${id}/copy`);
+      handleUpdateLocation(`${id}/copy`);
     };
   }
 
@@ -241,12 +249,12 @@ export const ListInformationPage: React.FC = () => {
 
   const shortcuts = [
     AddCommand.duplicate(handleKeyCommand(
-      () => history.push(`${id}/copy`),
+      () => handleUpdateLocation(`${id}/copy`),
       canUpdate,
       () => showCommandError(!canUpdate)
     )),
     AddCommand.edit(handleKeyCommand(
-      () => history.push(`${id}/edit`),
+      () => handleUpdateLocation(`${id}/edit`),
       canUpdate && !isEditDisabled(conditions),
       () => showCommandError(!canUpdate)
     )),
@@ -281,7 +289,7 @@ export const ListInformationPage: React.FC = () => {
                   buttonHandlers={buttonHandlers}
                   conditions={conditions}
                 />}
-                onClose={() => history.goBack()}
+                onClose={() => handleUpdateLocation(`${HOME_PAGE_URL}`)}
                 subheader={
                   <SubHeaderBannersLayout hasBannersToDisplay={shouldShowCrossTenantWarning || showSuccessRefreshMessage}>
                     <CrossTenantListWarning shouldShow={shouldShowCrossTenantWarning} />

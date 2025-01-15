@@ -121,7 +121,7 @@ describe('CopyList Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyPushMock).toBeCalledWith('/lists/list/id');
+        expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' });
       });
     });
 
@@ -147,7 +147,7 @@ describe('CopyList Page', () => {
 
         await user.click(cancelButton);
 
-        expect(historyPushMock).toBeCalledWith('/lists/list/id');
+        expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' });
       });
     });
     describe('Disable/Enable save button', () => {
