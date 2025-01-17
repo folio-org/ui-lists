@@ -2,6 +2,8 @@
 
 ## In progress
 
+## [3.1.5](https://github.com/folio-org/ui-lists/tree/v3.1.5) (2025-01-17)
+
 * The filters reset after closing list on nth pages. [UILISTS-211]
 
 [UILISTS-211]: https://folio-org.atlassian.net/browse/UILISTS-211
