@@ -3,7 +3,7 @@ import { ListExport } from '../../interfaces';
 import { useMessages } from '../useMessages';
 import { t } from '../../services';
 import { downloadCSV } from './downloadCSV';
-import { POLLING_DELAY } from './constants';
+import { POLLING_DELAY, REQUEST_TIMEOUT } from './constants';
 import { isSuccess, isFailed, isCancelled } from './helpers';
 
 export const useCSVExportPolling = (listName: string, clearStorage: () => void) => {
@@ -13,43 +13,66 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
   const poll = (listID: string, exportId: string) => {
     setTimeout(() => {
       (async () => {
-        const { listId, status } : ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
-        if (isFailed(status)) {
-          showErrorMessage({
-            message: t('callout.list.csv-export.error', {
-              listName
-            })
-          });
-        } else if (isSuccess(status)) {
-          downloadCSV({
-            ky,
-            listId,
-            exportId,
-            listName,
-            onSuccess: () => {
-              showSuccessMessage({
-                message: t('callout.list.csv-export.success', {
-                  listName
-                })
-              });
+        try {
+          const { listId, status }: ListExport = await ky
+            .get(`lists/${listID}/exports/${exportId}`, { signal: controller.signal })
+            .json();
 
-              clearStorage();
-            },
-            onError: () => {
-              showErrorMessage({
-                message: t('callout.list.csv-export.error', {
-                  listName
-                })
-              });
+          clearTimeout(timeoutId);
 
-              clearStorage();
-            }
-          });
-        } else if (isCancelled(status)) {
-          // collapse recursion
-        } else {
-          poll(listId, exportId);
+          if (isFailed(status)) {
+            showErrorMessage({
+              message: t('callout.list.csv-export.error', {
+                listName,
+              }),
+            });
+          } else if (isSuccess(status)) {
+            downloadCSV({
+              ky,
+              listId,
+              exportId,
+              listName,
+              onSuccess: () => {
+                showSuccessMessage({
+                  message: t('callout.list.csv-export.success', {
+                    listName,
+                  }),
+                });
+
+                clearStorage();
+              },
+              onError: () => {
+                showErrorMessage({
+                  message: t('callout.list.csv-export.error', {
+                    listName,
+                  }),
+                });
+
+                clearStorage();
+              },
+            });
+          } else if (isCancelled(status)) {
+            // collapse recursion
+          } else {
+            poll(listId, exportId);
+          }
+        } catch (error: any) {
+          clearTimeout(timeoutId);
+
+          if (error.name === 'AbortError') {
+            poll(listID, exportId);
+          } else {
+            showErrorMessage({
+              message: t('callout.list.csv-export.error', {
+                listName,
+              }),
+            });
+
+            clearStorage();
+          }
         }
       })();
     }, POLLING_DELAY);
