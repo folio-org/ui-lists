@@ -8,9 +8,13 @@ import { HOME_PAGE_URL, COLUMNS_NAME } from '../../../constants';
 import { ListsRecord } from '../../../interfaces';
 
 export const listTableResultFormatter: Record<string, (item: ListsRecord) => React.JSX.Element> = {
-  [COLUMNS_NAME.LIST_NAME]: (item) => (
-    <TextLink to={`${HOME_PAGE_URL}/list/${item.id}`}>{item.name}</TextLink>
-  ),
+  [COLUMNS_NAME.LIST_NAME]: (item) => {
+    const searchParams = window.location.search;
+    const linkTo = `${HOME_PAGE_URL}/list/${item.id}${searchParams}`;
+    return (
+      <TextLink to={linkTo}>{item.name}</TextLink>
+    );
+  },
   [COLUMNS_NAME.STATUS]: (item) => (
     t(item.isActive
       ? 'lists.item.active'

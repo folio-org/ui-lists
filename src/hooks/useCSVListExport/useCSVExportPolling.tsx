@@ -13,7 +13,8 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
   const poll = (listID: string, exportId: string) => {
     setTimeout(() => {
       (async () => {
-        const { listId, status } : ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
+        try {
+          const { listId, status }: ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
 
         if (isFailed(status)) {
           showErrorMessage({
@@ -46,13 +47,24 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
                 })
               });
 
-              clearStorage();
-            }
-          });
-        } else if (isCancelled(status)) {
-          // collapse recursion
-        } else {
-          poll(listId, exportId);
+                clearStorage();
+              },
+            });
+          } else if (isCancelled(status)) {
+            // collapse recursion
+          } else {
+            poll(listId, exportId);
+          }
+        } catch (error: any) {
+          if (error.name === 'TimeoutError') {
+            poll(listID, exportId);
+          } else {
+            showErrorMessage({
+              message: t('callout.list.csv-export.error', {
+                listName,
+              }),
+            });
+          }
         }
       })();
     }, POLLING_DELAY);
