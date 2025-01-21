@@ -3,7 +3,7 @@ import { ListExport } from '../../interfaces';
 import { useMessages } from '../useMessages';
 import { t } from '../../services';
 import { downloadCSV } from './downloadCSV';
-import { POLLING_DELAY, REQUEST_TIMEOUT } from './constants';
+import { POLLING_DELAY } from './constants';
 import { isSuccess, isFailed, isCancelled } from './helpers';
 
 export const useCSVExportPolling = (listName: string, clearStorage: () => void) => {
@@ -13,15 +13,8 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
   const poll = (listID: string, exportId: string) => {
     setTimeout(() => {
       (async () => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
-
         try {
-          const { listId, status }: ListExport = await ky
-            .get(`lists/${listID}/exports/${exportId}`, { signal: controller.signal })
-            .json();
-
-          clearTimeout(timeoutId);
+          const { listId, status }: ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
 
           if (isFailed(status)) {
             showErrorMessage({
@@ -60,9 +53,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
             poll(listId, exportId);
           }
         } catch (error: any) {
-          clearTimeout(timeoutId);
-
-          if (error.name === 'AbortError') {
+          if (error.name === 'TimeoutError') {
             poll(listID, exportId);
           } else {
             showErrorMessage({
@@ -70,8 +61,6 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
                 listName,
               }),
             });
-
-            clearStorage();
           }
         }
       })();
