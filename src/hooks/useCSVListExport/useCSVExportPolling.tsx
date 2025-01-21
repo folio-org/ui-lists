@@ -3,7 +3,7 @@ import { ListExport } from '../../interfaces';
 import { useMessages } from '../useMessages';
 import { t } from '../../services';
 import { downloadCSV } from './downloadCSV';
-import { POLLING_DELAY } from './constants';
+import { MESSAGE_DELAY, POLLING_DELAY } from './constants';
 import { isSuccess, isFailed, isCancelled } from './helpers';
 
 export const useCSVExportPolling = (listName: string, clearStorage: () => void) => {
@@ -17,7 +17,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
 
         if (isFailed(status)) {
           showErrorMessage({
-            timeout: 10000,
+            timeout: MESSAGE_DELAY,
             message: t('callout.list.csv-export.error', {
               listName
             })
@@ -30,7 +30,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
             listName,
             onSuccess: () => {
               showSuccessMessage({
-                timeout: 10000,
+                timeout: MESSAGE_DELAY,
                 message: t('callout.list.csv-export.success', {
                   listName
                 })
@@ -40,7 +40,7 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
             },
             onError: () => {
               showErrorMessage({
-                timeout: 10000,
+                timeout: MESSAGE_DELAY,
                 message: t('callout.list.csv-export.error', {
                   listName
                 })
