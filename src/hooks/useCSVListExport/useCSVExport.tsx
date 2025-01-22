@@ -52,7 +52,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.error', { listName });
 
-      showErrorMessage({ message: errorMessage, timeout: 10000 });
+      showErrorMessage({ message: errorMessage, timeout: MESSAGE_DELAY });
 
       removeListFromStorage();
     },
