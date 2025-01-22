@@ -3,8 +3,10 @@
 ## In progress
 
 * Stream export file during download. [MODLISTS-186]
+* Toast messages should appear for a longer time during exports [UILISTS-210]
 
 [MODLISTS-186]: https://folio-org.atlassian.net/browse/MODLISTS-186
+[UILISTS-210]: https://folio-org.atlassian.net/browse/UILISTS-210
 
 ## [3.1.5](https://github.com/folio-org/ui-lists/tree/v3.1.5) (2025-01-17)
 
