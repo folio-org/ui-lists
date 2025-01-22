@@ -52,7 +52,13 @@ export const CopyListPage:FC = () => {
   };
 
   const backToList = () => {
-    history.push(`${HOME_PAGE_URL}/list/${id}`);
+    const searchParams = new URLSearchParams(window.location.search).toString();
+    history.push(
+      {
+        pathname: `${HOME_PAGE_URL}/list/${id}`,
+        search: searchParams,
+      }
+    );
   };
 
   const { initRefresh } = useInitRefresh({ onSuccess: (data) => {

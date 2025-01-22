@@ -93,7 +93,7 @@ describe('EditList Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyPushMock).toBeCalledWith('/lists/list/id');
+        expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' });
       });
     });
 
@@ -127,7 +127,7 @@ describe('EditList Page', () => {
 
           await user.click(cancelButton);
 
-          expect(historyPushMock).toBeCalledWith('/lists/list/id');
+          expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' });
         });
       });
 
@@ -346,7 +346,7 @@ describe('EditList Page', () => {
 
           await waitFor(() => expect(saveButton).toBeDisabled());
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists/list/id'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' }));
 
           const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
           expect(successMessage).toContain('ui-lists.callout.list.save.success');
@@ -390,7 +390,7 @@ describe('EditList Page', () => {
 
           await waitFor(() => expect(saveButton).toBeDisabled());
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists/list/id'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/id', search: '' }));
 
           const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
           expect(successMessage).toContain('ui-lists.callout.list.active');

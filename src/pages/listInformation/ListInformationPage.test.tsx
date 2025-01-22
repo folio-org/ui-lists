@@ -12,13 +12,14 @@ import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
+const historyGoBack = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({ push: historyPushMock, goBack: historyGoBack })),
 }));
 
 const renderListInformation = () => {
@@ -117,7 +118,7 @@ describe('ListInformationPage Page', () => {
 
             await user.click(conformationDeleteButton);
 
-            await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists'));
+            await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists', search: '' }));
 
             const successMessage = JSON.stringify(showSuccessMessageMock.mock.lastCall);
             expect(successMessage).toContain('ui-lists.callout.list.delete.success');
@@ -206,7 +207,7 @@ describe('ListInformationPage Page', () => {
 
           await user.click(editList);
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('id/edit'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: 'id/edit', search: '' }));
         });
       });
     });
