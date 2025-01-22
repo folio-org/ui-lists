@@ -16,36 +16,36 @@ export const useCSVExportPolling = (listName: string, clearStorage: () => void) 
         try {
           const { listId, status }: ListExport = await ky.get(`lists/${listID}/exports/${exportId}`).json();
 
-        if (isFailed(status)) {
-          showErrorMessage({
-            timeout: MESSAGE_DELAY,
-            message: t('callout.list.csv-export.error', {
-              listName
-            })
-          });
-        } else if (isSuccess(status)) {
-          downloadCSV({
-            ky,
-            listId,
-            exportId,
-            listName,
-            onSuccess: () => {
-              showSuccessMessage({
-                timeout: MESSAGE_DELAY,
-                message: t('callout.list.csv-export.success', {
-                  listName
-                })
-              });
+          if (isFailed(status)) {
+            showErrorMessage({
+              timeout: MESSAGE_DELAY,
+              message: t('callout.list.csv-export.error', {
+                listName
+              })
+            });
+          } else if (isSuccess(status)) {
+            downloadCSV({
+              ky,
+              listId,
+              exportId,
+              listName,
+              onSuccess: () => {
+                showSuccessMessage({
+                  timeout: MESSAGE_DELAY,
+                  message: t('callout.list.csv-export.success', {
+                    listName
+                  })
+                });
 
-              clearStorage();
-            },
-            onError: () => {
-              showErrorMessage({
-                timeout: MESSAGE_DELAY,
-                message: t('callout.list.csv-export.error', {
-                  listName
-                })
-              });
+                clearStorage();
+              },
+              onError: () => {
+                showErrorMessage({
+                  timeout: MESSAGE_DELAY,
+                  message: t('callout.list.csv-export.error', {
+                    listName
+                  })
+                });
 
                 clearStorage();
               },
