@@ -8,6 +8,7 @@ import { useMessages } from '../useMessages';
 import { useCSVExportCancel } from './useCSVExportCancel';
 import { useCSVExportPolling } from './useCSVExportPolling';
 import { useVisibleColumns } from '../useVisibleColumns';
+import { MESSAGE_DELAY } from './constants';
 
 export const useCSVExport = ({ listId, listName, listDetails, columns }: { listId: string; listName: string, listDetails?: ListsRecordDetails, columns?: string[] }) => {
   const { showSuccessMessage, showErrorMessage } = useMessages();
@@ -41,6 +42,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
         message: t('callout.list.csv-export.begin', {
           listName,
         }),
+        timeout: MESSAGE_DELAY,
       });
 
       writeStorage('listIdsToExport', { ...values, [listId]: exportId });
@@ -50,7 +52,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.csv-export.error', { listName });
 
-      showErrorMessage({ message: errorMessage });
+      showErrorMessage({ message: errorMessage, timeout: MESSAGE_DELAY });
 
       removeListFromStorage();
     },
