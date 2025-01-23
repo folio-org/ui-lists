@@ -2,6 +2,8 @@
 
 ## In progress
 
+## [3.1.6](https://github.com/folio-org/ui-lists/tree/v3.1.6) (2025-01-23)
+
 * Stream export file during download. [MODLISTS-186]
 
 [MODLISTS-186]: https://folio-org.atlassian.net/browse/MODLISTS-186
