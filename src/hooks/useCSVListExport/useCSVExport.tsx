@@ -73,7 +73,7 @@ export const useCSVExport = ({ listId, listName, listDetails, columns }: { listI
           { listName },
         );
 
-        showErrorMessage({ message: errorMessage });
+        showErrorMessage({ message: errorMessage, timeout: MESSAGE_DELAY });
 
         removeListFromStorage();
       })();
