@@ -160,8 +160,8 @@
     "pane.dropdown.ariaLabel.columnFilter": "Vstup filtru sloupců",
     "pane.dropdown.search.placeholder": "Název vyhledávacího sloupce",
     "cross-tenant-message": "This list may contain records from multiple tenants.",
-    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
-    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "create-list.cross-tenant-tip": "<strong>Seznamy s dotazem napříč nájemci lze nastavit pouze na hodnotu Soukromé.</strong>",
+    "unexpected.error": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
+    "update-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
+    "create-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte."
 }
