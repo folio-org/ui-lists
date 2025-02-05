@@ -3,8 +3,10 @@
 ## In progress
 
 * Toast messages should appear for a longer time during exports [UILISTS-210]
+* Increase the width of the record type dropdown. [UILISTS-212]
 
 [UILISTS-210]: https://folio-org.atlassian.net/browse/UILISTS-210
+[UILISTS-212]: https://folio-org.atlassian.net/browse/UILISTS-212
 
 ## [3.1.6](https://github.com/folio-org/ui-lists/tree/v3.1.6) (2025-01-23)
 
