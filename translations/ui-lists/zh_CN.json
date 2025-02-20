@@ -161,7 +161,7 @@
     "pane.dropdown.search.placeholder": "搜索栏名称",
     "cross-tenant-message": "该列表可能包含来自多个租户的记录。",
     "create-list.cross-tenant-tip": "<strong>跨租户查询的列表只能设置为私有。 </strong>",
-    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "unexpected.error": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
+    "update-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
+    "create-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。"
 }
