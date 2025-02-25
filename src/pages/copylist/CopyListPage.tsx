@@ -1,4 +1,8 @@
-import React, { FC, useRef, useState } from 'react';
+import React, {
+  FC,
+  useRef,
+  useState
+} from 'react';
 import { useIntl } from 'react-intl';
 import {
   Accordion,
@@ -18,7 +22,8 @@ import {
   useInitRefresh,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages, useNavigationBlock,
+  useMessages,
+  useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
