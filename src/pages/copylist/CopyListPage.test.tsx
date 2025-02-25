@@ -14,13 +14,14 @@ import listDetailsRefreshed from '../../../test/data/listDetails.Initial.json';
 import * as hooks from '../../hooks';
 
 const historyPushMock = jest.fn();
+const historyBlockMock = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
     id: 'id',
   }),
-  useHistory: jest.fn(() => ({ push: historyPushMock })),
+  useHistory: jest.fn(() => ({ push: historyPushMock, block: historyBlockMock })),
 }));
 
 const renderCopyListPage = () => {

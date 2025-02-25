@@ -44,7 +44,10 @@ describe('useNavigationBlock', () => {
       result.current.continueNavigation();
     });
 
-    expect(pushMock).toHaveBeenCalledWith('/next');
+    expect(pushMock).toHaveBeenCalledWith({
+      pathname: '/next',
+      search: '',
+    });
     expect(result.current.showConfirmCancelEditModal).toBe(false);
   });
 

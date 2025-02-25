@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
   Accordion,
@@ -18,11 +18,12 @@ import {
   useInitRefresh,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages,
+  useMessages, useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { computeErrorMessage, t } from '../../services';
 import {
+  CancelEditModal,
   EditListLayout,
   EditListResultViewer,
   ErrorComponent,
@@ -44,29 +45,33 @@ export const CopyListPage:FC = () => {
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
   const recordTypeLabel = useRecordTypeLabel(listDetails?.entityTypeId);
   const accordionStatusRef = useRef(null);
+  const [isSaving, setIsSaving] = useState(false);
   const listName = listDetails?.name ?? '';
   const fqlQuery = listDetails?.fqlQuery ?? '';
 
+  const { showSuccessMessage, showErrorMessage } = useMessages();
+  const { state, onValueChange, hasChanges } = useCopyListFormState(listDetails, loadingListDetails);
+
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges, isSaving, true);
+
   const redirectToNewList = (newListId: string) => {
+    continueNavigation();
     history.push(`${HOME_PAGE_URL}/list/${newListId}`);
   };
 
   const backToList = () => {
-    const searchParams = new URLSearchParams(window.location.search).toString();
-    history.push(
-      {
-        pathname: `${HOME_PAGE_URL}/list/${id}`,
-        search: searchParams,
-      }
-    );
+    continueNavigation();
+    setIsSaving(false);
   };
 
   const { initRefresh } = useInitRefresh({ onSuccess: (data) => {
     redirectToNewList(data.listId);
   } });
-  const { showSuccessMessage, showErrorMessage } = useMessages();
-  const { state, onValueChange } = useCopyListFormState(listDetails, loadingListDetails);
-
 
   const recordType = listDetails?.entityTypeId;
   const { saveList, isLoading } = useCreateList(
@@ -100,10 +105,19 @@ export const CopyListPage:FC = () => {
   }
 
   const closeHandler = () => {
+    setShowConfirmCancelEditModal(true);
+    const searchParams = new URLSearchParams(window.location.search).toString();
+    history.push(
+      {
+        pathname: `${HOME_PAGE_URL}/list/${id}`,
+        search: searchParams,
+      }
+    );
     backToList();
   };
 
   const onSave = () => {
+    setIsSaving(true);
     saveList();
   };
 
@@ -179,6 +193,14 @@ export const CopyListPage:FC = () => {
           </EditListLayout>
         </TitleManager>
       </AccordionStatus>
+      <CancelEditModal
+        onCancel={() => {
+          setShowConfirmCancelEditModal(false);
+          backToList();
+        }}
+        onKeepEdit={keepEditHandler}
+        open={showConfirmCancelEditModal && hasChanges}
+      />
     </HasCommandWrapper>
   );
 };

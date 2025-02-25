@@ -18,8 +18,11 @@ export const useNavigationBlock = (
   const continueNavigation = useCallback(() => {
     if (nextLocation) {
       setShowConfirmCancelEditModal(false);
-      history.push(nextLocation.pathname + nextLocation.search);
       setIsBlocked(false);
+      history.push({
+        pathname: nextLocation.pathname,
+        search: nextLocation.search
+      });
       setNextLocation(null);
     }
   }, [history, nextLocation]);
