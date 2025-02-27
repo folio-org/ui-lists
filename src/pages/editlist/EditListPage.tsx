@@ -100,11 +100,6 @@ export const EditListPage:FC = () => {
 
   const backToList = () => {
     continueNavigation();
-    const searchParams = new URLSearchParams(window.location.search).toString();
-    history.push({
-      pathname: `${HOME_PAGE_URL}/list/${id}`,
-      search: searchParams
-    });
     setIsSaving(false);
   };
 
@@ -126,7 +121,11 @@ export const EditListPage:FC = () => {
           timeout: 5999 });
         }
 
-        backToList();
+        const searchParams = new URLSearchParams(window.location.search).toString();
+        history.push({
+          pathname: `${HOME_PAGE_URL}/list/${id}`,
+          search: searchParams
+        });
       },
       onError: (error: HTTPError) => {
         (async () => {
@@ -177,6 +176,18 @@ export const EditListPage:FC = () => {
 
   const isSaveDisabled = !hasChanges || !state[FIELD_NAMES.LIST_NAME] || isLoading;
 
+  const closeHandler = () => {
+    setShowConfirmCancelEditModal(true);
+    const searchParams = new URLSearchParams(window.location.search).toString();
+    history.push(
+      {
+        pathname: `${HOME_PAGE_URL}/list/${id}`,
+        search: searchParams,
+      }
+    );
+    backToList();
+  };
+
 
   const shortcuts = [
     AddCommand.save(handleKeyCommand(
@@ -204,10 +215,7 @@ export const EditListPage:FC = () => {
         }
           isLoading={loadingListDetails}
           recordsCount={listDetails?.successRefresh?.recordsCount ?? 0}
-          onCancel={() => {
-            setShowConfirmCancelEditModal(true);
-            backToList();
-          }}
+          onCancel={closeHandler}
           onSave={onSave}
           name={listName}
           title={t('lists.edit.title', { listName })}
