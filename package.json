@@ -76,8 +76,8 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "@folio/plugin-query-builder": "^1.1.2",
-    "@folio/stripes-acq-components": "~6.0.0",
+    "@folio/plugin-query-builder": "^2.0.0",
+    "@folio/stripes-acq-components": "~7.0.0",
     "date-fns": "^2.29.3",
     "ky": "^0.33.2",
     "lodash": "^4.17.21",
