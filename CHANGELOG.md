@@ -7,12 +7,14 @@
 * Prompt for unsaved changes when we duplicate the list. [UILISTS-207]
 * migrate stripes dependencies to their Sunflower versions. [UILISTS-213]
 * migrate react-intl to v7. [UILISTS-214]
+* Hide column selection if list is inactive. [UILISTS-217]
 
 [UILISTS-210]: https://folio-org.atlassian.net/browse/UILISTS-210
 [UILISTS-212]: https://folio-org.atlassian.net/browse/UILISTS-212
 [UILISTS-207]: https://folio-org.atlassian.net/browse/UILISTS-207
 [UILISTS-213]: https://folio-org.atlassian.net/browse/UILISTS-213
 [UILISTS-214]: https://folio-org.atlassian.net/browse/UILISTS-214
+[UILISTS-217]: https://folio-org.atlassian.net/browse/UILISTS-217
 
 ## [3.1.6](https://github.com/folio-org/ui-lists/tree/v3.1.6) (2025-01-23)
 
