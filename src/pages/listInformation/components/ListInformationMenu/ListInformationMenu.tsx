@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-import {
-  Headline,
-  TextField
-} from '@folio/stripes/components';
+import { Headline, TextField } from '@folio/stripes/components';
 import {
   t,
   tString,
@@ -16,27 +13,27 @@ import {
   isCancelRefreshDisabled,
   isCancelExportDisabled,
   isExportDisabled,
-  DisablingConditions
+  DisablingConditions,
 } from '../../../../services';
 import { ActionMenu } from '../../../../components';
 import { ICONS, QueryBuilderColumnMetadata } from '../../../../interfaces';
 import { useListAppPermissions } from '../../../../hooks';
 
 export interface ListInformationMenuProps {
-  columns: QueryBuilderColumnMetadata[]
-  visibleColumns?: string[] | null,
+  columns: QueryBuilderColumnMetadata[];
+  visibleColumns?: string[] | null;
   buttonHandlers: {
-    'cancel-refresh': () => void,
-    'refresh': () => void,
-    'edit': () => void,
-    'delete':() => void,
-    'export-all': () => void,
-    'export-visible': () => void,
-    'cancel-export': () => void,
-    'copy': () => void
-  },
-  conditions: DisablingConditions,
-  onColumnsChange: ({ values }: {values: string[]}) => void;
+    'cancel-refresh': () => void;
+    refresh: () => void;
+    edit: () => void;
+    delete: () => void;
+    'export-all': () => void;
+    'export-visible': () => void;
+    'cancel-export': () => void;
+    copy: () => void;
+  };
+  conditions: DisablingConditions;
+  onColumnsChange: ({ values }: { values: string[] }) => void;
 }
 
 export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
@@ -47,83 +44,78 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
   onColumnsChange,
 }) => {
   const permissions = useListAppPermissions();
-  const { isExportInProgress, isRefreshInProgress } = conditions;
+  const { isExportInProgress, isRefreshInProgress, isListInactive } =
+    conditions;
 
   const intl = useIntl();
   const [columnSearch, setColumnSearch] = useState('');
 
-  const filteredColumns = columns.filter(item => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
-  const allDisabled = columns.every(item => item.disabled);
+  const filteredColumns = columns.filter((item) => item.label.toLowerCase().includes(columnSearch.toLowerCase()));
+  const allDisabled = columns.every((item) => item.disabled);
 
   const cancelRefreshButton = {
     label: 'cancel-refresh',
     icon: ICONS.refresh,
     onClick: buttonHandlers['cancel-refresh'],
-    disabled: isCancelRefreshDisabled(conditions)
+    disabled: isCancelRefreshDisabled(conditions),
   };
 
   const refreshButton = {
     label: 'refresh',
     icon: ICONS.refresh,
     onClick: buttonHandlers.refresh,
-    disabled: isRefreshDisabled(conditions)
+    disabled: isRefreshDisabled(conditions),
   };
 
   const initExportButton = {
     label: 'export-visible',
     icon: ICONS.download,
     onClick: buttonHandlers['export-visible'],
-    disabled: isExportDisabled(conditions)
+    disabled: isExportDisabled(conditions),
   };
 
   const initExportAllButton = {
     label: 'export-all',
     icon: ICONS.download,
     onClick: buttonHandlers['export-all'],
-    disabled: isExportDisabled(conditions)
+    disabled: isExportDisabled(conditions),
   };
 
   const cancelExportButton = {
     label: 'cancel-export',
     icon: ICONS.download,
     onClick: buttonHandlers['cancel-export'],
-    disabled: isCancelExportDisabled(conditions)
+    disabled: isCancelExportDisabled(conditions),
   };
 
-  const refreshSlot = isRefreshInProgress ? (
-    cancelRefreshButton
-  ) : (
-    refreshButton
-  );
+  const refreshSlot = isRefreshInProgress ? cancelRefreshButton : refreshButton;
 
-  const exportSlot = isExportInProgress ? [cancelExportButton] : [initExportButton, initExportAllButton];
+  const exportSlot = isExportInProgress
+    ? [cancelExportButton]
+    : [initExportButton, initExportAllButton];
 
-  const actionButtons:ActionButton[] = [];
+  const actionButtons: ActionButton[] = [];
 
   if (permissions.canRefresh) {
     actionButtons.push(refreshSlot);
   }
 
   if (permissions.canUpdate) {
-    actionButtons.push(
-      {
-        label: 'edit',
-        icon: ICONS.edit,
-        onClick: buttonHandlers.edit,
-        disabled: isEditDisabled(conditions),
-      }
-    );
+    actionButtons.push({
+      label: 'edit',
+      icon: ICONS.edit,
+      onClick: buttonHandlers.edit,
+      disabled: isEditDisabled(conditions),
+    });
   }
 
   if (permissions.canUpdate) {
-    actionButtons.push(
-      {
-        label: 'copy',
-        icon: ICONS.duplicate,
-        onClick: buttonHandlers.copy,
-        disabled: false,
-      }
-    );
+    actionButtons.push({
+      label: 'copy',
+      icon: ICONS.duplicate,
+      onClick: buttonHandlers.copy,
+      disabled: false,
+    });
   }
 
   if (permissions.canDelete) {
@@ -131,7 +123,7 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
       label: 'delete',
       icon: ICONS.trash,
       onClick: buttonHandlers.delete,
-      disabled: isDeleteDisabled(conditions)
+      disabled: isDeleteDisabled(conditions),
     });
   }
 
@@ -141,28 +133,26 @@ export const ListInformationMenu: React.FC<ListInformationMenuProps> = ({
 
   return (
     <ActionMenu actionButtons={actionButtons}>
-      {
-        !isEmpty(columns) && (
-          <>
-            <TextField
-              value={columnSearch}
-              onChange={e => setColumnSearch(e.target.value)}
-              aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter')}
-              disabled={allDisabled}
-              placeholder={tString(intl, 'pane.dropdown.search.placeholder')}
-            />
-            <Headline size="medium" margin="none" tag="p" faded>
-              {t('pane.dropdown.show-columns')}
-            </Headline>
-            <CheckboxFilter
-              dataOptions={filteredColumns}
-              name="ui-lists-columns-filter"
-              onChange={onColumnsChange}
-              selectedValues={visibleColumns ?? []}
-            />
-          </>
-        )
-      }
+      {!isEmpty(columns) && !isListInactive && (
+        <>
+          <TextField
+            value={columnSearch}
+            onChange={(e) => setColumnSearch(e.target.value)}
+            aria-label={tString(intl, 'pane.dropdown.ariaLabel.columnFilter')}
+            disabled={allDisabled}
+            placeholder={tString(intl, 'pane.dropdown.search.placeholder')}
+          />
+          <Headline size="medium" margin="none" tag="p" faded>
+            {t('pane.dropdown.show-columns')}
+          </Headline>
+          <CheckboxFilter
+            dataOptions={filteredColumns}
+            name="ui-lists-columns-filter"
+            onChange={onColumnsChange}
+            selectedValues={visibleColumns ?? []}
+          />
+        </>
+      )}
     </ActionMenu>
   );
 };
