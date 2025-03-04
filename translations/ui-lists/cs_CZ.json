@@ -159,7 +159,7 @@
     "commands-error.permission": "Uživatel nemá oprávnění k provedení této akce",
     "pane.dropdown.ariaLabel.columnFilter": "Vstup filtru sloupců",
     "pane.dropdown.search.placeholder": "Název vyhledávacího sloupce",
-    "cross-tenant-message": "This list may contain records from multiple tenants.",
+    "cross-tenant-message": "Tento seznam může obsahovat záznamy od více nájemců.",
     "create-list.cross-tenant-tip": "<strong>Seznamy s dotazem napříč nájemci lze nastavit pouze na hodnotu Soukromé.</strong>",
     "unexpected.error": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
     "update-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",

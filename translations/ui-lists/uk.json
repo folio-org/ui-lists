@@ -75,7 +75,7 @@
     "callout.list.save.success": "List <strong>{listName}</strong> saved.",
     "callout.list.save.error": "Error: <strong>{listName}</strong> was not saved.",
     "callout.list.refresh.error": "The list <strong>{listName}</strong> was not refreshed. Please try again.",
-    "callout.list.save.error.version": "Error: <strong>{listName}</strong> was updated by another user. Please refresh the page.",
+    "callout.list.save.error.version": "Помилка: <strong> {listName} </strong> оновлено іншим користувачем. Будь ласка, оновіть сторінку.",
     "callout.list.csv-export.begin": "Export of <strong>{listName}</strong> is being generated. This may take some time for larger lists.",
     "callout.list.csv-export.success": "List <strong>{listName}</strong> was successfully exported to CSV.",
     "callout.list.csv-export.error": "Error: Export for list <strong>{listName}</strong> failed.",
