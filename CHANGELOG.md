@@ -2,6 +2,8 @@
 
 ## In progress
 
+## [4.0.0](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
+
 * Toast messages should appear for a longer time during exports [UILISTS-210]
 * Increase the width of the record type dropdown. [UILISTS-212]
 * Prompt for unsaved changes when we duplicate the list. [UILISTS-207]
