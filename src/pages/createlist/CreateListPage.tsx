@@ -10,7 +10,7 @@ import {
   useMessages,
   useRecordTypes,
   useCreateList,
-  useKeyCommandsMessages
+  useKeyCommandsMessages, useNavigationBlock
 } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
@@ -28,6 +28,13 @@ export const CreateListPage:FC = () => {
   const { isLoading: isLoadingRecords, recordTypes = [] } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { showCommandError } = useKeyCommandsMessages();
+
+  const {
+    showConfirmCancelEditModal,
+    continueNavigation,
+    keepEditHandler,
+    setShowConfirmCancelEditModal
+  } = useNavigationBlock(hasChanges);
 
   const { saveList, isLoading } = useCreateList({
     listObject: state,
@@ -47,6 +54,7 @@ export const CreateListPage:FC = () => {
         }) });
 
         history.push(`list/${list?.id}`);
+        continueNavigation();
       }
     }
   });
@@ -87,8 +95,12 @@ export const CreateListPage:FC = () => {
           isSaveButtonDisabled={isSaveDisabled}
           onSave={saveList}
           onClose={closeViewHandler}
-          onCancel={closeViewHandler}
           showModalOnCancel={hasChanges}
+          showConfirmCancelEditModal={showConfirmCancelEditModal}
+          keepEditHandler={keepEditHandler}
+          setShowConfirmCancelEditModal={setShowConfirmCancelEditModal}
+          continueNavigation={continueNavigation}
+          onCancel={closeViewHandler}
         >
           <MainCreateListForm
             selectedType={recordType}
