@@ -3,42 +3,41 @@ import { useIntl } from 'react-intl';
 import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
 import { CancelEditModal, ListAppIcon, Buttons } from '../../../../components';
 import { t, tString } from '../../../../services';
-import { useNavigationBlock } from '../../../../hooks';
 
 type CreateListLayoutProps = {
     isSaveButtonDisabled?: boolean;
     isSavingInProgress?: boolean;
-    onCancel?: () => void;
     onSave?: () => void;
     onClose?: () => void;
     showModalOnCancel?: boolean;
     children?: ReactElement;
+    showConfirmCancelEditModal: boolean;
+    keepEditHandler: ()=> void;
+    setShowConfirmCancelEditModal: (value: boolean)=> void;
+    continueNavigation: ()=> void;
+    onCancel: ()=> void;
 };
 
 export const CreateListLayout: FC<CreateListLayoutProps> = ({
   isSaveButtonDisabled = false,
   isSavingInProgress = false,
-  onCancel = () => {},
   onSave = () => {},
   onClose = () => {},
   showModalOnCancel = false,
-  children
+  children,
+  showConfirmCancelEditModal = false,
+  keepEditHandler,
+  setShowConfirmCancelEditModal,
+  continueNavigation,
+  onCancel
 }) => {
   const intl = useIntl();
-
-  const {
-    showConfirmCancelEditModal,
-    continueNavigation,
-    keepEditHandler,
-    setShowConfirmCancelEditModal
-  } = useNavigationBlock(showModalOnCancel);
 
   const cancelHandler = () => {
     if (!showConfirmCancelEditModal) {
       setShowConfirmCancelEditModal(true);
     }
     continueNavigation();
-    onCancel();
   };
 
   return (
@@ -61,7 +60,12 @@ export const CreateListLayout: FC<CreateListLayoutProps> = ({
             footer={
               <PaneFooter
                 renderStart={
-                  <Buttons.Cancel onCancel={cancelHandler} />
+                  <Buttons.Cancel onCancel={() => {
+                    onCancel();
+                    cancelHandler();
+                  }
+                  }
+                  />
                                 }
                 renderEnd={
                   <Buttons.Save
