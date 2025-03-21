@@ -155,13 +155,13 @@
     "pane.dropdown.export-all": "Alle kolommen exporteren (CSV)",
     "pane.dropdown.export-visible": "Zichtbare kolommen exporteren (CSV)",
     "app-menu.list-app-home": "Home app 'Lijsten'",
-    "commands-error.unavailable": "This action is unavailable",
-    "commands-error.permission": "User does not have permission to take this action",
+    "commands-error.unavailable": "Deze actie is niet beschikbaar",
+    "commands-error.permission": "Gebruiker heeft geen toestemming om deze actie uit te voeren",
     "pane.dropdown.ariaLabel.columnFilter": "Invoer kolomfilter",
     "pane.dropdown.search.placeholder": "Kolomnaam zoeken",
-    "cross-tenant-message": "This list may contain records from multiple tenants.",
-    "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
-    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "cross-tenant-message": "Deze lijst kan records van meerdere huurders bevatten.",
+    "create-list.cross-tenant-tip": "<strong>Lijsten met cross-tenant query kunnen alleen worden ingesteld op privé.</strong>",
+    "unexpected.error": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
+    "update-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
+    "create-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst."
 }
