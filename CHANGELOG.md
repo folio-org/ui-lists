@@ -2,6 +2,12 @@
 
 ## In progress
 
+## [4.0.1](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
+
+* Unsaved changes message prompt interrupts redirect link. [UILISTS-216]
+
+[UILISTS-216]: https://folio-org.atlassian.net/browse/UILISTS-216
+
 ## [4.0.0](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
 
 * Toast messages should appear for a longer time during exports [UILISTS-210]
@@ -10,7 +16,6 @@
 * migrate stripes dependencies to their Sunflower versions. [UILISTS-213]
 * migrate react-intl to v7. [UILISTS-214]
 * Hide column selection if list is inactive. [UILISTS-217]
-* Unsaved changes message prompt interrupts redirect link. [UILISTS-216]
 
 [UILISTS-210]: https://folio-org.atlassian.net/browse/UILISTS-210
 [UILISTS-212]: https://folio-org.atlassian.net/browse/UILISTS-212
@@ -18,7 +23,6 @@
 [UILISTS-213]: https://folio-org.atlassian.net/browse/UILISTS-213
 [UILISTS-214]: https://folio-org.atlassian.net/browse/UILISTS-214
 [UILISTS-217]: https://folio-org.atlassian.net/browse/UILISTS-217
-[UILISTS-216]: https://folio-org.atlassian.net/browse/UILISTS-216
 
 ## [3.1.6](https://github.com/folio-org/ui-lists/tree/v3.1.6) (2025-01-23)
 
