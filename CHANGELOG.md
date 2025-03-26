@@ -2,7 +2,7 @@
 
 ## In progress
 
-## [4.0.1](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
+## [4.0.1](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-26)
 
 * Unsaved changes message prompt interrupts redirect link. [UILISTS-216]
 
