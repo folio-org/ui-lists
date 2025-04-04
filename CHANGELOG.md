@@ -2,6 +2,10 @@
 
 ## In progress
 
+* Display a meaningfull error text when the POST /lists is failing. [UILISTS-228]
+
+[UILISTS-228]: https://folio-org.atlassian.net/browse/UILISTS-228
+
 ## [4.0.0](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
 
 * Toast messages should appear for a longer time during exports [UILISTS-210]
