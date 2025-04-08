@@ -28,6 +28,7 @@ export interface ConfigureQueryProps {
   version?: number;
   recordColumns?: string[];
   initialValues?: Record<string, unknown>;
+  setIsModalShown?: (isShown: boolean) => void;
 }
 
 export const ConfigureQuery: FC<ConfigureQueryProps> = ({
@@ -42,6 +43,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   version,
   recordColumns,
   initialValues,
+  setIsModalShown = () => ({}),
 }) => {
   const history = useHistory();
   const ky = useOkapiKy();
@@ -71,11 +73,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       limit,
     };
 
-    try {
-      return await ky.get(`query/${queryId}`, { searchParams }).json();
-    } catch (error) {
-      throw error;
-    }
+    return ky.get(`query/${queryId}`, { searchParams }).json();
   };
 
   const testQueryDataSource = async ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
@@ -176,6 +174,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       recordsLimit={recordsLimit}
       saveBtnLabel={t('list.modal.run-query-and-save')}
       triggerButtonLabel={triggerButtonLabel}
+      setIsModalShown={setIsModalShown}
     />
   );
 };

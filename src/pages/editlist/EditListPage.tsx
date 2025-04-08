@@ -19,7 +19,8 @@ import {
   useDeleteList,
   useKeyCommandsMessages,
   useListDetails,
-  useMessages, useNavigationBlock,
+  useMessages,
+  useNavigationBlock,
   useRecordTypeLabel
 } from '../../hooks';
 import { t, computeErrorMessage, isInactive, isInDraft, isCanned, isEmptyList } from '../../services';
@@ -49,6 +50,7 @@ export const EditListPage:FC = () => {
   const { id }: { id: string } = useParams();
   const [columns, setColumns] = useState<QueryBuilderColumnMetadata[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isQueryBuilderOpen, setIsQueryBuilderOpen] = useState(false);
 
   const { data: listDetails, isLoading: loadingListDetails, detailsError } = useListDetails(id);
   const { showCommandError } = useKeyCommandsMessages();
@@ -91,12 +93,14 @@ export const EditListPage:FC = () => {
 
   const version = listDetails?.version ?? 0;
 
+  // we only want to show the modal when we have form changes and the QB has not been invoked.
+  // if the QB is invoked, its own test/run query and save will handle saving, not us.
   const {
     showConfirmCancelEditModal,
     continueNavigation,
     keepEditHandler,
     setShowConfirmCancelEditModal
-  } = useNavigationBlock(hasChanges, isSaving, true);
+  } = useNavigationBlock(hasChanges && !isQueryBuilderOpen, isSaving, true);
 
   const backToList = () => {
     continueNavigation();
@@ -263,6 +267,9 @@ export const EditListPage:FC = () => {
               visibility={state[FIELD_NAMES.VISIBILITY]}
               description={state[FIELD_NAMES.DESCRIPTION]}
               setColumns={setColumns}
+              // QB will save the description/name/etc; we just need to turn off the "there are unsaved changes"
+              // dialog when the QB closes
+              setIsModalShown={setIsQueryBuilderOpen}
             />
           </AccordionStatus>
           <CancelEditModal

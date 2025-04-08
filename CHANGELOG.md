@@ -3,8 +3,10 @@
 ## In progress
 
 * Display a meaningfull error text when the POST /lists is failing. [UILISTS-228]
+* Prevent incorrectly showing unsaved changes prompt when using the query builder after editing a list. [UILISTS-222]
 
 [UILISTS-228]: https://folio-org.atlassian.net/browse/UILISTS-228
+[UILISTS-222]: https://folio-org.atlassian.net/browse/UILISTS-222
 
 ## [4.0.0](https://github.com/folio-org/ui-lists/tree/v4.0.0) (2025-03-13)
 
