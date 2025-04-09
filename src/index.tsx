@@ -24,7 +24,7 @@ import {
   MissingAllEntityTypePermissionsPage
 } from './pages';
 import { useRecordTypes } from './hooks';
-import { t } from './services';
+import { t } from './services'
 import {
   getStatusButtonElem,
   USER_PERMS,
