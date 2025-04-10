@@ -23,6 +23,7 @@ export interface EditListResultViewerProps {
   isDuplicating?: boolean;
   isQueryButtonDisabled?: boolean;
   setColumns?: (columns: QueryBuilderColumnMetadata[]) => void;
+  setIsModalShown?: (isShown: boolean) => void;
 }
 
 export const EditListResultViewer: FC<EditListResultViewerProps> = ({
@@ -40,6 +41,7 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
   setColumns,
   isDuplicating = false,
   isQueryButtonDisabled = false,
+  setIsModalShown,
 }) => {
   const ky = useOkapiKy();
 
@@ -90,6 +92,7 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
                 : VISIBILITY_VALUES.PRIVATE
             }
             description={description}
+            setIsModalShown={setIsModalShown}
           />
         </div>
       }
