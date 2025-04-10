@@ -54,7 +54,7 @@ import {
   ErrorComponent,
   HasCommandWrapper
 } from '../../components';
-import { handleKeyCommand, removeBackslashes } from '../../utils';
+import { handleKeyCommand } from '../../utils';
 import { AddCommand } from '../../keyboard-shortcuts';
 
 export const ListInformationPage: React.FC = () => {
@@ -309,8 +309,8 @@ export const ListInformationPage: React.FC = () => {
                   <AccordionSet>
                     <ListInformationResultViewer
                       refreshInProgress={isRefreshInProgress}
-                      listID={listData?.id}
-                      userFriendlyQuery={removeBackslashes(listData?.userFriendlyQuery)}
+                      listId={listData?.id}
+                      fqlQuery={listData?.fqlQuery}
                       entityTypeId={listData?.entityTypeId}
                       refreshTrigger={Number(refreshTrigger)}
                       setColumnControlList={setColumnControls}

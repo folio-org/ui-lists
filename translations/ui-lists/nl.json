@@ -31,7 +31,6 @@
     "list.info.source": "Bron",
     "list.info.source.system": "Systeem",
     "accordion.title.list-information": "Lijstinformatie",
-    "accordion.title.query": "Query: {query}",
     "pane.dropdown.show-columns": "Kolommen weergeven",
     "pane.dropdown.refresh": "Lijst verversen",
     "pane.dropdown.cancel-refresh": "Verversen annuleren",

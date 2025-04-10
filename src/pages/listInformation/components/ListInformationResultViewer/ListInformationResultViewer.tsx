@@ -1,62 +1,50 @@
-import React from 'react';
-// @ts-ignore:next-line
-import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-import { t } from '../../../../services';
+import { Loading } from '@folio/stripes/components';
+import { Pluggable } from '@folio/stripes/core';
+import React, { useMemo } from 'react';
+import { useQueryBuilderResultViewerSources } from '../../../../hooks/useQueryBuilderSources';
 import { QueryBuilderColumnMetadata } from '../../../../interfaces';
-import { removeBackslashes } from '../../../../utils';
+import { t } from '../../../../services';
 
 type ListInformationResultViewerType = {
-  userFriendlyQuery?: string;
   refreshTrigger?: number | boolean;
   setColumnControlList?: (columns: QueryBuilderColumnMetadata[]) => void;
   setDefaultVisibleColumns?: (columns: string[]) => void;
-  listID?: string;
+  listId?: string;
+  fqlQuery?: string;
   entityTypeId?: string;
   visibleColumns?: string[] | null;
   refreshInProgress: boolean;
 };
 
-
 export const ListInformationResultViewer: React.FC<ListInformationResultViewerType> = ({
-  userFriendlyQuery = '',
   refreshTrigger = 0,
   setColumnControlList = () => {},
-  listID = '',
+  listId = '',
+  fqlQuery,
   entityTypeId = '',
   setDefaultVisibleColumns = () => {},
   visibleColumns = [],
-  refreshInProgress
+  refreshInProgress,
 }) => {
-  const ky = useOkapiKy();
-
-  const getAsyncContentData = ({ limit, offset }: any) => {
-    return ky.get(`lists/${listID}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`).json();
-  };
-
-  const getAsyncEntityType = () => {
-    return ky.get(`entity-types/${entityTypeId}`).json();
-  };
+  const fqlQueryParsed = useMemo(() => (fqlQuery ? JSON.parse(fqlQuery) : undefined), [fqlQuery]);
 
   return (
     <Pluggable
       type="query-builder"
       componentType="viewer"
-      accordionHeadline={
-        t('accordion.title.query',
-          { query: removeBackslashes(userFriendlyQuery) })}
-      headline={({ totalRecords }: any) => t('mainPane.subTitle',
-        { count: totalRecords === 'NaN' ? 0 : totalRecords })}
+      showQueryAccordion
+      fqlQuery={fqlQueryParsed}
+      headline={({ totalRecords }: any) => t('mainPane.subTitle', { count: totalRecords === 'NaN' ? 0 : totalRecords })}
       refreshInProgress={refreshInProgress}
       refreshTrigger={refreshTrigger}
-      contentDataSource={getAsyncContentData}
-      entityTypeDataSource={getAsyncEntityType}
+      {...useQueryBuilderResultViewerSources(entityTypeId, listId, visibleColumns)}
       visibleColumns={visibleColumns}
       onSetDefaultVisibleColumns={setDefaultVisibleColumns}
       onSetDefaultColumns={setColumnControlList}
       height={500}
       contentQueryKeys={visibleColumns}
     >
-      No loaded
+      <Loading />
     </Pluggable>
   );
 };

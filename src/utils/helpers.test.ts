@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { buildListsUrl, filterByIncludes, handleKeyCommand, removeBackslashes } from './helpers';
+import { buildListsUrl, filterByIncludes, handleKeyCommand } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
 
 const baseUrl = 'http://www.test.com';
@@ -120,32 +120,6 @@ describe('Helpers', () => {
 
       expect(callback).not.toBeCalled();
       expect(preventDefault).toBeCalled();
-    });
-
-    describe('removeBackslashes', () => {
-      it('should remove all single backslashes from a string', () => {
-        expect(removeBackslashes('Wierd test \\/\\/\\/ \\*\\* symbols \\)\\)\\)')).toBe('Wierd test /// ** symbols )))');
-      });
-
-      it('should return the same string if no backslashes are present', () => {
-        expect(removeBackslashes('No backslashes here')).toBe('No backslashes here');
-      });
-
-      it('should handle strings with double backslashes', () => {
-        expect(removeBackslashes('Double backslashes here: \\...')).toBe('Double backslashes here: ...');
-      });
-
-      it('should handle strings with multiple backslashes in a row', () => {
-        expect(removeBackslashes('Multiple backslashes: \\\\\\\\\\')).toBe('Multiple backslashes: \\\\\\');
-      });
-
-      it('should handle an empty string', () => {
-        expect(removeBackslashes('')).toBe('');
-      });
-
-      it('should return empty string if input is undefined', () => {
-        expect(removeBackslashes()).toBe('');
-      });
     });
   });
 });

@@ -31,7 +31,6 @@
     "list.info.source": "출처",
     "list.info.source.system": "시스템",
     "accordion.title.list-information": "List information",
-    "accordion.title.query": "Query: {query}",
     "pane.dropdown.show-columns": "열 표시",
     "pane.dropdown.refresh": "Refresh list",
     "pane.dropdown.cancel-refresh": "Cancel refresh",

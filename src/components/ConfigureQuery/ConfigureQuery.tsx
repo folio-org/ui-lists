@@ -1,10 +1,10 @@
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { HTTPError } from 'ky';
-import { noop } from 'lodash';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HOME_PAGE_URL } from '../../constants';
 import { useMessages, useRecordsLimit } from '../../hooks';
+import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
 import {
   FqlQuery,
   ListForCreation,
@@ -52,37 +52,6 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
-  const entityTypeDataSource = async () => {
-    return selectedType ? ky.get(`entity-types/${selectedType}`).json() : noop;
-  };
-
-  const queryDetailsDataSource = async ({
-    queryId,
-    includeContent,
-    offset,
-    limit,
-  }: {
-    queryId: string;
-    includeContent: boolean;
-    offset: number;
-    limit: number;
-  }) => {
-    const searchParams = {
-      includeResults: includeContent,
-      offset,
-      limit,
-    };
-
-    return ky.get(`query/${queryId}`, { searchParams }).json();
-  };
-
-  const testQueryDataSource = async ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
-    return ky.post('query', { json: {
-      entityTypeId: selectedType,
-      fqlQuery: JSON.stringify(fqlQuery),
-    } }).json();
-  };
-
   const runQueryDataSource = ({ fqlQuery, queryId }: { fqlQuery: FqlQuery; queryId: string }) => {
     if (isEditQuery) {
       const data: ListForUpdate = {
@@ -113,11 +82,12 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
     }
   };
 
-
   const onQueryRunSuccess = ({ id }: { id: string }) => {
-    showSuccessMessage({ message: t('callout.list.save.success', {
-      listName
-    }) });
+    showSuccessMessage({
+      message: t('callout.list.save.success', {
+        listName,
+      }),
+    });
 
     history.push(`${HOME_PAGE_URL}/list/${id}`);
   };
@@ -130,24 +100,6 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
 
       showErrorMessage({ message: errorMessage });
     })();
-  };
-
-  const getParamsSource = async ({
-    entityTypeId,
-    columnName,
-    searchValue,
-  }: {
-    entityTypeId: string;
-    columnName: string;
-    searchValue: string;
-  }) => {
-    return ky
-      .get(`entity-types/${entityTypeId}/columns/${columnName}/values`, {
-        searchParams: {
-          search: searchValue,
-        },
-      })
-      .json();
   };
 
   const cancelQueryDataSource = async ({ queryId }: { queryId: string }) => {
@@ -163,12 +115,9 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       key={selectedType}
       disabled={isQueryButtonDisabled}
       initialValues={initialValues}
-      entityTypeDataSource={entityTypeDataSource}
-      testQueryDataSource={testQueryDataSource}
-      getParamsSource={getParamsSource}
       runQueryDataSource={runQueryDataSource}
       cancelQueryDataSource={cancelQueryDataSource}
-      queryDetailsDataSource={queryDetailsDataSource}
+      {...useQueryBuilderCommonSources(selectedType)}
       onQueryRunSuccess={onQueryRunSuccess}
       onQueryRunFail={onQueryRunFail}
       recordsLimit={recordsLimit}

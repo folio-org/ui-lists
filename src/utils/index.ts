@@ -6,7 +6,6 @@ export {
   filterByIncludes,
   getStatusButtonElem,
   handleKeyCommand,
-  removeBackslashes,
 } from './helpers';
 
 export { USER_PERMS } from './constants';
