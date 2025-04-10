@@ -1,10 +1,10 @@
-import { Pluggable, useOkapiKy } from '@folio/stripes/core';
-import React, { FC, useCallback, useMemo } from 'react';
+import { Pluggable } from '@folio/stripes/core';
+import React, { FC, useMemo } from 'react';
 import { useVisibleColumns } from '../../hooks';
+import { useQueryBuilderResultViewerSources } from '../../hooks/useQueryBuilderSources';
 import { QueryBuilderColumnMetadata, STATUS_VALUES, VISIBILITY_VALUES } from '../../interfaces';
 import { t } from '../../services';
 import { ConfigureQuery } from '../ConfigureQuery';
-import { removeBackslashes } from '../../utils';
 
 import css from './EditListResultViewer.module.css';
 
@@ -13,7 +13,6 @@ export interface EditListResultViewerProps {
   version?: number;
   entityTypeId?: string;
   fqlQuery: string;
-  userFriendlyQuery: string;
   contentVersion: number;
   fields?: string[];
   status: string;
@@ -31,7 +30,6 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
   version,
   entityTypeId,
   fqlQuery,
-  userFriendlyQuery = '',
   contentVersion,
   status,
   listName,
@@ -43,33 +41,19 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
   isQueryButtonDisabled = false,
   setIsModalShown,
 }) => {
-  const ky = useOkapiKy();
-
   const { visibleColumns } = useVisibleColumns(id);
 
-  const getAsyncContentData = useCallback(
-    ({ limit, offset }: { limit: number; offset: number }) => ky
-      .get(
-        `lists/${id}/contents?offset=${offset}&size=${limit}&fields=${visibleColumns?.join(',')}`,
-      )
-      .json(),
-    [ky, id, visibleColumns],
-  );
-
-  const getAsyncEntityType = useCallback(
-    () => ky.get(`entity-types/${entityTypeId}`).json(),
-    [ky, entityTypeId],
-  );
+  const fqlQueryParsed = useMemo(() => (fqlQuery ? JSON.parse(fqlQuery) : undefined), [fqlQuery]);
 
   return (
     <Pluggable
       type="query-builder"
       componentType="viewer"
-      accordionHeadline={t('accordion.title.query', { query: removeBackslashes(userFriendlyQuery) })}
+      showQueryAccordion
       headline={({ totalRecords }: any) => t('mainPane.subTitle', { count: totalRecords })}
       refreshTrigger={contentVersion}
-      contentDataSource={getAsyncContentData}
-      entityTypeDataSource={getAsyncEntityType}
+      fqlQuery={fqlQueryParsed}
+      {...useQueryBuilderResultViewerSources(entityTypeId, id, visibleColumns)}
       visibleColumns={visibleColumns}
       onSetDefaultColumns={setColumns}
       contentQueryKeys={visibleColumns}
@@ -80,7 +64,7 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
             listId={isDuplicating ? undefined : id}
             version={isDuplicating ? undefined : version}
             isEditQuery={!isDuplicating}
-            initialValues={useMemo(() => (fqlQuery ? JSON.parse(fqlQuery) : undefined), [fqlQuery])}
+            initialValues={fqlQueryParsed}
             selectedType={entityTypeId}
             recordColumns={fields}
             isQueryButtonDisabled={isQueryButtonDisabled}
