@@ -1,8 +1,8 @@
 # Change history for ui-lists
 
-## In progress
+## [4.0.2](https://github.com/folio-org/ui-lists/tree/v4.0.2) (2025-04-10)
 
-* Display a meaningfull error text when the POST /lists is failing. [UILISTS-228]
+* Display a meaningful error text when the POST /lists is failing. [UILISTS-228]
 * Prevent incorrectly showing unsaved changes prompt when using the query builder after editing a list. [UILISTS-222]
 * Make toast message for failed export it doesn't disappear [UILISTS-220]
 
