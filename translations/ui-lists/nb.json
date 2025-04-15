@@ -31,7 +31,6 @@
     "list.info.source": "Source",
     "list.info.source.system": "System",
     "accordion.title.list-information": "List information",
-    "accordion.title.query": "Query: {query}",
     "pane.dropdown.show-columns": "Show columns",
     "pane.dropdown.refresh": "Refresh list",
     "pane.dropdown.cancel-refresh": "Cancel refresh",

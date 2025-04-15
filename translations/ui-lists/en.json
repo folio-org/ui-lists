@@ -36,11 +36,9 @@
   "list.info.source": "Source",
   "list.info.record-type": "Record type",
 
-
   "list.info.source.system": "System",
 
   "accordion.title.list-information": "List information",
-  "accordion.title.query": "Query: {query}",
 
   "pane.dropdown.available-permissions": "Available permissions",
 
