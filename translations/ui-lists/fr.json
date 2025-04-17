@@ -162,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "unhandled.error": "An error occurred."
 }

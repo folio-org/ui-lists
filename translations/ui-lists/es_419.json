@@ -31,7 +31,6 @@
     "list.info.source": "Fuente",
     "list.info.source.system": "Sistema",
     "accordion.title.list-information": "Información de la lista",
-    "accordion.title.query": "Consulta: {query}",
     "pane.dropdown.show-columns": "Mostrar columnas",
     "pane.dropdown.refresh": "Refresh list",
     "pane.dropdown.cancel-refresh": "Cancelar actualización",
@@ -163,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "unhandled.error": "Se ha producido un error."
 }

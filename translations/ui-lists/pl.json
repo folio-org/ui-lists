@@ -124,10 +124,10 @@
     "lists.copy.title": "Duplikuj listę: {listName}",
     "lists.copy.name-postfix": "kopia",
     "list.info.record-type": "Typ rekordu",
-    "title.createList": "New list",
-    "title.duplicateList": "Duplicate List {listName}",
+    "title.createList": "Nowa lista",
+    "title.duplicateList": "Lista duplikatów {listName}",
     "title.infoList": "Listy - {listName}",
-    "title.editList": "Edit {listName}",
+    "title.editList": "Edytuj {listName}",
     "error-component.unknown": "An unknown error ocurred",
     "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
     "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
@@ -160,7 +160,8 @@
     "pane.dropdown.search.placeholder": "Przeszukaj nazwę kolumny",
     "cross-tenant-message": "This list may contain records from multiple tenants.",
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
-    "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "unexpected.error": "Nie można ukończyć akcji. Zapytanie nie jest już prawidłowe, ponieważ usunięto pole/pola. Proszę edytować zapytanie listy lub usunąć listę.",
+    "update-fql.query.invalid": "Nie można ukończyć akcji. Zapytanie nie jest już prawidłowe, ponieważ usunięto pole/pola. Proszę edytować zapytanie listy lub usunąć listę.",
+    "create-fql.query.invalid": "Nie można ukończyć akcji. Zapytanie nie jest już prawidłowe, ponieważ usunięto pole/pola. Proszę edytować zapytanie listy lub usunąć listę.",
+    "unhandled.error": "Wystąpił błąd"
 }

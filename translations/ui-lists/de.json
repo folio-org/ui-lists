@@ -162,5 +162,6 @@
     "create-list.cross-tenant-tip": "Listen mit mandantenübergreifenden Abfragen können nur auf Privat gesetzt werden.",
     "unexpected.error": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
     "update-fql.query.invalid": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
-    "create-fql.query.invalid": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste."
+    "create-fql.query.invalid": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
+    "unhandled.error": "Ein Fehler ist aufgetreten."
 }

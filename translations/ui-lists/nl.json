@@ -162,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Lijsten met cross-tenant query kunnen alleen worden ingesteld op privé.</strong>",
     "unexpected.error": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
     "update-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
-    "create-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst."
+    "create-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
+    "unhandled.error": "Er heeft zich een fout voorgedaan."
 }
