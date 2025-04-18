@@ -31,7 +31,6 @@
     "list.info.source": "ソース",
     "list.info.source.system": "システム",
     "accordion.title.list-information": "リスト情報",
-    "accordion.title.query": "クエリ: {query}",
     "pane.dropdown.show-columns": "カラムの表示",
     "pane.dropdown.refresh": "Refresh list",
     "pane.dropdown.cancel-refresh": "Cancel refresh",
@@ -163,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "unhandled.error": "エラーが発生しました"
 }

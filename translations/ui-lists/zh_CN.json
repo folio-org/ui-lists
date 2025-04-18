@@ -31,7 +31,6 @@
     "list.info.source": "来源",
     "list.info.source.system": "系统",
     "accordion.title.list-information": "列表信息",
-    "accordion.title.query": "查询 :  {query}",
     "pane.dropdown.show-columns": "显示列",
     "pane.dropdown.refresh": "刷新列表",
     "pane.dropdown.cancel-refresh": "取消刷新",
@@ -163,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>跨租户查询的列表只能设置为私有。 </strong>",
     "unexpected.error": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
     "update-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
-    "create-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。"
+    "create-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
+    "unhandled.error": "发生错误。"
 }

@@ -31,7 +31,6 @@
     "list.info.source": "來源",
     "list.info.source.system": "系統",
     "accordion.title.list-information": "列表資訊",
-    "accordion.title.query": "查詢 :  {query}",
     "pane.dropdown.show-columns": "顯示欄位",
     "pane.dropdown.refresh": "重新整理列表",
     "pane.dropdown.cancel-refresh": "取消重新整理",
@@ -163,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Lists with cross-tenant query can only be set to Private.</strong>",
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list."
+    "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
+    "unhandled.error": "發生未知錯誤"
 }

@@ -31,7 +31,6 @@
     "list.info.source": "Zdroj",
     "list.info.source.system": "Systém",
     "accordion.title.list-information": "Seznam informací",
-    "accordion.title.query": "Dotaz: {query}",
     "pane.dropdown.show-columns": "Zobrazit sloupce",
     "pane.dropdown.refresh": "Obnovit seznam",
     "pane.dropdown.cancel-refresh": "Zrušit obnovení",
@@ -163,5 +162,6 @@
     "create-list.cross-tenant-tip": "<strong>Seznamy s dotazem napříč nájemci lze nastavit pouze na hodnotu Soukromé.</strong>",
     "unexpected.error": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
     "update-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
-    "create-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte."
+    "create-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
+    "unhandled.error": "Došlo k chybě."
 }
