@@ -1,5 +1,13 @@
 # Change history for ui-lists
 
+## [4.0.3](https://github.com/folio-org/ui-lists/tree/v4.0.3) (2025-04-18)
+
+* Use query builder's user-friendly queries instead of relying on the backend. [UILISTS-223]
+* Make toast message for failed export it doesn't disappear (follow up). [UILISTS-220]
+
+[UILISTS-223]: https://folio-org.atlassian.net/browse/UILISTS-223
+[UILISTS-220]: https://folio-org.atlassian.net/browse/UILISTS-220
+
 ## [4.0.2](https://github.com/folio-org/ui-lists/tree/v4.0.2) (2025-04-10)
 
 * Display a meaningful error text when the POST /lists is failing. [UILISTS-228]
