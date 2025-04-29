@@ -17,7 +17,7 @@
     "lists.columns.first-name": "Imię",
     "lists.columns.last-name": "Nazwisko",
     "lists.columns.barcode": "Kod kreskowy",
-    "lists.columns.patron-group": "Grupa czytelnika",
+    "lists.columns.patron-group": "Grupa czytelników",
     "lists.item.active": "Aktywny",
     "lists.item.inactive": "Nieaktywny",
     "lists.item.shared": "Shared",
