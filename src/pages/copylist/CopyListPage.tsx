@@ -53,16 +53,19 @@ export const CopyListPage:FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const listName = listDetails?.name ?? '';
   const fqlQuery = listDetails?.fqlQuery ?? '';
+  const [isQueryBuilderOpen, setIsQueryBuilderOpen] = useState(false);
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, onValueChange, hasChanges } = useCopyListFormState(listDetails, loadingListDetails);
 
+  // we only want to show the modal when we have form changes and the QB has not been invoked.
+  // if the QB is invoked, its own test/run query and save will handle saving, not us.
   const {
     showConfirmCancelEditModal,
     continueNavigation,
     keepEditHandler,
     setShowConfirmCancelEditModal
-  } = useNavigationBlock(hasChanges, isSaving, true);
+  } = useNavigationBlock(hasChanges && !isQueryBuilderOpen, isSaving, true);
 
   const redirectToNewList = (newListId: string) => {
     continueNavigation();
@@ -193,6 +196,7 @@ export const CopyListPage:FC = () => {
               visibility={state[FIELD_NAMES.VISIBILITY]}
               description={state[FIELD_NAMES.DESCRIPTION]}
               isQueryButtonDisabled={hasName || isLoading}
+              setIsModalShown={setIsQueryBuilderOpen}
             />
           </EditListLayout>
         </TitleManager>
