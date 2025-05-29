@@ -118,7 +118,7 @@
     "error-component.invalid.request": "Nie znaleziono listy",
     "callout.list.created": "Lista <strong>{listName}</strong> została utworzona. Załaduj ponownie, aby zobaczyć zmiany. Uwaga: nowe listy mogą się nie pojawić, w oparciu, o aktualne filtry.",
     "callout.list.multiple-created": "Nowe listy zostały utworzone. Załaduj ponownie, aby zobaczyć zmiany. Uwaga: nowe listy mogą się nie pojawić, w oparciu, o aktualne filtry",
-    "create-list.main.list-visibility.tooltip": "<strong>Shared</strong> lists can be accessed by all users with permissions to the Lists app in this organization. <strong>Private</strong> lists can only be accessed by the user logged in.",
+    "create-list.main.list-visibility.tooltip": "Dostęp do list <strong>współdzielonych</strong> mogą uzyskać wszyscy użytkownicy posiadający uprawnienia do aplikacji Listy w tej organizacji. Dostęp do list <strong>prywatnych</strong> może uzyskać tylko zalogowany użytkownik.",
     "create-list.main.list-status.tooltip": "<strong>Active</strong> lists consist of a query and resulting record set. <strong>Inactive</strong> lists can have a query, but no record set.",
     "pane.dropdown.copy": "Duplikuj listę",
     "lists.copy.title": "Duplikuj listę: {listName}",
