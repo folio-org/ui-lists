@@ -82,7 +82,7 @@
     "callout.list.csv-export.cancel-error": "Błąd: eksport dla <strong>{listName}</strong> nie został anulowany. Sprawdź, czy eksport jest w toku i spróbuj ponownie.",
     "callout.list.active": "<strong>{listName}</strong> jest aktywna. Odśwież <strong>{listName}</strong>, aby zobaczyć zawartość listy",
     "lists.edit.saving": "Zapisywanie",
-    "lists.edit.loading": "Ładuje się",
+    "lists.edit.loading": "Ładowanie",
     "lists.edit.title": "Edytuj {listName}",
     "form.field.empty-error": "Proszę to wypełnić, aby kontynuować",
     "loading-fallback": "Nie załadowano",
