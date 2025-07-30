@@ -127,7 +127,7 @@
     "title.createList": "New list",
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Списки - {listName}",
-    "title.editList": "Edit {listName}",
+    "title.editList": "Редагувати {listName}",
     "error-component.unknown": "Сталася невідома помилка",
     "missing-all-entity-type-permissions.heading": "Ви не маєте необхідних дозволів для використання програми \"Списки\"",
     "missing-all-entity-type-permissions.message": "Будь ласка, зверніться до свого системного адміністратора за допомогою",
