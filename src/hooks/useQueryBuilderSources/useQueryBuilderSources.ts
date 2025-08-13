@@ -51,15 +51,26 @@ export function useQueryBuilderCommonSources(entityTypeId: string | undefined) {
     ),
 
     getParamsSource: useCallback(
-      (p: { entityTypeId: string; columnName: string; searchValue: string }) => {
-        return ky
-          .get(`entity-types/${p.entityTypeId}/columns/${p.columnName}/values`, {
-            searchParams: {
-              search: p.searchValue,
-            },
-          })
-          .json();
-      },
+      (p: { entityTypeId: string; columnName: string; searchValue: string }) => ky
+        .get(`entity-types/${p.entityTypeId}/columns/${p.columnName}/values`, {
+          searchParams: {
+            search: p.searchValue,
+          },
+        })
+        .json(),
+      [ky],
+    ),
+
+    getOrganizations: useCallback(
+      (ids: string[], property: 'code' | 'name') => ky
+        .get('organizations/organizations', {
+          searchParams: {
+            query: ids.map((id) => `id=="${id}"`).join(' or '),
+            limit: ids.length,
+          },
+        })
+        .json<{ organizations: { id: string; code: string; name: string }[] }>()
+        .then((response) => response.organizations.map((org) => ({ value: org.id, label: org[property] }))),
       [ky],
     ),
   };
