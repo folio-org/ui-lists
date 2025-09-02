@@ -132,10 +132,12 @@
   "delete-list.refresh.in.progress": "Error: <strong>{listName}</strong> was not deleted. Lists can't be deleted while a refresh is in progress.",
   "delete-export.in.progress": "Error: <strong>{listName}</strong> was not deleted. Lists can't be deleted while an export is in progress.",
   "delete-list.not.found": "Error: <strong>{listName}</strong> was not deleted because the list was not found. Verify the list location and try again.",
+  "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
 
   "update-list.refresh.in.progress": "Error: changes to <strong>{listName}</strong> were not saved. Lists can't be updated while a refresh is in progress.",
   "update-export.in.progress": "Error: changes to <strong>{listName}</strong> were not saved. Lists can't be updated while an export is in progress.",
   "update-list.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list was not found. Verify the list location and try again.",
+  "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
   "update-optimistic.lock.exception": "Error: someone else modified <strong>{listName}</strong>. Reload the page to view the latest version of this list.",
 
   "refresh-list.is.inactive": "Error: <strong>{listName}</strong> was not refreshed because it is inactive. Set the list status to active to refresh the list.",
@@ -144,6 +146,7 @@
   "refresh-list.refresh.in.progress": "Error: refresh for <strong>{listName}</strong> failed because a refresh for this list is already in progress.",
   "refresh-export.in.progress": "Error: <strong>{listName}</strong> was not refreshed. Lists can't be refreshed while an export is in progress.",
   "refresh-list.not.found":  "Error: <strong>{listName}</strong> was not refreshed because the list was not found. Verify the list location and try again.",
+  "refresh-entity.not.found":  "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
   "refresh-max.list.size.exceeded":  "Error: refresh for <strong>{listName}</strong> failed because the refreshed list contains too many records.",
   "refresh-list.missing.query":  "Error: <strong>{listName}</strong> was not refreshed. Add a query before refreshing the list.",
 
@@ -152,6 +155,7 @@
   "export-list.is.inactive": "Error: export of <strong>{listName}</strong> failed. Verify the list is active and try to export the list again.",
   "export-list.is.private": "Error: export of <strong>{listName}</strong> failed. Someone else modified this list and you no longer have access to it.",
   "export-list.not.found": "Error: export of <strong>{listName}</strong> failed because the list was not found. Verify the list location and try again.",
+  "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
 
   "cancel_export-export.not.in.progress": "Error: the export for <strong>{listName}</strong> was not cancelled as the export is not in progress. The export may have already completed.",
 
@@ -161,11 +165,13 @@
 
   "delete-list.is.private": "Error: the list <strong>{listName}</strong> was not deleted. Someone else modified this list and you no longer have access to it",
 
+  "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
   "read-list.not.found": "Error: <strong>{listName}</strong> was not found. Verify the list location and try again.",
   "read-list.is.private": "Error: changes to <strong>{listName}</strong> were not saved. Someone else modified this list and you no longer have access to it.",
 
   "error-component.read-entity.type.restricted": "You do not have permission to view this list",
   "error-component.read-list.not.found": "List not found",
+  "error-component.read-entity.not.found": "This list's entity type is no longer available",
   "error-component.read-list.is.private": "You don't have permission to view this list",
   "error-component.invalid.request": "List not found",
   "error-component.unknown": "An unknown error ocurred",
