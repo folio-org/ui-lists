@@ -102,7 +102,7 @@
     "home": "/lists",
     "hasSettings": false,
     "okapiInterfaces": {
-      "lists": "1.0",
+      "lists": "1.0 2.0",
       "fqm-query": "2.0",
       "entity-types": "2.0"
     },
