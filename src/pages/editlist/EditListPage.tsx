@@ -61,7 +61,7 @@ export const EditListPage:FC = () => {
 
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const { state, hasChanges, onValueChange, isListBecameActive } = useEditListFormState(listDetails, loadingListDetails);
-  const { requestExport, isExportInProgress, cancelExport, isCancelExportInProgress } = useCSVExport({
+  const { isExportInProgress, isCancelExportInProgress } = useCSVExport({
     listId: id,
     listName,
     listDetails,
@@ -159,9 +159,6 @@ export const EditListPage:FC = () => {
 
   const buttonHandlers = {
     'delete': () => setShowConfirmDeleteModal(true),
-    'export-all': () => requestExport({}),
-    'export-visible': () => requestExport({ allColumns: true }),
-    'cancel-export': () => cancelExport(),
   };
 
   const conditions = {
