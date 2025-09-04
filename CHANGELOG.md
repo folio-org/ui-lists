@@ -1,5 +1,11 @@
 # Change history for ui-lists
 
+## (IN PROGRESS)
+
+* Update permission sets to not use the `mod-configuration` permissions. [UILISTS-226]
+
+[UILISTS-226]: https://folio-org.atlassian.net/browse/UILISTS-226
+
 ## [4.0.3](https://github.com/folio-org/ui-lists/tree/v4.0.3) (2025-04-18)
 
 * Use query builder's user-friendly queries instead of relying on the backend. [UILISTS-223]
