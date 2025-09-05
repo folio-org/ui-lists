@@ -122,8 +122,7 @@
           "lists.collection.get",
           "lists.item.get",
           "lists.item.contents.get",
-          "lists.configuration.get",
-          "configuration.entries.collection.get"
+          "lists.configuration.get"
         ]
       },
       {
