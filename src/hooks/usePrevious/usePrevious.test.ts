@@ -5,8 +5,8 @@ describe('usePrevious', () => {
   describe('When initial render happened', () => {
     const { result } = renderHook(() => usePrevious(1));
 
-    it('is expected to return undefined', () => {
-      expect(result.current).toBeUndefined();
+    it('is expected to return null', () => {
+      expect(result.current).toBeNull();
     });
   });
 
