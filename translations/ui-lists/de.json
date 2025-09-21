@@ -163,5 +163,11 @@
     "unexpected.error": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
     "update-fql.query.invalid": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
     "create-fql.query.invalid": "Aktion kann nicht abgeschlossen werden. Die Abfrage ist aufgrund eines gelöschten Feldes bzw. gelöschter Felder nicht mehr gültig. Bitte bearbeiten Sie die Abfrage oder löschen Sie die Liste.",
-    "unhandled.error": "Ein Fehler ist aufgetreten."
+    "unhandled.error": "Ein Fehler ist aufgetreten.",
+    "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
+    "error-component.read-entity.not.found": "This list's entity type is no longer available"
 }

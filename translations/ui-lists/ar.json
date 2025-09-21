@@ -163,5 +163,11 @@
     "unexpected.error": "تعذر إكمال الإجراء. لم يعد الاستعلام صالحاً بسبب حذف حقل. يرجى تعديل استعلام القائمة أو حذفها.",
     "update-fql.query.invalid": "تعذر إكمال الإجراء. لم يعد الاستعلام صالحاً بسبب حذف حقل. يرجى تعديل استعلام القائمة أو حذفها.",
     "create-fql.query.invalid": "تعذر إكمال الإجراء. لم يعد الاستعلام صالحاً بسبب حذف حقل. يرجى تعديل استعلام القائمة أو حذفها.",
-    "unhandled.error": "لقد حدث خطأ."
+    "unhandled.error": "لقد حدث خطأ.",
+    "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
+    "error-component.read-entity.not.found": "This list's entity type is no longer available"
 }

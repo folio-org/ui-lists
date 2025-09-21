@@ -163,5 +163,11 @@
     "unexpected.error": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
     "update-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
     "create-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
-    "unhandled.error": "发生错误。"
+    "unhandled.error": "发生错误。",
+    "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
+    "error-component.read-entity.not.found": "This list's entity type is no longer available"
 }
