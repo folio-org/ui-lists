@@ -163,5 +163,11 @@
     "unexpected.error": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
     "update-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
     "create-fql.query.invalid": "Akci nelze dokončit. Dotaz již není platný kvůli smazaným polím. Upravte prosím dotaz na seznam nebo seznam odstraňte.",
-    "unhandled.error": "Došlo k chybě."
+    "unhandled.error": "Došlo k chybě.",
+    "delete-entity.not.found": "Chyba: <strong>{listName} </strong> nebyl odstraněn, protože typ entity seznamu již není k dispozici. Ověřte, zda typ entity existuje, a zkuste to znovu.",
+    "update-entity.not.found": "Chyba: změny na <strong>{listName} </strong> nebyly uloženy, protože typ entity seznamu již není k dispozici. Ověřte, zda typ entity existuje, a zkuste to znovu.",
+    "refresh-entity.not.found": "Chyba: <strong>{listName} </strong> nebyl obnoven, protože typ entity seznamu již není k dispozici. Ověřte, zda typ entity existuje, a zkuste to znovu.",
+    "export-entity.not.found": "Chyba: export <strong>{listName} </strong> selhal, protože typ entity seznamu již není k dispozici. Ověřte, zda typ entity existuje, a zkuste to znovu.",
+    "read-entity.not.found": "Chyba: <strong>{listName} </strong> 'typ entity nebyl nalezen. Ověřte, zda typ entity existuje, a zkuste to znovu.",
+    "error-component.read-entity.not.found": "Typ entity tohoto seznamu již není k dispozici"
 }

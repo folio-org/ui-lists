@@ -163,5 +163,11 @@
     "unexpected.error": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
     "update-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
     "create-fql.query.invalid": "Kan actie niet voltooien. Query is niet langer geldig vanwege een verwijderd veld. Bewerk de query van de lijst of verwijder de lijst.",
-    "unhandled.error": "Er heeft zich een fout voorgedaan."
+    "unhandled.error": "Er heeft zich een fout voorgedaan.",
+    "delete-entity.not.found": "Fout: <strong>{listName}</strong> is niet verwijderd omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
+    "update-entity.not.found": "Fout: wijzigingen in <strong>{listName}</strong> zijn niet opgeslagen omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
+    "refresh-entity.not.found": "Fout: <strong>{listName}</strong> is niet ververst omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
+    "export-entity.not.found": "Fout: export van <strong>{listName}</strong> is mislukt omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
+    "read-entity.not.found": "Fout: <strong>{listName}</strong>'s entiteittype is niet gevonden. Controleer of het entiteittype bestaat en probeer het opnieuw.",
+    "error-component.read-entity.not.found": "Het entiteittype van deze lijst is niet langer Beschikbaar"
 }

@@ -163,5 +163,11 @@
     "unexpected.error": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
     "update-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
     "create-fql.query.invalid": "Não foi possível concluir a ação. A consulta não é mais válida devido a um ou mais campos excluídos. Edite a consulta da lista ou exclua a lista.",
-    "unhandled.error": "Ocorreu um erro."
+    "unhandled.error": "Ocorreu um erro.",
+    "delete-entity.not.found": "Erro: <strong>{listName}</strong> não foi excluído porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
+    "update-entity.not.found": "Erro: as alterações em <strong>{listName}</strong> não foram salvas porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
+    "refresh-entity.not.found": "Erro: <strong>{listName}</strong> não foi atualizado porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
+    "export-entity.not.found": "Erro: a exportação de <strong> {listName}</strong> falhou porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
+    "read-entity.not.found": "Erro: O tipo de entidade de <strong>{listName}</strong> não foi encontrado. Verifique se o tipo de entidade existe e tente novamente.",
+    "error-component.read-entity.not.found": "O tipo de entidade desta lista não está mais disponível"
 }

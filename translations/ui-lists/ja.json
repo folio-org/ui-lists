@@ -163,5 +163,11 @@
     "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
     "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-    "unhandled.error": "エラーが発生しました"
+    "unhandled.error": "エラーが発生しました",
+    "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+    "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
+    "error-component.read-entity.not.found": "This list's entity type is no longer available"
 }
