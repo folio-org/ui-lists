@@ -164,10 +164,10 @@
     "update-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
     "create-fql.query.invalid": "无法完成操作。由于删除了字段，查询不再有效。请编辑列表查询或删除列表。",
     "unhandled.error": "发生错误。",
-    "delete-entity.not.found": "Error: <strong>{listName}</strong> was not deleted because the list's entity type is no longer available. Verify the entity type exists and try again.",
-    "update-entity.not.found": "Error: changes to <strong>{listName}</strong> were not saved because the list's entity type is no longer available. Verify the entity type exists and try again.",
-    "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
-    "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
-    "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
-    "error-component.read-entity.not.found": "This list's entity type is no longer available"
+    "delete-entity.not.found": "错误： <strong>{listName}</strong>未被删除，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
+    "update-entity.not.found": "错误：对<strong>{listName}</strong>的更改未保存，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
+    "refresh-entity.not.found": "错误： <strong>{listName}</strong>未刷新，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
+    "export-entity.not.found": "错误： <strong>{listName}</strong>导出失败，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
+    "read-entity.not.found": "错误：未找到<strong>{listName}</strong>的实体类型。请验证该实体类型是否存在，然后重试。",
+    "error-component.read-entity.not.found": "此列表的实体类型不再可用"
 }
