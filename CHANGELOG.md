@@ -3,8 +3,10 @@
 ## (IN PROGRESS)
 
 * Update permission sets to not use the `mod-configuration` permissions. [UILISTS-226]
+* Configure query-plugin to show Record type information and List name. [UILISTS-245]
 
 [UILISTS-226]: https://folio-org.atlassian.net/browse/UILISTS-226
+[UILISTS-245]: https://folio-org.atlassian.net/browse/UILISTS-245
 
 ## [4.0.3](https://github.com/folio-org/ui-lists/tree/v4.0.3) (2025-04-18)
 

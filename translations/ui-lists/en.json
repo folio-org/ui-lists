@@ -98,6 +98,7 @@
   "list.modal.confirm-cancel-message": "There are unsaved changes",
   "list.modal.run-query-and-save": "Run query & save",
   "list.modal.edit-query": "Edit query",
+  "list.modal.pane-sub": "List name: {listName}",
 
   "callout.list.delete.success": "List <strong>{listName}</strong> deleted.",
   "callout.list.delete.error": "Error: <strong>{listName}</strong> was not deleted.",

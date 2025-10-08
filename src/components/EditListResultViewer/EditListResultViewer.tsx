@@ -47,6 +47,7 @@ export const EditListResultViewer: FC<EditListResultViewerProps> = ({
 
   return (
     <Pluggable
+      paneSub={t('list.modal.pane-sub', { listName })}
       type="query-builder"
       componentType="viewer"
       showQueryAccordion
