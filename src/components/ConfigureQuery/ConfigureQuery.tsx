@@ -108,6 +108,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
 
   return (
     <Pluggable
+      paneSub={t('list.modal.pane-sub', { listName })}
       componentType="builder"
       type="query-builder"
       recordColumns={recordColumns}
