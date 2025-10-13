@@ -43,8 +43,8 @@ export type EntityType =
     })
   | (BaseEntityType & {
       isCustom: false;
-      createdAt?: undefined;
-      updatedAt?: undefined;
+      createdAt?: null;
+      updatedAt?: null;
     });
 
 export interface QueryBuilderColumnMetadata {
