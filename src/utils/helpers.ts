@@ -1,4 +1,4 @@
-import { ListsRequest } from '../interfaces';
+import { EntityTypeOption, EntityTypeSelectOption, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
   STATUS_ACTIVE,
@@ -96,4 +96,23 @@ export const handleKeyCommand = (
       onFalseConditions();
     }
   };
+};
+
+export const computeRecordTypeOptions = (
+  entityTypes: EntityTypeOption[],
+  prefix = '',
+  selected = '',
+): EntityTypeSelectOption[] => {
+  const options = entityTypes
+    .map(({ id, label }) => ({
+      label,
+      value: `${prefix}${id}`,
+      selected: id === selected,
+    })) as EntityTypeSelectOption[];
+
+  // EntityTypeSelectOption has label as ReactNode, but we just created it above
+  // where all these labels are string only, so we can safely coerce to string
+  options.sort((a, b) => (a.label as string).localeCompare(b.label as string));
+
+  return options;
 };

@@ -1,8 +1,7 @@
 import { useRecordTypes } from '../useRecordTypes';
 
+export function useRecordTypeLabel(targetID = '') {
+  const { labelMapping } = useRecordTypes();
 
-export const useRecordTypeLabel = (targetID = '') => {
-  const { recordTypes = [] } = useRecordTypes();
-
-  return recordTypes.find(({ id }) => id === targetID)?.label ?? '';
-};
+  return labelMapping[targetID] ?? '';
+}

@@ -14,7 +14,6 @@ import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes
 import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
-// @ts-ignore:next-line
 import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import {
   useKeyCommandsMessages,

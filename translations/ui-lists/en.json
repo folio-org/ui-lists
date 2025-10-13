@@ -146,10 +146,10 @@
 
   "refresh-list.refresh.in.progress": "Error: refresh for <strong>{listName}</strong> failed because a refresh for this list is already in progress.",
   "refresh-export.in.progress": "Error: <strong>{listName}</strong> was not refreshed. Lists can't be refreshed while an export is in progress.",
-  "refresh-list.not.found":  "Error: <strong>{listName}</strong> was not refreshed because the list was not found. Verify the list location and try again.",
-  "refresh-entity.not.found":  "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
-  "refresh-max.list.size.exceeded":  "Error: refresh for <strong>{listName}</strong> failed because the refreshed list contains too many records.",
-  "refresh-list.missing.query":  "Error: <strong>{listName}</strong> was not refreshed. Add a query before refreshing the list.",
+  "refresh-list.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list was not found. Verify the list location and try again.",
+  "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
+  "refresh-max.list.size.exceeded": "Error: refresh for <strong>{listName}</strong> failed because the refreshed list contains too many records.",
+  "refresh-list.missing.query": "Error: <strong>{listName}</strong> was not refreshed. Add a query before refreshing the list.",
 
   "export-list.refresh.in.progress": "Error: <strong>{listName}</strong> was not exported. Lists can't be exported while a refresh is in progress.",
   "export-export.in.progress": "Error: export of <strong>{listName}</strong> failed because an export for this list is already in progress.",
@@ -189,7 +189,7 @@
 
   "commands-label.create": "Create a new list",
   "commands-label.edit": "Edit a list",
-  "commands-label.save": "Save a list" ,
+  "commands-label.save": "Save a list",
   "commands-label.duplicate": "Duplicate a list",
   "commands-label.toggle-lists-detail-accordion": "Expand or collapse a Lists detail accordion",
   "commands-label.expand-list-detail-accordions": "Expand all List detail accordions",
@@ -211,5 +211,9 @@
   "unexpected.error": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
   "update-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
   "create-fql.query.invalid": "Unable to complete action. Query is no longer valid due to a deleted field(s). Please edit the list query or delete the list.",
-  "unhandled.error": "An error occurred."
+  "unhandled.error": "An error occurred.",
+
+  "record-types.label.deduplication.built-in": "{label} (built-in)",
+  "record-types.label.deduplication.custom.no-built-ins": "{label}{number, plural, =1 {} other { (#)}}",
+  "record-types.label.deduplication.custom.with-built-ins": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }

@@ -16,17 +16,17 @@ export interface Pagination {
 }
 
 export interface EntityTypesResponse {
-  entityTypes: EntityType[],
-  _version: string
+  entityTypes: EntityType[];
+  _version: string;
 }
 
 export interface InitRefreshResponse {
-  id: string,
-  listId: string,
-  refreshStartDate: string,
-  refreshedBy: string,
-  refreshedByUsername: string,
-  status: string
+  id: string;
+  listId: string;
+  refreshStartDate: string;
+  refreshedBy: string;
+  refreshedByUsername: string;
+  status: string;
 }
 
 export interface ListsResponse<T> {
