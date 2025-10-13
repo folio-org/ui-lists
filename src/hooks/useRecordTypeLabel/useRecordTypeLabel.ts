@@ -1,7 +1,7 @@
 import { useRecordTypes } from '../useRecordTypes';
 
-export function useRecordTypeLabel(targetID = '') {
+export function useRecordTypeLabel(entityTypeId = '') {
   const { labelMapping } = useRecordTypes();
 
-  return labelMapping[targetID] ?? '';
+  return labelMapping[entityTypeId] ?? '';
 }

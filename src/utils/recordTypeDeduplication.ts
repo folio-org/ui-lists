@@ -26,7 +26,7 @@ export function deduplicateRecordTypeLabels(
       const builtIn = entities.find((e) => e.isCustom === false);
       const customs = entities
         .filter((e) => e.isCustom === true)
-        .toSorted((a, b) => a.createdAt!.localeCompare(b.createdAt!));
+        .toSorted((a, b) => a.createdAt.localeCompare(b.createdAt));
 
       if (builtIn) {
         return [
@@ -38,7 +38,7 @@ export function deduplicateRecordTypeLabels(
           ],
           ...customs.map((e, index) => [
             e.id,
-            tString(intl, 'record-types.label.deduplication.custom.with-built-ins', {
+            tString(intl, 'record-types.label.deduplication.custom.with-built-in', {
               label: e.label,
               number: index + 1,
             }),
@@ -53,8 +53,6 @@ export function deduplicateRecordTypeLabels(
           }),
         ]);
       }
-
-      return [];
     }),
   );
 }

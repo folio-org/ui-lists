@@ -25,17 +25,27 @@ export interface EntityTypeColumn {
   values: Value[];
 }
 
-export interface EntityType {
+type BaseEntityType = {
   id: string;
   name: string;
   labelAlias: string;
   label: string;
   crossTenantQueriesEnabled: boolean;
   columns: EntityTypeColumn[];
-  isCustom: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-}
+};
+
+// type safety!
+export type EntityType =
+  | (BaseEntityType & {
+      isCustom: true;
+      createdAt: string;
+      updatedAt: string;
+    })
+  | (BaseEntityType & {
+      isCustom: false;
+      createdAt?: undefined;
+      updatedAt?: undefined;
+    });
 
 export interface QueryBuilderColumnMetadata {
   label: string;

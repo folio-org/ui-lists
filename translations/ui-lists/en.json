@@ -214,6 +214,6 @@
   "unhandled.error": "An error occurred.",
 
   "record-types.label.deduplication.built-in": "{label} (built-in)",
-  "record-types.label.deduplication.custom.no-built-ins": "{label}{number, plural, =1 {} other { (#)}}",
-  "record-types.label.deduplication.custom.with-built-ins": "{label} (custom){number, plural, =1 {} other { (#)}}"
+  "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+  "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }

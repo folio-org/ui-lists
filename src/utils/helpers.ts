@@ -4,7 +4,7 @@ import {
   STATUS_ACTIVE,
   STATUS_INACTIVE,
   VISIBILITY_PRIVATE,
-  VISIBILITY_SHARED
+  VISIBILITY_SHARED,
 } from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
@@ -72,8 +72,8 @@ export const checkIncludes = (target: string, string: string) => {
   return string.includes(target);
 };
 
-export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
-  return options.filter(option => {
+export const filterByIncludes = (term: string, options: { label: string; value: string }[]) => {
+  return options.filter((option) => {
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
 };
@@ -85,7 +85,7 @@ export const getStatusButtonElem = () => {
 export const handleKeyCommand = (
   callback: (event?: KeyboardEvent) => void,
   condition = true,
-  onFalseConditions = () => {}
+  onFalseConditions = () => {},
 ) => {
   return (event: KeyboardEvent) => {
     event.preventDefault();
@@ -103,16 +103,11 @@ export const computeRecordTypeOptions = (
   prefix = '',
   selected = '',
 ): EntityTypeSelectOption[] => {
-  const options = entityTypes
+  return entityTypes
     .map(({ id, label }) => ({
       label,
       value: `${prefix}${id}`,
       selected: id === selected,
-    })) as EntityTypeSelectOption[];
-
-  // EntityTypeSelectOption has label as ReactNode, but we just created it above
-  // where all these labels are string only, so we can safely coerce to string
-  options.sort((a, b) => (a.label as string).localeCompare(b.label as string));
-
-  return options;
+    }))
+    .toSorted((a, b) => a.label.localeCompare(b.label)) as EntityTypeSelectOption[];
 };
