@@ -2,6 +2,13 @@ import { IntlShape } from 'react-intl';
 import { EntityType, ListsRecord, ListsResponse } from '../interfaces';
 import { tString } from '../services';
 
+/**
+ * Deduplicates record type labels by appending information to entity type labels, as needed.
+ * If a built-in and custom entity type share the same label, the built-in will have "(built-in)" appended to its label,
+ * and the custom will have "(custom)" appended.
+ * If multiple custom entity types share the same label, numbers will be appended to their labels in order of creation date.
+ * Formatting of numbers (and if (1) is shown) is controlled by translations.
+ */
 export function deduplicateRecordTypeLabels(
   recordTypes: EntityType[],
   intl: IntlShape,
