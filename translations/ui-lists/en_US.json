@@ -6,7 +6,7 @@
     "paneHeader.button.actions": "Actions",
     "filterPane.title": "Filter",
     "mainPane.title": "Lists",
-    "mainPane.subTitle": "{count} records found",
+    "mainPane.subTitle": "{count, plural, =0 {No records found} =1 {1 record found} other {# records found}}",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "Record type",
     "lists.columns.records": "Records",
