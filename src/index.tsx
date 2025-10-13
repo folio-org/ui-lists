@@ -51,8 +51,6 @@ export const ListsApp:IListsApp = (props) => {
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
-
-
   const shortcutModalToggle = (handleToggle: () => void) => {
     handleToggle();
     setShowKeyboardShortcutsModal(true);

@@ -7,7 +7,7 @@ import { EditListResultViewer, EditListResultViewerProps } from './EditListResul
 const PluggableMock = Pluggable as jest.Mock;
 const useVisibleColumnsMock = useVisibleColumns as jest.Mock;
 
-const kyGetMock = jest.fn(() => ({ json: jest.fn() }));
+const kyGetMock = jest.fn(() => ({ json: jest.fn(() => Promise.resolve({})) }));
 const kyPostMock = jest.fn(() => ({ json: jest.fn() }));
 const kyPutMock = jest.fn(() => ({ json: jest.fn() }));
 const kyDeleteMock = jest.fn(() => ({ json: jest.fn() }));

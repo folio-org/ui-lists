@@ -81,7 +81,6 @@ export const ListsTable: FC<ListsTableProps> = ({
     content = updatedListsData.content;
   }
 
-
   return (
     <MultiColumnList
       autosize

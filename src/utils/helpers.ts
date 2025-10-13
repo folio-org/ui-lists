@@ -1,10 +1,10 @@
-import { ListsRequest } from '../interfaces';
+import { EntityTypeOption, EntityTypeSelectOption, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
   STATUS_ACTIVE,
   STATUS_INACTIVE,
   VISIBILITY_PRIVATE,
-  VISIBILITY_SHARED
+  VISIBILITY_SHARED,
 } from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
@@ -72,8 +72,8 @@ export const checkIncludes = (target: string, string: string) => {
   return string.includes(target);
 };
 
-export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
-  return options.filter(option => {
+export const filterByIncludes = (term: string, options: { label: string; value: string }[]) => {
+  return options.filter((option) => {
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
 };
@@ -85,7 +85,7 @@ export const getStatusButtonElem = () => {
 export const handleKeyCommand = (
   callback: (event?: KeyboardEvent) => void,
   condition = true,
-  onFalseConditions = () => {}
+  onFalseConditions = () => {},
 ) => {
   return (event: KeyboardEvent) => {
     event.preventDefault();
@@ -96,4 +96,18 @@ export const handleKeyCommand = (
       onFalseConditions();
     }
   };
+};
+
+export const computeRecordTypeOptions = (
+  entityTypes: EntityTypeOption[],
+  prefix = '',
+  selected = '',
+): EntityTypeSelectOption[] => {
+  return entityTypes
+    .map(({ id, label }) => ({
+      label,
+      value: `${prefix}${id}`,
+      selected: id === selected,
+    }))
+    .toSorted((a, b) => a.label.localeCompare(b.label)) as EntityTypeSelectOption[];
 };
