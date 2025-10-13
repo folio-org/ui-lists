@@ -54,7 +54,7 @@ export function deduplicateRecordTypeLabels(
       } else {
         return customs.map((e, index) => [
           e.id,
-          tString(intl, 'record-types.label.deduplication.custom.no-built-ins', {
+          tString(intl, 'record-types.label.deduplication.custom.no-built-in', {
             label: e.label,
             number: index + 1,
           }),

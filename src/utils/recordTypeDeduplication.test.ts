@@ -24,7 +24,7 @@ mockTString.mockImplementation((_intl, id, values) =>
 describe('deduplicateRecordTypeLabels', () => {
   it('handles empty list', () => {
     const result = deduplicateRecordTypeLabels([], intl);
-    expect(result).toEqual([]);
+    expect(result).toEqual({});
   });
 
   it('handles unique labels', () => {
@@ -129,8 +129,8 @@ describe('injectLabelsIntoListsResponse', () => {
     );
     expect(result).toEqual({
       content: [
-        { id: 'list-1', name: 'List 1', entityTypeId: 'id-1', entityTypeLabel: 'New label 1' },
-        { id: 'list-2', name: 'List 2', entityTypeId: 'id-2', entityTypeLabel: 'New label 2' },
+        { id: 'list-1', name: 'List 1', entityTypeId: 'id-1', entityTypeName: 'New label 1' },
+        { id: 'list-2', name: 'List 2', entityTypeId: 'id-2', entityTypeName: 'New label 2' },
       ],
     });
   });
