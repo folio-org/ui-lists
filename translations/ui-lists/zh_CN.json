@@ -169,5 +169,9 @@
     "refresh-entity.not.found": "错误： <strong>{listName}</strong>未刷新，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
     "export-entity.not.found": "错误： <strong>{listName}</strong>导出失败，因为列表的实体类型不再可用。请验证该实体类型是否存在，然后重试。",
     "read-entity.not.found": "错误：未找到<strong>{listName}</strong>的实体类型。请验证该实体类型是否存在，然后重试。",
-    "error-component.read-entity.not.found": "此列表的实体类型不再可用"
+    "error-component.read-entity.not.found": "此列表的实体类型不再可用",
+    "list.modal.pane-sub": "List name: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (built-in)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }

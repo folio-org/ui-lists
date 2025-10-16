@@ -169,5 +169,9 @@
     "refresh-entity.not.found": "Fout: <strong>{listName}</strong> is niet ververst omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
     "export-entity.not.found": "Fout: export van <strong>{listName}</strong> is mislukt omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
     "read-entity.not.found": "Fout: <strong>{listName}</strong>'s entiteittype is niet gevonden. Controleer of het entiteittype bestaat en probeer het opnieuw.",
-    "error-component.read-entity.not.found": "Het entiteittype van deze lijst is niet langer Beschikbaar"
+    "error-component.read-entity.not.found": "Het entiteittype van deze lijst is niet langer Beschikbaar",
+    "list.modal.pane-sub": "List name: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (built-in)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }

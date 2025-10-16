@@ -6,7 +6,7 @@
     "paneHeader.button.actions": "작업",
     "filterPane.title": "필터",
     "mainPane.title": "Lists",
-    "mainPane.subTitle": "{count} records found",
+    "mainPane.subTitle": "{count, plural, =0 {No records found} =1 {1 record found} other {# records found}}",
     "lists.columns.list-name": "List name",
     "lists.columns.record-type": "레코드 유형",
     "lists.columns.records": "레코드",
@@ -169,5 +169,9 @@
     "refresh-entity.not.found": "Error: <strong>{listName}</strong> was not refreshed because the list's entity type is no longer available. Verify the entity type exists and try again.",
     "export-entity.not.found": "Error: export of <strong>{listName}</strong> failed because the list's entity type is no longer available. Verify the entity type exists and try again.",
     "read-entity.not.found": "Error: <strong>{listName}</strong>'s entity type was not found. Verify the entity type exists and try again.",
-    "error-component.read-entity.not.found": "This list's entity type is no longer available"
+    "error-component.read-entity.not.found": "This list's entity type is no longer available",
+    "list.modal.pane-sub": "List name: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (built-in)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }
