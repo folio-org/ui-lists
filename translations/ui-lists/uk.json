@@ -169,5 +169,9 @@
     "refresh-entity.not.found": "Помилка: <strong> {listName} </strong> не оновлений, оскільки тип сутності (тип запису) списку більше недоступний. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
     "export-entity.not.found": "Помилка: <strong> {listName} </strong> не вдався, оскільки тип сутності (тип запису) списку більше недоступний. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
     "read-entity.not.found": "Помилка: тип сутності (тип запису) <strong> {listName} </strong> не знайдено. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
-    "error-component.read-entity.not.found": "Тип сутності (тип запису) для цього списку більше не доступний"
+    "error-component.read-entity.not.found": "Тип сутності (тип запису) для цього списку більше не доступний",
+    "list.modal.pane-sub": "List name: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (built-in)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
 }
