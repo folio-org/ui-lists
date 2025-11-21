@@ -170,7 +170,7 @@
     "export-entity.not.found": "Chyba: export <strong>{listName} </strong> selhal, protože typ entity seznamu již není k dispozici. Ověřte, zda typ entity existuje, a zkuste to znovu.",
     "read-entity.not.found": "Chyba: <strong>{listName} </strong> 'typ entity nebyl nalezen. Ověřte, zda typ entity existuje, a zkuste to znovu.",
     "error-component.read-entity.not.found": "Typ entity tohoto seznamu již není k dispozici",
-    "list.modal.pane-sub": "List name: {listName}",
+    "list.modal.pane-sub": "Název seznamu: {listName}",
     "record-types.label.deduplication.built-in": "{label} (built-in)",
     "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
     "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
