@@ -121,7 +121,7 @@ export const getFqmError = async (e: unknown): Promise<FQMError> => {
       parameters: [
         {
           key: 'stack',
-          value: new Error().stack,
+          value: new Error('stack generator').stack,
         },
       ],
     };

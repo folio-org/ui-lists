@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { buildListsUrl, filterByIncludes, handleKeyCommand } from './helpers';
+import { buildListsUrl, filterByIncludes, getFqmError, handleKeyCommand } from './helpers';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
 
 const baseUrl = 'http://www.test.com';
@@ -120,6 +120,34 @@ describe('Helpers', () => {
 
       expect(callback).not.toBeCalled();
       expect(preventDefault).toBeCalled();
+    });
+  });
+
+  describe('getFqmError', () => {
+    it.each([
+      [
+        1234,
+        {
+          message: '1234',
+          code: 'misc_error',
+          parameters: [
+            { key: 'stack', value: expect.stringContaining('helpers.test.js') },
+          ],
+        },
+      ],
+      [
+        new Error('test'),
+        {
+          message: 'test',
+          code: 'misc_error',
+          parameters: [
+            { key: 'type', value: 'Error' },
+          ],
+        },
+      ],
+    ])('error %p results in %p', (error, expected) => {
+      const actual = getFqmError(error);
+      expect(actual).toMatchObject(expected);
     });
   });
 });
