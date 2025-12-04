@@ -1,4 +1,5 @@
-import { EntityTypeOption, EntityTypeSelectOption, ListsRequest } from '../interfaces';
+import { HTTPError } from 'ky';
+import { EntityTypeOption, EntityTypeSelectOption, FQMError, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
   STATUS_ACTIVE,
@@ -110,4 +111,61 @@ export const computeRecordTypeOptions = (
       selected: id === selected,
     }))
     .toSorted((a, b) => a.label.localeCompare(b.label)) as EntityTypeSelectOption[];
+};
+
+export const getFqmError = async (e: unknown): Promise<FQMError> => {
+  if (!(e instanceof Error)) {
+    return {
+      message: JSON.stringify(e),
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'stack',
+          value: new Error().stack,
+        },
+      ],
+    };
+  } else if (e.name !== 'HTTPError') {
+    return {
+      message: e.message,
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'type',
+          value: e.name,
+        },
+        {
+          key: 'stack',
+          value: e.stack,
+        },
+      ],
+    };
+  }
+
+  const httpError = e as HTTPError;
+
+  try {
+    const errorResponse = await httpError.response.json();
+
+    return errorResponse as FQMError;
+  } catch {
+    return {
+      message: httpError.message,
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'status',
+          value: httpError.response.status.toString(),
+        },
+      ],
+    };
+  }
+};
+
+export const throwingFqmError = async <T>(runnable: () => Promise<T>): Promise<T> => {
+  try {
+    return await runnable();
+  } catch (e) {
+    throw await getFqmError(e);
+  }
 };

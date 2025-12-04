@@ -1,0 +1,1 @@
+export { CatastrophicErrorPage } from './CatastrophicErrorPage';
