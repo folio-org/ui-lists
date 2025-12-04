@@ -15,7 +15,7 @@ import { FQMError } from '../../interfaces';
  */
 export function getErrorTranslations(
   error: FQMError | null,
-  messages: Record<string, unknown>,
+  messages: Record<string, unknown> = {},
 ): {
   headingKey: string;
   messageKey: string;
