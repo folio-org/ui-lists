@@ -29,12 +29,12 @@ export function getErrorTranslations(
   }
 
   const errorCode = error.code;
-  const possibleHeadings = [`ui-lists.catastrophic-error.${errorCode}.heading`];
-  const possibleMessages = [
-    `ui-lists.catastrophic-error.${errorCode}.message`,
+  const possibleHeadings = [
+    `ui-lists.catastrophic-error.${errorCode}.heading`,
     `ui-lists.error-component.${errorCode}`,
     `ui-lists.${errorCode}`,
   ];
+  const possibleMessages = [`ui-lists.catastrophic-error.${errorCode}.message`];
   return {
     headingKey:
       possibleHeadings.find((key) => key in messages) ||

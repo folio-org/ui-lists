@@ -28,13 +28,13 @@ describe('CatastrophicErrorPage translation calculations', () => {
   it('falls back to error-component and code keys for message if specific one is not found', () => {
     const error = { message: '', code: '_misc_error' } as const;
     const messages = {
-      'catastrophic-error._misc_error.heading': 'Some heading',
+      'catastrophic-error._misc_error.message': 'Some message',
       'error-component._misc_error': 'Error component message',
       _misc_error: 'Generic error message',
     };
     const { headingKey, messageKey } = getErrorTranslations(error, messages);
-    expect(headingKey).toBe('catastrophic-error._misc_error.heading');
-    expect(messageKey).toBe('error-component._misc_error');
+    expect(headingKey).toBe('error-component._misc_error');
+    expect(messageKey).toBe('catastrophic-error._misc_error.heading');
   });
 
   it('computes values from error parameters', () => {
