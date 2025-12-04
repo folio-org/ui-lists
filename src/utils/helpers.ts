@@ -147,7 +147,20 @@ export const getFqmError = async (e: unknown): Promise<FQMError> => {
   try {
     const errorResponse = await httpError.response.json();
 
-    return errorResponse as FQMError;
+    if (typeof errorResponse === 'object' && 'code' in errorResponse) {
+      return errorResponse as FQMError;
+    } else {
+      return {
+        message: JSON.stringify(errorResponse),
+        code: '_misc_error',
+        parameters: [
+          {
+            key: 'status',
+            value: httpError.response.status.toString(),
+          },
+        ],
+      };
+    }
   } catch {
     return {
       message: httpError.message,
