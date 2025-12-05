@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { ListsRecord, ListsResponse } from '../interfaces';
+import { FQMError, ListsRecord, ListsResponse } from '../interfaces';
 import { t } from '../services';
-import { buildListsUrl, injectLabelsIntoListsResponse } from '../utils';
+import { buildListsUrl, injectLabelsIntoListsResponse, throwingFqmError } from '../utils';
 import { useMessages } from './useMessages';
 import { useRecordTypes } from './useRecordTypes';
 import { PULLING_STATUS_DELAY } from './useRefresh/constants';
@@ -21,11 +21,11 @@ export const useListsFetchedSinceTimestamp = () => {
 
   const url = buildListsUrl('lists', { listsLastFetchedTimestamp });
 
-  const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>({
+  const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, FQMError>({
     queryKey: [url],
     refetchInterval: PULLING_STATUS_DELAY,
     queryFn: async () => {
-      const response = await ky.get(url);
+      const response = await throwingFqmError(() => ky.get(url));
 
       return response.json();
     },

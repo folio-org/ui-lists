@@ -1,5 +1,16 @@
 import { EntityType } from './entity';
 
+export interface FQMError {
+  message: string;
+  type?: string;
+  code?:
+    | 'CUSTOM_ENTITY_TYPE_ACCESS_DENIED'
+    | 'entity.type.source.missing'
+    | 'migration.query.changed'
+    | '_misc_error'; // used within ui-lists when the HTTPError can not be parsed
+  parameters?: Readonly<{ key: string; value?: string }[]>;
+}
+
 export interface Sort {
   empty: boolean;
   sorted: boolean;

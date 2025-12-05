@@ -2,8 +2,8 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { useMemo } from 'react';
-import { ListsRequest, ListsResponse, ListsRecord } from '../interfaces';
-import { buildListsUrl, injectLabelsIntoListsResponse } from '../utils';
+import { ListsRequest, ListsResponse, ListsRecord, FQMError } from '../interfaces';
+import { buildListsUrl, injectLabelsIntoListsResponse, throwingFqmError } from '../utils';
 import { useRecordTypes } from './useRecordTypes';
 
 export const useLists = (request: ListsRequest) => {
@@ -12,10 +12,10 @@ export const useLists = (request: ListsRequest) => {
 
   const url = buildListsUrl('lists', request);
 
-  const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, Error>({
+  const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, FQMError>({
     queryKey: [url],
     queryFn: async () => {
-      const response = await ky.get(url);
+      const response = await throwingFqmError(() => ky.get(url));
 
       return response.json();
     },
