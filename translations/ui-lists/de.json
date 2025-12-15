@@ -129,8 +129,6 @@
     "title.infoList": "Listen {listName}",
     "title.editList": "Bearbeiten {listName}",
     "error-component.unknown": "Ein unbekannter Fehler ist aufgetreten",
-    "missing-all-entity-type-permissions.heading": "Sie haben nicht die erforderlichen Berechtigungen, um die Lists-App zu nutzen",
-    "missing-all-entity-type-permissions.message": "Bitte kontaktieren Sie Ihren Systemadministrator.",
     "error-component.read-entity.type.restricted": "Sie haben keine Berechtigung, diese Liste zu sehen",
     "app-menu.keyboard-shortcuts": "Tastenkürzel",
     "commands-label.create": "Neue Liste erstellen",
@@ -173,5 +171,10 @@
     "list.modal.pane-sub": "List name: {listName}",
     "record-types.label.deduplication.built-in": "{label} (built-in)",
     "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
-    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "Sie haben nicht die erforderlichen Berechtigungen, um die Lists-App zu nutzen",
+    "catastrophic-error.entity.type.source.missing.heading": "A broken record type is preventing access to the Lists app",
+    "catastrophic-error.entity.type.source.missing.message": "Custom record type “{parentEntityTypeName}” (<code>{parentEntityTypeId}</code>) references source “{sourceEntityTypeAlias}” (<code>{sourceEntityTypeId}</code>) which could not be found. The Lists app will not be usable until the source is restored, the source is removed from the definition, or the record type is deleted.",
+    "catastrophic-error.fallback.heading": "An error is preventing access to the Lists app",
+    "catastrophic-error.fallback.message": "Bitte kontaktieren Sie Ihren Systemadministrator."
 }
