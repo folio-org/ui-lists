@@ -128,9 +128,7 @@
     "title.duplicateList": "Duplicate List {listName}",
     "title.infoList": "Lists - {listName}",
     "title.editList": "Edit {listName}",
-    "error-component.unknown": "An unknown error ocurred",
-    "missing-all-entity-type-permissions.heading": "You do not have the required permissions to use the Lists app",
-    "missing-all-entity-type-permissions.message": "Please contact your system administrator for help",
+    "error-component.unknown": "An unknown error occurred",
     "error-component.read-entity.type.restricted": "You do not have permission to view this list",
     "app-menu.keyboard-shortcuts": "Atajos de teclado",
     "commands-label.create": "Create a new list",
@@ -173,5 +171,10 @@
     "list.modal.pane-sub": "List name: {listName}",
     "record-types.label.deduplication.built-in": "{label} (built-in)",
     "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
-    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "No dispones de los permisos necesarios para utilizar la aplicación Lists",
+    "catastrophic-error.entity.type.source.missing.heading": "Un tipo de registro roto impide el acceso a la aplicación Listas",
+    "catastrophic-error.entity.type.source.missing.message": "Custom record type “{parentEntityTypeName}” (<code>{parentEntityTypeId}</code>) references source “{sourceEntityTypeAlias}” (<code>{sourceEntityTypeId}</code>) which could not be found. The Lists app will not be usable until the source is restored, the source is removed from the definition, or the record type is deleted.",
+    "catastrophic-error.fallback.heading": "Un error impide el acceso a la aplicación Listas",
+    "catastrophic-error.fallback.message": "Póngase en contacto con el administrador del sistema para obtener ayuda"
 }

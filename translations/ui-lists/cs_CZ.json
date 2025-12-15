@@ -6,7 +6,7 @@
     "paneHeader.button.actions": "Akce",
     "filterPane.title": "Filtr",
     "mainPane.title": "Seznamy",
-    "mainPane.subTitle": "{count} nalezených záznamů",
+    "mainPane.subTitle": "{count, plural, =0 {Nenalezeny žádné záznamy} =1 {Nalezen 1 záznam} other {Nalezeno záznamů: #}}",
     "lists.columns.list-name": "Název seznamu",
     "lists.columns.record-type": "Typ záznamu",
     "lists.columns.records": "Záznamy",
@@ -129,8 +129,6 @@
     "title.infoList": "Seznamy – {listName}",
     "title.editList": "Upravit {listName}",
     "error-component.unknown": "Nastala neznámá chyba",
-    "missing-all-entity-type-permissions.heading": "Nemáte potřebná oprávnění k používání aplikace Seznamy.",
-    "missing-all-entity-type-permissions.message": "Požádejte prosím o pomoc správce systému",
     "error-component.read-entity.type.restricted": "K zobrazení tohoto seznamu nemáte oprávnění",
     "app-menu.keyboard-shortcuts": "Klávesové zkratky",
     "commands-label.create": "Vytvořit nový seznam",
@@ -173,5 +171,10 @@
     "list.modal.pane-sub": "Název seznamu: {listName}",
     "record-types.label.deduplication.built-in": "{label} (vestavěný)",
     "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
-    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}"
+    "record-types.label.deduplication.custom.with-built-in": "{label} (vlastní){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "Nemáte potřebná oprávnění k používání aplikace Seznamy.",
+    "catastrophic-error.entity.type.source.missing.heading": "A broken record type is preventing access to the Lists app",
+    "catastrophic-error.entity.type.source.missing.message": "Custom record type “{parentEntityTypeName}” (<code>{parentEntityTypeId}</code>) references source “{sourceEntityTypeAlias}” (<code>{sourceEntityTypeId}</code>) which could not be found. The Lists app will not be usable until the source is restored, the source is removed from the definition, or the record type is deleted.",
+    "catastrophic-error.fallback.heading": "An error is preventing access to the Lists app",
+    "catastrophic-error.fallback.message": "Požádejte prosím o pomoc správce systému"
 }
