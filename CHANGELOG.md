@@ -4,6 +4,7 @@
 
 * Update permission sets to not use the `mod-configuration` permissions. [UILISTS-226]
 * Configure query-plugin to show Record type information and List name. [UILISTS-245]
+* NAN records is displayed under the listName [UILISTS-247]
 
 [UILISTS-226]: https://folio-org.atlassian.net/browse/UILISTS-226
 [UILISTS-245]: https://folio-org.atlassian.net/browse/UILISTS-245
