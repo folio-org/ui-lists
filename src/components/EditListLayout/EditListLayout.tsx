@@ -1,5 +1,4 @@
 import React, { FC, ReactElement, ReactNode } from 'react';
-import { useIntl } from 'react-intl';
 import { isNumber, noop } from 'lodash';
 import { Layer, Loading, Pane, PaneFooter, Paneset } from '@folio/stripes/components';
 import { Buttons } from '../Buttons';
@@ -27,12 +26,11 @@ export const EditListLayout: FC<EditListLayoutProps> = ({
   onCancel = noop,
   isSaveButtonDisabled,
   onSave = noop,
-  lastMenu
+  lastMenu,
 }) => {
-  const { formatNumber } = useIntl();
   const getRecordCountString = (count: any) => {
     if (isNumber(count)) {
-      return t('mainPane.subTitle', { count: formatNumber(count) });
+      return t('mainPane.subTitle', { count });
     }
     return '';
   };
