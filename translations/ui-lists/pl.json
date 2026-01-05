@@ -154,7 +154,7 @@
     "app-menu.list-app-home": "Strona główna aplikacji Listy",
     "commands-error.unavailable": "Ta akcja jest niedostępna",
     "commands-error.permission": "Użytkownik nie ma uprawnień do wykonania tej akcji",
-    "pane.dropdown.ariaLabel.columnFilter": "Column filter input",
+    "pane.dropdown.ariaLabel.columnFilter": "Pole filtra kolumny",
     "pane.dropdown.search.placeholder": "Przeszukaj nazwę kolumny",
     "cross-tenant-message": "Lista ta może zawierać rekordy od wielu tenantów.",
     "create-list.cross-tenant-tip": "<strong>Listy z zapytaniami międzynajemcami można ustawić tylko jako prywatne.</strong>",
