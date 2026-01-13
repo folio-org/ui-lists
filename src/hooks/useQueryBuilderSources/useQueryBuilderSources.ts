@@ -9,15 +9,20 @@ export function useQueryBuilderCommonSources(
   const ky = useOkapiKy();
 
   return {
-    entityTypeDataSource: useCallback(() => {
-      if (!entityTypeId) {
+    entityTypeDataSource: useCallback((arg?: unknown) => {
+      // react-query may call the queryFn with a query context object.
+      // Also allow callers to pass an override entityTypeId string.
+      const overrideEntityTypeId = typeof arg === 'string' ? arg : undefined;
+      const id = overrideEntityTypeId ?? entityTypeId;
+
+      if (!id) {
         return undefined;
       }
 
       return ky
-        .get(`entity-types/${entityTypeId}`)
+        .get(`entity-types/${id}`)
         .json<EntityType>()
-        .then((et) => ({ ...et, labelAlias: labelMapping[entityTypeId] ?? 'aaaa' }));
+        .then((et) => ({ ...et, labelAlias: labelMapping[id] ?? 'aaaa' }));
     }, [ky, entityTypeId, labelMapping]),
 
     testQueryDataSource: useCallback(
