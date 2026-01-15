@@ -61,7 +61,7 @@ export function useQueryBuilderCommonSources(
 
     getParamsSource: useCallback(
       (p: { entityTypeId: string; columnName: string; searchValue: string }) => ky
-        .get(`entity-types/${p.entityTypeId}/columns/${p.columnName}/values`, {
+        .get(`entity-types/${p.entityTypeId}/columns/${encodeURIComponent(p.columnName)}/values`, {
           searchParams: {
             search: p.searchValue,
           },
