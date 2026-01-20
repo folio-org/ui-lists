@@ -221,8 +221,9 @@ describe('ConfigureQuery component', () => {
       searchValue: 'search-value',
     });
 
-    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/columns/column-name/values', {
+    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/field-values', {
       searchParams: {
+        field: 'column-name',
         search: 'search-value',
       },
     }));
