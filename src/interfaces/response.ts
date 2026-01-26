@@ -3,10 +3,19 @@ import { EntityType } from './entity';
 export interface FQMError {
   message: string;
   type?: string;
-  code?:
-    | 'CUSTOM_ENTITY_TYPE_ACCESS_DENIED'
+  code:
+    | 'entity.type.access.denied'
+    | 'entity.type.in.use'
+    | 'entity.type.invalid'
+    | 'entity.type.not.found'
     | 'entity.type.source.missing'
+    | 'field.not.found'
     | 'migration.query.changed'
+    | 'permissions.missing'
+    | 'query.invalid'
+    | 'query.not.found'
+    | 'query.too.large'
+    | 'unknown.error'
     | '_misc_error'; // used within ui-lists when the HTTPError can not be parsed
   parameters?: Readonly<{ key: string; value?: string }[]>;
 }
