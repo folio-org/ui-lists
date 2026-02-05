@@ -37,7 +37,7 @@
     "pane.dropdown.delete": "Listeyi sil",
     "pane.dropdown.edit": "Listeyi düzenle",
     "pane.dropdown.cancel-export": "İhracatı iptal et",
-    "status-toast.success.refresh-complete": "<strong>Yenileme tamamlandı</strong> ile <strong>{count}</strong> kayıtlar: ",
+    "status-toast.success.refresh-complete": "<strong>Yenileme tamamlandı</strong> ile <strong>{count}</strong> kayıtlar:",
     "status-toast.success.link": "Güncelleştirilmiş listeyi görüntüle",
     "create-list.subtitle": "Sorgu oluşturmak için ölçütleri ayarlama",
     "create-list.saving": "Kaydet",
