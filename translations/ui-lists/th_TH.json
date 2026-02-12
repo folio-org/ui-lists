@@ -16,7 +16,7 @@
     "lists.columns.visibility": "Visibility",
     "lists.columns.first-name": "First name",
     "lists.columns.last-name": "Last name",
-    "lists.columns.barcode": "Barcode",
+    "lists.columns.barcode": "บาร์โค้ด",
     "lists.columns.patron-group": "Patron group",
     "lists.item.active": "Active",
     "lists.item.inactive": "Inactive",
