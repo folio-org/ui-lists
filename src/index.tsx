@@ -16,12 +16,12 @@ import {
   checkScope
 } from '@folio/stripes/components';
 import {
+  CatastrophicErrorPage,
   CopyListPage,
   CreateListPage,
   EditListPage,
   ListInformationPage,
   ListPage,
-  MissingAllEntityTypePermissionsPage
 } from './pages';
 import { useRecordTypes } from './hooks';
 import { t } from './services';
@@ -47,11 +47,9 @@ export const ListsApp:IListsApp = (props) => {
   const { match: { path } } = props;
 
   const history = useHistory();
-  const { recordTypes, isLoading } = useRecordTypes();
+  const { recordTypes, isLoading, error } = useRecordTypes();
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
-
-
 
   const shortcutModalToggle = (handleToggle: () => void) => {
     handleToggle();
@@ -82,7 +80,7 @@ export const ListsApp:IListsApp = (props) => {
   ];
 
   if (!isLoading && recordTypes?.length === 0) {
-    return <MissingAllEntityTypePermissionsPage />;
+    return <CatastrophicErrorPage error={error} />;
   }
 
   return (

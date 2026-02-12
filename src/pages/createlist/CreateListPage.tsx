@@ -14,8 +14,7 @@ import {
 } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
-import { computeRecordTypeOptions } from './helpers';
-import { handleKeyCommand } from '../../utils';
+import { computeRecordTypeOptions, handleKeyCommand } from '../../utils';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { HOME_PAGE_URL } from '../../constants';
 
@@ -66,6 +65,7 @@ export const CreateListPage:FC = () => {
 
   const recordTypesOptions = computeRecordTypeOptions(
     recordTypes,
+    '',
     recordType
   );
 

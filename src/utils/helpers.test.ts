@@ -1,6 +1,7 @@
 import { expect } from '@jest/globals';
-import { buildListsUrl, filterByIncludes, handleKeyCommand } from './helpers';
+import { HTTPError, NormalizedOptions } from 'ky';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
+import { buildListsUrl, filterByIncludes, getFqmError, handleKeyCommand, throwingFqmError } from './helpers';
 
 const baseUrl = 'http://www.test.com';
 
@@ -68,7 +69,9 @@ describe('Helpers', () => {
       });
 
       it('should create a complex URL string if multipled filters are checked', async () => {
-        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE, VISIBILITY_PRIVATE, 'record_types.1234', 'record_types.5678'] });
+        const result = buildListsUrl(baseUrl, {
+          filters: [STATUS_ACTIVE, VISIBILITY_PRIVATE, 'record_types.1234', 'record_types.5678'],
+        });
 
         expect(result).toEqual(`${baseUrl}?active=true&private=true&entityTypeIds=1234%2C5678`);
       });
@@ -77,19 +80,23 @@ describe('Helpers', () => {
 
   describe('filterByIncludes', () => {
     it('is expected to filter items', () => {
-      const items = [{
-        label: 'Loans',
-        value: '1233131'
-      },
-      {
-        label: 'Users',
-        value: '123s1233131'
-      }];
+      const items = [
+        {
+          label: 'Loans',
+          value: '1233131',
+        },
+        {
+          label: 'Users',
+          value: '123s1233131',
+        },
+      ];
 
-      expect(filterByIncludes('ers', items)).toEqual([{
-        label: 'Users',
-        value: '123s1233131'
-      }]);
+      expect(filterByIncludes('ers', items)).toEqual([
+        {
+          label: 'Users',
+          value: '123s1233131',
+        },
+      ]);
     });
   });
 
@@ -120,6 +127,114 @@ describe('Helpers', () => {
 
       expect(callback).not.toBeCalled();
       expect(preventDefault).toBeCalled();
+    });
+  });
+
+  describe('getFqmError', () => {
+    it.each([
+      // non error
+      [
+        1234,
+        {
+          message: '1234',
+          code: '_misc_error',
+          parameters: [{ key: 'stack', value: expect.stringContaining('helpers.ts') }],
+        },
+      ],
+      // non-http error
+      [
+        new Error('test'),
+        {
+          message: 'test',
+          code: '_misc_error',
+          parameters: [
+            { key: 'type', value: 'Error' },
+            { key: 'stack', value: expect.stringContaining('helpers.test') },
+          ],
+        },
+      ],
+      // non-json error
+      [
+        new HTTPError(
+          {
+            json: (): Promise<unknown> => {
+              throw new Error('unparsable');
+            },
+            status: 500,
+          } as Response,
+          {} as Request,
+          {} as NormalizedOptions,
+        ),
+        {
+          code: '_misc_error',
+          parameters: [{ key: 'status', value: '500' }],
+        },
+      ],
+      // non-object error
+      [
+        new HTTPError(
+          {
+            json: () => Promise.resolve('decoded, but not FQM, error'),
+            status: 500,
+          } as Response,
+          {} as Request,
+          {} as NormalizedOptions,
+        ),
+        {
+          message: '"decoded, but not FQM, error"',
+          code: '_misc_error',
+          parameters: [{ key: 'status', value: '500' }],
+        },
+      ],
+      // non-FQM object error
+      [
+        new HTTPError(
+          {
+            json: () => Promise.resolve({ message: 'decoded, but not FQM, error' }),
+            status: 500,
+          } as Response,
+          {} as Request,
+          {} as NormalizedOptions,
+        ),
+        {
+          message: '{"message":"decoded, but not FQM, error"}',
+          code: '_misc_error',
+          parameters: [{ key: 'status', value: '500' }],
+        },
+      ],
+      // what we _want_ to get
+      [
+        new HTTPError(
+          {
+            json: () => Promise.resolve({ message: 'FQM error', code: 'something' }),
+            status: 500,
+          } as Response,
+          {} as Request,
+          {} as NormalizedOptions,
+        ),
+        {
+          message: 'FQM error',
+          code: 'something',
+        },
+      ],
+    ])('error %p results in %p', async (error, expected) => {
+      const actual = await getFqmError(error);
+      expect(actual).toMatchObject(expected);
+    });
+  });
+
+  describe('throwingFqmError', () => {
+    it('does nothing when no errors are thrown', async () => {
+      expect(await throwingFqmError(() => Promise.resolve('test'))).toBe('test');
+    });
+
+    it('rethrows FQM error when error is thrown', async () => {
+      const errorToThrow = new Error('test');
+      await expect(throwingFqmError(() => Promise.reject(errorToThrow))).rejects.toMatchObject({
+        message: 'test',
+        code: '_misc_error',
+        parameters: expect.any(Array),
+      });
     });
   });
 });

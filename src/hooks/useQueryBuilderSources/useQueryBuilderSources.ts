@@ -1,15 +1,24 @@
 import { useOkapiKy } from '@folio/stripes/core';
 import { useCallback } from 'react';
-import { FqlQuery } from '../../interfaces';
+import { EntityType, FqlQuery } from '../../interfaces';
 
-export function useQueryBuilderCommonSources(entityTypeId: string | undefined) {
+export function useQueryBuilderCommonSources(
+  entityTypeId: string | undefined,
+  labelMapping: Record<string, string>,
+) {
   const ky = useOkapiKy();
 
   return {
-    entityTypeDataSource: useCallback(
-      () => (entityTypeId ? ky.get(`entity-types/${entityTypeId}`).json() : undefined),
-      [ky, entityTypeId],
-    ),
+    entityTypeDataSource: useCallback(() => {
+      if (!entityTypeId) {
+        return undefined;
+      }
+
+      return ky
+        .get(`entity-types/${entityTypeId}`)
+        .json<EntityType>()
+        .then((et) => ({ ...et, labelAlias: labelMapping[entityTypeId] ?? 'aaaa' }));
+    }, [ky, entityTypeId, labelMapping]),
 
     testQueryDataSource: useCallback(
       ({ fqlQuery }: { fqlQuery: FqlQuery }) => {
@@ -52,8 +61,9 @@ export function useQueryBuilderCommonSources(entityTypeId: string | undefined) {
 
     getParamsSource: useCallback(
       (p: { entityTypeId: string; columnName: string; searchValue: string }) => ky
-        .get(`entity-types/${p.entityTypeId}/columns/${p.columnName}/values`, {
+        .get(`entity-types/${p.entityTypeId}/field-values`, {
           searchParams: {
+            field: p.columnName,
             search: p.searchValue,
           },
         })
@@ -84,7 +94,7 @@ export function useQueryBuilderResultViewerSources(
   const ky = useOkapiKy();
 
   return {
-    ...useQueryBuilderCommonSources(entityTypeId),
+    ...useQueryBuilderCommonSources(entityTypeId, {}), // we don't need the correct ET label for result viewing
     contentDataSource: useCallback(
       ({ limit, offset }: { limit: number; offset: number }) => {
         return ky

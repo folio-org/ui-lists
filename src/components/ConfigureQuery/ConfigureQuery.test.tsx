@@ -11,7 +11,7 @@ import { ConfigureQuery, ConfigureQueryProps } from './ConfigureQuery';
 
 const PluggableMock = Pluggable as unknown as jest.Mock;
 
-const kyGetMock = jest.fn(() => ({ json: jest.fn() }));
+const kyGetMock = jest.fn(() => ({ json: jest.fn(() => Promise.resolve({})) }));
 const kyPostMock = jest.fn(() => ({ json: jest.fn() }));
 const kyPutMock = jest.fn(() => ({ json: jest.fn() }));
 const kyDeleteMock = jest.fn(() => ({ json: jest.fn() }));
@@ -39,6 +39,7 @@ const showErrorMessageMock = jest.fn();
 
 jest.mock('../../hooks', () => ({
   useRecordsLimit: jest.fn(() => 10),
+  useRecordTypes: jest.fn(() => ({ labelMapping: {}, isLoading: false })),
   useMessages: () => ({
     showSuccessMessage: showSuccessMessageMock,
     showErrorMessage: showErrorMessageMock,
@@ -220,8 +221,9 @@ describe('ConfigureQuery component', () => {
       searchValue: 'search-value',
     });
 
-    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/columns/column-name/values', {
+    await waitFor(() => expect(kyGetMock).toHaveBeenCalledWith('entity-types/type-id/field-values', {
       searchParams: {
+        field: 'column-name',
         search: 'search-value',
       },
     }));

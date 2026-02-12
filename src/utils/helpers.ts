@@ -1,10 +1,11 @@
-import { ListsRequest } from '../interfaces';
+import { HTTPError } from 'ky';
+import { EntityTypeOption, EntityTypeSelectOption, FQMError, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
   STATUS_ACTIVE,
   STATUS_INACTIVE,
   VISIBILITY_PRIVATE,
-  VISIBILITY_SHARED
+  VISIBILITY_SHARED,
 } from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
@@ -72,8 +73,8 @@ export const checkIncludes = (target: string, string: string) => {
   return string.includes(target);
 };
 
-export const filterByIncludes = (term: string, options: {label: string, value: string}[]) => {
-  return options.filter(option => {
+export const filterByIncludes = (term: string, options: { label: string; value: string }[]) => {
+  return options.filter((option) => {
     return checkIncludes(term.toLowerCase(), option.label.toLowerCase());
   });
 };
@@ -85,7 +86,7 @@ export const getStatusButtonElem = () => {
 export const handleKeyCommand = (
   callback: (event?: KeyboardEvent) => void,
   condition = true,
-  onFalseConditions = () => {}
+  onFalseConditions = () => {},
 ) => {
   return (event: KeyboardEvent) => {
     event.preventDefault();
@@ -96,4 +97,88 @@ export const handleKeyCommand = (
       onFalseConditions();
     }
   };
+};
+
+export const computeRecordTypeOptions = (
+  entityTypes: EntityTypeOption[],
+  prefix = '',
+  selected = '',
+): EntityTypeSelectOption[] => {
+  return entityTypes
+    .map(({ id, label }) => ({
+      label,
+      value: `${prefix}${id}`,
+      selected: id === selected,
+    }))
+    .toSorted((a, b) => a.label.localeCompare(b.label)) as EntityTypeSelectOption[];
+};
+
+export const getFqmError = async (e: unknown): Promise<FQMError> => {
+  if (!(e instanceof Error)) {
+    return {
+      message: JSON.stringify(e),
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'stack',
+          value: new Error('stack generator').stack,
+        },
+      ],
+    };
+  } else if (e.name !== 'HTTPError') {
+    return {
+      message: e.message,
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'type',
+          value: e.name,
+        },
+        {
+          key: 'stack',
+          value: e.stack,
+        },
+      ],
+    };
+  }
+
+  const httpError = e as HTTPError;
+
+  try {
+    const errorResponse = await httpError.response.json();
+
+    if (typeof errorResponse === 'object' && 'code' in errorResponse) {
+      return errorResponse as FQMError;
+    } else {
+      return {
+        message: JSON.stringify(errorResponse),
+        code: '_misc_error',
+        parameters: [
+          {
+            key: 'status',
+            value: httpError.response.status.toString(),
+          },
+        ],
+      };
+    }
+  } catch {
+    return {
+      message: httpError.message,
+      code: '_misc_error',
+      parameters: [
+        {
+          key: 'status',
+          value: httpError.response.status.toString(),
+        },
+      ],
+    };
+  }
+};
+
+export const throwingFqmError = async <T>(runnable: () => Promise<T>): Promise<T> => {
+  try {
+    return await runnable();
+  } catch (e) {
+    throw await getFqmError(e);
+  }
 };

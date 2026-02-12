@@ -6,7 +6,7 @@
     "paneHeader.button.actions": "Ações",
     "filterPane.title": "Filtro",
     "mainPane.title": "Listas",
-    "mainPane.subTitle": "{count} registros encontrados",
+    "mainPane.subTitle": "{count, plural, =0 { Nenhum registro encontrado } =1 { 1 registro encontrado } other {# registros encontrados }}",
     "lists.columns.list-name": "Nome da lista",
     "lists.columns.record-type": "Tipo de registro",
     "lists.columns.records": "Registros",
@@ -129,8 +129,6 @@
     "title.infoList": "Listas – {listName}",
     "title.editList": "Listas – Editar {listName}",
     "error-component.unknown": "Ocorreu um erro desconhecido",
-    "missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
-    "missing-all-entity-type-permissions.message": "Entre em contato com o administrador do sistema para obter ajuda",
     "error-component.read-entity.type.restricted": "Você não tem permissão para visualizar esta lista",
     "app-menu.keyboard-shortcuts": "Atalhos do teclado",
     "commands-label.create": "Crie uma nova lista",
@@ -169,5 +167,14 @@
     "refresh-entity.not.found": "Erro: <strong>{listName}</strong> não foi atualizado porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
     "export-entity.not.found": "Erro: a exportação de <strong> {listName}</strong> falhou porque o tipo de entidade da lista não está mais disponível. Verifique se o tipo de entidade existe e tente novamente.",
     "read-entity.not.found": "Erro: O tipo de entidade de <strong>{listName}</strong> não foi encontrado. Verifique se o tipo de entidade existe e tente novamente.",
-    "error-component.read-entity.not.found": "O tipo de entidade desta lista não está mais disponível"
+    "error-component.read-entity.not.found": "O tipo de entidade desta lista não está mais disponível",
+    "list.modal.pane-sub": "Nome da lista: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (integrado)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (personalizado){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "Você não tem as permissões necessárias para usar o aplicativo Listas",
+    "catastrophic-error.entity.type.source.missing.heading": "Um erro de digitação está impedindo o acesso ao aplicativo Listas",
+    "catastrophic-error.entity.type.source.missing.message": "O tipo de registro personalizado \"{parentEntityTypeName}\" (<code>{parentEntityTypeId}</code>) faz referência à fonte \"{sourceEntityTypeAlias}\" (<code>{sourceEntityTypeId}</code>) que não pôde ser encontrada. O aplicativo Listas não poderá ser usado até que a fonte seja restaurada, a fonte seja removida da definição ou o tipo de registro seja excluído.",
+    "catastrophic-error.fallback.heading": "Um erro está impedindo o acesso ao aplicativo Listas",
+    "catastrophic-error.fallback.message": "Entre em contato com o administrador do sistema para obter ajuda"
 }

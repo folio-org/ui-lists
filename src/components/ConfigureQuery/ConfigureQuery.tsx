@@ -1,9 +1,10 @@
+import { Loading } from '@folio/stripes/components';
 import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { HTTPError } from 'ky';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HOME_PAGE_URL } from '../../constants';
-import { useMessages, useRecordsLimit } from '../../hooks';
+import { useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
 import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
 import {
   FqlQuery,
@@ -48,6 +49,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const history = useHistory();
   const ky = useOkapiKy();
   const recordsLimit = useRecordsLimit();
+  const { labelMapping, isLoading } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
@@ -106,6 +108,10 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
     return ky.delete(`query/${queryId}`);
   };
 
+  const commonSources = useQueryBuilderCommonSources(selectedType, labelMapping);
+
+  if (isLoading) return <Loading />;
+
   return (
     <Pluggable
       paneSub={t('list.modal.pane-sub', { listName })}
@@ -118,7 +124,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       initialValues={initialValues}
       runQueryDataSource={runQueryDataSource}
       cancelQueryDataSource={cancelQueryDataSource}
-      {...useQueryBuilderCommonSources(selectedType)}
+      {...commonSources}
       onQueryRunSuccess={onQueryRunSuccess}
       onQueryRunFail={onQueryRunFail}
       recordsLimit={recordsLimit}

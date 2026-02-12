@@ -277,11 +277,11 @@ export const ListInformationPage: React.FC = () => {
                 defaultWidth="fill"
                 appIcon={<ListAppIcon />}
                 paneTitle={listName}
-                paneSub={!isRefreshInProgress ?
-                  t('mainPane.subTitle',
-                    { count: intl.formatNumber(recordCount) })
-                  :
-                  <CompilingLoader />}
+                paneSub={
+                  !isRefreshInProgress
+                    ? t('mainPane.subTitle', { count: recordCount })
+                    : <CompilingLoader />
+                }
                 lastMenu={<ListInformationMenu
                   visibleColumns={visibleColumns}
                   columns={columnControls}

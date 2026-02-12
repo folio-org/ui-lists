@@ -129,8 +129,6 @@
     "title.infoList": "Списки - {listName}",
     "title.editList": "Редагувати {listName}",
     "error-component.unknown": "Сталася невідома помилка",
-    "missing-all-entity-type-permissions.heading": "Ви не маєте необхідних дозволів для використання програми \"Списки\"",
-    "missing-all-entity-type-permissions.message": "Будь ласка, зверніться до свого системного адміністратора за допомогою",
     "error-component.read-entity.type.restricted": "Ви не маєте дозволу на перегляд цього списку",
     "app-menu.keyboard-shortcuts": "\"Гарячі\" клавіші",
     "commands-label.create": "Створити новий список",
@@ -169,5 +167,14 @@
     "refresh-entity.not.found": "Помилка: <strong> {listName} </strong> не оновлений, оскільки тип сутності (тип запису) списку більше недоступний. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
     "export-entity.not.found": "Помилка: <strong> {listName} </strong> не вдався, оскільки тип сутності (тип запису) списку більше недоступний. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
     "read-entity.not.found": "Помилка: тип сутності (тип запису) <strong> {listName} </strong> не знайдено. Перевірте існування типу сутності (типу запису) та повторіть спробу.",
-    "error-component.read-entity.not.found": "Тип сутності (тип запису) для цього списку більше не доступний"
+    "error-component.read-entity.not.found": "Тип сутності (тип запису) для цього списку більше не доступний",
+    "list.modal.pane-sub": "List name: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (built-in)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (custom){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "Ви не маєте необхідних дозволів для використання програми \"Списки\"",
+    "catastrophic-error.entity.type.source.missing.heading": "A broken record type is preventing access to the Lists app",
+    "catastrophic-error.entity.type.source.missing.message": "Custom record type “{parentEntityTypeName}” (<code>{parentEntityTypeId}</code>) references source “{sourceEntityTypeAlias}” (<code>{sourceEntityTypeId}</code>) which could not be found. The Lists app will not be usable until the source is restored, the source is removed from the definition, or the record type is deleted.",
+    "catastrophic-error.fallback.heading": "An error is preventing access to the Lists app",
+    "catastrophic-error.fallback.message": "Будь ласка, зверніться до свого системного адміністратора за допомогою"
 }

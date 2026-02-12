@@ -6,7 +6,7 @@
     "paneHeader.button.actions": "Acties",
     "filterPane.title": "Filter",
     "mainPane.title": "Lijsten",
-    "mainPane.subTitle": "{count} records gevonden",
+    "mainPane.subTitle": "{count, plural, =0 {Geen records gevonden} =1 {1 record gevonden} other {# records gevonden}}",
     "lists.columns.list-name": "Naam lijst",
     "lists.columns.record-type": "Type record",
     "lists.columns.records": "Records",
@@ -129,8 +129,6 @@
     "title.infoList": "Lijsten - {listName}",
     "title.editList": "Bewerken {listName}",
     "error-component.unknown": "Er is een onbekende fout opgetreden",
-    "missing-all-entity-type-permissions.heading": "U hebt niet de vereiste rechten om de app 'Lijsten' te gebruiken",
-    "missing-all-entity-type-permissions.message": "Neem contact op met uw systeembeheerder voor hulp",
     "error-component.read-entity.type.restricted": "U hebt geen toestemming om deze lijst te bekijken",
     "app-menu.keyboard-shortcuts": "Toetsenbordcombinaties",
     "commands-label.create": "Een nieuwe lijst aanmaken",
@@ -169,5 +167,14 @@
     "refresh-entity.not.found": "Fout: <strong>{listName}</strong> is niet ververst omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
     "export-entity.not.found": "Fout: export van <strong>{listName}</strong> is mislukt omdat het entiteittype van de lijst niet langer beschikbaar is. Controleer of het entiteittype bestaat en probeer het opnieuw.",
     "read-entity.not.found": "Fout: <strong>{listName}</strong>'s entiteittype is niet gevonden. Controleer of het entiteittype bestaat en probeer het opnieuw.",
-    "error-component.read-entity.not.found": "Het entiteittype van deze lijst is niet langer Beschikbaar"
+    "error-component.read-entity.not.found": "Het entiteittype van deze lijst is niet langer Beschikbaar",
+    "list.modal.pane-sub": "Naam lijst: {listName}",
+    "record-types.label.deduplication.built-in": "{label} (ingebouwd)",
+    "record-types.label.deduplication.custom.no-built-in": "{label}{number, plural, =1 {} other { (#)}}",
+    "record-types.label.deduplication.custom.with-built-in": "{label} (Maatwerk){number, plural, =1 {} other { (#)}}",
+    "catastrophic-error.missing-all-entity-type-permissions.heading": "U hebt niet de vereiste rechten om de app 'Lijsten' te gebruiken",
+    "catastrophic-error.entity.type.source.missing.heading": "Een gebroken type Record verhindert de toegang tot de app Lists",
+    "catastrophic-error.entity.type.source.missing.message": "Maatwerk records \"{parentEntityTypeName}\" (<code>{parentEntityTypeId}</code>) referenties bron \"{sourceEntityTypeAlias}\" (<code>{sourceEntityTypeId}</code>) die niet gevonden kon worden. De app Lists zal niet bruikbaar zijn totdat de bron hersteld is, de bron uit de definitie verwijderd is, of het type Record verwijderd is.",
+    "catastrophic-error.fallback.heading": "Een fout verhindert de toegang tot de app Lijsten",
+    "catastrophic-error.fallback.message": "Neem contact op met uw systeembeheerder voor hulp"
 }

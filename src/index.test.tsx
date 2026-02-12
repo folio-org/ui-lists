@@ -71,7 +71,17 @@ describe('Lists app entry point', () => {
     renderApp();
     await waitFor(() => {
       expect(
-        screen.getByText('ui-lists.missing-all-entity-type-permissions.heading'),
+        screen.getByText('ui-lists.catastrophic-error.missing-all-entity-type-permissions.heading'),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('should render error message if entity types could not be fetched', async () => {
+    useRecordTypesMock.mockReturnValue({ recordTypes: [], isLoading: false, error: { code: '_misc_error' } });
+    renderApp();
+    await waitFor(() => {
+      expect(
+        screen.getByText('ui-lists.catastrophic-error.fallback.heading'),
       ).toBeInTheDocument();
     });
   });
