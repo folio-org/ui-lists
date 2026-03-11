@@ -16,13 +16,19 @@ export default function useFilterConfig() {
         label: tString(intl, 'filter-label.status'),
         name: 'status',
         cql: 'status',
-        values: ['Active', 'Inactive'],
+        values: [
+          { name: 'Active', cql: 'Active', displayName: tString(intl, 'lists.item.active') },
+          { name: 'Inactive', cql: 'Inactive', displayName: tString(intl, 'lists.item.inactive') },
+        ],
       },
       {
         label: tString(intl, 'filter-label.visibility'),
         name: 'visibility',
         cql: 'visibility',
-        values: ['Shared', 'Private'],
+        values: [
+          { name: 'Shared', cql: 'Shared', displayName: tString(intl, 'lists.item.shared') },
+          { name: 'Private', cql: 'Private', displayName: tString(intl, 'lists.item.private') },
+        ],
       },
     ];
 
