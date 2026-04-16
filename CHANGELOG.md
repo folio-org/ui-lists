@@ -6,6 +6,7 @@
 * Support `lists` interface version `2.0`
 * Support `lists` interface version `2.0`
 
+**Other changes:**
 * Update permission sets to not use the `mod-configuration` permissions. [UILISTS-226]
 * Properly URL-encode column names [UIPQB-227]
 * Remove extra unsaved changes prompt when duplicating lists [UILISTS-231]
