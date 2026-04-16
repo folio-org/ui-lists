@@ -1,13 +1,34 @@
 # Change history for ui-lists
 
-## (IN PROGRESS)
+## [5.0.0](https://github.com/folio-org/ui-lists/tree/v5.0.0) (2026-04-16) Trillium
+
+**API CHANGES:**
+* Support `lists` interface version `2.0`
+* Support `lists` interface version `2.0`
 
 * Update permission sets to not use the `mod-configuration` permissions. [UILISTS-226]
+* Properly URL-encode column names [UIPQB-227]
+* Remove extra unsaved changes prompt when duplicating lists [UILISTS-231]
+* Remove export actions from edit view [UILISTS-235]
+* Disambiguate duplicate entity names [UILISTS-243]
 * Configure query-plugin to show Record type information and List name. [UILISTS-245]
-* NAN records is displayed under the listName [UILISTS-247]
+* Fix “NaN records” being displayed under the listName [UILISTS-247]
+* Localize list filter options [UILISTS-251]
+* Gracefully handle entities with broken sources [MODFQMMGR-1018]
+* Use new standardized FQM error codes [MODFQMMGR-1045]
+* Use new field values API for building queries [MODFQMMGR-1048]
 
 [UILISTS-226]: https://folio-org.atlassian.net/browse/UILISTS-226
+[UIPQB-227]: https://folio-org.atlassian.net/browse/UIPQB-227
+[UILISTS-231]: https://folio-org.atlassian.net/browse/UILISTS-231
+[UILISTS-235]: https://folio-org.atlassian.net/browse/UILISTS-235
+[UILISTS-243]: https://folio-org.atlassian.net/browse/UILISTS-243
 [UILISTS-245]: https://folio-org.atlassian.net/browse/UILISTS-245
+[UILISTS-247]: https://folio-org.atlassian.net/browse/UILISTS-247
+[UILISTS-251]: https://folio-org.atlassian.net/browse/UILISTS-251
+[MODFQMMGR-1018]: https://folio-org.atlassian.net/browse/MODFQMMGR-1018
+[MODFQMMGR-1045]: https://folio-org.atlassian.net/browse/MODFQMMGR-1045
+[MODFQMMGR-1048]: https://folio-org.atlassian.net/browse/MODFQMMGR-1048
 
 ## [4.0.3](https://github.com/folio-org/ui-lists/tree/v4.0.3) (2025-04-18)
 
