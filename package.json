@@ -1,6 +1,6 @@
 {
   "name": "@folio/lists",
-  "version": "4.0.3",
+  "version": "5.0.0",
   "description": "FOLIO Reporting Machine Lists",
   "main": "src/index.tsx",
   "license": "Apache-2.0",
