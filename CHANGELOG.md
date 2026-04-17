@@ -1,5 +1,9 @@
 # Change history for ui-lists
 
+## [5.0.1](https://github.com/folio-org/ui-lists/tree/v5.0.1) (2026-04-17)
+
+* bump up stripes-acq-components
+
 ## [5.0.0](https://github.com/folio-org/ui-lists/tree/v5.0.0) (2026-04-16) Trillium
 
 **API CHANGES:**
