@@ -103,8 +103,8 @@
     "hasSettings": false,
     "okapiInterfaces": {
       "lists": "1.0 2.0",
-      "fqm-query": "2.0 3.0",
-      "entity-types": "2.0 3.0"
+      "fqm-query": "2.0",
+      "entity-types": "2.0"
     },
     "stripesDeps": [
       "@folio/stripes-acq-components"
