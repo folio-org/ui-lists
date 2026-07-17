@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 // @ts-ignore
 import { runAxeTest } from '@folio/stripes-testing';
-import { waitFor, screen } from '@testing-library/dom';
+import { waitFor, screen, fireEvent } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { IfPermission } from '@folio/stripes/core';
 
@@ -80,6 +80,49 @@ describe('ListPage Page', () => {
   it('should render with no axe errors', async () => {
     await runAxeTest({
       rootNode: document.body,
+    });
+  });
+
+  it('should keep Search button disabled when search input is empty', async () => {
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'stripes-acq-components.search' })).toBeDisabled();
+    });
+  });
+
+  it('should enable Search button after entering search text', async () => {
+    const searchInput = await screen.findByRole('searchbox', { name: 'ui-lists.lists.searchInputLabel' });
+
+    fireEvent.change(searchInput, { target: { value: 'missing' } });
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'stripes-acq-components.search' })).toBeEnabled();
+    });
+  });
+
+  it('should clear search input and disable Search button when Reset all is clicked', async () => {
+    const searchInput = await screen.findByRole('searchbox', { name: 'ui-lists.lists.searchInputLabel' }) as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'missing' } });
+    fireEvent.click(screen.getByRole('button', { name: 'stripes-smart-components.resetAll' }));
+
+    await waitFor(() => {
+      expect(searchInput.value).toBe('');
+      expect(screen.getByRole('button', { name: 'stripes-acq-components.search' })).toBeDisabled();
+    });
+  });
+
+  it('should clear search input when the clear icon inside the search field is clicked', async () => {
+    const searchInput = await screen.findByRole('searchbox', { name: 'ui-lists.lists.searchInputLabel' }) as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'missing' } });
+
+    const clearButton = await screen.findByRole('button', { name: 'clear search' });
+
+    fireEvent.click(clearButton);
+
+    await waitFor(() => {
+      expect(searchInput.value).toBe('');
+      expect(screen.getByRole('button', { name: 'stripes-acq-components.search' })).toBeDisabled();
     });
   });
 });

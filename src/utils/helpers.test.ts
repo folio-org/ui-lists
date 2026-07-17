@@ -75,6 +75,21 @@ describe('Helpers', () => {
 
         expect(result).toEqual(`${baseUrl}?active=true&private=true&entityTypeIds=1234%2C5678`);
       });
+
+      it('should include search parameter when present', async () => {
+        const result = buildListsUrl(baseUrl, { search: 'missing items' });
+
+        expect(result).toEqual(`${baseUrl}?search=missing+items`);
+      });
+
+      it('should include search parameter with existing filters', async () => {
+        const result = buildListsUrl(baseUrl, {
+          filters: [STATUS_ACTIVE],
+          search: 'missing items',
+        });
+
+        expect(result).toEqual(`${baseUrl}?active=true&search=missing+items`);
+      });
     });
   });
 

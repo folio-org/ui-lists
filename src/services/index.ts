@@ -1,4 +1,4 @@
-export { t, tString } from './translation';
+export { t, tString, UI_LISTS_NAMESPACE } from './translation';
 
 
 export { isCanned, isInactive, isInDraft, isEmptyList } from './list';

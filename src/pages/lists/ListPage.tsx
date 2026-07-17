@@ -11,6 +11,7 @@ import {
   LoadingPane
 } from '@folio/stripes/components';
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
+import { SingleSearchForm } from '@folio/stripes-acq-components';
 import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
@@ -21,7 +22,7 @@ import {
   useListsFetchedSinceTimestamp,
   useLocalStorageToggle
 } from '../../hooks';
-import { t } from '../../services';
+import { t, UI_LISTS_NAMESPACE } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
 import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
@@ -49,6 +50,9 @@ export const ListPage: React.FC = () => {
     isDefaultState
   } = useFilters();
 
+  const [searchValue, setSearchValue] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
   useListsFetchedSinceTimestamp();
 
   const shortcuts = [
@@ -62,6 +66,29 @@ export const ListPage: React.FC = () => {
     }))
   ];
 
+  const hasSearchInput = !!searchValue.trim();
+  const hasAppliedSearch = !!searchTerm;
+  const isResetDisabled = isDefaultState && !hasSearchInput && !hasAppliedSearch;
+
+  const applySearch = () => {
+    setSearchTerm(searchValue.trim());
+  };
+
+  const changeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    setSearchValue(value);
+
+    if (!value) {
+      setSearchTerm('');
+    }
+  };
+
+  const onResetAllHandler = () => {
+    onResetAll();
+    setSearchValue('');
+    setSearchTerm('');
+  };
 
   return (
     <HasCommandWrapper
@@ -78,13 +105,19 @@ export const ListPage: React.FC = () => {
             </PaneMenu>
           }
         >
+          <SingleSearchForm
+            ariaLabelId={`${UI_LISTS_NAMESPACE}.lists.searchInputLabel`}
+            applySearch={applySearch}
+            changeSearch={changeSearch}
+            searchQuery={searchValue}
+          />
           <div className={css.resetButtonWrap}>
             <Button
               // @ts-ignore:next-line
               buttonStyle="none"
               id="clickable-reset-all"
-              disabled={isDefaultState}
-              onClick={onResetAll}
+              disabled={isResetDisabled}
+              onClick={onResetAllHandler}
             >
               <Icon icon="times-circle-solid">
                 <FormattedMessage id="stripes-smart-components.resetAll" />
@@ -143,6 +176,7 @@ export const ListPage: React.FC = () => {
         >
           <ListsTable
             activeFilters={activeFilters}
+            searchTerm={searchTerm}
             setTotalRecords={setTotalRecords}
           />
         </Pane>

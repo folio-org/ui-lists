@@ -58,6 +58,7 @@ export interface ListsRequest {
   idsToTrack?: Array<string>,
   size?: number,
   offset?: number,
+  search?: string,
   listsLastFetchedTimestamp?: string
 }
 
