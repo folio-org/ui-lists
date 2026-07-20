@@ -49,10 +49,9 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   }
 
   if (listsLastFetchedTimestamp) params.append('updatedAsOf', listsLastFetchedTimestamp);
-
+  const paramString = params.toString();
   if (search) params.append('search', search);
 
-  const paramString = params.toString();
 
   if (paramString) {
     return url + `?${paramString}`;

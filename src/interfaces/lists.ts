@@ -59,7 +59,6 @@ export interface ListsRequest {
   size?: number,
   offset?: number,
   search?: string,
-  listsLastFetchedTimestamp?: string
 }
 
 export interface ListsRecordBase {
