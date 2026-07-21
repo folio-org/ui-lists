@@ -189,6 +189,11 @@
   "filter-label.record-types": "Record types",
   "filter-label.status": "Status",
   "filter-label.visibility": "Visibility",
+  "filter-label.created-by": "Created by",
+  "filter-label.updated-by": "Updated by",
+
+  "find-user.label": "Find user",
+  "find-user.plugin-unavailable": "Find user plugin is unavailable",
 
   "commands-label.create": "Create a new list",
   "commands-label.edit": "Edit a list",
@@ -199,6 +204,7 @@
   "commands-label.collapse-list-detail-accordions": "Collapse all List detail accordions",
   "commands-label.go-to-filter-pane": "Go to Search & filter pane",
   "mainPane.noResults": "No results found for \"{searchTerm}\". Please check your spelling and filters.",
+  "mainPane.noResultsFilters": "No results found. Please check your spelling and filters.",
   "commands-label.close-modal-pop-up": "Close a modal or pop-up",
   "commands-label.open-shortcuts-modal": "Open keyboard shortcuts modal",
   "commands-label.copy": "Copy",

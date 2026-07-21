@@ -26,7 +26,12 @@ export const startMirage = ({
         const rawSearch = request.queryParams.search;
         const search = (Array.isArray(rawSearch) ? rawSearch[0] : rawSearch)?.toLowerCase();
 
-        if (search) {
+        const rawCreatedBy = request.queryParams.createdBy;
+        const createdBy = Array.isArray(rawCreatedBy) ? rawCreatedBy[0] : rawCreatedBy;
+        const rawUpdatedBy = request.queryParams.updatedBy;
+        const updatedBy = Array.isArray(rawUpdatedBy) ? rawUpdatedBy[0] : rawUpdatedBy;
+
+        if (search || createdBy || updatedBy) {
           const content = lists.content.filter((list) => {
             const normalizedName = list.name?.toLowerCase() || '';
             const normalizedDescription = (
@@ -35,7 +40,15 @@ export const startMirage = ({
                 : ''
             ).toLowerCase();
 
-            return normalizedName.includes(search) || normalizedDescription.includes(search);
+            const matchesSearch = !search
+              || normalizedName.includes(search)
+              || normalizedDescription.includes(search);
+            const matchesCreatedBy = !createdBy
+              || ('createdBy' in list && list.createdBy === createdBy);
+            const matchesUpdatedBy = !updatedBy
+              || ('updatedBy' in list && list.updatedBy === updatedBy);
+
+            return matchesSearch && matchesCreatedBy && matchesUpdatedBy;
           });
 
           return {

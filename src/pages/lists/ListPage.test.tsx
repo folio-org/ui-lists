@@ -59,6 +59,13 @@ describe('ListPage Page', () => {
     });
   });
 
+  it('should render Created by and Updated by facets', async () => {
+    await waitFor(() => {
+      expect(document.getElementById('created-by-filter')).toBeInTheDocument();
+      expect(document.getElementById('updated-by-filter')).toBeInTheDocument();
+    });
+  });
+
   it('should render New button when user has permission', async () => {
     // @ts-ignore:next-line
     IfPermission.mockImplementation(({ children }) => children);

@@ -75,6 +75,26 @@ describe('Helpers', () => {
 
         expect(result).toEqual(`${baseUrl}?active=true&private=true&entityTypeIds=1234%2C5678`);
       });
+
+      it('should set createdBy when a Created by user is selected', async () => {
+        const result = buildListsUrl(baseUrl, { filters: ['created_by.user-1'] });
+
+        expect(result).toEqual(`${baseUrl}?createdBy=user-1`);
+      });
+
+      it('should set updatedBy when an Updated by user is selected', async () => {
+        const result = buildListsUrl(baseUrl, { filters: ['updated_by.user-2'] });
+
+        expect(result).toEqual(`${baseUrl}?updatedBy=user-2`);
+      });
+
+      it('should combine createdBy and updatedBy with other filters', async () => {
+        const result = buildListsUrl(baseUrl, {
+          filters: [STATUS_ACTIVE, 'created_by.user-1', 'updated_by.user-2'],
+        });
+
+        expect(result).toEqual(`${baseUrl}?active=true&createdBy=user-1&updatedBy=user-2`);
+      });
     });
   });
 

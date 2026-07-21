@@ -5,6 +5,7 @@ import { Loading, MultiColumnList, Row } from '@folio/stripes/components';
 import { listTableMapping } from './helpers/mappers';
 import { listTableResultFormatter } from './helpers/formatters';
 import { LISTS_VISIBLE_COLUMNS } from '../../constants';
+import { CREATED_BY_PREFIX, UPDATED_BY_PREFIX } from '../../utils/constants';
 import { useLists, useListsIdsToTrack, usePrevious, useListsPagination } from '../../hooks';
 import { columnWidthsConfig } from './configs';
 import { t } from '../../services';
@@ -65,6 +66,9 @@ export const ListsTable: FC<ListsTableProps> = ({
   }
 
   const hasSearchTerm = !!searchTerm;
+  const hasUserFilter = activeFilters.some(
+    (filter) => filter.startsWith(CREATED_BY_PREFIX) || filter.startsWith(UPDATED_BY_PREFIX)
+  );
   const displayedContent = content ?? [];
   const displayedTotalRecords = totalRecords;
 
@@ -116,7 +120,14 @@ export const ListsTable: FC<ListsTableProps> = ({
       columnMapping={listTableMapping}
       onNeedMoreData={onNeedMoreDataHandler}
       // @ts-ignore:next-line
-      emptyMessage={hasSearchTerm ? t('mainPane.noResults', { searchTerm }) : undefined}
+      emptyMessage={
+        // eslint-disable-next-line no-nested-ternary
+        hasSearchTerm
+          ? t('mainPane.noResults', { searchTerm })
+          : hasUserFilter
+            ? t('mainPane.noResultsFilters')
+            : undefined
+      }
     />
   );
 };

@@ -15,6 +15,7 @@ import { SingleSearchForm } from '@folio/stripes-acq-components';
 import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
+import { UserFilter } from './UserFilter';
 import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import {
   useKeyCommandsMessages,
@@ -24,7 +25,7 @@ import {
 } from '../../hooks';
 import { t, UI_LISTS_NAMESPACE } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
-import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS } from '../../utils/constants';
+import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS, CREATED_BY_PREFIX, UPDATED_BY_PREFIX } from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { getStatusButtonElem, handleKeyCommand } from '../../utils';
@@ -44,6 +45,10 @@ export const ListPage: React.FC = () => {
     selectedRecordTypes,
     onResetAll,
     onClearGroup,
+    setUserFilter,
+    clearUserFilter,
+    createdByFilter,
+    updatedByFilter,
     filterCount,
     filtersObject,
     activeFilters,
@@ -68,7 +73,8 @@ export const ListPage: React.FC = () => {
 
   const hasSearchInput = !!searchValue.trim();
   const hasAppliedSearch = !!searchTerm;
-  const isResetDisabled = isDefaultState && !hasSearchInput && !hasAppliedSearch;
+  const hasUserFilter = !!createdByFilter.userId || !!updatedByFilter.userId;
+  const isResetDisabled = isDefaultState && !hasSearchInput && !hasAppliedSearch && !hasUserFilter;
 
   const applySearch = () => {
     setSearchTerm(searchValue.trim());
@@ -129,6 +135,22 @@ export const ListPage: React.FC = () => {
             filters={filtersObject}
             onChangeFilter={onChangeFilter}
             onClearFilter={onClearGroup}
+          />
+          <UserFilter
+            id="created-by-filter"
+            label={t('filter-label.created-by')}
+            filterGroupName={CREATED_BY_PREFIX}
+            userName={createdByFilter.userName}
+            onSelectUser={(userId, userName) => setUserFilter(CREATED_BY_PREFIX, userId, userName)}
+            onClear={clearUserFilter}
+          />
+          <UserFilter
+            id="updated-by-filter"
+            label={t('filter-label.updated-by')}
+            filterGroupName={UPDATED_BY_PREFIX}
+            userName={updatedByFilter.userName}
+            onSelectUser={(userId, userName) => setUserFilter(UPDATED_BY_PREFIX, userId, userName)}
+            onClear={clearUserFilter}
           />
           {
             isLoadingConfigData ? (<LoadingPane />) : (

@@ -2,6 +2,8 @@ import { HTTPError } from 'ky';
 import { EntityTypeOption, EntityTypeSelectOption, FQMError, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
+  CREATED_BY_PREFIX,
+  UPDATED_BY_PREFIX,
   STATUS_ACTIVE,
   STATUS_INACTIVE,
   VISIBILITY_PRIVATE,
@@ -32,6 +34,14 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
       if (filter.startsWith(RECORD_TYPES_PREFIX)) {
         entityTypeIdsArray.push(filter.slice(RECORD_TYPES_PREFIX.length));
       }
+
+      if (filter.startsWith(CREATED_BY_PREFIX)) {
+        params.append('createdBy', filter.slice(CREATED_BY_PREFIX.length));
+      }
+
+      if (filter.startsWith(UPDATED_BY_PREFIX)) {
+        params.append('updatedBy', filter.slice(UPDATED_BY_PREFIX.length));
+      }
     }
   }
 
@@ -49,9 +59,10 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   }
 
   if (listsLastFetchedTimestamp) params.append('updatedAsOf', listsLastFetchedTimestamp);
-  const paramString = params.toString();
+
   if (search) params.append('search', search);
 
+  const paramString = params.toString();
 
   if (paramString) {
     return url + `?${paramString}`;

@@ -1,4 +1,6 @@
 export const RECORD_TYPES_PREFIX = 'record_types.';
+export const CREATED_BY_PREFIX = 'created_by.';
+export const UPDATED_BY_PREFIX = 'updated_by.';
 export const STATUS_ACTIVE = 'status.Active';
 export const STATUS_INACTIVE = 'status.Inactive';
 export const VISIBILITY_PRIVATE = 'visibility.Private';

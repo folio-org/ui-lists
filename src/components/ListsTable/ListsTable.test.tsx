@@ -13,7 +13,7 @@ import { startMirage } from '../../../test/mirage';
 import { queryClient } from '../../../test/utils';
 
 import { ListsTable } from './ListsTable';
-import { STATUS_ACTIVE } from '../../utils/constants';
+import { CREATED_BY_PREFIX, STATUS_ACTIVE } from '../../utils/constants';
 
 const filterConfig = [STATUS_ACTIVE];
 
@@ -27,11 +27,11 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock })),
 }));
 
-const renderListsTablePage = (searchTerm = '') => {
+const renderListsTablePage = (searchTerm = '', activeFilters = filterConfig) => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>
-        <ListsTable activeFilters={filterConfig} searchTerm={searchTerm} setTotalRecords={noop} />
+        <ListsTable activeFilters={activeFilters} searchTerm={searchTerm} setTotalRecords={noop} />
       </MemoryRouter>
     </QueryClientProvider>
   );
@@ -93,6 +93,17 @@ describe('ListsTable', () => {
 
       expect(lastProps.contentData).toEqual([]);
       expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
+    });
+  });
+
+  it('should show no-results message when a Created by filter has no matches', async () => {
+    renderListsTablePage('', [`${CREATED_BY_PREFIX}non-matching-user-id`]);
+
+    await waitFor(() => {
+      const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
+
+      expect(lastProps.contentData).toEqual([]);
+      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
     });
   });
 
