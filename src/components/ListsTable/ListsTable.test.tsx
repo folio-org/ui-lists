@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router';
 import { QueryClientProvider } from 'react-query';
 // @ts-ignore
 import { runAxeTest } from '@folio/stripes-testing';
+import { MultiColumnList } from '@folio/stripes/components';
 import { Server } from 'miragejs';
 import { render } from '@testing-library/react';
 import { screen, waitFor } from '@testing-library/dom';
@@ -12,7 +13,7 @@ import { startMirage } from '../../../test/mirage';
 import { queryClient } from '../../../test/utils';
 
 import { ListsTable } from './ListsTable';
-import { STATUS_ACTIVE } from '../../utils/constants';
+import { CREATED_BY_PREFIX, STATUS_ACTIVE } from '../../utils/constants';
 
 const filterConfig = [STATUS_ACTIVE];
 
@@ -26,11 +27,11 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock })),
 }));
 
-const renderListsTablePage = () => {
+const renderListsTablePage = (searchTerm = '', activeFilters = filterConfig) => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>
-        <ListsTable activeFilters={filterConfig} setTotalRecords={noop} />
+        <ListsTable activeFilters={activeFilters} searchTerm={searchTerm} setTotalRecords={noop} />
       </MemoryRouter>
     </QueryClientProvider>
   );
@@ -81,6 +82,45 @@ describe('ListsTable', () => {
   it('should render with no axe errors', async () => {
     await runAxeTest({
       rootNode: document.body,
+    });
+  });
+
+  it('should show no-results message when search has no matches', async () => {
+    renderListsTablePage('no-match-term');
+
+    await waitFor(() => {
+      const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
+
+      expect(lastProps.contentData).toEqual([]);
+      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
+    });
+  });
+
+  it('should show no-results message when a Created by filter has no matches', async () => {
+    renderListsTablePage('', [`${CREATED_BY_PREFIX}non-matching-user-id`]);
+
+    await waitFor(() => {
+      const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
+
+      expect(lastProps.contentData).toEqual([]);
+      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
+    });
+  });
+
+  it('should send both the active filters and the search term in the same request', async () => {
+    const requestedUrls: string[] = [];
+
+    server.pretender.handledRequest = (_verb: string, _path: string, request: any) => {
+      requestedUrls.push(request.url);
+    };
+
+    renderListsTablePage('report');
+
+    await waitFor(() => {
+      const listsRequest = requestedUrls.find((url) => url.includes('/lists?') && url.includes('search=report'));
+
+      expect(listsRequest).toBeDefined();
+      expect(listsRequest).toEqual(expect.stringContaining('active=true'));
     });
   });
 });

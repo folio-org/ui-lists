@@ -1,5 +1,8 @@
 # Change history for ui-lists
 
+* Add search box to Search & filter pane [UILISTS-252]
+* Add filter by List Creator and Updated by [UILISTS-253]
+
 ## [5.0.2](https://github.com/folio-org/ui-lists/tree/v5.0.2) (2026-05-04)
 
 * bump up plugin-query-builder

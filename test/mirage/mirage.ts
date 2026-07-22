@@ -1,6 +1,6 @@
 import { createServer, Response } from 'miragejs';
 import lists from '../data/lists.json';
-import listsUpdate from '../data/lists-update.json'
+import listsUpdate from '../data/lists-update.json';
 import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
 import exportStarted from '../data/exportStarted.json';
@@ -23,6 +23,45 @@ export const startMirage = ({
 
       this.get('lists', (schema, request) => {
         const updatedAsOf = request.queryParams.updatedAsOf;
+        const rawSearch = request.queryParams.search;
+        const search = (Array.isArray(rawSearch) ? rawSearch[0] : rawSearch)?.toLowerCase();
+
+        const rawCreatedBy = request.queryParams.createdBy;
+        const createdBy = Array.isArray(rawCreatedBy) ? rawCreatedBy[0] : rawCreatedBy;
+        const rawUpdatedBy = request.queryParams.updatedBy;
+        const updatedBy = Array.isArray(rawUpdatedBy) ? rawUpdatedBy[0] : rawUpdatedBy;
+
+        if (search || createdBy || updatedBy) {
+          const content = lists.content.filter((list) => {
+            const normalizedName = list.name?.toLowerCase() || '';
+            const normalizedDescription = (
+              'description' in list && typeof list.description === 'string'
+                ? list.description
+                : ''
+            ).toLowerCase();
+
+            const matchesSearch = !search
+              || normalizedName.includes(search)
+              || normalizedDescription.includes(search);
+            const matchesCreatedBy = !createdBy
+              || ('createdBy' in list && list.createdBy === createdBy);
+            const matchesUpdatedBy = !updatedBy
+              || ('updatedBy' in list && list.updatedBy === updatedBy);
+
+            return matchesSearch && matchesCreatedBy && matchesUpdatedBy;
+          });
+
+          return {
+            ...lists,
+            content,
+            totalRecords: content.length,
+            totalPages: content.length ? 1 : 0,
+            numberOfElements: content.length,
+            empty: content.length === 0,
+            first: true,
+            last: true,
+          };
+        }
 
         if (updatedAsOf) {
           return listsUpdate;

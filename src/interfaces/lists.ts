@@ -58,7 +58,8 @@ export interface ListsRequest {
   idsToTrack?: Array<string>,
   size?: number,
   offset?: number,
-  listsLastFetchedTimestamp?: string
+  search?: string,
+  listsLastFetchedTimestamp?: string,
 }
 
 export interface ListsRecordBase {
@@ -71,13 +72,14 @@ export interface ListsRecordBase {
   userFriendlyQuery?: string;
   fqlQuery?: string;
   createdByUsername?: string;
+  createdBy?: string;
   createdDate?: string;
   isActive?: boolean;
   isPrivate?: boolean;
   fields?: string[],
   isCanned?: boolean;
-  updatedBy?: boolean;
-  updatedByUsername?: boolean;
+  updatedBy?: string;
+  updatedByUsername?: string;
   updatedDate?: string;
   recordsCount?: number;
 }
