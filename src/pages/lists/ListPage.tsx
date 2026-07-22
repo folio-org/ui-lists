@@ -54,6 +54,8 @@ export const ListPage: React.FC = () => {
     isDefaultState
   } = useFilters();
 
+  // searchValue is the live text bound to the search input; searchTerm is the applied
+  // query actually sent to ListsTable, set only on submit (or cleared when the input is emptied).
   const [searchValue, setSearchValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
