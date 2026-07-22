@@ -11,11 +11,10 @@ import {
   LoadingPane
 } from '@folio/stripes/components';
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
-import { SingleSearchForm } from '@folio/stripes-acq-components';
+import { PluggableUserFilter, SingleSearchForm } from '@folio/stripes-acq-components';
 import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
-import { UserFilter } from './UserFilter';
 import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import {
   useKeyCommandsMessages,
@@ -136,21 +135,29 @@ export const ListPage: React.FC = () => {
             onChangeFilter={onChangeFilter}
             onClearFilter={onClearGroup}
           />
-          <UserFilter
+          <PluggableUserFilter
             id="created-by-filter"
-            label={t('filter-label.created-by')}
-            filterGroupName={CREATED_BY_PREFIX}
-            userName={createdByFilter.userName}
-            onSelectUser={(userId, userName) => setUserFilter(CREATED_BY_PREFIX, userId, userName)}
-            onClear={clearUserFilter}
+            activeFilters={createdByFilter.userId ? [createdByFilter.userId] : []}
+            closedByDefault={false}
+            labelId={`${UI_LISTS_NAMESPACE}.filter-label.created-by`}
+            name="createdBy"
+            onChange={({ values }: { values: string[] }) => (
+              values.length
+                ? setUserFilter(CREATED_BY_PREFIX, values[0])
+                : clearUserFilter(CREATED_BY_PREFIX)
+            )}
           />
-          <UserFilter
+          <PluggableUserFilter
             id="updated-by-filter"
-            label={t('filter-label.updated-by')}
-            filterGroupName={UPDATED_BY_PREFIX}
-            userName={updatedByFilter.userName}
-            onSelectUser={(userId, userName) => setUserFilter(UPDATED_BY_PREFIX, userId, userName)}
-            onClear={clearUserFilter}
+            activeFilters={updatedByFilter.userId ? [updatedByFilter.userId] : []}
+            closedByDefault={false}
+            labelId={`${UI_LISTS_NAMESPACE}.filter-label.updated-by`}
+            name="updatedBy"
+            onChange={({ values }: { values: string[] }) => (
+              values.length
+                ? setUserFilter(UPDATED_BY_PREFIX, values[0])
+                : clearUserFilter(UPDATED_BY_PREFIX)
+            )}
           />
           {
             isLoadingConfigData ? (<LoadingPane />) : (

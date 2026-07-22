@@ -28,6 +28,41 @@ jest.mock('../../components/ListsTable', () => ({
   ))
 }));
 
+// Importing the real `@folio/stripes-acq-components` package currently throws: its
+// `PluggableUserFilter` pulls in a hooks barrel that in turn needs a `countries` export
+// that this install's `stripes-components` doesn't have yet (see UILISTS-252). Stubbing
+// the whole module here; `SingleSearchForm` gets a lightweight stand-in that preserves the
+// accessible roles/labels/disabled-state behavior these tests exercise.
+jest.mock('@folio/stripes-acq-components', () => {
+  const SingleSearchForm = ({ ariaLabelId, applySearch, changeSearch, searchQuery }: {
+    ariaLabelId: string,
+    applySearch: () => void,
+    changeSearch: (event: { target: { value: string } }) => void,
+    searchQuery: string
+  }) => React.createElement(
+    'form',
+    { onSubmit: (e: React.FormEvent) => { e.preventDefault(); applySearch(); } },
+    React.createElement('input', {
+      type: 'search',
+      'aria-label': ariaLabelId,
+      value: searchQuery,
+      onChange: changeSearch,
+    }),
+    React.createElement('button', {
+      type: 'button',
+      'aria-label': 'clear search',
+      onClick: () => changeSearch({ target: { value: '' } }),
+    }),
+    React.createElement('button', { type: 'submit', disabled: !searchQuery }, 'stripes-acq-components.search'),
+  );
+
+  return {
+    SingleSearchForm,
+    PluggableUserFilter: ({ id }: { id: string }) => React.createElement('div', { id }),
+    useShowCallout: () => jest.fn(),
+  };
+});
+
 
 const renderLists = () => {
   return render(

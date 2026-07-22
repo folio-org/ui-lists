@@ -78,7 +78,7 @@
   "dependencies": {
     "@folio/plugin-find-user": "^8.1.0",
     "@folio/plugin-query-builder": "^3.0.0",
-    "@folio/stripes-acq-components": "~7.1.0",
+    "@folio/stripes-acq-components": "^7.2.0",
     "date-fns": "^2.29.3",
     "ky": "^0.33.2",
     "lodash": "^4.17.21",

@@ -77,10 +77,6 @@ const useURLFilters = () => {
 
 export function useFilters() {
   const { filterParams, addValue, removeValue, resetFilters, setValues } = useURLFilters();
-  const [namespace] = useNamespace();
-  const { getItem, setItem } = useSessionStorage(`${namespace}/filter-user-names`);
-
-  const userNames = (getItem() as Record<string, string>) || {};
 
   const filterCount = filterParams?.length;
 
@@ -92,31 +88,22 @@ export function useFilters() {
     setValues([...fil, ...a]);
   };
 
-  const setUserFilter = (prefix: string, userId: string, userName: string) => {
+  const setUserFilter = (prefix: string, userId: string) => {
     const withoutGroup = filterParams.filter((item: string) => {
       return !item.startsWith(prefix);
     });
 
-    setItem({ ...userNames, [prefix]: userName });
     setValues([...withoutGroup, `${prefix}${userId}`]);
   };
 
   const clearUserFilter = (prefix: string) => {
-    const rest = { ...userNames };
-    delete rest[prefix];
-    setItem(rest);
-
     setValues(filterParams.filter((item: string) => !item.startsWith(prefix)));
   };
 
   const getUserFilter = (prefix: string) => {
     const value = filterParams.find((item: string) => item.startsWith(prefix));
 
-    if (!value) {
-      return { userId: '', userName: '' };
-    }
-
-    return { userId: value.slice(prefix.length), userName: userNames[prefix] || '' };
+    return { userId: value ? value.slice(prefix.length) : '' };
   };
 
   const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,7 +117,6 @@ export function useFilters() {
   };
 
   const onResetAll = () => {
-    setItem({});
     resetFilters();
   };
 
