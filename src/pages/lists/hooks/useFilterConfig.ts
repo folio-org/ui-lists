@@ -30,6 +30,15 @@ export default function useFilterConfig() {
           { name: 'Private', cql: 'Private', displayName: tString(intl, 'lists.item.private') },
         ],
       },
+      {
+        label: tString(intl, 'filter-label.source'),
+        name: 'source',
+        cql: 'source',
+        values: [
+          { name: 'System', cql: 'System', displayName: tString(intl, 'lists.item.system') },
+          { name: 'User', cql: 'User', displayName: tString(intl, 'lists.item.user-generated') },
+        ],
+      },
     ];
 
     const recordTypeConfig = {

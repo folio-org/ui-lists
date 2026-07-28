@@ -92,7 +92,7 @@ describe('ListsTable', () => {
       const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
 
       expect(lastProps.contentData).toEqual([]);
-      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
+      expect(lastProps.isEmptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
     });
   });
 
@@ -103,7 +103,7 @@ describe('ListsTable', () => {
       const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
 
       expect(lastProps.contentData).toEqual([]);
-      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
+      expect(lastProps.isEmptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
     });
   });
 

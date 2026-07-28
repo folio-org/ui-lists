@@ -31,7 +31,10 @@ export const startMirage = ({
         const rawUpdatedBy = request.queryParams.updatedBy;
         const updatedBy = Array.isArray(rawUpdatedBy) ? rawUpdatedBy[0] : rawUpdatedBy;
 
-        if (search || createdBy || updatedBy) {
+        const rawCanned = request.queryParams.canned;
+        const canned = Array.isArray(rawCanned) ? rawCanned[0] : rawCanned;
+
+        if (search || createdBy || updatedBy || canned) {
           const content = lists.content.filter((list) => {
             const normalizedName = list.name?.toLowerCase() || '';
             const normalizedDescription = (
@@ -47,8 +50,10 @@ export const startMirage = ({
               || ('createdBy' in list && list.createdBy === createdBy);
             const matchesUpdatedBy = !updatedBy
               || ('updatedBy' in list && list.updatedBy === updatedBy);
+            const matchesCanned = canned === undefined
+              || ('isCanned' in list && String(list.isCanned) === canned);
 
-            return matchesSearch && matchesCreatedBy && matchesUpdatedBy;
+            return matchesSearch && matchesCreatedBy && matchesUpdatedBy && matchesCanned;
           });
 
           return {

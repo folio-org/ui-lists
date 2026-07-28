@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { HTTPError, NormalizedOptions } from 'ky';
-import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
+import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED, SOURCE_SYSTEM, SOURCE_USER } from './constants';
 import { buildListsUrl, filterByIncludes, getFqmError, handleKeyCommand, throwingFqmError } from './helpers';
 
 const baseUrl = 'http://www.test.com';
@@ -52,6 +52,24 @@ describe('Helpers', () => {
 
       it('should omit visibility when both Private and Shared checkbox is checked', async () => {
         const result = buildListsUrl(baseUrl, { filters: [VISIBILITY_PRIVATE, VISIBILITY_SHARED] });
+
+        expect(result).toEqual(baseUrl);
+      });
+
+      it('should set canned=true when System (canned) checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_SYSTEM] });
+
+        expect(result).toEqual(`${baseUrl}?canned=true`);
+      });
+
+      it('should set canned=false when User generated checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_USER] });
+
+        expect(result).toEqual(`${baseUrl}?canned=false`);
+      });
+
+      it('should omit canned when both System and User generated checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_SYSTEM, SOURCE_USER] });
 
         expect(result).toEqual(baseUrl);
       });
