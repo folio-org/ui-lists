@@ -5,6 +5,8 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { isGuardable } from '@folio/stripes/core';
+
 export const useNavigationBlock = (
   showModalOnCancel: boolean,
   isSaving = false,
@@ -40,8 +42,17 @@ export const useNavigationBlock = (
     }
 
     if (showModalOnCancel && !isBlocked) {
+      // the function passed to history.block() should return true if navigation
+      // should continue, false to halt navigation and stay at the present
+      // location.
+
       // @ts-ignore
       unblock = history.block((next) => {
+        // some nav (e.g. to `/logout` when a session ends) cannot be guarded
+        if (!isGuardable(next.pathname)) {
+          return true;
+        }
+
         const isListPath = /^\/lists\/list\/[0-9a-fA-F-]+$/.test(next.pathname);
 
         if (isListPath && !blockListPath) {
