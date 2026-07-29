@@ -53,6 +53,13 @@ export interface FailedListRefresh extends ListRefresh {
   }
 }
 
+export type ListsSortOrder = 'asc' | 'desc';
+
+export interface ListsSortQuery {
+  sortBy: string,
+  sortOrder: ListsSortOrder,
+}
+
 export interface ListsRequest {
   filters?: Array<string>,
   idsToTrack?: Array<string>,
@@ -60,6 +67,8 @@ export interface ListsRequest {
   offset?: number,
   search?: string,
   listsLastFetchedTimestamp?: string,
+  sortBy?: string,
+  sortOrder?: ListsSortOrder,
 }
 
 export interface ListsRecordBase {

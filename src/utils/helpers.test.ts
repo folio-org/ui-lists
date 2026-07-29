@@ -113,6 +113,29 @@ describe('Helpers', () => {
 
         expect(result).toEqual(`${baseUrl}?active=true&createdBy=user-1&updatedBy=user-2`);
       });
+
+      it('should append sortBy and sortOrder when sorting is provided', async () => {
+        const result = buildListsUrl(baseUrl, { sortBy: 'updatedDate', sortOrder: 'desc' });
+
+        expect(result).toEqual(`${baseUrl}?sortBy=updatedDate&sortOrder=desc`);
+      });
+
+      it('should combine sorting with filters and search', async () => {
+        const result = buildListsUrl(baseUrl, {
+          filters: [STATUS_ACTIVE],
+          search: 'report',
+          sortBy: 'name',
+          sortOrder: 'asc',
+        });
+
+        expect(result).toEqual(`${baseUrl}?active=true&search=report&sortBy=name&sortOrder=asc`);
+      });
+
+      it('should omit sorting params when sorting is not provided', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE] });
+
+        expect(result).toEqual(`${baseUrl}?active=true`);
+      });
     });
   });
 

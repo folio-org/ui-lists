@@ -15,7 +15,7 @@ import {
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
 
 export const buildListsUrl = (url: string, request?: ListsRequest) => {
-  const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search } = request || {};
+  const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search, sortBy, sortOrder } = request || {};
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
 
@@ -71,6 +71,10 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   if (listsLastFetchedTimestamp) params.append('updatedAsOf', listsLastFetchedTimestamp);
 
   if (search) params.append('search', search);
+
+  if (sortBy) params.append('sortBy', sortBy);
+
+  if (sortOrder) params.append('sortOrder', sortOrder);
 
   const paramString = params.toString();
 

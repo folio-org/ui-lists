@@ -20,3 +20,4 @@ export { useListAppPermissions } from './useListAppPermissions';
 export { useCrossTenantCheck } from './useCrossTenantCheck';
 export { useIsEscEnvCheck } from './useIsEscEnvCheck';
 export { useNavigationBlock } from './useNavigationBlock';
+export { useListsSorting } from './useListsSorting';
