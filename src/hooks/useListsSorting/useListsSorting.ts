@@ -2,10 +2,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { COLUMNS_NAME, SORTABLE_COLUMNS } from '../../constants';
 import { ListsSortQuery } from '../../interfaces';
 
-// These param names and direction values intentionally match the ones
-// stripes-acq-components uses, so a sorted Lists URL reads the same as it does
-// elsewhere in FOLIO. That module itself cannot be imported here — the repo's jest
-// mocks make its transitive constants barrel unloadable.
 export const SORTING_PARAMETER = 'sorting';
 export const SORTING_DIRECTION_PARAMETER = 'sortingDirection';
 export const ASC_DIRECTION = 'ascending';
@@ -30,8 +26,6 @@ export const useListsSorting = (): UseListsSortingResult => {
   const fieldFromUrl = searchParams.get(SORTING_PARAMETER) ?? '';
   const directionFromUrl = searchParams.get(SORTING_DIRECTION_PARAMETER) ?? '';
 
-  // A hand-edited or stale URL can name a column the API refuses to sort by, and it
-  // answers those with a 400, so anything unexpected falls back to the default.
   const sortField = SORTABLE_COLUMNS.includes(fieldFromUrl) ? fieldFromUrl : DEFAULT_SORT_FIELD;
   const sortDirection: ListsSortDirection = directionFromUrl === DESC_DIRECTION
     ? DESC_DIRECTION

@@ -11,8 +11,6 @@ export const COLUMNS_NAME = {
 } as const;
 export const LISTS_VISIBLE_COLUMNS = Object.values(COLUMNS_NAME) as (keyof ListsRecord)[];
 
-// These three column keys are exactly the values GET /lists accepts for its sortBy
-// parameter, so the column keys double as the API's sort keys.
 export const SORTABLE_COLUMNS: string[] = [
   COLUMNS_NAME.LIST_NAME,
   COLUMNS_NAME.LAST_UPDATED,
