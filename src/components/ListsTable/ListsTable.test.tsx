@@ -52,21 +52,13 @@ afterEach(() => {
 
 describe('ListsTable', () => {
   describe('Loading', () => {
-    describe('When components mounted', () => {
-      it('it is expected to show loader', () => {
-        const loader = screen.getByText('Loading');
+    it('it is expected to hand the loading state to the list instead of replacing it', async () => {
+      const lastProps = () => (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
 
-        expect(loader).toBeInTheDocument();
-      });
-    });
+      expect(screen.getByTestId('ItemsList')).toBeInTheDocument();
 
-    describe('When loading finished mounted', () => {
-      it('it is expected to hide loader', async () => {
-        const loader = screen.getByText('Loading');
-
-        await waitFor(() => {
-          return expect(loader).not.toBeInTheDocument();
-        });
+      await waitFor(() => {
+        expect(lastProps().loading).toBe(false);
       });
     });
   });
@@ -92,7 +84,7 @@ describe('ListsTable', () => {
       const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
 
       expect(lastProps.contentData).toEqual([]);
-      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
+      expect(lastProps.isEmptyMessage?.props?.id).toBe('ui-lists.mainPane.noResults');
     });
   });
 
@@ -103,7 +95,7 @@ describe('ListsTable', () => {
       const lastProps = (MultiColumnList as unknown as jest.Mock).mock.calls.at(-1)?.[0];
 
       expect(lastProps.contentData).toEqual([]);
-      expect(lastProps.emptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
+      expect(lastProps.isEmptyMessage?.props?.id).toBe('ui-lists.mainPane.noResultsFilters');
     });
   });
 

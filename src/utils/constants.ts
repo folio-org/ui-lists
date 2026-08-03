@@ -5,6 +5,8 @@ export const STATUS_ACTIVE = 'status.Active';
 export const STATUS_INACTIVE = 'status.Inactive';
 export const VISIBILITY_PRIVATE = 'visibility.Private';
 export const VISIBILITY_SHARED = 'visibility.Shared';
+export const SOURCE_SYSTEM = 'source.System';
+export const SOURCE_USER = 'source.User';
 
 export const PAGINATION_AMOUNT = 100;
 

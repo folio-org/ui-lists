@@ -8,12 +8,14 @@ import {
   STATUS_INACTIVE,
   VISIBILITY_PRIVATE,
   VISIBILITY_SHARED,
+  SOURCE_SYSTEM,
+  SOURCE_USER,
 } from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
 
 export const buildListsUrl = (url: string, request?: ListsRequest) => {
-  const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search } = request || {};
+  const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search, sortBy, sortOrder } = request || {};
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
 
@@ -28,6 +30,14 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
       params.append('private', 'true');
     } else if (filters.includes(VISIBILITY_SHARED) && !filters.includes(VISIBILITY_PRIVATE)) {
       params.append('private', 'false');
+    }
+
+    // Source facet: "System" == canned list, "User generated" == non-canned list.
+    // When both (or neither) are selected there is no constraint, so the param is omitted.
+    if (filters.includes(SOURCE_SYSTEM) && !filters.includes(SOURCE_USER)) {
+      params.append('canned', 'true');
+    } else if (filters.includes(SOURCE_USER) && !filters.includes(SOURCE_SYSTEM)) {
+      params.append('canned', 'false');
     }
 
     for (const filter of filters) {
@@ -61,6 +71,10 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   if (listsLastFetchedTimestamp) params.append('updatedAsOf', listsLastFetchedTimestamp);
 
   if (search) params.append('search', search);
+
+  if (sortBy) params.append('sortBy', sortBy);
+
+  if (sortOrder) params.append('sortOrder', sortOrder);
 
   const paramString = params.toString();
 

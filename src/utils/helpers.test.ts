@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { HTTPError, NormalizedOptions } from 'ky';
-import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED } from './constants';
+import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED, SOURCE_SYSTEM, SOURCE_USER } from './constants';
 import { buildListsUrl, filterByIncludes, getFqmError, handleKeyCommand, throwingFqmError } from './helpers';
 
 const baseUrl = 'http://www.test.com';
@@ -56,6 +56,24 @@ describe('Helpers', () => {
         expect(result).toEqual(baseUrl);
       });
 
+      it('should set canned=true when System (canned) checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_SYSTEM] });
+
+        expect(result).toEqual(`${baseUrl}?canned=true`);
+      });
+
+      it('should set canned=false when User generated checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_USER] });
+
+        expect(result).toEqual(`${baseUrl}?canned=false`);
+      });
+
+      it('should omit canned when both System and User generated checkbox is checked', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [SOURCE_SYSTEM, SOURCE_USER] });
+
+        expect(result).toEqual(baseUrl);
+      });
+
       it('should include entity type GUID if checked', async () => {
         const result = buildListsUrl(baseUrl, { filters: ['record_types.1234'] });
 
@@ -94,6 +112,29 @@ describe('Helpers', () => {
         });
 
         expect(result).toEqual(`${baseUrl}?active=true&createdBy=user-1&updatedBy=user-2`);
+      });
+
+      it('should append sortBy and sortOrder when sorting is provided', async () => {
+        const result = buildListsUrl(baseUrl, { sortBy: 'updatedDate', sortOrder: 'desc' });
+
+        expect(result).toEqual(`${baseUrl}?sortBy=updatedDate&sortOrder=desc`);
+      });
+
+      it('should combine sorting with filters and search', async () => {
+        const result = buildListsUrl(baseUrl, {
+          filters: [STATUS_ACTIVE],
+          search: 'report',
+          sortBy: 'name',
+          sortOrder: 'asc',
+        });
+
+        expect(result).toEqual(`${baseUrl}?active=true&search=report&sortBy=name&sortOrder=asc`);
+      });
+
+      it('should omit sorting params when sorting is not provided', async () => {
+        const result = buildListsUrl(baseUrl, { filters: [STATUS_ACTIVE] });
+
+        expect(result).toEqual(`${baseUrl}?active=true`);
       });
     });
   });

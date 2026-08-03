@@ -27,6 +27,18 @@ beforeEach(() => {
 });
 
 describe('useFilters', () => {
+  it('should keep the sort params when Reset all is selected', () => {
+    locationSearch = '?filters=visibility.Private&sorting=updatedDate&sortingDirection=descending';
+
+    const { result } = renderHook(() => useFilters());
+
+    result.current.onResetAll();
+
+    expect(historyPushMock).toBeCalledWith(
+      '?filters=status.Active&sorting=updatedDate&sortingDirection=descending'
+    );
+  });
+
   it('should update filter values', () => {
     const event = {
       target: {

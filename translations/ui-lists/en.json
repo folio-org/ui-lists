@@ -28,6 +28,8 @@
   "lists.item.shared": "Shared",
   "lists.item.private": "Private",
   "lists.item.compiling": "Compiling",
+  "lists.item.system": "System",
+  "lists.item.user-generated": "User generated",
   "lists.searchInputLabel": "Search lists",
   "list.info.list-name": "List name",
   "list.info.description": "Description",
@@ -189,6 +191,7 @@
   "filter-label.record-types": "Record types",
   "filter-label.status": "Status",
   "filter-label.visibility": "Visibility",
+  "filter-label.source": "Source",
   "filter-label.created-by": "Created by",
   "filter-label.updated-by": "Updated by",
 
