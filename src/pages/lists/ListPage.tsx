@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom';
-import { noop } from 'lodash';
+import { useHistory } from 'react-router-dom';
 import {
   Icon,
   Pane,
@@ -193,15 +192,13 @@ export const ListPage: React.FC = () => {
         }
           lastMenu={
             <IfPermission perm={USER_PERMS.CreateList}>
-              <Link to={CREATE_LIST_URL}>
-                <Button
-                  bottomMargin0
-                  buttonStyle="primary"
-                  onClick={noop}
-                >
-                  {t('paneHeader.button.new')}
-                </Button>
-              </Link>
+              <Button
+                to={CREATE_LIST_URL}
+                bottomMargin0
+                buttonStyle="primary"
+              >
+                {t('paneHeader.button.new')}
+              </Button>
             </IfPermission>
         }
         >
