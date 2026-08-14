@@ -85,7 +85,6 @@
   "create-list.main.list-private": "Private",
   "create-list.main.list-active": "Active",
   "create-list.main.list-inactive": "Inactive",
-  "create-list.main.expand-all": "Expand all",
   "create-list.choose-record-type": "Select record type",
 
   "warning.inactive-status": "Warning: making status inactive will clear list contents.",
