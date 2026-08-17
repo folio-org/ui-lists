@@ -1,9 +1,4 @@
-.mainFormCollapseButton {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
+
 
 .queryBuilderButton {
     width: 110px;
