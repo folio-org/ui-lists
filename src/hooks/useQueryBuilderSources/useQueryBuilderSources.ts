@@ -15,7 +15,11 @@ export function useQueryBuilderCommonSources(
       }
 
       return ky
-        .get(`entity-types/${entityTypeId}`)
+        .get(`entity-types/${entityTypeId}`, {
+          // Include hidden columns so the query builder can detect capability placeholders (e.g. the MARC
+          // placeholder). Hidden columns are filtered out of the field picker and results columns downstream.
+          searchParams: { includeHidden: true },
+        })
         .json<EntityType>()
         .then((et) => ({ ...et, labelAlias: labelMapping[entityTypeId] ?? 'aaaa' }));
     }, [ky, entityTypeId, labelMapping]),
