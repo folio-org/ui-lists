@@ -92,7 +92,7 @@ describe('ConfigureQuery component', () => {
       renderComponent({ selectedType: 'foo' });
       PluggableMock.mock.lastCall[0].entityTypeDataSource();
 
-      expect(kyGetMock).toHaveBeenCalledWith('entity-types/foo');
+      expect(kyGetMock).toHaveBeenCalledWith('entity-types/foo', { searchParams: { includeHidden: true } });
     });
 
     it.each(['', undefined])(

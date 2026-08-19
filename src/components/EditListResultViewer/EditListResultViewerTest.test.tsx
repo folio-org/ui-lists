@@ -68,7 +68,7 @@ describe('EditListResultViewer component', () => {
 
       PluggableMock.mock.lastCall[0].entityTypeDataSource();
 
-      expect(kyGetMock).toHaveBeenCalledWith('entity-types/entity-type-here');
+      expect(kyGetMock).toHaveBeenCalledWith('entity-types/entity-type-here', { searchParams: { includeHidden: true } });
     });
   });
 });
