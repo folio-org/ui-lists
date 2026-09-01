@@ -7,6 +7,7 @@
 * Remove the keyboard-inaccessible Collapse all action from the Create a new list page [UILISTS-255]
 * Fix repetitive keyboard focus on New action [UILISTS-267]
 * Fetch entity types with hidden columns so the query builder can detect MARC capability [UIPQB-287]
+* Lists app: Refresh banner: View updated list is not been accessed/tabbed via keyboard. [UILISTS-266]
 
 ## [5.0.2](https://github.com/folio-org/ui-lists/tree/v5.0.2) (2026-05-04)
 
