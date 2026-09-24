@@ -18,6 +18,8 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search, sortBy, sortOrder } = request || {};
   const params = new URLSearchParams();
   const entityTypeIdsArray = [];
+  const createdByArray = [];
+  const updatedByArray = [];
 
   if (filters?.length) {
     if (filters.includes(STATUS_ACTIVE) && !filters.includes(STATUS_INACTIVE)) {
@@ -46,11 +48,11 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
       }
 
       if (filter.startsWith(CREATED_BY_PREFIX)) {
-        params.append('createdBy', filter.slice(CREATED_BY_PREFIX.length));
+        createdByArray.push(filter.slice(CREATED_BY_PREFIX.length));
       }
 
       if (filter.startsWith(UPDATED_BY_PREFIX)) {
-        params.append('updatedBy', filter.slice(UPDATED_BY_PREFIX.length));
+        updatedByArray.push(filter.slice(UPDATED_BY_PREFIX.length));
       }
     }
   }
@@ -58,6 +60,10 @@ export const buildListsUrl = (url: string, request?: ListsRequest) => {
   const entityTypeIdsString = entityTypeIdsArray.join(',');
 
   if (entityTypeIdsString) params.append('entityTypeIds', entityTypeIdsString);
+
+  if (createdByArray.length) params.append('createdBy', createdByArray.join(','));
+
+  if (updatedByArray.length) params.append('updatedBy', updatedByArray.join(','));
 
   // If tracking IDs, don't use offset
   if (offset && !idsToTrack?.length) params.append('offset', offset.toString());

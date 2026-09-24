@@ -193,9 +193,6 @@
   "filter-label.created-by": "Created by",
   "filter-label.updated-by": "Updated by",
 
-  "find-user.label": "Find user",
-  "find-user.plugin-unavailable": "Find user plugin is unavailable",
-
   "commands-label.create": "Create a new list",
   "commands-label.edit": "Edit a list",
   "commands-label.save": "Save a list",

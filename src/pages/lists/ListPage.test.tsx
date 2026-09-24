@@ -4,8 +4,9 @@ import { QueryClientProvider } from 'react-query';
 // @ts-ignore
 import { runAxeTest } from '@folio/stripes-testing';
 import { waitFor, screen, fireEvent } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { IfPermission } from '@folio/stripes/core';
+import { Accordion } from '@folio/stripes/components';
 
 import { ListPage } from './ListPage';
 import { startMirage } from '../../../test/mirage';
@@ -28,9 +29,9 @@ jest.mock('../../components/ListsTable', () => ({
   ))
 }));
 
-// Importing the real `@folio/stripes-acq-components` package currently throws: its
-// `PluggableUserFilter` pulls in a hooks barrel that in turn needs a `countries` export
-// that this install's `stripes-components` doesn't have yet (see UILISTS-252). Stubbing
+// Importing the real `@folio/stripes-acq-components` package currently throws: it pulls
+// in a hooks barrel that in turn needs a `countries` export that this install's
+// `stripes-components` doesn't have yet (see UILISTS-252). Stubbing
 // the whole module here; `SingleSearchForm` gets a lightweight stand-in that preserves the
 // accessible roles/labels/disabled-state behavior these tests exercise.
 jest.mock('@folio/stripes-acq-components', () => {
@@ -58,7 +59,6 @@ jest.mock('@folio/stripes-acq-components', () => {
 
   return {
     SingleSearchForm,
-    PluggableUserFilter: ({ id }: { id: string }) => React.createElement('div', { id }),
     useShowCallout: () => jest.fn(),
   };
 });
@@ -98,6 +98,43 @@ describe('ListPage Page', () => {
     await waitFor(() => {
       expect(document.getElementById('created-by-filter')).toBeInTheDocument();
       expect(document.getElementById('updated-by-filter')).toBeInTheDocument();
+    });
+  });
+
+  it('should render Created by and Updated by facets collapsed by default', async () => {
+    await waitFor(() => {
+      expect(document.getElementById('created-by-filter')).not.toHaveAttribute('open');
+      expect(document.getElementById('updated-by-filter')).not.toHaveAttribute('open');
+    });
+  });
+
+  it('should collapse Created by and Updated by facets when Reset all is clicked', async () => {
+    const searchInput = await screen.findByRole('searchbox', { name: 'ui-lists.lists.searchInputLabel' });
+    const createdByFilter = document.getElementById('created-by-filter') as HTMLElement;
+    const updatedByFilter = document.getElementById('updated-by-filter') as HTMLElement;
+
+    const toggleAccordion = (id: string) => {
+      const { calls } = (Accordion as unknown as jest.Mock).mock;
+      const [props] = calls.filter(([accordionProps]) => accordionProps?.id === id).pop();
+
+      act(() => props.onToggle());
+    };
+
+    toggleAccordion('created-by-filter');
+    toggleAccordion('updated-by-filter');
+
+    await waitFor(() => {
+      expect(createdByFilter).toHaveAttribute('open');
+      expect(updatedByFilter).toHaveAttribute('open');
+    });
+
+    // Reset all is enabled once there is something to reset
+    fireEvent.change(searchInput, { target: { value: 'missing' } });
+    fireEvent.click(screen.getByRole('button', { name: 'stripes-smart-components.resetAll' }));
+
+    await waitFor(() => {
+      expect(createdByFilter).not.toHaveAttribute('open');
+      expect(updatedByFilter).not.toHaveAttribute('open');
     });
   });
 

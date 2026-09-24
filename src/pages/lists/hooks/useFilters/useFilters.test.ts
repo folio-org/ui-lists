@@ -64,18 +64,31 @@ describe('useFilters', () => {
     expect(historyPushMock).toBeCalledWith('?filters=&visibility.Shared=');
   });
 
-  it('should set a Created by filter and expose it via createdByFilter', () => {
+  it('should set a Created by filter and expose it via createdByUserIds', () => {
     const { result, rerender } = renderHook(() => useFilters());
 
-    result.current.setUserFilter(CREATED_BY_PREFIX, 'user-1');
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-1']);
 
     expect(historyPushMock).toBeCalledWith('?filters=created_by.user-1');
 
     locationSearch = '?filters=created_by.user-1';
     rerender();
 
-    expect(result.current.createdByFilter).toEqual({ userId: 'user-1' });
-    expect(result.current.updatedByFilter).toEqual({ userId: '' });
+    expect(result.current.createdByUserIds).toEqual(['user-1']);
+    expect(result.current.updatedByUserIds).toEqual([]);
+  });
+
+  it('should support selecting multiple Created by users', () => {
+    const { result, rerender } = renderHook(() => useFilters());
+
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-1', 'user-2']);
+
+    expect(historyPushMock).toBeCalledWith('?filters=created_by.user-1%2Ccreated_by.user-2');
+
+    locationSearch = '?filters=created_by.user-1,created_by.user-2';
+    rerender();
+
+    expect(result.current.createdByUserIds).toEqual(['user-1', 'user-2']);
   });
 
   it('should preserve other active filters when setting a Created by filter', () => {
@@ -83,45 +96,45 @@ describe('useFilters', () => {
 
     const { result } = renderHook(() => useFilters());
 
-    result.current.setUserFilter(CREATED_BY_PREFIX, 'user-1');
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-1']);
 
     expect(historyPushMock).toBeCalledWith('?filters=status.Active%2Crecord_types.abc%2Ccreated_by.user-1');
   });
 
-  it('should replace a previously selected Created by user when a new one is selected', () => {
-    locationSearch = '?filters=created_by.user-1';
+  it('should replace the Created by selection with the new set of users', () => {
+    locationSearch = '?filters=created_by.user-1,created_by.user-2';
 
     const { result } = renderHook(() => useFilters());
 
-    result.current.setUserFilter(CREATED_BY_PREFIX, 'user-2');
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-2', 'user-3']);
 
-    expect(historyPushMock).toBeCalledWith('?filters=created_by.user-2');
+    expect(historyPushMock).toBeCalledWith('?filters=created_by.user-2%2Ccreated_by.user-3');
   });
 
   it('should track Created by and Updated by filters independently', () => {
     const { result, rerender } = renderHook(() => useFilters());
 
-    result.current.setUserFilter(CREATED_BY_PREFIX, 'user-1');
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-1']);
     locationSearch = '?filters=created_by.user-1';
     rerender();
 
-    result.current.setUserFilter(UPDATED_BY_PREFIX, 'user-2');
-    expect(historyPushMock).toBeCalledWith('?filters=created_by.user-1%2Cupdated_by.user-2');
+    result.current.setUserFilter(UPDATED_BY_PREFIX, ['user-2', 'user-3']);
+    expect(historyPushMock).toBeCalledWith('?filters=created_by.user-1%2Cupdated_by.user-2%2Cupdated_by.user-3');
 
-    locationSearch = '?filters=created_by.user-1,updated_by.user-2';
+    locationSearch = '?filters=created_by.user-1,updated_by.user-2,updated_by.user-3';
     rerender();
 
-    expect(result.current.createdByFilter).toEqual({ userId: 'user-1' });
-    expect(result.current.updatedByFilter).toEqual({ userId: 'user-2' });
+    expect(result.current.createdByUserIds).toEqual(['user-1']);
+    expect(result.current.updatedByUserIds).toEqual(['user-2', 'user-3']);
   });
 
   it('should clear a Created by filter', () => {
     const { result, rerender } = renderHook(() => useFilters());
 
-    result.current.setUserFilter(CREATED_BY_PREFIX, 'user-1');
+    result.current.setUserFilter(CREATED_BY_PREFIX, ['user-1']);
     locationSearch = '?filters=created_by.user-1';
     rerender();
-    expect(result.current.createdByFilter.userId).toBe('user-1');
+    expect(result.current.createdByUserIds).toEqual(['user-1']);
 
     result.current.clearUserFilter(CREATED_BY_PREFIX);
 
@@ -130,6 +143,16 @@ describe('useFilters', () => {
     locationSearch = '?filters=';
     rerender();
 
-    expect(result.current.createdByFilter).toEqual({ userId: '' });
+    expect(result.current.createdByUserIds).toEqual([]);
+  });
+
+  it('should clear Created by users on Reset all', () => {
+    locationSearch = '?filters=status.Active,created_by.user-1,updated_by.user-2';
+
+    const { result } = renderHook(() => useFilters());
+
+    result.current.onResetAll();
+
+    expect(historyPushMock).toBeCalledWith('?filters=status.Active');
   });
 });
