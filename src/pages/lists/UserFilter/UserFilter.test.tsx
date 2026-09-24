@@ -102,6 +102,18 @@ describe('UserFilter', () => {
     expect(screen.queryByRole('button', { name: 'Clean' })).not.toBeInTheDocument();
   });
 
+  it('should call onChange with the selected values from MultiSelectionFilter', async () => {
+    renderUserFilter();
+
+    await waitFor(() => {
+      expect(getLastMultiSelectionProps().onChange).toBeInstanceOf(Function);
+    });
+
+    getLastMultiSelectionProps().onChange({ values: ['11111111-1111-1111-1111-111111111111'] });
+
+    expect(onChange).toHaveBeenCalledWith(['11111111-1111-1111-1111-111111111111']);
+  });
+
   describe('getSortedUserOptions', () => {
     it('should sort users alphabetically and remove duplicates', () => {
       expect(getSortedUserOptions([
