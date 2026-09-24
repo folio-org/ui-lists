@@ -10,10 +10,11 @@ import {
   LoadingPane
 } from '@folio/stripes/components';
 import { CollapseFilterPaneButton, ExpandFilterPaneButton } from '@folio/stripes/smart-components';
-import { PluggableUserFilter, SingleSearchForm } from '@folio/stripes-acq-components';
+import { SingleSearchForm } from '@folio/stripes-acq-components';
 import { IfPermission } from '@folio/stripes/core';
 import { RecordTypesFilter } from './RecordTypesFilter';
 import { Filters } from './Filters';
+import { UserFilter } from './UserFilter';
 import { ListsTable, ListAppIcon, HasCommandWrapper } from '../../components';
 import {
   useKeyCommandsMessages,
@@ -23,7 +24,13 @@ import {
 } from '../../hooks';
 import { t, UI_LISTS_NAMESPACE } from '../../services';
 import { CREATE_LIST_URL } from '../../constants';
-import { FILTER_PANE_VISIBILITY_KEY, USER_PERMS, CREATED_BY_PREFIX, UPDATED_BY_PREFIX } from '../../utils/constants';
+import {
+  FILTER_PANE_VISIBILITY_KEY,
+  USER_PERMS,
+  CREATED_BY_PREFIX,
+  UPDATED_BY_PREFIX,
+  RELATED_USERS_TYPE
+} from '../../utils/constants';
 import { useFilterConfig, useFilters } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { getStatusButtonElem, handleKeyCommand } from '../../utils';
@@ -45,8 +52,8 @@ export const ListPage: React.FC = () => {
     onClearGroup,
     setUserFilter,
     clearUserFilter,
-    createdByFilter,
-    updatedByFilter,
+    createdByUserIds,
+    updatedByUserIds,
     filterCount,
     filtersObject,
     activeFilters,
@@ -57,6 +64,8 @@ export const ListPage: React.FC = () => {
   // query actually sent to ListsTable, set only on submit (or cleared when the input is emptied).
   const [searchValue, setSearchValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCreatedByOpen, setIsCreatedByOpen] = useState(false);
+  const [isUpdatedByOpen, setIsUpdatedByOpen] = useState(false);
 
   useListsFetchedSinceTimestamp();
 
@@ -73,7 +82,7 @@ export const ListPage: React.FC = () => {
 
   const hasSearchInput = !!searchValue.trim();
   const hasAppliedSearch = !!searchTerm;
-  const hasUserFilter = !!createdByFilter.userId || !!updatedByFilter.userId;
+  const hasUserFilter = createdByUserIds.length > 0 || updatedByUserIds.length > 0;
   const isResetDisabled = isDefaultState && !hasSearchInput && !hasAppliedSearch && !hasUserFilter;
 
   const applySearch = () => {
@@ -94,7 +103,15 @@ export const ListPage: React.FC = () => {
     onResetAll();
     setSearchValue('');
     setSearchTerm('');
+    setIsCreatedByOpen(false);
+    setIsUpdatedByOpen(false);
   };
+
+  const onChangeUserFilter = (prefix: string) => (userIds: string[]) => (
+    userIds.length
+      ? setUserFilter(prefix, userIds)
+      : clearUserFilter(prefix)
+  );
 
   return (
     <HasCommandWrapper
@@ -136,29 +153,27 @@ export const ListPage: React.FC = () => {
             onChangeFilter={onChangeFilter}
             onClearFilter={onClearGroup}
           />
-          <PluggableUserFilter
+          <UserFilter
             id="created-by-filter"
-            activeFilters={createdByFilter.userId ? [createdByFilter.userId] : []}
-            closedByDefault={false}
-            labelId={`${UI_LISTS_NAMESPACE}.filter-label.created-by`}
             name="createdBy"
-            onChange={({ values }: { values: string[] }) => (
-              values.length
-                ? setUserFilter(CREATED_BY_PREFIX, values[0])
-                : clearUserFilter(CREATED_BY_PREFIX)
-            )}
+            label={t('filter-label.created-by')}
+            type={RELATED_USERS_TYPE.CreatedBy}
+            open={isCreatedByOpen}
+            onToggle={() => setIsCreatedByOpen((isOpen) => !isOpen)}
+            selectedUserIds={createdByUserIds}
+            onChange={onChangeUserFilter(CREATED_BY_PREFIX)}
+            onClear={() => clearUserFilter(CREATED_BY_PREFIX)}
           />
-          <PluggableUserFilter
+          <UserFilter
             id="updated-by-filter"
-            activeFilters={updatedByFilter.userId ? [updatedByFilter.userId] : []}
-            closedByDefault={false}
-            labelId={`${UI_LISTS_NAMESPACE}.filter-label.updated-by`}
             name="updatedBy"
-            onChange={({ values }: { values: string[] }) => (
-              values.length
-                ? setUserFilter(UPDATED_BY_PREFIX, values[0])
-                : clearUserFilter(UPDATED_BY_PREFIX)
-            )}
+            label={t('filter-label.updated-by')}
+            type={RELATED_USERS_TYPE.UpdatedBy}
+            open={isUpdatedByOpen}
+            onToggle={() => setIsUpdatedByOpen((isOpen) => !isOpen)}
+            selectedUserIds={updatedByUserIds}
+            onChange={onChangeUserFilter(UPDATED_BY_PREFIX)}
+            onClear={() => clearUserFilter(UPDATED_BY_PREFIX)}
           />
           {
             isLoadingConfigData ? (<LoadingPane />) : (
