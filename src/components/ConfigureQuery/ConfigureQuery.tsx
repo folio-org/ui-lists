@@ -5,6 +5,7 @@ import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HOME_PAGE_URL } from '../../constants';
 import { useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
+import { pushWithCurrentSearch } from '../../utils';
 import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
 import {
   FqlQuery,
@@ -91,7 +92,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       }),
     });
 
-    history.push(`${HOME_PAGE_URL}/list/${id}`);
+    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${id}`);
   };
 
   const onQueryRunFail = (error: HTTPError) => {

@@ -39,7 +39,7 @@ import { useEditListFormState, useEditList } from './hooks';
 import { FIELD_NAMES, QueryBuilderColumnMetadata } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyCommand } from '../../utils';
+import { handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 
 
 export const EditListPage:FC = () => {
@@ -74,7 +74,7 @@ export const EditListPage:FC = () => {
           listName
         })
       });
-      history.push(HOME_PAGE_URL);
+      pushWithCurrentSearch(history, HOME_PAGE_URL);
     },
     onError: async (error: HTTPError) => {
       const errorMessage = await computeErrorMessage(error, 'callout.list.delete.error', {

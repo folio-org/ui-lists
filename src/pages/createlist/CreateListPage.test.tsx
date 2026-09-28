@@ -6,9 +6,11 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { screen, waitFor, within } from '@testing-library/dom';
 import user from '@testing-library/user-event';
 import { render } from '@testing-library/react';
+import { Response } from 'miragejs';
 import { startMirage } from '../../../test/mirage';
 import { CreateListPage } from './CreateListPage';
 import { queryClient } from '../../../test/utils';
+import listDetailsRefreshed from '../../../test/data/listDetails.refreshed.json';
 
 const historyPushMock = jest.fn();
 
@@ -119,7 +121,7 @@ describe('CreateList Page', () => {
 
         await user.click(closeButton);
 
-        expect(historyPushMock).toBeCalledWith('/lists');
+        expect(historyPushMock).toBeCalledWith({ pathname: '/lists', search: '' });
       });
     });
 
@@ -136,7 +138,7 @@ describe('CreateList Page', () => {
 
           await user.click(cancelButton);
 
-          expect(historyPushMock).toBeCalledWith('/lists');
+          expect(historyPushMock).toBeCalledWith({ pathname: '/lists', search: '' });
         });
       });
 
@@ -247,6 +249,38 @@ describe('CreateList Page', () => {
 
             expect(saveButton).toBeEnabled();
           });
+        });
+      });
+    });
+
+    describe('Save list', () => {
+      describe('Success save', () => {
+        it('is expected to redirect after successful save', async () => {
+          await renderCreateListPage();
+
+          await awaitLoading();
+
+          server.post('lists', () => new Response(200, {}, listDetailsRefreshed));
+
+          const saveButton = screen.getByRole('button', {
+            name: 'ui-lists.button.save'
+          });
+          const nameField = screen.getByLabelText('ui-lists.create-list.main.list-name', {
+            selector: 'input'
+          });
+          const select = screen.getByRole('combobox');
+
+          await user.selectOptions(select, 'Users');
+          await user.type(nameField, ' some text');
+
+          expect(saveButton).toBeEnabled();
+
+          await user.click(saveButton);
+
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({
+            pathname: `/lists/list/${listDetailsRefreshed.id}`,
+            search: ''
+          }));
         });
       });
     });

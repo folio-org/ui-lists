@@ -39,7 +39,7 @@ import { useCopyListFormState } from './hooks';
 import { FIELD_NAMES, ListsRecordBase, STATUS_VALUES } from '../../interfaces';
 import { HOME_PAGE_URL } from '../../constants';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { handleKeyCommand } from '../../utils';
+import { handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 
 export const CopyListPage:FC = () => {
   const history = useHistory();
@@ -69,7 +69,7 @@ export const CopyListPage:FC = () => {
 
   const redirectToNewList = (newListId: string) => {
     continueNavigation();
-    history.push(`${HOME_PAGE_URL}/list/${newListId}`);
+    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${newListId}`);
   };
 
   const backToList = () => {

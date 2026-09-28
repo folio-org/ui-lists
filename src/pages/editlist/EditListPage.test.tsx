@@ -241,7 +241,7 @@ describe('EditList Page', () => {
 
           expect(conformationModal).not.toBeInTheDocument();
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists', search: '' }));
           expect(showSuccessMessageHookMock).toBeCalled();
         });
       });
