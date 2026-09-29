@@ -6,20 +6,25 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { waitFor, screen, fireEvent } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { IfPermission } from '@folio/stripes/core';
+import { Button, HasCommand } from '@folio/stripes/components';
 
 import { ListPage } from './ListPage';
 import { startMirage } from '../../../test/mirage';
-import { HOME_PAGE_URL } from '../../constants';
+import { HOME_PAGE_URL, CREATE_LIST_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
+import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
+
+const historyPushMock = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory:  jest.fn().mockReturnValue({
-    push: jest.fn(),
+  useHistory: jest.fn(() => ({
+    push: historyPushMock,
     location: {
+      pathname: '/lists',
       search: ''
     }
-  })
+  }))
 }));
 
 jest.mock('../../components/ListsTable', () => ({
@@ -76,15 +81,17 @@ const renderLists = () => {
 
 describe('ListPage Page', () => {
   let server: any;
+  let renderResult: ReturnType<typeof renderLists>;
 
   beforeEach(async () => {
     server = startMirage({});
 
-    await renderLists();
+    renderResult = await renderLists();
   });
 
   afterEach(() => {
     server.shutdown();
+    window.history.pushState({}, '', '/');
   });
 
 
@@ -116,6 +123,46 @@ describe('ListPage Page', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('ui-lists.paneHeader.button.new')).toBeNull();
+    });
+  });
+
+  it('should preserve the current search params in the New button link', async () => {
+    // @ts-ignore:next-line
+    IfPermission.mockImplementation(({ children }) => children);
+
+    // The Button's `to` prop is computed from `window.location.search` at render time,
+    // so it must be set before (re-)rendering rather than after.
+    renderResult.unmount();
+    window.history.pushState({}, '', '/lists?search=foo&sorting=name');
+    renderResult = renderLists();
+
+    await screen.findByText('ui-lists.paneHeader.button.new');
+
+    const ButtonMock = Button as unknown as jest.Mock;
+    const newButtonCall = [...ButtonMock.mock.calls]
+      .reverse()
+      .find(([props]) => props?.to?.pathname === CREATE_LIST_URL);
+
+    expect(newButtonCall).toBeDefined();
+    expect(newButtonCall?.[0].to.search).toBe('search=foo&sorting=name');
+  });
+
+  it('should navigate to the create list page preserving search params when the "new" keyboard shortcut is triggered', async () => {
+    window.history.pushState({}, '', '/lists?search=foo&sorting=name');
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ListTable')).toBeInTheDocument();
+    });
+
+    const HasCommandMock = HasCommand as unknown as jest.Mock;
+    const { commands } = HasCommandMock.mock.lastCall[0];
+    const newCommand = commands.find((command: { name: string }) => command.name === SHORTCUTS_NAMES.NEW);
+
+    newCommand.handler({ preventDefault: jest.fn() });
+
+    expect(historyPushMock).toBeCalledWith({
+      pathname: CREATE_LIST_URL,
+      search: 'search=foo&sorting=name'
     });
   });
 

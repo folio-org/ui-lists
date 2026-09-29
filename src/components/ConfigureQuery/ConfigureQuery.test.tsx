@@ -200,7 +200,7 @@ describe('ConfigureQuery component', () => {
     renderComponent({ listName: 'list-name' });
     PluggableMock.mock.lastCall[0].onQueryRunSuccess({ id: 'list-id' });
 
-    expect(historyPushMock).toHaveBeenCalledWith('/lists/list/list-id');
+    expect(historyPushMock).toHaveBeenCalledWith({ pathname: '/lists/list/list-id', search: '' });
     expect(showSuccessMessageMock).toHaveBeenCalled();
   });
 

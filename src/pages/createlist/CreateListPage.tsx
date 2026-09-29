@@ -14,7 +14,7 @@ import {
 } from '../../hooks';
 import { CreateListLayout, MainCreateListForm } from './components';
 import { HasCommandWrapper } from '../../components';
-import { computeRecordTypeOptions, handleKeyCommand } from '../../utils';
+import { computeRecordTypeOptions, handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { HOME_PAGE_URL } from '../../constants';
 
@@ -52,12 +52,12 @@ export const CreateListPage:FC = () => {
           listName: state[FIELD_NAMES.LIST_NAME]
         }) });
 
-        history.push(`list/${list?.id}`);
+        pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${list.id}`);
         continueNavigation();
       }
     }
   });
-  const closeViewHandler = useCallback(() => history.push(HOME_PAGE_URL),
+  const closeViewHandler = useCallback(() => pushWithCurrentSearch(history, HOME_PAGE_URL),
     [history]);
 
   const { description, listName, visibility, status, recordType } = state;
