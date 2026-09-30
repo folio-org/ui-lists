@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 import { RelatedUser, RelatedUsersResponse } from '../../interfaces';
-import { RELATED_USERS_LIMIT, RELATED_USERS_TYPE, RELATED_USERS_URL } from '../../utils/constants';
+import { RELATED_USERS_TYPE, RELATED_USERS_URL } from '../../utils/constants';
 
 const RELATED_USERS_HASH = 'relatedUsers';
 
@@ -28,7 +28,7 @@ export const useRelatedUsers = (type: RELATED_USERS_TYPE) => {
   const { data, isLoading } = useQuery({
     queryKey: [RELATED_USERS_HASH, type],
     queryFn: () => ky.get(RELATED_USERS_URL, {
-      searchParams: { role: type, limit: RELATED_USERS_LIMIT }
+      searchParams: { role: type }
     }).json<RelatedUsersResponse>(),
     select: (response) => getSortedUserOptions(response?.relatedUsers),
     refetchOnWindowFocus: false,

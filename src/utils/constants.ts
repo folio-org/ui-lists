@@ -23,7 +23,6 @@ export const enum USER_PERMS {
 }
 
 export const RELATED_USERS_URL = 'lists/related-users';
-export const RELATED_USERS_LIMIT = 1000;
 
 export const enum RELATED_USERS_TYPE {
   CreatedBy = 'create',
