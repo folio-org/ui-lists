@@ -6,7 +6,7 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { waitFor, screen, fireEvent, within } from '@testing-library/dom';
 import { act, render } from '@testing-library/react';
 import { IfPermission, useStripes } from '@folio/stripes/core';
-import { Accordion, Button, HasCommand } from '@folio/stripes/components';
+import { Accordion, Button } from '@folio/stripes/components';
 
 import { ListPage } from './ListPage';
 import { startMirage } from '../../../test/mirage';
@@ -217,15 +217,7 @@ describe('ListPage Page', () => {
   it('should navigate to the create list page preserving search params when the "new" keyboard shortcut is triggered', async () => {
     window.history.pushState({}, '', '/lists?search=foo&sorting=name');
 
-    await waitFor(() => {
-      expect(screen.getByTestId('ListTable')).toBeInTheDocument();
-    });
-
-    const HasCommandMock = HasCommand as unknown as jest.Mock;
-    const { commands } = HasCommandMock.mock.lastCall[0];
-    const newCommand = commands.find((command: { name: string }) => command.name === SHORTCUTS_NAMES.NEW);
-
-    newCommand.handler({ preventDefault: jest.fn() });
+    fireEvent.click(await screen.findByRole('button', { name: SHORTCUTS_NAMES.NEW }));
 
     expect(historyPushMock).toBeCalledWith({
       pathname: CREATE_LIST_URL,
@@ -290,7 +282,7 @@ describe('ListPage Page', () => {
     await waitFor(() => {
       expect(mockHistory.push.mock.calls.length).toBe(pushCallsBefore + 1);
     });
-    expect(mockHistory.push).toHaveBeenLastCalledWith('/lists/new');
+    expect(mockHistory.push).toHaveBeenLastCalledWith({ pathname: CREATE_LIST_URL, search: '' });
   });
 
   it('should not navigate when the create shortcut is triggered and user has no permission', async () => {
@@ -325,10 +317,7 @@ describe('ListPage Page', () => {
     fireEvent.click(screen.getByRole('button', { name: 'stripes-acq-components.search' }));
 
     await waitFor(() => {
-      const { calls } = (ListsTable as unknown as jest.Mock).mock;
-      const [props] = calls[calls.length - 1];
-
-      expect(props.searchTerm).toBe('missing');
+      expect(mockHistory.push).toHaveBeenLastCalledWith('/lists?search=missing');
     });
   });
 
