@@ -31,9 +31,9 @@ import {
   UPDATED_BY_PREFIX,
   RELATED_USERS_TYPE
 } from '../../utils/constants';
-import { useFilterConfig, useFilters } from './hooks';
+import { useFilterConfig, useFilters, useSearch } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
-import { getStatusButtonElem, handleKeyCommand } from '../../utils';
+import { getStatusButtonElem, handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 
 import css from './ListPage.module.css';
 
@@ -62,8 +62,8 @@ export const ListPage: React.FC = () => {
 
   // searchValue is the live text bound to the search input; searchTerm is the applied
   // query actually sent to ListsTable, set only on submit (or cleared when the input is emptied).
-  const [searchValue, setSearchValue] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm, setSearchTerm } = useSearch();
+  const [searchValue, setSearchValue] = useState(searchTerm);
   const [isCreatedByOpen, setIsCreatedByOpen] = useState(false);
   const [isUpdatedByOpen, setIsUpdatedByOpen] = useState(false);
 
@@ -71,7 +71,7 @@ export const ListPage: React.FC = () => {
 
   const shortcuts = [
     AddCommand.create(handleKeyCommand(
-      () => history.push('/lists/new'),
+      () => pushWithCurrentSearch(history, CREATE_LIST_URL),
       canCreate,
       () => showCommandError(!canCreate)
     )),
@@ -208,7 +208,7 @@ export const ListPage: React.FC = () => {
           lastMenu={
             <IfPermission perm={USER_PERMS.CreateList}>
               <Button
-                to={CREATE_LIST_URL}
+                to={{ pathname: CREATE_LIST_URL, search: new URLSearchParams(window.location.search).toString() }}
                 bottomMargin0
                 buttonStyle="primary"
               >

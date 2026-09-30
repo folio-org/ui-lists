@@ -1,4 +1,5 @@
 import { HTTPError } from 'ky';
+import { useHistory } from 'react-router-dom';
 import { EntityTypeOption, EntityTypeSelectOption, FQMError, ListsRequest } from '../interfaces';
 import {
   RECORD_TYPES_PREFIX,
@@ -13,6 +14,10 @@ import {
 } from './constants';
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
+
+export const pushWithCurrentSearch = (history: ReturnType<typeof useHistory>, pathname: string) => {
+  history.push({ pathname, search: new URLSearchParams(window.location.search).toString() });
+};
 
 export const buildListsUrl = (url: string, request?: ListsRequest) => {
   const { filters, offset, size, idsToTrack, listsLastFetchedTimestamp, search, sortBy, sortOrder } = request || {};

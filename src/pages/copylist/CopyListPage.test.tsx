@@ -208,7 +208,7 @@ describe('CopyList Page', () => {
 
           await waitFor(() => expect(saveButton).toBeDisabled());
 
-          await waitFor(() => expect(historyPushMock).toBeCalledWith('/lists/list/123'));
+          await waitFor(() => expect(historyPushMock).toBeCalledWith({ pathname: '/lists/list/123', search: '' }));
 
           const successMessage = JSON.stringify(showSuccessMessageHookMock.mock.lastCall);
           expect(successMessage).toContain('ui-lists.callout.list.save.success');
