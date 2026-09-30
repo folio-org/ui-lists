@@ -20,9 +20,11 @@ const useURLFilters = () => {
   const sessionFilters = getItem() as string;
 
   const setValues = (filters: string[]) => {
-    searchParams.set(FILTERS_URL_KEY, filters.join(','));
+    const nextParams = new URLSearchParams(history.location.search);
 
-    history.push(`${history.location.pathname}?${searchParams.toString()}`);
+    nextParams.set(FILTERS_URL_KEY, filters.join(','));
+
+    history.push(`${history.location.pathname}?${nextParams.toString()}`);
 
     setItem(filters.join(','));
   };
