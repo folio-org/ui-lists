@@ -124,8 +124,7 @@
           "lists.item.get",
           "lists.item.contents.get",
           "lists.configuration.get",
-          "module.ui-plugin-find-user.enabled",
-          "users.collection.get"
+          "lists.related-users.collection.get"
         ]
       },
       {

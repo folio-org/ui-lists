@@ -21,3 +21,4 @@ export { useCrossTenantCheck } from './useCrossTenantCheck';
 export { useIsEscEnvCheck } from './useIsEscEnvCheck';
 export { useNavigationBlock } from './useNavigationBlock';
 export { useListsSorting } from './useListsSorting';
+export { useRelatedUsers } from './useRelatedUsers';

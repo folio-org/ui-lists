@@ -20,9 +20,11 @@ const useURLFilters = () => {
   const sessionFilters = getItem() as string;
 
   const setValues = (filters: string[]) => {
-    searchParams.set(FILTERS_URL_KEY, filters.join(','));
+    const nextParams = new URLSearchParams(history.location.search);
 
-    history.push(`${history.location.pathname}?${searchParams.toString()}`);
+    nextParams.set(FILTERS_URL_KEY, filters.join(','));
+
+    history.push(`${history.location.pathname}?${nextParams.toString()}`);
 
     setItem(filters.join(','));
   };
@@ -88,12 +90,12 @@ export function useFilters() {
     setValues([...fil, ...a]);
   };
 
-  const setUserFilter = (prefix: string, userId: string) => {
+  const setUserFilter = (prefix: string, userIds: string[]) => {
     const withoutGroup = filterParams.filter((item: string) => {
       return !item.startsWith(prefix);
     });
 
-    setValues([...withoutGroup, `${prefix}${userId}`]);
+    setValues([...withoutGroup, ...userIds.map((userId) => `${prefix}${userId}`)]);
   };
 
   const clearUserFilter = (prefix: string) => {
@@ -101,9 +103,9 @@ export function useFilters() {
   };
 
   const getUserFilter = (prefix: string) => {
-    const value = filterParams.find((item: string) => item.startsWith(prefix));
-
-    return { userId: value ? value.slice(prefix.length) : '' };
+    return filterParams
+      .filter((item: string) => item.startsWith(prefix))
+      .map((item: string) => item.slice(prefix.length));
   };
 
   const onChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
@@ -141,8 +143,8 @@ export function useFilters() {
     onResetAll,
     setUserFilter,
     clearUserFilter,
-    createdByFilter: getUserFilter(CREATED_BY_PREFIX),
-    updatedByFilter: getUserFilter(UPDATED_BY_PREFIX),
+    createdByUserIds: getUserFilter(CREATED_BY_PREFIX),
+    updatedByUserIds: getUserFilter(UPDATED_BY_PREFIX),
     filterCount,
     activeFilters: filterParams,
     selectedRecordTypes,

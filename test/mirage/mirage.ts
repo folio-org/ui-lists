@@ -5,6 +5,7 @@ import listDetailsRefreshed from '../data/listDetails.refreshed.json';
 import entityTypeDetails from '../data/entityTypeDetails.json';
 import exportStarted from '../data/exportStarted.json';
 import entityTypes from '../data/entityTypes.json';
+import relatedUsers from '../data/relatedUsers.json';
 
 interface IParams {
   urlPrefix?: string;
@@ -27,9 +28,9 @@ export const startMirage = ({
         const search = (Array.isArray(rawSearch) ? rawSearch[0] : rawSearch)?.toLowerCase();
 
         const rawCreatedBy = request.queryParams.createdBy;
-        const createdBy = Array.isArray(rawCreatedBy) ? rawCreatedBy[0] : rawCreatedBy;
+        const createdBy = (Array.isArray(rawCreatedBy) ? rawCreatedBy[0] : rawCreatedBy)?.split(',');
         const rawUpdatedBy = request.queryParams.updatedBy;
-        const updatedBy = Array.isArray(rawUpdatedBy) ? rawUpdatedBy[0] : rawUpdatedBy;
+        const updatedBy = (Array.isArray(rawUpdatedBy) ? rawUpdatedBy[0] : rawUpdatedBy)?.split(',');
 
         const rawCanned = request.queryParams.canned;
         const canned = Array.isArray(rawCanned) ? rawCanned[0] : rawCanned;
@@ -47,9 +48,9 @@ export const startMirage = ({
               || normalizedName.includes(search)
               || normalizedDescription.includes(search);
             const matchesCreatedBy = !createdBy
-              || ('createdBy' in list && list.createdBy === createdBy);
+              || ('createdBy' in list && createdBy.includes(list.createdBy));
             const matchesUpdatedBy = !updatedBy
-              || ('updatedBy' in list && list.updatedBy === updatedBy);
+              || ('updatedBy' in list && updatedBy.includes(list.updatedBy));
             const matchesCanned = canned === undefined
               || ('isCanned' in list && String(list.isCanned) === canned);
 
@@ -80,6 +81,12 @@ export const startMirage = ({
       this.delete('lists/:id', () => new Response(204, {}));
 
       this.put('lists/:id', () => new Response(200, {}));
+
+      this.get('lists/related-users', (schema, request) => {
+        const users = request.queryParams.role === 'update' ? relatedUsers.updatedBy : relatedUsers.createdBy;
+
+        return { totalRecords: users.length, relatedUsers: users };
+      });
 
       this.get('lists/configuration', () => new Response(200, {}, { maxListSize: '100' }));
 

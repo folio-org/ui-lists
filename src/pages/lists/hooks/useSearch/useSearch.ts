@@ -9,7 +9,8 @@ export const useSearch = () => {
   const searchTerm = searchParams.get(SEARCH_URL_KEY) ?? '';
 
   const setSearchTerm = (term: string) => {
-    const nextParams = new URLSearchParams(location.search);
+    const currentLocation = history.location;
+    const nextParams = new URLSearchParams(currentLocation.search);
 
     if (term) {
       nextParams.set(SEARCH_URL_KEY, term);
@@ -17,7 +18,7 @@ export const useSearch = () => {
       nextParams.delete(SEARCH_URL_KEY);
     }
 
-    history.push(`${location.pathname}?${nextParams.toString()}`);
+    history.push(`${currentLocation.pathname}?${nextParams.toString()}`);
   };
 
   return { searchTerm, setSearchTerm };

@@ -114,6 +114,14 @@ describe('Helpers', () => {
         expect(result).toEqual(`${baseUrl}?active=true&createdBy=user-1&updatedBy=user-2`);
       });
 
+      it('should join multiple selected Created by and Updated by users', async () => {
+        const result = buildListsUrl(baseUrl, {
+          filters: ['created_by.user-1', 'created_by.user-2', 'updated_by.user-3', 'updated_by.user-4'],
+        });
+
+        expect(result).toEqual(`${baseUrl}?createdBy=user-1%2Cuser-2&updatedBy=user-3%2Cuser-4`);
+      });
+
       it('should append sortBy and sortOrder when sorting is provided', async () => {
         const result = buildListsUrl(baseUrl, { sortBy: 'updatedDate', sortOrder: 'desc' });
 
