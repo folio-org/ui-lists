@@ -18,6 +18,7 @@ import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
 
 const mockHistory = {
   push: jest.fn(),
+  replace: jest.fn(),
   location: {
     pathname: '/lists',
     search: ''
@@ -97,14 +98,16 @@ jest.mock('@folio/stripes-acq-components', () => {
 });
 
 
+const listsPage = () => (
+  <QueryClientProvider client={queryClient}>
+    <MemoryRouter initialEntries={[HOME_PAGE_URL]}>
+      <ListPage />
+    </MemoryRouter>
+  </QueryClientProvider>
+);
+
 const renderLists = () => {
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[HOME_PAGE_URL]}>
-        <ListPage />
-      </MemoryRouter>
-    </QueryClientProvider>
-  );
+  return render(listsPage());
 };
 
 describe('ListPage Page', () => {
@@ -112,6 +115,7 @@ describe('ListPage Page', () => {
   let renderResult: ReturnType<typeof renderLists>;
 
   beforeEach(async () => {
+    sessionStorage.clear();
     server = startMirage({});
 
     renderResult = await renderLists();
@@ -128,6 +132,28 @@ describe('ListPage Page', () => {
   it('should render multiColumnList ', async () => {
     await waitFor(() => {
       expect(screen.getByTestId('ListTable')).toBeInTheDocument();
+    });
+  });
+
+  it('should apply the default filters to the URL on the first visit', async () => {
+    await waitFor(() => {
+      expect(mockHistory.replace).toHaveBeenCalledWith({
+        pathname: HOME_PAGE_URL,
+        search: 'filters=status.Active'
+      });
+    });
+  });
+
+  it('should show a search term that appears in the URL after the page is rendered', async () => {
+    const searchInput = await screen.findByRole('searchbox', { name: 'ui-lists.lists.searchInputLabel' }) as HTMLInputElement;
+
+    expect(searchInput.value).toBe('');
+
+    mockHistory.location.search = '?search=foo';
+    renderResult.rerender(listsPage());
+
+    await waitFor(() => {
+      expect(searchInput.value).toBe('foo');
     });
   });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import {
@@ -31,7 +31,7 @@ import {
   UPDATED_BY_PREFIX,
   RELATED_USERS_TYPE
 } from '../../utils/constants';
-import { useFilterConfig, useFilters, useSearch } from './hooks';
+import { useFilterConfig, useFilters, useRestoreListsView, useSearch } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { getStatusButtonElem, handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 
@@ -39,6 +39,7 @@ import css from './ListPage.module.css';
 
 export const ListPage: React.FC = () => {
   const history = useHistory();
+  useRestoreListsView();
   const { canCreate } = useListAppPermissions();
   const { showCommandError } = useKeyCommandsMessages();
   const [totalRecords, setTotalRecords] = useState(0);
@@ -64,6 +65,11 @@ export const ListPage: React.FC = () => {
   // query actually sent to ListsTable, set only on submit (or cleared when the input is emptied).
   const { searchTerm, setSearchTerm } = useSearch();
   const [searchValue, setSearchValue] = useState(searchTerm);
+
+  useEffect(() => {
+    setSearchValue(searchTerm);
+  }, [searchTerm]);
+
   const [isCreatedByOpen, setIsCreatedByOpen] = useState(false);
   const [isUpdatedByOpen, setIsUpdatedByOpen] = useState(false);
 
