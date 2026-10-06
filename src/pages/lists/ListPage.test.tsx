@@ -12,7 +12,6 @@ import { ListPage } from './ListPage';
 import { startMirage } from '../../../test/mirage';
 import { HOME_PAGE_URL, CREATE_LIST_URL } from '../../constants';
 import { queryClient } from '../../../test/utils';
-import { ListsTable } from '../../components/ListsTable';
 import { getStatusButtonElem } from '../../utils';
 import { SHORTCUTS_NAMES } from '../../keyboard-shortcuts';
 
@@ -167,6 +166,29 @@ describe('ListPage Page', () => {
   it('should render Created by and Updated by facets collapsed by default', async () => {
     await waitFor(() => {
       expect(document.getElementById('created-by-filter')).not.toHaveAttribute('open');
+      expect(document.getElementById('updated-by-filter')).not.toHaveAttribute('open');
+    });
+  });
+
+  it('should keep Created by and Updated by facets open across a remount (navigating away and back)', async () => {
+    const toggleAccordion = (id: string) => {
+      const { calls } = (Accordion as unknown as jest.Mock).mock;
+      const [props] = calls.filter(([accordionProps]) => accordionProps?.id === id).pop();
+
+      act(() => props.onToggle());
+    };
+
+    toggleAccordion('created-by-filter');
+
+    await waitFor(() => {
+      expect(document.getElementById('created-by-filter')).toHaveAttribute('open');
+    });
+
+    renderResult.unmount();
+    renderResult = renderLists();
+
+    await waitFor(() => {
+      expect(document.getElementById('created-by-filter')).toHaveAttribute('open');
       expect(document.getElementById('updated-by-filter')).not.toHaveAttribute('open');
     });
   });

@@ -3,6 +3,7 @@ import { useMutation } from 'react-query';
 import { HTTPError } from 'ky';
 import { ListsRecordBase, FormStateType } from '../../interfaces';
 import { prepareDataForRequest } from '../../pages/createlist/hooks/helpers';
+import { useInvalidateLists } from '../useInvalidateLists';
 
 type UseCreateListProps = {
   listObject: FormStateType,
@@ -15,11 +16,15 @@ export const useCreateList = (config: UseCreateListProps) => {
   const preparedObject = prepareDataForRequest(listObject);
 
   const ky = useOkapiKy();
+  const invalidateLists = useInvalidateLists();
   const { mutate: saveList, isLoading: savingList, data } = useMutation<ListsRecordBase, HTTPError>(
     ['createList', preparedObject.name],
     () => ky.post('lists', { json: preparedObject }).json(),
     {
-      onSuccess,
+      onSuccess: (list) => {
+        invalidateLists();
+        onSuccess(list);
+      },
       onError
     }
   );

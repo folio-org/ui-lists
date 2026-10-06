@@ -30,6 +30,40 @@
             "isActive": true,
             "isPrivate": true,
             "isRefreshing": true
+        },
+        {
+            "id": "9c3b1a9a-5c7e-4a1a-9a3b-1e7f2b6d4c21",
+            "name": "Inactive Patron Loan",
+            "entityTypeId": "4e09d89a-44ed-418e-a9cc-820dfb27bf3a",
+            "userFriendlyQuery": "loan_status = 'Closed'",
+            "fqlQuery": "loan_status = 'Closed'",
+            "createdByUsername": "SYSTEM",
+            "createdBy": "11111111-1111-1111-1111-111111111111",
+            "updatedBy": "22222222-2222-2222-2222-222222222222",
+            "createdDate": "2023-01-31T22:11:48.574301Z",
+            "isActive": false,
+            "isPrivate": true,
+            "recordsCount": 1,
+            "refreshedDate": "2023-02-01T20:17:55.162331Z",
+            "refreshedByUsername": "8101497b-b9ea-4e40-b0d6-039d924640f3",
+            "isRefreshing": false
+        },
+        {
+            "id": "7b2d4e8a-1f3c-4a5b-9d6e-8c7f1a2b3c4d",
+            "name": "Shared Inactive List",
+            "entityTypeId": "4e09d89a-44ed-418e-a9cc-820dfb27bf3a",
+            "userFriendlyQuery": "loan_status = 'Open'",
+            "fqlQuery": "loan_status = 'Open'",
+            "createdByUsername": "SYSTEM",
+            "createdBy": "11111111-1111-1111-1111-111111111111",
+            "updatedBy": "22222222-2222-2222-2222-222222222222",
+            "createdDate": "2023-01-31T22:11:48.574301Z",
+            "isActive": false,
+            "isPrivate": false,
+            "recordsCount": 5,
+            "refreshedDate": "2023-02-01T20:17:55.162331Z",
+            "refreshedByUsername": "8101497b-b9ea-4e40-b0d6-039d924640f3",
+            "isRefreshing": false
         }
     ],
     "pageable": {
@@ -44,7 +78,7 @@
         "paged": true,
         "unpaged": false
     },
-    "totalRecords": 2,
+    "totalRecords": 4,
     "totalPages": 1,
     "last": true,
     "size": 100,
@@ -54,7 +88,7 @@
         "sorted": false,
         "unsorted": true
     },
-    "numberOfElements": 2,
+    "numberOfElements": 4,
     "first": true,
     "empty": false
 }

@@ -4,7 +4,7 @@ import { HTTPError } from 'ky';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HOME_PAGE_URL } from '../../constants';
-import { useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
+import { useInvalidateLists, useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
 import { pushWithCurrentSearch } from '../../utils';
 import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
 import {
@@ -52,6 +52,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const recordsLimit = useRecordsLimit();
   const { labelMapping, isLoading } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
+  const invalidateLists = useInvalidateLists();
   const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
@@ -86,6 +87,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   };
 
   const onQueryRunSuccess = ({ id }: { id: string }) => {
+    invalidateLists();
     showSuccessMessage({
       message: t('callout.list.save.success', {
         listName,

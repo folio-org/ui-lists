@@ -11,6 +11,7 @@ let server: Server;
 
 beforeEach(() => {
   server = startMirage({});
+  queryClient.clear();
 });
 afterEach(() => {
   server.shutdown();
@@ -39,6 +40,25 @@ describe('useDeleteList', () => {
       await waitFor(() => !result.current.isDeleteInProgress);
 
       expect(onSuccessMock).toBeCalled();
+    });
+
+    it('invalidates the lists collection', async () => {
+      queryClient.setQueryData(['lists', { filters: ['status.Active'] }], { content: [], totalRecords: 0 });
+
+      const { result, waitFor } = renderHook(
+        () => useDeleteList({ id: '123', onSuccess: jest.fn() }),
+        { wrapper }
+      );
+
+      await act(() => {
+        result.current.deleteList();
+      });
+
+      await waitFor(() => !result.current.isDeleteInProgress);
+
+      const cachedQuery = queryClient.getQueryCache().find(['lists', { filters: ['status.Active'] }]);
+
+      expect(cachedQuery?.isStale()).toBe(true);
     });
   });
 

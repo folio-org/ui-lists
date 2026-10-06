@@ -11,6 +11,7 @@
 * Change Created by and Updated by filters to multi-select dropdowns of related users [UILISTS-281]
 * Lists app: Persist search, filter, and sorting across actions. [UILISTS-279]
 * Lists app: Consistent behavior for app navigation buttons. [UILISTS-280]
+* Lists app: Fix stale/incorrect record count and rows after filtering, create/edit/duplicate, and navigation. [UILISTS-277]
 
 ## [5.0.2](https://github.com/folio-org/ui-lists/tree/v5.0.2) (2026-05-04)
 

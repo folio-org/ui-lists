@@ -3,6 +3,7 @@ import { useMutation } from 'react-query';
 import { HTTPError } from 'ky';
 import { ListsRecordBase, FormStateType } from '../../../interfaces';
 import { prepareDataForRequest } from '../../createlist/hooks/helpers';
+import { useInvalidateLists } from '../../../hooks';
 
 type UseEditListProps = {
     id: string,
@@ -18,6 +19,7 @@ export const useEditList = (config: UseEditListProps) => {
   const { listObject, onSuccess, onChangeVersionError, onError = () => {}, id, version: originalVersion } = config;
 
   const preparedObject = prepareDataForRequest(listObject);
+  const invalidateLists = useInvalidateLists();
 
   const { mutate: saveList, isLoading: savingList } = useMutation<ListsRecordBase, HTTPError>(
     ['saveEditedList', preparedObject.name],
@@ -26,7 +28,10 @@ export const useEditList = (config: UseEditListProps) => {
         ...preparedObject, version: originalVersion
       } }).json(),
     {
-      onSuccess,
+      onSuccess: (list) => {
+        invalidateLists();
+        onSuccess(list);
+      },
       onError
     }
   );

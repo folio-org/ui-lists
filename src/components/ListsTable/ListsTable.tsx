@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { isEqual, noop } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 
@@ -55,7 +55,7 @@ export const ListsTable: FC<ListsTableProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters, searchTerm, sortField, sortDirection]);
 
-  const { listsData, isLoading } = useLists({
+  const { listsData, isFetching, isPreviousData } = useLists({
     filters: activeFilters,
     size: pagination?.limit,
     offset: pagination?.offset,
@@ -64,31 +64,41 @@ export const ListsTable: FC<ListsTableProps> = ({
   });
 
   const { totalRecords = 0, totalPages } = listsData ?? {};
-
-  let { content } = listsData ?? {};
-
-  if (!queryJustChanged && updatedListsData?.content) {
-    content = updatedListsData.content;
-  }
-
-  const hasSearchTerm = !!searchTerm;
-  const displayedContent = content ?? [];
   const displayedTotalRecords = totalRecords;
+  const hasSearchTerm = !!searchTerm;
+
+  // Row membership/order/count come exclusively from listsData (the filtered, sorted,
+  // paged, authoritative result); the tracked-ids poll only ever overlays live fields
+  // (e.g. refresh status) onto rows that are already here - it can never add, remove,
+  // or reorder a row, and never affects totalRecords/totalPages.
+  const displayedContent = useMemo(() => {
+    const baseContent = listsData?.content ?? [];
+    const trackedById = new Map((updatedListsData?.content ?? []).map((row) => [row.id, row]));
+
+    return baseContent.map((row) => (trackedById.has(row.id) ? { ...row, ...trackedById.get(row.id) } : row));
+  }, [listsData, updatedListsData]);
 
   useEffect(() => {
-    if (isLoading || queryJustChanged) {
+    setTotalRecords(displayedTotalRecords);
+  }, [displayedTotalRecords, setTotalRecords]);
+
+  useEffect(() => {
+    // isPreviousData means listsData is still the *previous* query's carried-over
+    // snapshot (keepPreviousData) - don't seed the tracked-ids poll or auto-correct the
+    // page from data that's about to be replaced by the current query's own result.
+    if (isPreviousData) {
       return;
     }
 
-    if (displayedContent.length) {
-      setRecordIds(displayedContent.map(({ id }) => id));
-    } else if (listsData?.totalPages) {
-      goToLastPage(listsData?.totalPages);
-    }
+    const content = listsData?.content ?? [];
 
-    setTotalRecords(displayedTotalRecords);
+    if (content.length) {
+      setRecordIds(content.map(({ id }) => id));
+    } else if (listsData?.totalPages) {
+      goToLastPage(listsData.totalPages);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listsData, searchTerm, updatedListsData]);
+  }, [listsData, isPreviousData]);
 
   const onNeedMoreDataHandler = (askAmount: number, limit: number, index?: number, direction = '') => {
     onNeedMoreData(direction);
@@ -100,7 +110,7 @@ export const ListsTable: FC<ListsTableProps> = ({
     <MultiColumnList
       autosize
       interactive
-      loading={isLoading}
+      loading={isFetching}
       data-testid="ItemsList"
       contentData={displayedContent}
       columnWidths={columnWidthsConfig}
@@ -110,8 +120,8 @@ export const ListsTable: FC<ListsTableProps> = ({
       pageAmount={totalPages}
       totalCount={displayedTotalRecords}
       pagingOffset={pagination.offset}
-      pagingCanGoPrevious={hasPreviousPage && !isLoading}
-      pagingCanGoNext={checkHasNextPage(totalRecords) && !isLoading}
+      pagingCanGoPrevious={hasPreviousPage && !isFetching}
+      pagingCanGoNext={checkHasNextPage(totalRecords) && !isFetching}
       columnMapping={listTableMapping}
       onNeedMoreData={onNeedMoreDataHandler}
       sortedColumn={sortField as keyof ListsRecord}
