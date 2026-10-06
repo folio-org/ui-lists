@@ -27,6 +27,12 @@ beforeEach(() => {
 });
 
 describe('useFilters', () => {
+  it('should not change the URL on mount', () => {
+    renderHook(() => useFilters());
+
+    expect(historyPushMock).not.toBeCalled();
+  });
+
   it('should keep the sort params when Reset all is selected', () => {
     locationSearch = '?filters=visibility.Private&sorting=updatedDate&sortingDirection=descending';
 

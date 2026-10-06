@@ -1,9 +1,7 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { isEqual } from 'lodash';
-import { useNamespace } from '@folio/stripes/core';
 import { buildFiltersObject } from './helpers';
-import { useSessionStorage } from '../../../../hooks';
 import { DEFAULT_FILTERS } from './configurations';
 import { CREATED_BY_PREFIX, UPDATED_BY_PREFIX } from '../../../../utils/constants';
 
@@ -13,11 +11,6 @@ const useURLFilters = () => {
   const history = useHistory();
   const { location } = history;
   const searchParams = new URLSearchParams(location.search);
-  const [namespace] = useNamespace();
-
-  const { getItem, setItem } = useSessionStorage(`${namespace}/filters`);
-
-  const sessionFilters = getItem() as string;
 
   const setValues = (filters: string[]) => {
     const nextParams = new URLSearchParams(history.location.search);
@@ -25,34 +18,7 @@ const useURLFilters = () => {
     nextParams.set(FILTERS_URL_KEY, filters.join(','));
 
     history.push(`${history.location.pathname}?${nextParams.toString()}`);
-
-    setItem(filters.join(','));
   };
-
-  useEffect(() => {
-    const filtersURL = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
-      return !!filter;
-    }).join(',');
-
-    if (sessionFilters === filtersURL) {
-      return;
-    }
-
-    if (!sessionFilters && !filtersURL) {
-      setValues(DEFAULT_FILTERS);
-
-      return;
-    }
-
-    if (filtersURL) {
-      setItem(filtersURL);
-    }
-
-    if (!filtersURL && sessionFilters) {
-      history.push(`${history.location.pathname}?${FILTERS_URL_KEY}=${sessionFilters}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionFilters]);
 
   const filters = (searchParams.get(FILTERS_URL_KEY)?.split(',') || []).filter((filter) => {
     return !!filter;
