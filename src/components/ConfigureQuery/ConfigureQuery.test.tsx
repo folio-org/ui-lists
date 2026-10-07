@@ -36,6 +36,7 @@ jest.mock('react-router-dom', () => ({
 
 const showSuccessMessageMock = jest.fn();
 const showErrorMessageMock = jest.fn();
+const invalidateListsMock = jest.fn();
 
 jest.mock('../../hooks', () => ({
   useRecordsLimit: jest.fn(() => 10),
@@ -44,6 +45,7 @@ jest.mock('../../hooks', () => ({
     showSuccessMessage: showSuccessMessageMock,
     showErrorMessage: showErrorMessageMock,
   }),
+  useInvalidateLists: () => invalidateListsMock,
 }));
 
 function renderComponent(props: Partial<ConfigureQueryProps> = {}) {
@@ -200,6 +202,7 @@ describe('ConfigureQuery component', () => {
     renderComponent({ listName: 'list-name' });
     PluggableMock.mock.lastCall[0].onQueryRunSuccess({ id: 'list-id' });
 
+    expect(invalidateListsMock).toHaveBeenCalled();
     expect(historyPushMock).toHaveBeenCalledWith({ pathname: '/lists/list/list-id', search: '' });
     expect(showSuccessMessageMock).toHaveBeenCalled();
   });

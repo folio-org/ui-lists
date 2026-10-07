@@ -35,7 +35,20 @@ export const startMirage = ({
         const rawCanned = request.queryParams.canned;
         const canned = Array.isArray(rawCanned) ? rawCanned[0] : rawCanned;
 
-        if (search || createdBy || updatedBy || canned) {
+        const rawActive = request.queryParams.active;
+        const active = Array.isArray(rawActive) ? rawActive[0] : rawActive;
+        const rawPrivate = request.queryParams.private;
+        const isPrivateParam = Array.isArray(rawPrivate) ? rawPrivate[0] : rawPrivate;
+        const rawEntityTypeIds = request.queryParams.entityTypeIds;
+        const entityTypeIds = (Array.isArray(rawEntityTypeIds) ? rawEntityTypeIds[0] : rawEntityTypeIds)?.split(',');
+        const rawIds = request.queryParams.ids;
+        const ids = (Array.isArray(rawIds) ? rawIds[0] : rawIds)?.split(',');
+
+        if (
+          search || createdBy || updatedBy || canned
+          || active !== undefined || isPrivateParam !== undefined
+          || entityTypeIds || ids
+        ) {
           const content = lists.content.filter((list) => {
             const normalizedName = list.name?.toLowerCase() || '';
             const normalizedDescription = (
@@ -53,8 +66,16 @@ export const startMirage = ({
               || ('updatedBy' in list && updatedBy.includes(list.updatedBy));
             const matchesCanned = canned === undefined
               || ('isCanned' in list && String(list.isCanned) === canned);
+            const matchesActive = active === undefined
+              || ('isActive' in list && String(list.isActive) === active);
+            const matchesPrivate = isPrivateParam === undefined
+              || ('isPrivate' in list && String(list.isPrivate) === isPrivateParam);
+            const matchesEntityTypeIds = !entityTypeIds
+              || ('entityTypeId' in list && entityTypeIds.includes(list.entityTypeId));
+            const matchesIds = !ids || ids.includes(list.id);
 
-            return matchesSearch && matchesCreatedBy && matchesUpdatedBy && matchesCanned;
+            return matchesSearch && matchesCreatedBy && matchesUpdatedBy && matchesCanned
+              && matchesActive && matchesPrivate && matchesEntityTypeIds && matchesIds;
           });
 
           return {

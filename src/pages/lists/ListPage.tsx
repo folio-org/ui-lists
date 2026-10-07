@@ -31,7 +31,7 @@ import {
   UPDATED_BY_PREFIX,
   RELATED_USERS_TYPE
 } from '../../utils/constants';
-import { useFilterConfig, useFilters, useRestoreListsView, useSearch } from './hooks';
+import { useFilterConfig, useFilters, useRestoreListsView, useSearch, useUserFilterAccordions } from './hooks';
 import { AddCommand } from '../../keyboard-shortcuts';
 import { getStatusButtonElem, handleKeyCommand, pushWithCurrentSearch } from '../../utils';
 
@@ -70,8 +70,7 @@ export const ListPage: React.FC = () => {
     setSearchValue(searchTerm);
   }, [searchTerm]);
 
-  const [isCreatedByOpen, setIsCreatedByOpen] = useState(false);
-  const [isUpdatedByOpen, setIsUpdatedByOpen] = useState(false);
+  const { isCreatedByOpen, isUpdatedByOpen, toggleCreatedBy, toggleUpdatedBy, resetToClosed } = useUserFilterAccordions();
 
   useListsFetchedSinceTimestamp();
 
@@ -109,8 +108,7 @@ export const ListPage: React.FC = () => {
     onResetAll();
     setSearchValue('');
     setSearchTerm('');
-    setIsCreatedByOpen(false);
-    setIsUpdatedByOpen(false);
+    resetToClosed();
   };
 
   const onChangeUserFilter = (prefix: string) => (userIds: string[]) => (
@@ -165,7 +163,7 @@ export const ListPage: React.FC = () => {
             label={t('filter-label.created-by')}
             type={RELATED_USERS_TYPE.CreatedBy}
             open={isCreatedByOpen}
-            onToggle={() => setIsCreatedByOpen((isOpen) => !isOpen)}
+            onToggle={toggleCreatedBy}
             selectedUserIds={createdByUserIds}
             onChange={onChangeUserFilter(CREATED_BY_PREFIX)}
             onClear={() => clearUserFilter(CREATED_BY_PREFIX)}
@@ -176,7 +174,7 @@ export const ListPage: React.FC = () => {
             label={t('filter-label.updated-by')}
             type={RELATED_USERS_TYPE.UpdatedBy}
             open={isUpdatedByOpen}
-            onToggle={() => setIsUpdatedByOpen((isOpen) => !isOpen)}
+            onToggle={toggleUpdatedBy}
             selectedUserIds={updatedByUserIds}
             onChange={onChangeUserFilter(UPDATED_BY_PREFIX)}
             onClear={() => clearUserFilter(UPDATED_BY_PREFIX)}

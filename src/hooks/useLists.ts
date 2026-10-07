@@ -12,14 +12,15 @@ export const useLists = (request: ListsRequest) => {
 
   const url = buildListsUrl('lists', request);
 
-  const { data, isLoading, error } = useQuery<ListsResponse<ListsRecord[]>, FQMError>({
-    queryKey: [url],
+  const { data, isLoading, isFetching, isPreviousData, error } = useQuery<ListsResponse<ListsRecord[]>, FQMError>({
+    queryKey: ['lists', request],
     queryFn: async () => {
       const response = await throwingFqmError(() => ky.get(url));
 
       return response.json();
     },
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 
   return {
@@ -28,6 +29,8 @@ export const useLists = (request: ListsRequest) => {
       [data, labelMapping],
     ),
     isLoading,
+    isFetching,
+    isPreviousData,
     error,
   };
 };
