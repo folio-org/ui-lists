@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { uniqueId } from 'lodash';
 import {
   AccordionStatus,
@@ -46,7 +46,7 @@ import {
 } from './components';
 
 import { HOME_PAGE_URL } from '../../constants';
-import { QueryBuilderColumnMetadata } from '../../interfaces';
+import { ListsRecordDetails, QueryBuilderColumnMetadata } from '../../interfaces';
 
 import {
   ConfirmDeleteModal,
@@ -63,6 +63,11 @@ export const ListInformationPage: React.FC = () => {
   const { canDelete, canUpdate, canExport, canRefresh } = useListAppPermissions();
   const { showCommandError } = useKeyCommandsMessages();
   const { id }: {id: string} = useParams();
+  const routerLocation = useLocation<{ querySaved?: boolean } | undefined>();
+  // Set when the page was opened right after a query was saved: the refresh that is running then replaces the
+  // list's old count and rows, so once it finishes it is applied right away instead of offering "View updated list".
+  // Only that first refresh is applied this way; a refresh the user starts afterwards keeps the banner.
+  const applyFinishedRefreshRef = useRef(Boolean(routerLocation.state?.querySaved));
   const accordionStatusRef = useRef(null);
   const { isCrossTenant } = useCrossTenantCheck();
   const handleUpdateLocation = (location : string) => {
@@ -97,6 +102,12 @@ export const ListInformationPage: React.FC = () => {
   });
 
   const queryClient = useQueryClient();
+
+  const showUpdatedList = (details: ListsRecordDetails) => {
+    queryClient.setQueryData(['listDetails', id], details);
+    setRefreshTrigger(uniqueId());
+  };
+
   const [showSuccessRefreshMessage, setShowSuccessRefreshMessage] = useState(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const { showSuccessMessage, showErrorMessage } = useMessages();
@@ -110,8 +121,13 @@ export const ListInformationPage: React.FC = () => {
         })
       });
     },
-    onSuccessPolling: () => {
-      setShowSuccessRefreshMessage(true);
+    onSuccessPolling: (data) => {
+      if (applyFinishedRefreshRef.current) {
+        applyFinishedRefreshRef.current = false;
+        showUpdatedList(data);
+      } else {
+        setShowSuccessRefreshMessage(true);
+      }
     },
     onError: (error: HTTPError) => {
       (async () => {
@@ -177,6 +193,7 @@ export const ListInformationPage: React.FC = () => {
 
   const refresh = () => {
     if (!listData?.inProgressRefresh) {
+      applyFinishedRefreshRef.current = false;
       initRefresh();
       closeSuccessMessage();
       if (showSuccessRefreshMessage && polledData) {

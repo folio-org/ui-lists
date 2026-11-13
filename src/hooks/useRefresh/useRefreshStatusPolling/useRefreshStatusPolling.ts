@@ -1,6 +1,6 @@
 import { HTTPError } from 'ky';
 import { useOkapiKy } from '@folio/stripes/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { usePollingToggle } from '../usePollingToggle';
 import { InProgressRefresh, ListsRecordDetails } from '../../../interfaces';
@@ -31,6 +31,15 @@ export const useRefreshStatusPolling = ({
   } = usePollingToggle(Boolean(inProgressRefresh?.id));
 
   const [currentRefreshId, setCurrentRefreshId] = useState<string>(inProgressRefresh?.id ?? '');
+
+  // The list details can report the refresh only after this hook has mounted (the page mounts it before the details
+  // have loaded). Without this the refresh is unknown to the first poll, so a refresh that has already finished by
+  // then is mistaken for a cancelled one.
+  useEffect(() => {
+    if (inProgressRefresh?.id) {
+      setCurrentRefreshId(inProgressRefresh.id);
+    }
+  }, [inProgressRefresh?.id]);
 
   const stopPolling = () => {
     setCurrentRefreshId('');

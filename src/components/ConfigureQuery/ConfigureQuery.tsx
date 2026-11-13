@@ -3,7 +3,8 @@ import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { HTTPError } from 'ky';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { HOME_PAGE_URL } from '../../constants';
+import { useQueryClient } from 'react-query';
+import { HOME_PAGE_URL, QUERY_SAVED_LOCATION_STATE } from '../../constants';
 import { useInvalidateLists, useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
 import { pushWithCurrentSearch } from '../../utils';
 import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
@@ -53,6 +54,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const { labelMapping, isLoading } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const invalidateLists = useInvalidateLists();
+  const queryClient = useQueryClient();
   const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
@@ -88,13 +90,16 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
 
   const onQueryRunSuccess = ({ id }: { id: string }) => {
     invalidateLists();
+    // The cached details still describe the previous query (old record count, no refresh in progress), so the
+    // list information page must load them again instead of rendering that snapshot first.
+    queryClient.removeQueries(['listDetails', id]);
     showSuccessMessage({
       message: t('callout.list.save.success', {
         listName,
       }),
     });
 
-    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${id}`);
+    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${id}`, QUERY_SAVED_LOCATION_STATE);
   };
 
   const onQueryRunFail = (error: HTTPError) => {
