@@ -1,7 +1,15 @@
 import { expect } from '@jest/globals';
 import { HTTPError, NormalizedOptions } from 'ky';
+import { useHistory } from 'react-router-dom';
 import { STATUS_ACTIVE, STATUS_INACTIVE, VISIBILITY_PRIVATE, VISIBILITY_SHARED, SOURCE_SYSTEM, SOURCE_USER } from './constants';
-import { buildListsUrl, filterByIncludes, getFqmError, handleKeyCommand, throwingFqmError } from './helpers';
+import {
+  buildListsUrl,
+  filterByIncludes,
+  getFqmError,
+  handleKeyCommand,
+  pushWithCurrentSearch,
+  throwingFqmError,
+} from './helpers';
 
 const baseUrl = 'http://www.test.com';
 
@@ -303,6 +311,41 @@ describe('Helpers', () => {
         message: 'test',
         code: '_misc_error',
         parameters: expect.any(Array),
+      });
+    });
+  });
+
+  describe('pushWithCurrentSearch', () => {
+    const history = { push: jest.fn() } as unknown as ReturnType<typeof useHistory>;
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      window.history.pushState({}, '', '/lists?query=abc&sort=name');
+    });
+
+    afterEach(() => {
+      window.history.pushState({}, '', '/');
+    });
+
+    it('pushes the path together with the current search', () => {
+      pushWithCurrentSearch(history, '/lists/list/1');
+
+      expect(history.push).toHaveBeenCalledWith({ pathname: '/lists/list/1', search: 'query=abc&sort=name' });
+    });
+
+    it('does not add a state when none is given', () => {
+      pushWithCurrentSearch(history, '/lists/list/1');
+
+      expect(Object.keys((history.push as jest.Mock).mock.calls[0][0])).toEqual(['pathname', 'search']);
+    });
+
+    it('pushes the given state along with the path and search', () => {
+      pushWithCurrentSearch(history, '/lists/list/1', { querySaved: true });
+
+      expect(history.push).toHaveBeenCalledWith({
+        pathname: '/lists/list/1',
+        search: 'query=abc&sort=name',
+        state: { querySaved: true },
       });
     });
   });
