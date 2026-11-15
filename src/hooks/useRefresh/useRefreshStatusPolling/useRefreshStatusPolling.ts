@@ -1,6 +1,6 @@
 import { HTTPError } from 'ky';
 import { useOkapiKy } from '@folio/stripes/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { usePollingToggle } from '../usePollingToggle';
 import { InProgressRefresh, ListsRecordDetails } from '../../../interfaces';
@@ -31,6 +31,12 @@ export const useRefreshStatusPolling = ({
   } = usePollingToggle(Boolean(inProgressRefresh?.id));
 
   const [currentRefreshId, setCurrentRefreshId] = useState<string>(inProgressRefresh?.id ?? '');
+
+  useEffect(() => {
+    if (inProgressRefresh?.id) {
+      setCurrentRefreshId(inProgressRefresh.id);
+    }
+  }, [inProgressRefresh?.id]);
 
   const stopPolling = () => {
     setCurrentRefreshId('');

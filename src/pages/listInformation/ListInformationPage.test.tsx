@@ -6,10 +6,15 @@ import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { Response, Server } from 'miragejs';
 import * as acq from '@folio/stripes-acq-components';
+import { Pane } from '@folio/stripes/components';
 import { startMirage } from '../../../test/mirage';
 import { ListInformationPage } from './ListInformationPage';
 import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
+import { CompilingLoader } from '../../components';
+import { QUERY_SAVED_LOCATION_STATE } from '../../constants';
+import refreshed from '../../../test/data/listDetails.refreshed.json';
+import inRefresh from '../../../test/data/listDetails.in-refresh.json';
 
 const historyPushMock = jest.fn();
 const historyGoBack = jest.fn();
@@ -22,10 +27,13 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(() => ({ push: historyPushMock, goBack: historyGoBack })),
 }));
 
-const renderListInformation = () => {
+// The real 10s interval would make any scenario with more than one status check needlessly slow.
+jest.mock('../../hooks/useRefresh/constants', () => ({ PULLING_STATUS_DELAY: 50 }));
+
+const renderListInformation = (locationState?: Record<string, unknown>) => {
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: '/', state: locationState }]}>
         <ListInformationPage />
       </MemoryRouter>
     </QueryClientProvider>
@@ -396,6 +404,124 @@ describe('ListInformationPage Page', () => {
           const errorMessage = JSON.stringify(showErrorMessageMock.mock.lastCall);
           expect(errorMessage).toContain('ui-lists.cancel.error.code');
         });
+      });
+    });
+  });
+
+  describe('when a list refresh is running while the page is open', () => {
+    const OLD_COUNT = 150;
+    const NEW_COUNT = 200;
+    const newRefresh = inRefresh.inProgressRefresh;
+
+    // The backend keeps reporting the previous snapshot until the running refresh completes.
+    const refreshRunningDetails = {
+      ...refreshed,
+      successRefresh: { ...refreshed.successRefresh, id: 'old-refresh', recordsCount: OLD_COUNT },
+      inProgressRefresh: newRefresh,
+    };
+    const refreshFinishedDetails = {
+      ...refreshed,
+      successRefresh: { ...refreshed.successRefresh, id: newRefresh.id, recordsCount: NEW_COUNT },
+    };
+
+    // Every distinct pane subtitle the user was shown, in order: 'loader' or the record count.
+    const shownSubtitles = () => (Pane as jest.Mock).mock.calls
+      .map(([props]) => props?.paneSub)
+      .filter(Boolean)
+      .map((paneSub) => (paneSub.type === CompilingLoader ? 'loader' : paneSub.props.values.count))
+      .filter((subtitle, index, all) => index === 0 || subtitle !== all[index - 1]);
+
+    // The Pane mock does not render `subheader`, so read what the page hands to it: the refresh banner is on
+    // exactly when the sub header has banners to display (there is no cross tenant warning in these scenarios).
+    const isRefreshBannerOffered = () => Boolean(
+      (Pane as jest.Mock).mock.lastCall?.[0].subheader?.props.hasBannersToDisplay
+    );
+
+    // Serves the given details one per request, repeating the last one.
+    const respondWithDetails = (...states: Record<string, unknown>[]) => {
+      let requestsServed = 0;
+
+      server.get('lists/:id', () => {
+        const state = states[Math.min(requestsServed, states.length - 1)];
+
+        requestsServed += 1;
+
+        return new Response(200, {}, state);
+      });
+    };
+
+    beforeEach(() => {
+      (Pane as jest.Mock).mockClear();
+    });
+
+    describe('and the page was opened right after the list query was saved', () => {
+      // ConfigureQuery sets this when it navigates to the list after saving the query.
+      const openedAfterQuerySave = QUERY_SAVED_LOCATION_STATE;
+
+      describe('and the new query finishes by the time of the first status check', () => {
+        it('is expected to show "Query in progress" and then the new count, never the old one', async () => {
+          respondWithDetails(refreshRunningDetails, refreshFinishedDetails);
+
+          await renderListInformation(openedAfterQuerySave);
+
+          await waitFor(() => expect(shownSubtitles()).toContain(NEW_COUNT), { timeout: 2000 });
+
+          expect(shownSubtitles()).toEqual(['loader', NEW_COUNT]);
+        });
+
+        it('is expected not to ask the user to click "View updated list"', async () => {
+          respondWithDetails(refreshRunningDetails, refreshFinishedDetails);
+
+          await renderListInformation(openedAfterQuerySave);
+
+          await waitFor(() => expect(shownSubtitles()).toContain(NEW_COUNT), { timeout: 2000 });
+
+          expect(isRefreshBannerOffered()).toBe(false);
+        });
+      });
+
+      describe('and the new query is still running at the first status check', () => {
+        it('is expected to keep showing "Query in progress" until it finishes, then the new count', async () => {
+          respondWithDetails(refreshRunningDetails, refreshRunningDetails, refreshRunningDetails, refreshFinishedDetails);
+
+          await renderListInformation(openedAfterQuerySave);
+
+          await waitFor(() => expect(shownSubtitles()).toContain(NEW_COUNT), { timeout: 2000 });
+
+          expect(shownSubtitles()).toEqual(['loader', NEW_COUNT]);
+        });
+      });
+
+      describe('and the user starts a refresh afterwards', () => {
+        it('is expected to offer "View updated list" for it as usual', async () => {
+          const manualRefreshId = 'manual-refresh';
+          const manualRefreshFinishedDetails = {
+            ...refreshed,
+            successRefresh: { ...refreshed.successRefresh, id: manualRefreshId, recordsCount: NEW_COUNT + 1 },
+          };
+
+          server.post('lists/:listId/refresh', () => new Response(200, {}, { id: manualRefreshId }));
+          respondWithDetails(refreshRunningDetails, refreshFinishedDetails, manualRefreshFinishedDetails);
+
+          await renderListInformation(openedAfterQuerySave);
+          await waitFor(() => expect(shownSubtitles()).toContain(NEW_COUNT), { timeout: 2000 });
+
+          await user.click(screen.getByRole('menuitem', { name: /ui-lists.pane.dropdown.refresh/i }));
+
+          await waitFor(() => expect(isRefreshBannerOffered()).toBe(true), { timeout: 2000 });
+        });
+      });
+    });
+
+    describe('and the page was not opened from a query save', () => {
+      it('is expected to keep the previous snapshot and offer "View updated list" once it finishes', async () => {
+        respondWithDetails(refreshRunningDetails, refreshFinishedDetails);
+
+        await renderListInformation();
+
+        await waitFor(() => expect(isRefreshBannerOffered()).toBe(true), { timeout: 2000 });
+
+        expect(shownSubtitles()).toEqual(['loader', OLD_COUNT]);
       });
     });
   });
