@@ -90,8 +90,6 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
 
   const onQueryRunSuccess = ({ id }: { id: string }) => {
     invalidateLists();
-    // The cached details still describe the previous query (old record count, no refresh in progress), so the
-    // list information page must load them again instead of rendering that snapshot first.
     queryClient.removeQueries(['listDetails', id]);
     showSuccessMessage({
       message: t('callout.list.save.success', {

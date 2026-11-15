@@ -32,9 +32,6 @@ export const useRefreshStatusPolling = ({
 
   const [currentRefreshId, setCurrentRefreshId] = useState<string>(inProgressRefresh?.id ?? '');
 
-  // The list details can report the refresh only after this hook has mounted (the page mounts it before the details
-  // have loaded). Without this the refresh is unknown to the first poll, so a refresh that has already finished by
-  // then is mistaken for a cancelled one.
   useEffect(() => {
     if (inProgressRefresh?.id) {
       setCurrentRefreshId(inProgressRefresh.id);

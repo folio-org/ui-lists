@@ -64,9 +64,6 @@ export const ListInformationPage: React.FC = () => {
   const { showCommandError } = useKeyCommandsMessages();
   const { id }: {id: string} = useParams();
   const routerLocation = useLocation<{ querySaved?: boolean } | undefined>();
-  // Set when the page was opened right after a query was saved: the refresh that is running then replaces the
-  // list's old count and rows, so once it finishes it is applied right away instead of offering "View updated list".
-  // Only that first refresh is applied this way; a refresh the user starts afterwards keeps the banner.
   const applyFinishedRefreshRef = useRef(Boolean(routerLocation.state?.querySaved));
   const accordionStatusRef = useRef(null);
   const { isCrossTenant } = useCrossTenantCheck();
