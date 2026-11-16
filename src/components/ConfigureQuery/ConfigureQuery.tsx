@@ -4,7 +4,7 @@ import { HTTPError } from 'ky';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
-import { HOME_PAGE_URL, QUERY_SAVED_LOCATION_STATE } from '../../constants';
+import { HOME_PAGE_URL } from '../../constants';
 import { useInvalidateLists, useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
 import { pushWithCurrentSearch } from '../../utils';
 import { useQueryBuilderCommonSources } from '../../hooks/useQueryBuilderSources';
@@ -97,7 +97,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
       }),
     });
 
-    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${id}`, QUERY_SAVED_LOCATION_STATE);
+    pushWithCurrentSearch(history, `${HOME_PAGE_URL}/list/${id}`);
   };
 
   const onQueryRunFail = (error: HTTPError) => {

@@ -15,14 +15,8 @@ import {
 
 export const getVisibleColumnsKey = (entityTypeId?: string) => `lists-visible-columns-${entityTypeId}`;
 
-export const pushWithCurrentSearch = (
-  history: ReturnType<typeof useHistory>,
-  pathname: string,
-  state?: Record<string, unknown>,
-) => {
-  const search = new URLSearchParams(window.location.search).toString();
-
-  history.push(state ? { pathname, search, state } : { pathname, search });
+export const pushWithCurrentSearch = (history: ReturnType<typeof useHistory>, pathname: string) => {
+  history.push({ pathname, search: new URLSearchParams(window.location.search).toString() });
 };
 
 export const buildListsUrl = (url: string, request?: ListsRequest) => {

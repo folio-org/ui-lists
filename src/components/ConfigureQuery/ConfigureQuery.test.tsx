@@ -7,7 +7,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { queryClient } from '../../../test/utils';
-import { QUERY_SAVED_LOCATION_STATE } from '../../constants';
 import { ConfigureQuery, ConfigureQueryProps } from './ConfigureQuery';
 
 const PluggableMock = Pluggable as unknown as jest.Mock;
@@ -204,16 +203,12 @@ describe('ConfigureQuery component', () => {
     PluggableMock.mock.lastCall[0].onQueryRunSuccess({ id: 'list-id' });
 
     expect(invalidateListsMock).toHaveBeenCalled();
-    expect(historyPushMock).toHaveBeenCalledWith({
-      pathname: '/lists/list/list-id',
-      search: '',
-      state: QUERY_SAVED_LOCATION_STATE,
-    });
+    expect(historyPushMock).toHaveBeenCalledWith({ pathname: '/lists/list/list-id', search: '' });
     expect(showSuccessMessageMock).toHaveBeenCalled();
   });
 
   describe('on query run success', () => {
-    it('drops the cached details of the saved list so its page never shows the previous query\'s count', () => {
+    it('drops the cached details of the saved list so its page never renders the previous query\'s count', () => {
       queryClient.setQueryData(['listDetails', 'list-id'], { successRefresh: { recordsCount: 150 } });
       queryClient.setQueryData(['listDetails', 'other-list-id'], { successRefresh: { recordsCount: 7 } });
 
