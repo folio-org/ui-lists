@@ -301,6 +301,13 @@ export const ListInformationPage: React.FC = () => {
                   </SubHeaderBannersLayout>
               }
               >
+                <div
+                  role="status"
+                  className="sr-only"
+                  data-testid="refresh-status-announcement"
+                >
+                  {isRefreshInProgress && t('refresh.status.in-progress')}
+                </div>
                 <AccordionStatus ref={accordionStatusRef}>
                   <AccordionSet>
                     <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
