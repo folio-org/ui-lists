@@ -1,16 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const usePollingToggle = (shouldStartPolling: boolean) => {
   const [isPollingEnabled, setIsPollingEnabled] = useState(shouldStartPolling);
-  const [previousShouldStartPolling, setPreviousShouldStartPolling] = useState(shouldStartPolling);
 
-  if (shouldStartPolling !== previousShouldStartPolling) {
-    setPreviousShouldStartPolling(shouldStartPolling);
-
+  useEffect(() => {
     if (shouldStartPolling && !isPollingEnabled) {
       setIsPollingEnabled(true);
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldStartPolling]);
 
   return {
     isPollingEnabled,
