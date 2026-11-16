@@ -34,7 +34,11 @@ export const ListInformationResultViewer: React.FC<ListInformationResultViewerTy
       componentType="viewer"
       showQueryAccordion
       fqlQuery={fqlQueryParsed}
-      headline={({ totalRecords }: any) => t('mainPane.subTitle', { count: totalRecords === 'NaN' ? 0 : totalRecords })}
+      headline={({ totalRecords }: any) => (
+        refreshInProgress
+          ? t('mainPane.queryInProgress')
+          : t('mainPane.subTitle', { count: totalRecords === 'NaN' ? 0 : totalRecords })
+      )}
       refreshInProgress={refreshInProgress}
       refreshTrigger={refreshTrigger}
       {...useQueryBuilderResultViewerSources(entityTypeId, listId, visibleColumns)}

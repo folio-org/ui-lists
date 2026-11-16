@@ -3,6 +3,7 @@ import { Pluggable, useOkapiKy } from '@folio/stripes/core';
 import { HTTPError } from 'ky';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { HOME_PAGE_URL } from '../../constants';
 import { useInvalidateLists, useMessages, useRecordsLimit, useRecordTypes } from '../../hooks';
 import { pushWithCurrentSearch } from '../../utils';
@@ -53,6 +54,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
   const { labelMapping, isLoading } = useRecordTypes();
   const { showSuccessMessage, showErrorMessage } = useMessages();
   const invalidateLists = useInvalidateLists();
+  const queryClient = useQueryClient();
   const [columns, setColumns] = useState<string[]>([]);
   const triggerButtonLabel = initialValues ? t('list.modal.edit-query') : undefined;
 
@@ -88,6 +90,7 @@ export const ConfigureQuery: FC<ConfigureQueryProps> = ({
 
   const onQueryRunSuccess = ({ id }: { id: string }) => {
     invalidateLists();
+    queryClient.removeQueries(['listDetails', id]);
     showSuccessMessage({
       message: t('callout.list.save.success', {
         listName,

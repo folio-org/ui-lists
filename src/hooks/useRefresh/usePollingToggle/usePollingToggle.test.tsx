@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { usePollingToggle } from './usePollingToggle';
 
@@ -56,6 +57,32 @@ describe('usePollingToggle', () => {
       });
 
       expect(result.current.isPollingEnabled).toBe(true);
+    });
+  });
+
+  describe('When shouldStartPulling changes to true', () => {
+    it('is expected to enable polling in that same render, with no committed render in between', () => {
+      const committedRenders: { shouldStartPolling: boolean; isPollingEnabled: boolean }[] = [];
+
+      const { rerender } = renderHook(
+        (shouldStartPolling: boolean) => {
+          const { isPollingEnabled } = usePollingToggle(shouldStartPolling);
+
+          // effects only run for committed renders, so renders React discards are not recorded
+          useEffect(() => {
+            committedRenders.push({ shouldStartPolling, isPollingEnabled });
+          });
+
+          return isPollingEnabled;
+        },
+        { initialProps: false }
+      );
+
+      rerender(true);
+
+      expect(committedRenders.filter(({ shouldStartPolling, isPollingEnabled }) => (
+        shouldStartPolling && !isPollingEnabled
+      ))).toEqual([]);
     });
   });
 });

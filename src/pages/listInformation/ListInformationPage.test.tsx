@@ -6,10 +6,14 @@ import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { Response, Server } from 'miragejs';
 import * as acq from '@folio/stripes-acq-components';
+import { Pane } from '@folio/stripes/components';
+import { Pluggable } from '@folio/stripes/core';
 import { startMirage } from '../../../test/mirage';
 import { ListInformationPage } from './ListInformationPage';
 import { queryClient } from '../../../test/utils';
 import * as hooks from '../../hooks';
+import { CompilingLoader } from '../../components';
+import listDetailsInRefresh from '../../../test/data/listDetails.in-refresh.json';
 
 const historyPushMock = jest.fn();
 const historyGoBack = jest.fn();
@@ -395,6 +399,29 @@ describe('ListInformationPage Page', () => {
 
           const errorMessage = JSON.stringify(showErrorMessageMock.mock.lastCall);
           expect(errorMessage).toContain('ui-lists.cancel.error.code');
+        });
+      });
+    });
+
+    describe('Opened while a refresh is in progress', () => {
+      it('is expected to show loading states in every render, never the previous record count', async () => {
+        server.get('lists/:id', () => new Response(200, {}, listDetailsInRefresh));
+
+        await renderListInformation();
+
+        await awaitLoading();
+
+        const paneRenders = (Pane as unknown as jest.Mock).mock.calls;
+        const pluggableRenders = (Pluggable as unknown as jest.Mock).mock.calls;
+
+        expect(paneRenders.length).toBeGreaterThan(0);
+        expect(pluggableRenders.length).toBeGreaterThan(0);
+
+        paneRenders.forEach(([{ paneSub }]) => {
+          expect(paneSub.type).toBe(CompilingLoader);
+        });
+        pluggableRenders.forEach(([{ refreshInProgress }]) => {
+          expect(refreshInProgress).toBe(true);
         });
       });
     });
