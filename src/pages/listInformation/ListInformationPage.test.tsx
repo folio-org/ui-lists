@@ -324,7 +324,9 @@ describe('ListInformationPage Page', () => {
           // The live region must already be in the DOM before its content changes, otherwise screen readers ignore it
           const statusRegion = screen.getByTestId('refresh-status-announcement');
 
-          expect(statusRegion).toHaveAttribute('role', 'status');
+          // <output> carries an implicit role="status", so it's reachable by role with no explicit attribute
+          expect(screen.getByRole('status')).toBe(statusRegion);
+          expect(statusRegion.tagName).toBe('OUTPUT');
           expect(statusRegion).toBeEmptyDOMElement();
 
           await user.click(screen.getByRole('menuitem', {
