@@ -315,6 +315,26 @@ describe('ListInformationPage Page', () => {
 
           expect(cancelRefreshButton).toBeInTheDocument();
         });
+
+        it('it is expected to announce the refresh progress to screen readers', async () => {
+          await renderListInformation();
+
+          await awaitLoading();
+
+          // The live region must already be in the DOM before its content changes, otherwise screen readers ignore it
+          const statusRegion = screen.getByTestId('refresh-status-announcement');
+
+          // <output> carries an implicit role="status", so it's reachable by role with no explicit attribute
+          expect(screen.getByRole('status')).toBe(statusRegion);
+          expect(statusRegion.tagName).toBe('OUTPUT');
+          expect(statusRegion).toBeEmptyDOMElement();
+
+          await user.click(screen.getByRole('menuitem', {
+            name: /ui-lists.pane.dropdown.refresh/i
+          }));
+
+          await waitFor(() => expect(statusRegion).toHaveTextContent('ui-lists.refresh.status.in-progress'));
+        });
       });
 
       describe('When refresh cancel success', () => {

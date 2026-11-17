@@ -50,6 +50,7 @@
   "pane.dropdown.search.placeholder": "Search column name",
   "pane.dropdown.refresh": "Refresh list",
   "pane.dropdown.cancel-refresh": "Cancel refresh",
+  "refresh.status.in-progress": "List refresh in progress",
 
   "pane.dropdown.delete": "Delete list",
   "pane.dropdown.edit": "Edit list",
