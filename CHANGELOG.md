@@ -14,7 +14,6 @@
 * Fix stale/incorrect record count and rows after filtering, create/edit/duplicate, and navigation. [UILISTS-277]
 * Show "Compiling" and "Query in progress" until the "View updated list" banner appears. [UILISTS-276]
 * Announce "Refresh list" loading status to screen readers. [UILISTS-269]
-* Keep focus on the Actions menu trigger after selecting a menu item, so it no longer falls to the page body and silences the refresh announcement. [UILISTS-269]
 
 ## [5.0.2](https://github.com/folio-org/ui-lists/tree/v5.0.2) (2026-05-04)
 

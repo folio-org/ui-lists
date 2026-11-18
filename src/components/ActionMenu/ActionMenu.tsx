@@ -20,12 +20,6 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
 }) => {
   const int = useIntl();
   const [open, setOpen] = useState(false);
-  // Selecting a menu item closes the menu by flipping this `open` state directly,
-  // which bypasses the Dropdown/Popdown focus-restoration logic (that logic only
-  // runs when the trigger button itself, or its own keyboard handlers, close the
-  // menu). Left alone, the clicked item is removed from the DOM and focus falls
-  // through to the document body, which screen readers then announce instead of
-  // the action that was actually taken.
   const containerRef = useRef<HTMLDivElement>(null);
   const handleToggle = useCallback(() => setOpen(!open), [open]);
   const handleClick = useCallback((onClick: () => void) => {
