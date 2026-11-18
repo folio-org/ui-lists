@@ -171,10 +171,6 @@ export const ListInformationPage: React.FC = () => {
     setShowSuccessRefreshMessage(false);
   };
 
-  if (detailsError) {
-    return <ErrorComponent error={detailsError} />;
-  }
-
   const refresh = () => {
     if (!listData?.inProgressRefresh) {
       initRefresh();
@@ -193,10 +189,6 @@ export const ListInformationPage: React.FC = () => {
     setShowSuccessRefreshMessage(false);
   };
 
-
-  if (isDetailsLoading) {
-    return <LoadingPane />;
-  }
 
   const recordCount = listData?.successRefresh?.recordsCount ?? 0;
 
@@ -270,71 +262,79 @@ export const ListInformationPage: React.FC = () => {
         page={intl.formatMessage({ id:'ui-lists.title.infoList' }, { listName })}
       >
         <Paneset data-testid="listInformation">
-          <Layer isOpen contentLabel={listName}>
-            <Paneset isRoot>
-              <Pane
-                dismissible
-                defaultWidth="fill"
-                appIcon={<ListAppIcon />}
-                paneTitle={listName}
-                paneSub={
-                  !isRefreshInProgress
-                    ? t('mainPane.subTitle', { count: recordCount })
-                    : <CompilingLoader />
-                }
-                lastMenu={<ListInformationMenu
-                  visibleColumns={visibleColumns}
-                  columns={columnControls}
-                  onColumnsChange={handleColumnsChange}
-                  buttonHandlers={buttonHandlers}
-                  conditions={conditions}
-                />}
-                onClose={() => handleUpdateLocation(`${HOME_PAGE_URL}`)}
-                subheader={
-                  <SubHeaderBannersLayout hasBannersToDisplay={shouldShowCrossTenantWarning || showSuccessRefreshMessage}>
-                    <CrossTenantListWarning shouldShow={shouldShowCrossTenantWarning} />
-                    <SuccessRefreshSection
-                      shouldShow={showSuccessRefreshMessage}
-                      recordsCount={intl.formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
-                      onViewListClick={onVewListClickHandler}
-                    />
-                  </SubHeaderBannersLayout>
-              }
-              >
-                <output
-                  className="sr-only"
-                  data-testid="refresh-status-announcement"
-                >
-                  {isRefreshInProgress && t('refresh.status.in-progress')}
-                </output>
-                <AccordionStatus ref={accordionStatusRef}>
-                  <AccordionSet>
-                    <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
-                  </AccordionSet>
-
-                  <AccordionSet>
-                    <ListInformationResultViewer
-                      refreshInProgress={isRefreshInProgress}
-                      listId={listData?.id}
-                      fqlQuery={listData?.fqlQuery}
-                      entityTypeId={listData?.entityTypeId}
-                      refreshTrigger={Number(refreshTrigger)}
-                      setColumnControlList={setColumnControls}
+          <output
+            className="sr-only"
+            data-testid="refresh-status-announcement"
+          >
+            {isRefreshInProgress && t('refresh.status.in-progress')}
+          </output>
+          {detailsError ? (
+            <ErrorComponent error={detailsError} />
+          ) : isDetailsLoading ? (
+            <LoadingPane />
+          ) : (
+            <>
+              <Layer isOpen contentLabel={listName}>
+                <Paneset isRoot>
+                  <Pane
+                    dismissible
+                    defaultWidth="fill"
+                    appIcon={<ListAppIcon />}
+                    paneTitle={listName}
+                    paneSub={
+                      !isRefreshInProgress
+                        ? t('mainPane.subTitle', { count: recordCount })
+                        : <CompilingLoader />
+                    }
+                    lastMenu={<ListInformationMenu
                       visibleColumns={visibleColumns}
-                    />
-                  </AccordionSet>
-                </AccordionStatus>
-              </Pane>
-            </Paneset>
-          </Layer>
-          <ConfirmDeleteModal
-            listName={listName}
-            onCancel={() => setShowConfirmDeleteModal(false)}
-            onConfirm={() => {
-              deleteListHandler();
-            }}
-            open={showConfirmDeleteModal}
-          />
+                      columns={columnControls}
+                      onColumnsChange={handleColumnsChange}
+                      buttonHandlers={buttonHandlers}
+                      conditions={conditions}
+                    />}
+                    onClose={() => handleUpdateLocation(`${HOME_PAGE_URL}`)}
+                    subheader={
+                      <SubHeaderBannersLayout hasBannersToDisplay={shouldShowCrossTenantWarning || showSuccessRefreshMessage}>
+                        <CrossTenantListWarning shouldShow={shouldShowCrossTenantWarning} />
+                        <SuccessRefreshSection
+                          shouldShow={showSuccessRefreshMessage}
+                          recordsCount={intl.formatNumber(polledData?.successRefresh?.recordsCount ?? 0)}
+                          onViewListClick={onVewListClickHandler}
+                        />
+                      </SubHeaderBannersLayout>
+                  }
+                  >
+                    <AccordionStatus ref={accordionStatusRef}>
+                      <AccordionSet>
+                        <MetaSectionAccordion listInfo={listData} recordType={recordTypeLabel} />
+                      </AccordionSet>
+
+                      <AccordionSet>
+                        <ListInformationResultViewer
+                          refreshInProgress={isRefreshInProgress}
+                          listId={listData?.id}
+                          fqlQuery={listData?.fqlQuery}
+                          entityTypeId={listData?.entityTypeId}
+                          refreshTrigger={Number(refreshTrigger)}
+                          setColumnControlList={setColumnControls}
+                          visibleColumns={visibleColumns}
+                        />
+                      </AccordionSet>
+                    </AccordionStatus>
+                  </Pane>
+                </Paneset>
+              </Layer>
+              <ConfirmDeleteModal
+                listName={listName}
+                onCancel={() => setShowConfirmDeleteModal(false)}
+                onConfirm={() => {
+                  deleteListHandler();
+                }}
+                open={showConfirmDeleteModal}
+              />
+            </>
+          )}
         </Paneset>
       </TitleManager>
     </HasCommandWrapper>

@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useRef, useState } from 'react';
 import {
   Dropdown,
   DropdownMenu
@@ -20,31 +20,35 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
 }) => {
   const int = useIntl();
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const handleToggle = useCallback(() => setOpen(!open), [open]);
   const handleClick = useCallback((onClick: () => void) => {
     handleToggle();
+    containerRef.current?.querySelector<HTMLButtonElement>('button')?.focus();
     onClick();
   }, [handleToggle]);
 
   return (
-    <Dropdown
-      id="AddPermissionDropdown"
-      data-testid="paneDropdownButton"
-      label={t('paneHeader.button.actions')}
-      buttonProps={{ buttonStyle: 'primary', bottomMargin0: true }}
-      open={open}
-      onToggle={handleToggle}
-    >
-      <DropdownMenu
-        aria-label={tString(int, 'pane.dropdown.available-permissions')}
+    <div ref={containerRef}>
+      <Dropdown
+        id="AddPermissionDropdown"
+        data-testid="paneDropdownButton"
+        label={t('paneHeader.button.actions')}
+        buttonProps={{ buttonStyle: 'primary', bottomMargin0: true }}
         open={open}
         onToggle={handleToggle}
       >
-        <div className={children ? css.actionMenuGroup : ''}>
-          <ActionButtonsList buttons={actionButtons} handleClick={handleClick} />
-        </div>
-        {children}
-      </DropdownMenu>
-    </Dropdown>
+        <DropdownMenu
+          aria-label={tString(int, 'pane.dropdown.available-permissions')}
+          open={open}
+          onToggle={handleToggle}
+        >
+          <div className={children ? css.actionMenuGroup : ''}>
+            <ActionButtonsList buttons={actionButtons} handleClick={handleClick} />
+          </div>
+          {children}
+        </DropdownMenu>
+      </Dropdown>
+    </div>
   );
 };
