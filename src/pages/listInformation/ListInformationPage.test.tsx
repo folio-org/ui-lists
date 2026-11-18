@@ -444,6 +444,25 @@ describe('ListInformationPage Page', () => {
           expect(refreshInProgress).toBe(true);
         });
       });
+
+      it('it is expected to keep the same live region mounted through loading, so landing on an already-compiling list is announced as a change', async () => {
+        server.get('lists/:id', () => new Response(200, {}, listDetailsInRefresh));
+
+        await renderListInformation();
+
+        // The live region must exist (and be empty) before the list data loads, otherwise
+        // its "in progress" text would be there from the very first render instead of
+        // appearing as a change, and screen readers only announce changes.
+        const statusRegion = screen.getByTestId('refresh-status-announcement');
+
+        expect(statusRegion.tagName).toBe('OUTPUT');
+        expect(statusRegion).toBeEmptyDOMElement();
+
+        await awaitLoading();
+
+        expect(screen.getByTestId('refresh-status-announcement')).toBe(statusRegion);
+        expect(statusRegion).toHaveTextContent('ui-lists.refresh.status.in-progress');
+      });
     });
   });
 });
